@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	body{
+		
+	}
+	.login-container{
+		width: 500px;
+		background: #f7f7f7;
+		text-align : center;
+	}
+	.login-title{
+		color: #854836;
+		font-size: 25px;
+		
+	}
+</style>
+</head>
+<body>
+	<th:block th:include = "common/header"></th:block>
+	<div class = "login-container">
+		<div class = "login-title">로그인</div>
+		<form class = "login-form">
+			<input type = "text" name = "login-id" placeholder = "아이디"> 
+			<input type = "password" name = "login-password" placeholder = "비밀번호">
+			<div class = "login-option">
+				<input type = "checkbox" id = "login-remain"> 
+				<label for = "login-remain">로그인상태유지</label>
+			</div>
+			<button type = "submit" class = "login-button">로그인</button>
+		</form>
+		<div class = "login-footer">
+			<a href = "#">회원가입</a> 
+			<a href = "#">아이디</a>
+			<span> / </span>
+			<a href = "#">비밀번호 찾기</a>
+		</div>
+	</div>
+	<th:block th:include = "common/footer"></th:block>
+</body>
+</html>
