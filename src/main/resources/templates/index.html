@@ -3,16 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page</title>
+    <title>환영합니다!</title>
+	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <th:block th:include="common/header"></th:block>
 
-    <main>
-        <h1>메인 컨텐츠</h1>
-        <p>스크롤 해도 헤더가 고정되고, 컨텐츠와 자연스럽게 어울립니다.</p>
-        <p style="margin-top:1000px;">아래쪽 테스트 영역</p>
-    </main>
+	<div class="container">
+	    <main>
+	        <div class="slider" id="slider"></div>
+	    </main>
+	    <div class="dots-container">
+	        <div class="dots" id="dots"></div>
+	    </div>
+
+	    <div class="main-page">
+	        <br>
+	        <hr>
+	        <h2>최근 보호중인 아이들</h2>
+
+	        <div class="all-card">
+	            <div class="card-container">
+	                <div class="card">
+	                    <img src="#.jpg" alt="아이1">
+	                </div>
+	                <h3>이름1</h3>
+	            </div>
+	            <div class="card-container">
+	                <div class="card">
+	                    <img src="#.jpg" alt="아이2">
+	                </div>
+	                <h3>이름2</h3>
+	            </div>
+	            <div class="card-container">
+	                <div class="card">
+	                    <img src="#.jpg" alt="아이3">
+	                </div>
+	                <h3>이름3</h3>
+	            </div>
+	            <div class="card-container">
+	                <div class="card">
+	                    <img src="#.jpg" alt="아이4">
+	                </div>
+	                <h3>이름4</h3>
+	            </div>
+	        </div>
+
+	        <div class="more-btn-container">
+	            <button class="more-btn">더보기</button>
+	        </div>
+	    </div>
+	</div>
+	<script src="js/main.js"></script>
 
     <th:block th:include="common/footer"></th:block>
 </body>
