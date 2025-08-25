@@ -15,4 +15,9 @@
 	<select id="selectAdoptionTotalCount" resultType="int">
 		select count(*) from adoption
 	</select>
+	
+	<insert id="insertAdoption">
+		insert into adoption values(adoption_seq.nextval,#{adoptionContent},to_char(sysdate,'yyyy-mm-dd'),#{adoptionTitle})
+		순서 다시 봐야 함
+	</insert>
 </mapper>

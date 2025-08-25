@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.adoption.model.dao.AdoptionDao;
+import kr.co.iei.adoption.model.vo.Adoption;
 import kr.co.iei.adoption.model.vo.AdoptionListData;
 
 @Service
@@ -66,5 +68,11 @@ public class AdoptionService {
 		AdoptionListData ald = new AdoptionListData(list, pageNavi);
 		
 		return ald;
+	}
+
+	@Transactional
+	public int insertAdoption(Adoption a) {
+		int result = adoptionDao.insertAdoption(a);
+		return result;
 	}
 }
