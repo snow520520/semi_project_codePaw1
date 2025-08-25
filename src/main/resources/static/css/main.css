@@ -125,6 +125,7 @@ main {
 
 .more-btn:hover {
     background: #FFB22C;
+}
 .title-row {
     display: flex;
     justify-content: space-between;
