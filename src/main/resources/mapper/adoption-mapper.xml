@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.iei.adoption.model.dao.AdoptionDao">
+	<select id="selectAdoptionList" resultType="adoption">
+		select * from
+    		(select rownum as rnum, n.* from
+      		  (select
+         		   adoption_no, adoption_title, adoption_date, member_id
+      		  from adoption order by adoption_no desc
+       		 )n
+  		  )
+		where #{start} <![CDATA[ <= ]]>  rnum and rnum <![CDATA[ <= ]]> #{end}
+	</select>
+	
+	<select id="selectAdoptionTotalCount" resultType="int">
+		select count(*) from adoption
+	</select>
+</mapper>

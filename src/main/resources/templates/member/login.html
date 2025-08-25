@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<style>	
+body {
+	font-family: Nanum Gothic Coding, sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+.login-container{
+	width: 800px;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.login-wrap {
+	width: 500px;
+	background: #f7f7f7;
+	padding: 30px;
+	text-align: center;
+	border-radius : 10px;
+	margin-top : 10%;
+}
+.login-title {
+	color: #854836;
+	font-size: 25px;
+	font-weight: bold;
+	padding: 30px;
+	padding-bottom: 40px;
+}
+.login-form{
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+.login-form>.login-input-wrap{
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	margin: 30px; 
+}
+.login-form>.login-input-wrap>input{
+	font-size: 16px;
+	height:40px;
+	padding: 10px;
+	border: 1px solid #854836;
+	border-radius: 2px;
+}
+.login-form>.login-input-wrap>input:last-child{
+	margin-top: 5px;
+}
+.login-form>.login-input-wrap>input:hover{
+	font-size: 14px;
+	font-style: inherit;
+}
+.login-option{
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	margin-left: 30px;
+}
+.login-option>label{
+	padding-left: 5px;
+}
+.login-button{
+	height: 40px;
+	border: 0;
+	border-radius: 15px;
+	color: white;
+	background: #FFB22C;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: 500;
+	margin: 30px;
+}
+.login-footer{
+	display: flex;
+	justify-content: space-between;
+	margin-top: 15px;
+	font-size: 15px;
+}
+.login-footer a{
+	text-decoration: none;
+	color: #854836;
+}
+.login-footer a:hover{
+	font-weight: bold; 
+}
+.material-symbols-outlined{
+	cursor: pointer;
+	font-size:20px;
+	padding-top: 2px;
+}
+</style>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="login-container">
+		<section class="login-wrap">
+			<div class="login-title">로그인</div>
+			<form action="/member/login" method="post" class="login-form" autocomplete="off">
+				<div class="login-input-wrap">
+					<input type="text" name="memberId" id = "memberId" placeholder="아이디"> 
+					<input type="password" name="memberPw" id = "memberPw" placeholder="비밀번호">
+				</div>
+				<div class="login-option">
+					<span class="material-symbols-outlined">check_box</span>
+					<label for="login-remain">로그인 상태유지</label>
+				</div>
+				<button type="submit" class="login-button">로그인</button>
+			</form>
+			<div class="login-footer">
+				<a href="#">회원가입</a>
+				<span> 
+					<a href="#">아이디</a> 
+					<span style="color: #854836">|</span> 
+					<a href="#">비밀번호 찾기</a>
+				</span>
+			</div>
+		</section>
+	</main>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>
