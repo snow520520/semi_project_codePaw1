@@ -12,7 +12,7 @@ body {
 	align-items: center;
 	height: 100vh;
 }
-.login-container{
+.content{
 	width: 100%;
 	display:flex;
 	justify-content: center;
@@ -104,7 +104,7 @@ body {
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
-	<main class="login-container">
+	<main class="content">
 		<section class="login-wrap">
 			<div class="login-title">로그인</div>
 			<form action="/member/login" method="post" class="login-form" autocomplete="off">
@@ -120,7 +120,7 @@ body {
 				<button type="submit" class="login-button">로그인</button>
 			</form>
 			<div class="login-footer">
-				<a href="#">회원가입</a>
+				<a href="/member/joinFrm">회원가입</a>
 				<span> 
 					<a href="#">아이디</a> 
 					<span style="color: #854836">|</span> 
@@ -133,7 +133,6 @@ body {
 	  $("#checkBox").on("click", function(){
 		  $(this).hide();
 		  $("#checkBoxOut").show();
-		  
 	  });
 	  $("#checkBoxOut").on("click", function(){
 		  $(this).hide();

@@ -57,4 +57,8 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/"; 
 	}
+	@GetMapping(value = "/joinFrm")
+	public String joinFrm() {
+		return "member/join";
+	}
 }
