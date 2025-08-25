@@ -95,7 +95,6 @@ main {
 
 .write-btn-wrapper {
     display: flex;
-    justify-content: flex-end;
     margin-top: 20px;       
 }
 .write-btn {
