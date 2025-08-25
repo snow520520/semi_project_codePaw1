@@ -12,5 +12,80 @@ html, body {
     padding: 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     border-radius: 8px;
-	height: 800px;
+    height: 800px;
+}
+
+.container h2{
+	padding-bottom: 30px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+input[type="text"], input[type="number"], select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+form .form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+form .form-group {
+    width: 48%;
+}
+
+form label {
+    font-size: 16px;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.content-box {
+    margin-bottom: 20px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+button {
+    padding: 12px 20px;  
+    background: #FFB22C;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: background 0.2s, transform 0.2s;
+}
+
+button:hover {
+    background: #FFB22C;
+    transform: translateY(-2px);
 }
