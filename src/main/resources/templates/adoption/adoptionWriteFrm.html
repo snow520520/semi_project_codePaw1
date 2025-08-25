@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main>
+		<section>
+			<div>입양신청</div>
+			<div>
+				<input type="text" name="adoptionTitle" placeholder="제목">
+			</div>
+			<div>입양 희망자 정보</div>
+			<table>
+				<tr>
+					<th>이름</th>
+					<td>
+						<span th:text="${session.member.memberName}"></span>
+						<input type="hidden" name="WriterName" th:value="${session.member.memberName}">
+					</td>
+					<th>전화번호</th>
+					<td>
+						<span th:text="${session.member.memberPhone}"></span>
+						<input type="hidden" name="WriterPhone" th:value="${session.member.memberPhone}">
+					</td>
+					<th>주소</th>
+					<td>
+						<span th:text="${session.member.memberAddr}"></span>
+						<input type="hidden" name="WriterAddr" th:value="${session.member.memberAddr}">
+					</td>
+					<th>입양동기</th>
+					<td>
+						<div>
+							<textarea name="adoptionContent"></textarea>
+						</div>
+					</td>	
+				</tr>
+			</table>
+			<div>아이 정보</div>
+			<table>
+				<tr>
+					<th>이름</th>
+					<td>
+						<span th:text="${session.animal.animalName}"></span>
+						<input type="hidden" name="animalName" th:value="${session.animal.animalName}">
+					</td>
+					<th>품종</th>
+					<td>
+						<span th:text="${session.animal.animalType}"></span>
+						<input type="hidden" name="animalType" th:value="${session.animal.animalType}">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button type="submit">작성하기</button>
+					</td>
+				</tr>
+			</table>
+		</section>
+	</main>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>

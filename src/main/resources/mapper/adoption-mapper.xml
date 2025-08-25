@@ -5,7 +5,7 @@
 		select * from
     		(select rownum as rnum, n.* from
       		  (select
-         		   adoption_no, adoption_title, adoption_date, member_id
+         		   adoption_no, adoption_title, adoption_date, member_no
       		  from adoption order by adoption_no desc
        		 )n
   		  )

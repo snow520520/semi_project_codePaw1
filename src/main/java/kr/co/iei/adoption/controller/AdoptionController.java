@@ -23,4 +23,9 @@ public class AdoptionController {
 		model.addAttribute("pageNavi", ald.getPageNavi());
 		return "adoption/list";
 	}
+	
+	@GetMapping(value="/adoptionWriteFrm")
+	public String adoptionWriteFrm() {
+		return "adoption/adoptionWriteFrm";
+	}
 }
