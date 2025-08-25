@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>	
 body {
 	font-family: Nanum Gothic Coding, sans-serif;
@@ -11,7 +11,6 @@ body {
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
-	
 }
 .login-container{
 	width: 100%;
@@ -20,7 +19,6 @@ body {
 	align-items: center;
 	background-color: #f7f7f7;
 }
-
 .login-wrap {
 	width: 500px;
 	background-color: white;
@@ -46,7 +44,8 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
-	margin: 30px; 
+	margin: 30px;
+	margin-bottom: 10px;
 }
 .login-form>.login-input-wrap>input{
 	font-size: 16px;
@@ -67,12 +66,13 @@ body {
 	justify-content: left;
 	align-items: center;
 	margin-left: 30px;
+	cursor: pointer;
 }
 .login-option>label{
 	padding-left: 5px;
 }
 .login-button{
-	height: 40px;
+	height: 45px;
 	border: 0;
 	border-radius: 15px;
 	color: white;
@@ -95,7 +95,7 @@ body {
 .login-footer a:hover{
 	font-weight: bold; 
 }
-.material-symbols-outlined{
+.material-icons-outlined{
 	cursor: pointer;
 	font-size:20px;
 	padding-top: 2px;
@@ -113,7 +113,8 @@ body {
 					<input type="password" name="memberPw" id = "memberPw" placeholder="비밀번호">
 				</div>
 				<div class="login-option">
-					<span class="material-symbols-outlined">check_box</span>
+					<span class="material-icons" id="checkBox">check_box</span>
+					<span class="material-icons" id="checkBoxOut" style="display:none">check_box_outline_blank</span>
 					<label for="login-remain">로그인 상태유지</label>
 				</div>
 				<button type="submit" class="login-button">로그인</button>
@@ -129,10 +130,30 @@ body {
 		</section>
 	</main>
 	<script>
-		$("#memberId").on("click", function(){
-			
-		});
+	  $("#checkBox").on("click", function(){
+		  $(this).hide();
+		  $("#checkBoxOut").show();
+		  
+	  });
+	  $("#checkBoxOut").on("click", function(){
+		  $(this).hide();
+		  $("#checkBox").show();
+	  });
+	 $()
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+

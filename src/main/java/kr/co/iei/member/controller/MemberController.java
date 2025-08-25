@@ -40,9 +40,11 @@ public class MemberController {
 			if(member.getMemberLevel() == 3) {
 				//member != null or memberLevel == 3이면 (정회원(입양하지 않은 회원) 마이페이지에 회원정보 수정할수 있게끔만)
 				session.setAttribute("member", member);
+				
 			}else if(member.getMemberLevel() == 2) {
 				//member != null or memberLevel == 2이면 (입양한 회원 (마이페이지에 입양 후기쓴 글 or 입양신청서 작성 시 수락 / 회원정보 수정할 수 있게))
 				session.setAttribute("member", member);
+				
 			}else if(member.getMemberLevel() == 1) {
 				//member != null or memberLevel == 1이면 (관리자 권한 (마이페이지 or 관리자 페이지))
 				session.setAttribute("member", member);
