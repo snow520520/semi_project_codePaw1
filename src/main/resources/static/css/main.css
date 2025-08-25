@@ -58,11 +58,6 @@ main {
     opacity: 1;
 }
 
-.main-page h2 {
-	padding-top: 10px;
-    padding-bottom: 30px;
-}
-
 .all-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, 250px); 
@@ -125,4 +120,29 @@ main {
 
 .more-btn:hover {
     background: #FFB22C;
+}
+.title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+	padding-top: 10px;
+}
+
+.title-row h2{
+	padding-left: 10px;
+	
+}
+
+.title-row a {
+    font-size: 16px;
+    color: #666; 
+    text-decoration: none; 
+    transition: all 0.2s ease;
+	padding-right: 10px;
+}
+
+.title-row a:hover {
+    color: #333; 
+    text-decoration: underline;
 }
