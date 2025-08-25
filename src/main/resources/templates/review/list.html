@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:include = "common/header"></th:block>
+	<main class="content">
+		<section class = "section review-list-wrap">
+			<div class= "page-tit nnle">입양사진 및 후기</div>
+			<div class= "list-header">
+			<!-- 게시판 이용 등급 조건걸기 -->
+			</div>
+			<div class="list-tbl-wrap">
+			
+			</div>
+			<div id="pagaNavi" th:utext = "${pageNavi}"></div> <!-- utext : thymeleaf문법 -->
+		</section>
+	</main>
+	
+	<script th:inline = "javascript">
+		const totalCount = [[${totalCount}]];	//페이지 들어올 때 조회해온 전체 게시물 수
+		let currentCount = 0; 					//현재까지 읽어온 게시물 수 저장
+		let start = 1;							//추가로 가져올 게시물의 시작 번호
+		const amount = 4;						//			
+		
+		
+	</script>
+	
+	<th:block th:include= "common/footer"></th:block>
+</body>
+</html>
