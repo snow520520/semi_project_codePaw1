@@ -27,7 +27,7 @@ public class MemberController {
 		//select * from member_tbl where member_id = memberId and member_pw = memberPw
 		Member member = memberService.login(m);
 		System.out.println(member);
-		
+		///dsdasda
 		if(member == null) {
 			//member == null 이면 로그인이 안된경우 (id or pw가 틀렸다는 문구 다시 확인하세요)
 		}else {
