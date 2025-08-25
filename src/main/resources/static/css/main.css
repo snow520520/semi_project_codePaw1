@@ -1,0 +1,128 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #f0f0f0;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+main {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.slider {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slider img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.dots-container {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.dots span {
+    display: inline-block;
+    margin: 0 5px;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
+
+.dots span.active {
+    opacity: 1;
+}
+
+.main-page h2 {
+	padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+.all-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px); 
+    justify-content: center; 
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.card {
+    background: #fafafa;
+    width: 250px;
+    height: 180px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.card-container h3 {
+    margin-top: 3px;
+    margin-left: 10px;
+    text-align: left;
+    font-size: 16px;
+    color: #333;
+}
+
+.more-btn-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.more-btn {
+    padding: 8px 30px;
+    font-size: 16px;
+    border: none;
+    background: #FFB22C;
+    color: #FFFFFF;
+    border-radius: 12px;
+    cursor: pointer;
+    display: block;
+    margin: 30px auto 0 auto;
+    transition: all 0.2s ease; 
+}
+
+.more-btn:active {
+    transform: scale(0.95); 
+    background: #e6a81c;   
+}
+
+.more-btn:hover {
+    background: #FFB22C;
+}
