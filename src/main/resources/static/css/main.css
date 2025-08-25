@@ -125,6 +125,7 @@ main {
 
 .more-btn:hover {
     background: #FFB22C;
+	transform: translateY(-2px);
 }
 .title-row {
     display: flex;
