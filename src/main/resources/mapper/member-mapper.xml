@@ -11,5 +11,6 @@
   		
   		
   		
+  		select * from member_tbl where member_id=#{memberId} and member_pw=#{memberPw}
   	</select>
 </mapper>
