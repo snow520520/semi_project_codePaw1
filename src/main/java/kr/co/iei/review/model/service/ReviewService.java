@@ -9,4 +9,5 @@ import kr.co.iei.review.model.dao.ReviewDao;
 public class ReviewService {
 	@Autowired
 	private ReviewDao reviewDao;
+
 }

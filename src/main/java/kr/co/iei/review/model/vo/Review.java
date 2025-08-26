@@ -1,4 +1,4 @@
-package kr.co.iei.model.vo;
+package kr.co.iei.review.model.vo;
 
 import org.apache.ibatis.type.Alias;
 
