@@ -16,4 +16,6 @@ public interface AdoptionDao {
 
 	int insertAdoption(Adoption a);
 
+	Adoption selectOneAdoption(int adoptionNo);
+
 }
