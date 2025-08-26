@@ -15,23 +15,9 @@ import kr.co.iei.review.model.service.ReviewService;
 public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
-<<<<<<< HEAD
-
-	
 	@GetMapping(value = "/list")
 	public String reviewList(int reqPage, Model model) {
 		return "review/review";
 		
 	}
-
-=======
-	
-	@GetMapping(value = "/list")
-	public String reviewList(int reqPage, Model model) {
-		List List = reviewService.selectAllReview(reqPage);
-		model.addAttribute("list", list);
-		return "review/review
-		
-	}
->>>>>>> main
 }

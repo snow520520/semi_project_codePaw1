@@ -11,13 +11,5 @@ import kr.co.iei.review.model.dao.ReviewDao;
 public class ReviewService {
 	@Autowired
 	private ReviewDao reviewDao;
-<<<<<<< HEAD
 
-=======
-	
-	public List selectAllReview(int reqPage) {
-		int numPerPage = 16;
-		
-	}
->>>>>>> main
 }
