@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.review.model.dao.ReviewDao">
+
   <select id="reviewList" resultType = "review">
   	select * from 
   		(select rownum as rnum, n.* from
   			(select
-  				review_no, review_title, review_date, member_no
+  				review_no, review_content, review_title, review_date
   			from animal_review order by review_no desc
   			)n
   		)

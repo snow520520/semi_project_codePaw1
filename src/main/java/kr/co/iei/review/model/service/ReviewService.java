@@ -25,7 +25,7 @@ public class ReviewService {
 		HashMap<String, Object> param = new HashMap<String, Object>();
 		param.put("start", start);
 		param.put("end", end);
-		int totalCount = reviewDao.reviewList();
+		int totalCount = reviewDao.selectReviewList();
 		int totalPage = (int)(Math.ceil(totalCount/(double)numPerPage));
 		int pageNaviSize = 5;
 		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize+1;
@@ -64,7 +64,7 @@ public class ReviewService {
 		
 		pageNavi += "</ul>";
 		
-		List list = reviewDao.selectReviewList(param);
+		List list = reviewDao.reviewList(param);
 		
 		ReviewListData rld = new ReviewListData(list, pageNavi);
 		
