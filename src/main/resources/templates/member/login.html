@@ -175,45 +175,44 @@ body {
 		</section>
 	</main>
 	<script>
-	  $("#checkBox").on("click", function(){
-		  $(this).hide();
-		  $("#checkBoxOut").show();
-	  });
-	  $("#checkBoxOut").on("click", function(){
-		  $(this).hide();
-		  $("#checkBox").show();
-	  });
-	 $("#memberId").on("click", function(){
-		$(this).css("border", "1px solid #854836");
-	 });
-	 $(".login-button").on("click", function(){
-		const memberIdCheck = $("#memberId").val();
-		const memberPwCheck = $("#memberPw").val();
-		if((memberIdCheck === null && memberPwCheck === null)){
-			$("#IdPw").show();
-			$("#Pw").hide();
-		}else if(memberIdCheck !== null && memberPwCheck === null){
-			$("#IdPw").show();
-			$("#Pw").hide();
-		}else if(memberIdCheck === null && memberPwCheck !== null){
-			$("#IdPw").hide();
-			$("#Pw").show();
-		}
-	 });
+		  $("#memberId").on("click", function(){
+			  $(this).css('border', '1px solid #854836');
+			  $(this).removeAttr("placeholder");
+		 });
+		  $("#memberId").on("focusout", function(){
+			  $(this).attr('placeholder','아이디');
+		  });
+		  $("#memberPw").on("click", function(){
+			  $(this).css('border', '1px solid brown');
+			  $(this).removeAttr("placeholder");
+		  });
+		  $("#memberPw").on("focusout", function(){
+		  	  $(this).attr('placeholder','비밀번호');
+		  });
+		  $("#checkBox").on("click", function(){
+			  $(this).hide();
+			  $("#checkBoxOut").show();
+		  });
+		  $("#checkBoxOut").on("click", function(){
+			  $(this).hide();
+			  $("#checkBox").show();
+		  });
+		 $(".login-button").on("click", function(){
+			
+			const memberIdCheck = $("#memberId").val();
+			const memberPwCheck = $("#memberPw").val();
+			if((!memberIdCheck && !memberPwCheck)){
+				$("#IdPw").show();
+				$("#Pw").hide();
+			}else if(memberIdCheck !== null && !memberPwCheck){
+				$("#IdPw").show();
+				$("#Pw").hide();
+			}else if(!memberIdCheck && memberPwCheck !== null){
+				$("#IdPw").hide();
+				$("#Pw").show();
+			}
+		 });
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
