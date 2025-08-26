@@ -5,7 +5,7 @@
   	select * from 
   		(select rownum as rnum, n.* from
   			(select
-  				review_no, review_content, review_title, review_date
+  				review_no, review_content, review_title, review_date, member_no
   			from animal_review order by review_no desc
   			)n
   		)

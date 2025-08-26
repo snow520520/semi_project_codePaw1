@@ -16,4 +16,5 @@ public class Adoption {
 	private String adoptionDate;
 	private String adoptionTitle;
 	private String adoptionStatus;
+	private String memberId;
 }
