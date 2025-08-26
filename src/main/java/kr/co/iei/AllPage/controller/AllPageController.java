@@ -24,9 +24,12 @@ public class AllPageController {
 
     // 전체 게시물 페이지
     @GetMapping(value="/allpage")
-    public String allpage(Model model) {
+    public String allpage(Model model, HttpSession session) {
         List<AllPage> list = allpageService.selectAllProtect();
         model.addAttribute("list", list);
+
+        Member member = (Member) session.getAttribute("member");
+        model.addAttribute("member", member);
         return "mainAllpage/allpage";
     }
 
