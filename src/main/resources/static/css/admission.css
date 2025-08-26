@@ -5,12 +5,18 @@ html, body {
     background: #f0f0f0;
 }
 .content{
+	margin: 0 auto;
+}
+.section{	
 	width: 1200px;
 	padding: 20px;
 	background-color: #ffffff;
+	margin: 20px;
+	border-radius: 8px;
 }
 .page-title{
 	font-size: 24px;
 	font-weight: 600;
 	color: #854836;
+	padding-bottom: 20px;
 }
