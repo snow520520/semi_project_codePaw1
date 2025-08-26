@@ -3,44 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="join-wrap">
-			<h2>회원 가입</h2>
-			<form action="#" method="post" class="join-form" autocomplete="off">
-				<div>
-					<span></span>
+			<div class="join-title">회원가입</div>
+			<form action="/member" method="post" class="join-form" autocomplete="off">
+				<div class="input-id">
+					<span class="material-icons-outlined">account_circle</span>
 					<input type="text" name="memberId" id="memberId" placeholder="아이디 입력">
 				</div>
-				<div>
-					<span></span>
+				<div class="input-pw">
+					<span class="material-icons-outlined">password</span>
 					<input type="password" name="memberPw" id="memberPw" placeholder="비밀번호 입력">
 				</div>
-				<div>
-					<span></span>
+				<div class="input-pwRe">
+					<span class="material-icons-outlined">refresh</span>
 					<input type="password" name="memberPwRe" id="memberPwRe" placeholder="비밀번호 확인">
 				</div>
-				<div class="addr-box">
-					<span></span>
+				<div class="addr-div">
+					<span class="material-icons-outlined">email</span>
 					<input type="text" name="memberAddr" id="memberAddr" placeholder="이메일 주소">
-					<div class="addrCertify-box">
+					<div class="addrCertify-div">
 						<input type="text" name="addrCertify" placeholder="인증번호 입력">
-						<button type="button">인증</button>
-						<span>시간넣어야함</span>
+						<button type="button" class="auto-btn" id="auto-code" >인증</button>
+						<span>분</span>
+						<span>초</span>
 					</div>
 				</div>
-				<div>
+				<div class="input-name">
+					<span class="material-icons-outlined">dns</span>
 					<input type="text" name="memberName" id = "memberName" placeholder="이름" >
 				</div>
-				<div>
+				<div class="input-phone">
+					<span class="material-icons-outlined">phone_android</span>
 					<input type="text" name="memberPhone" id = "memberPhone" placeholder="전화번호">
 				</div>
-				<div class="birth-box">
-					
+				<div class="age-div">
+					<span class="material-icons-outlined">badge</span>
+					<input type ="text" name = "memberAge" id="memberAge" placeholder="나이">
 				</div>
-				<div class="submit-box">
+				<div class="submit-btn">
 					<button type="submit" class="join-button">가입하기</button>
 				</div>
 			</form>
