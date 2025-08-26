@@ -6,10 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.co.iei.adoption.model.service.AdoptionService;
 import kr.co.iei.adoption.model.vo.Adoption;
 import kr.co.iei.adoption.model.vo.AdoptionListData;
+import kr.co.iei.member.model.vo.Member;
 
 @Controller
 @RequestMapping(value="/adoption")
@@ -39,5 +41,20 @@ public class AdoptionController {
 		model.addAttribute("icon", "success");
 		model.addAttribute("loc", "/adoption/list?reqPage=1");
 		return "common/msg";
+	}
+	
+	@GetMapping(value="/view")
+	public String adoptionView(int adoptionNo, Model model) {
+		Adoption a = adoptionService.selectOneAdoption(adoptionNo);
+		if(a == null) {
+			model.addAttribute("title", "게시글 조회 실패");
+			model.addAttribute("text", "이미 삭제된 게시글 입니다");
+			model.addAttribute("icon", "info");
+			model.addAttribute("loc", "/adoption/list?reqPage=1");
+			return "common/msg";
+		}else {
+			model.addAttribute("a", a);
+			return "adoption/view";
+		}
 	}
 }

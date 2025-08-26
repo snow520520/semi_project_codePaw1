@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.admission.model.dao.AdmissionDao">
   <select id="selectAll" resultType="admission">
-  	select * from admission
+  	select * from admission order by admission_no desc
+  </select>
+  <select id="selectAdmissionCount" resultType="int">
+  	select count(*) from admission
   </select>
 </mapper>

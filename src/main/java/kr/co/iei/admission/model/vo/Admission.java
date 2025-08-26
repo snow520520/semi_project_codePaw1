@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Alias(value="admission")
 public class Admission {
-	private int addmissionNo;
-	private String addmissionTitle;
-	private String addmissionContent;
-	private String addmissionDate;
+	private int admissionNo;
+	private String admissionTitle;
+	private String admissionContent;
+	private String admissionDate;
 	private String memberId;
 }
