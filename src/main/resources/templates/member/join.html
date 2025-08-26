@@ -4,13 +4,28 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+body {
+	font-family: Nanum Gothic Coding, sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+.content{
+	width:80%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+</style>
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="join-wrap">
 			<div class="join-title">회원가입</div>
-			<form action="/member" method="post" class="join-form" autocomplete="off">
+			<form action="/member/join" method="post" class="join-form" autocomplete="off">
 				<div class="input-id">
 					<span class="material-icons-outlined">account_circle</span>
 					<input type="text" name="memberId" id="memberId" placeholder="아이디 입력">
