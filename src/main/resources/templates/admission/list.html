@@ -17,11 +17,13 @@
 					<th style="width: 20%">작성일</th>
 					<th style="width: 20%">작성자</th>
 				</tr>
-				<tr>
-					<td>1</td>
-					<td>제목1</td>
-					<td>2025-08-26</td>
-					<td>user01</td>
+				<tr th:each="admission : ${list}">
+					<td th:text="${admission.admissionNo}"></td>
+					<td>
+						<a th:href="@{/admission/view(admissionNo=${admission.admissionNo})}" th:text="${admission.admissionTitle}"></a>
+					</td>
+					<td th:text="${admission.admissionDate}"></td>
+					<td th:text="${admission.memberId}"></td>
 				</tr>
 			</table>
 		</section>
