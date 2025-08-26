@@ -7,4 +7,14 @@
   <select id="selectAdmissionCount" resultType="int">
   	select count(*) from admission
   </select>
+  <select id="selectAdmissionList" resultType="admission">
+  	select * from
+	    	(select rownum as rnum, n.* from
+	        	(select 
+	            	admission_no, admission_title, member_id, admission_date 
+	        	from admission order by admission_no desc
+	        	)n
+	    	)
+		where #{start} <![CDATA[ <= ]]> rnum and rnum <![CDATA[ <= ]]> #{end}
+  </select>
 </mapper>

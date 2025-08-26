@@ -48,9 +48,30 @@ public class AdmissionService {
 			if(pageNo == reqPage) {
 				pageNavi += "<a class='page-item active-page' href='/admission/list?reqPage="+pageNo+"'>";
 			}else {
-				pageNavi += "<a class='page-item' href='/admission/list?reqPage=";
+				pageNavi += "<a class='page-item' href='/admission/list?reqPage="+pageNo+"'>";
+			}
+			pageNavi += pageNo;
+			pageNavi += "</a>";
+			pageNavi += "</li>";
+			
+			pageNo++;
+			if(pageNo > totalPage) {
+				break;
 			}
 		}
-		return null;
+		if(pageNo <= totalPage) {
+			pageNavi += "<li>";
+			pageNavi += "<a class='page-item' href='/admission/list?reqPage="+pageNo+"'>";
+			pageNavi += "<span class='material-icons'>chevron_right</span>";
+			pageNavi += "</a>";
+			pageNavi += "</li>";
+		}
+		pageNavi += "</ul>";
+		
+		List list = admissionDao.selectAdmissionList(param);
+		
+		AdmissionListData ald = new AdmissionListData(list, pageNavi);
+		
+		return ald;
 	}
 }

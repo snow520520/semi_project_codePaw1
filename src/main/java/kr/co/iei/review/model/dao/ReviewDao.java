@@ -10,13 +10,12 @@ import kr.co.iei.review.model.vo.Review;
 @Mapper
 public interface ReviewDao {
 
-	int selectrReviewTotalCount();
+	List reviewList(HashMap<String, Object> param);
 
-	List selectReviewList(HashMap<String, Object> param);
+	int selectReviewList();
 
-	int insertAdoption(Review r);
-	
-	
+	int insertReview(Review r);
+
 	
 
 }

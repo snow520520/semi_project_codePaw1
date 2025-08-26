@@ -10,14 +10,21 @@
     <th:block th:include="common/header"></th:block>
     <div class="container">
         <main>
+			<div class="header-wrapper">
             <h2>현재 입양 가능한 아이들</h2>
+			<div th:if="${member != null and member.memberLevel == 1}">
+			    <a href="/mainAllpage/writeFrm">
+			        <button class="write-btn">글쓰기</button>
+			    </a>
+			</div>
+			</div>
             <hr>
             <div class="all-card">  
                 <div th:each="ap : ${list}">
                     <div class="card-container">
                         <a th:href="@{/mainAllpage/detail(protectNo=${ap.protectNo})}">
                             <div class="card">
-                                <img src="#.jpg" alt="이미지" />
+                                <img src="/image/slider/1.jpg" alt="이미지" />
                             </div>
                         </a>
                         <div class="card-info">
@@ -27,11 +34,6 @@
                         <p class="date" th:text="${ap.protectDate}">2025-xx-xx</p>
                     </div>
                 </div>
-            </div>
-            <div class="write-btn-wrapper">
-                <a href="/mainAllpage/writeFrm">
-                    <button class="write-btn">글쓰기</button>
-                </a>
             </div>
         </main>
     </div>
