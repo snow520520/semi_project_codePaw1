@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.iei.admission.model.vo.Admission;
+
 @Mapper
 public interface AdmissionDao {
 
@@ -15,5 +17,7 @@ public interface AdmissionDao {
 	int searchTitleCount(String searchTitle);
 
 	List searchTitleAdmission(HashMap<String, Object> param);
+
+	Admission selectOneAdmission(int admissionNo);
 
 }

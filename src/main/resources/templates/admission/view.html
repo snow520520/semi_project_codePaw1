@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>입소신청 상세페이지</title>
+<link rel="stylesheet" href="/css/admission.css">
+<style>
+	.section>div:last-child{
+		float: right;
+	}	
+</style>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section">
+			<div class="page-title" th:text="${admission.admissionTitle}"></div>
+			<div th:text="${admission.memberId}"></div>
+			<div th:text="${admission.admissionDate}"></div>
+		</section>
+	</main>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>

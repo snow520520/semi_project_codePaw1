@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.iei.admission.model.dao.AdmissionDao;
+import kr.co.iei.admission.model.vo.Admission;
 import kr.co.iei.admission.model.vo.AdmissionListData;
 
 @Service
@@ -126,5 +127,10 @@ public class AdmissionService {
 		AdmissionListData ald = new AdmissionListData(list, pageNavi);
 		
 		return ald;
+	}
+
+	public Admission selectOneAdmission(int admissionNo) {
+		Admission admission = admissionDao.selectOneAdmission(admissionNo);
+		return admission;
 	}
 }

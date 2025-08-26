@@ -29,4 +29,7 @@
 	    	)
 		where #{start} <![CDATA[ <= ]]> rnum and rnum <![CDATA[ <= ]]> #{end}
   </select>
+  <select id="selectOneAdmission" resultType="admission">
+  	select * from admission where admission_no = ${admissionNo}
+  </select>
 </mapper>

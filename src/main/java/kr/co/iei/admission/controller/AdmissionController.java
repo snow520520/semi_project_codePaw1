@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.iei.admission.model.service.AdmissionService;
+import kr.co.iei.admission.model.vo.Admission;
 import kr.co.iei.admission.model.vo.AdmissionListData;
 
 @Controller
@@ -30,5 +31,11 @@ public class AdmissionController {
 		model.addAttribute("list", ald.getList());
 		model.addAttribute("pageNavi", ald.getPageNavi());
 		return "admission/list";
+	}
+	@GetMapping(value="/view")
+	public String view(int admissionNo, Model model) {
+		Admission admission = admissionSerivce.selectOneAdmission(admissionNo);
+		model.addAttribute("admission", admission);
+		return "admission/view";
 	}
 }
