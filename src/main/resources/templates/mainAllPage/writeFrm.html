@@ -11,9 +11,64 @@
     <th:block th:include="common/header"></th:block>
 	<div class="container">
 
-			
-			
-		</div>
+	<h2>입양가능한 아이 글쓰기</h2>
+	<hr>
+	<form class="form" method="post" action="/mainAllpage/write">
+	    <div class="header">
+	        <input type="text" id="title" name="protecttitle" placeholder="제목을 입력하세요" />
+	    </div>
+
+	    <div class="form-row">
+	        <div class="form-group">
+	            <label for="age">나이</label>
+	            <input type="number" id="age" name="age" placeholder="나이" />
+	        </div>
+	        <div class="form-group">
+	            <label for="vaccination">접종</label>
+	            <input type="text" id="vaccination" name="vaccination" placeholder="접종 여부" />
+	        </div>
+	    </div>
+
+	    <div class="form-row">
+	        <div class="form-group">
+	            <label for="name">이름</label>
+	            <input type="text" id="name" name="name" placeholder="이름" />
+	        </div>
+	        <div class="form-group">
+	            <label for="neutering">중성화</label>
+	            <select id="neutering" name="neutering">
+	                <option value="yes">중성화 됨</option>
+	                <option value="no">중성화 안 됨</option>
+	            </select>
+	        </div>
+	    </div>
+
+	    <div class="form-row">
+	        <div class="form-group">
+	            <label for="breed">품종</label>
+	            <input type="text" id="breed" name="breed" placeholder="품종" />
+	        </div>
+	        <div class="form-group">
+	            <label for="gender">성별</label>
+	            <select id="gender" name="gender">
+	                <option value="male">남자</option>
+	                <option value="female">여자</option>
+	            </select>
+	        </div>
+	    </div>
+
+	    <div class="content-box">
+	        <textarea id="content" name="protectcontent" rows="6" placeholder="내용을 작성하세요."></textarea>
+	    </div>
+
+	    <div class="buttons">
+	        <a href="/mainAllpage/allpage">
+	            <button type="button">목록으로</button>
+	        </a>
+	        <button type="submit">작성하기</button>
+	    </div>
+	</form>
+
 	</div>
 	<th:block th:include="common/footer"></th:block>
 </body>
