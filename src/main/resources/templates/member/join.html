@@ -14,7 +14,7 @@ body {
 	height: 100vh;
 }
 .content{
-	width:80%;
+	width:100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -27,7 +27,7 @@ body {
 	justify-content: center;
 	flex-direction: column;
 	align-items: center;
-	background-color: #f7f7f7;
+	background-color: white;
 }
 .join-title{
 	color : #854836;
@@ -40,28 +40,44 @@ body {
 	width: 80%;
 	display: flex;
 	justify-content: center;
-	align-items: left;
+	align-items: center;
 	flex-direction: column;
 	gap: 20px;
 }
-.join-form>.addr-div>div{
+.join-form>div{
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+.join-form>.addr-div{
 	display: flex;
 	justify-content: left;
 	align-items: center;
 	gap: 20px;
 }
-.join-form>.addr-div{
-	display: flex;
-	flex-direction: row;
-}
-.join-form>.addr-div>
 .join-form>div>input{
-	margin-bottom:10px;
+	height: 30px;
+	font-size: 13px;
+	margin: auto 0 ;
+	border: 1px solid black;
+	padding-left:5px;
+	border: none;
+}
+.join-form>.addr-div>div>input{
+	margin: auto 0 ;
+	border: 1px solid black;
+	padding-left:5px;
+	border: none;
+}
+.join-form>.addr-div>div>input>div:first-child{
+	height: 30px;
+	font-size: 13px;
 }
 .join-form>div>.material-icons-outlined{
 	cursor: pointer;
 	font-size:20px;
-	padding-top: 10px;
+	margin: auto 0;
+	line-height: 35px;
 }
 </style>
 </head>
@@ -72,29 +88,29 @@ body {
 			<div class="join-title">회원가입</div>
 			<form action="/member/join" method="post" class="join-form" autocomplete="off">
 				<div class="input-id">
-					<i class="material-icons-outlined">account_circle</i>
+					<span class="material-icons-outlined">account_circle</span>
 					<div class="checkId-wrap">
-						<input type="text" name="memberId" id="memberId" placeholder="아이디 입력">
+						<input type="text" name="memberId" id="memberId" placeholder="아이디 입력" style="border: none;">
 						<button type="button" class="checkId-btn">중복체크</button>
 					</div>
 				</div>
 				<div class="input-pw">
 					<span class="material-icons-outlined">password</span>
-					<input type="password" name="memberPw" id="memberPw" placeholder="비밀번호 입력">
+					<input type="password" name="memberPw" id="memberPw" placeholder="비밀번호 입력" style="border: none;">
 				</div>
 				<div class="input-pwRe">
 					<span class="material-icons-outlined">refresh</span>
 					<input type="password" name="memberPwRe" id="memberPwRe" placeholder="비밀번호 확인">
 				</div>
 				<div class="addr-div">
-					<form type ="submit" name = "memberAddr" id ="memberAddr">
-						<span class="material-icons-outlined">email</span>
-						<input type="text" name="memberAddr" id="memberAddr" placeholder="이메일 주소">
+					<!-- <form action ="#" method="post" class="addr-form"> -->
+					<span class="material-icons-outlined">email</span>
 						<div class="addrCertify-div">
+							<input type="text" name="memberAddr" id="memberAddr" placeholder="이메일 주소">
 							<input type="text" name="addrCertify" placeholder="인증번호 입력">
 							<button type="button" class="auto-btn" id="auto-code" >인증</button>
 						</div>
-					</form>
+					<!-- </form>-->
 				</div>
 				<div class="input-name">
 					<span class="material-icons-outlined">dns</span>
@@ -104,7 +120,7 @@ body {
 					<span class="material-icons-outlined">phone_android</span>
 					<input type="text" name="memberPhone" id = "memberPhone" placeholder="전화번호">
 				</div>
-				<div class="age-div">
+				<div class="input-age">
 					<span class="material-icons-outlined">badge</span>
 					<input type ="text" name = "memberAge" id="memberAge" placeholder="나이">
 				</div>
@@ -114,6 +130,9 @@ body {
 			</form>
 		</section>
 	</main>
+	<script>
+	
+	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>
