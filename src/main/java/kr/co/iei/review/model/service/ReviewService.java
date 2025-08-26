@@ -18,14 +18,14 @@ public class ReviewService {
 	@Autowired
 	private ReviewDao reviewDao;
 
-	public ReviewListData selectReviewList(int reqPage) {
+	public ReviewListData reviewList(int reqPage) {
 		int numPerPage = 16;
 		int end = reqPage * numPerPage;
 		int start = end - numPerPage + 1 ;
 		HashMap<String, Object> param = new HashMap<String, Object>();
 		param.put("start", start);
 		param.put("end", end);
-		int totalCount = reviewDao.selectrReviewTotalCount();
+		int totalCount = reviewDao.reviewList();
 		int totalPage = (int)(Math.ceil(totalCount/(double)numPerPage));
 		int pageNaviSize = 5;
 		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize+1;
@@ -73,7 +73,8 @@ public class ReviewService {
 
 	@Transactional
 	public int insertAdoption(Review r) {
-		int result = reviewDao.insertAdoption(r);
+		int result = reviewDao.insertReview(r);
 		return result;
 	}
+
 }
