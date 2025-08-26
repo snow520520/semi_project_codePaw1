@@ -75,4 +75,9 @@ public class AdoptionService {
 		int result = adoptionDao.insertAdoption(a);
 		return result;
 	}
+
+	public Adoption selectOneAdoption(int adoptionNo) {
+		Adoption a = adoptionDao.selectOneAdoption(adoptionNo);
+		return a;
+	}
 }
