@@ -19,4 +19,12 @@
     <select id="getNextProtectNo" resultType="int">
         SELECT protect_seq.NEXTVAL FROM dual
     </select>
+    
+    <select id="selectAllProtect" resultType="kr.co.iei.AllPage.model.vo.AllPage">
+    SELECT p.protect_no,
+           p.protect_title,
+           p.protect_date
+    FROM protect_tbl p
+    ORDER BY p.protect_no DESC
+</select>
 </mapper>

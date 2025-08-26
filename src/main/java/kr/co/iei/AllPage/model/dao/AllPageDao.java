@@ -1,5 +1,7 @@
 package kr.co.iei.AllPage.model.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import kr.co.iei.AllPage.model.vo.AllPage;
@@ -11,4 +13,6 @@ public interface AllPageDao {
 	
 	int insertProtect(AllPage ap);
 	int getNextProtectNo();
+
+	List<AllPage> selectAllProtect();
 }
