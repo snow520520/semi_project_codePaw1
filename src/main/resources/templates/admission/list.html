@@ -6,6 +6,11 @@
 <link rel="stylesheet" href="/css/admission.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+<style>
+	#pageNavi{
+		margin-top: 30px;
+	}
+</style>
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
@@ -34,6 +39,7 @@
 					<td th:text="${admission.memberId}"></td>
 				</tr>
 			</table>
+			<div id="pageNavi" th:utext="${pageNavi}"></div>
 		</section>
 	</main>
 	<th:block th:include="common/footer"></th:block>

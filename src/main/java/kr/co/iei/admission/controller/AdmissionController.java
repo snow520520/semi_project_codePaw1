@@ -20,7 +20,6 @@ public class AdmissionController {
 	@GetMapping(value="/list")
 	public String list(int reqPage, Model model) {
 		AdmissionListData ald = admissionSerivce.selectAdmissionList(reqPage);
-		
 		model.addAttribute("list", ald.getList());
 		model.addAttribute("pageNavi", ald.getPageNavi());
 		return "admission/list";
