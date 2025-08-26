@@ -1,5 +1,7 @@
 package kr.co.iei.AllPage.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,4 +31,9 @@ public class AllPageService {
 
         return allpageDao.insertProtect(ap);
     }
+
+	public List<AllPage> selectAllProtect() {
+		// TODO Auto-generated method stub
+		return allpageDao.selectAllProtect();
+	}
 }
