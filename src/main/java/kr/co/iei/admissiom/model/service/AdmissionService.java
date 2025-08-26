@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import kr.co.iei.admissiom.model.dao.AdmissionDao;
 
 @Service
-public class AdmssionService {
+public class AdmissionService {
 	@Autowired
 	private AdmissionDao addmissionDao;
 }
