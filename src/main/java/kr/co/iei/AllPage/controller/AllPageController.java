@@ -29,7 +29,8 @@ public class AllPageController {
     	Member member = (Member) session.getAttribute("loginMember");
         if (member == null || member.getMemberLevel() != 1) {
         	//관리자만 문구
-            return "";
+        	// 관리자가 아니면 접근 불가 → 메시지 페이지로 이동
+            return null;
         }
         return "mainAllpage/writeFrm";
     }
@@ -38,19 +39,19 @@ public class AllPageController {
     public String write(AllPage ap,Animal animal, HttpSession session, Model model) {
     	Member member = (Member) session.getAttribute("loginMember");
         if (member == null || member.getMemberLevel() != 1) {
-        	//관리자만
-            return "";
+        	// 관리자가 아니면 작성 불가 → 메시지 페이지
+            return null;
         }
 
         int result = allpageService.insertProtect(ap, member.getMemberNo(), animal);
 
         if (result > 0) {
-        		//성공
-            return "";
+        	// 등록 성공
+            return null;
+            
         } else {
-        	
-        	//실패
-            return "";
+        	// 등록 실패 (동물 이름/나이 검증 실패)
+            return null;
         }
     }
 }
