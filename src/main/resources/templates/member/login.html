@@ -4,7 +4,19 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <style>	
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://example.com/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
+    url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
+    url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+}
 body {
 	font-family: Nanum Gothic Coding, sans-serif;
 	display: flex;
@@ -54,6 +66,25 @@ body {
 	border: 1px solid #854836;
 	border-radius: 2px;
 }
+/*
+.password-wrap{
+	position: relative;
+	display: inline-block;
+}
+/*
+.input-icon{
+	position: absolute;
+	left: 10px;
+	transform: translateY(-50%);
+}
+*/
+.password-wrap>input{
+	font-size: 16px;
+	height:40px;
+	padding: 10px;
+	border: 1px solid #854836;
+	border-radius: 2px;
+}
 .login-form>.login-input-wrap>input:last-child{
 	margin-top: 5px;
 }
@@ -70,6 +101,13 @@ body {
 }
 .login-option>label{
 	padding-left: 5px;
+}
+.alert{
+	margin-left: 35px;
+	text-align: left;
+	font-size: small;
+	font-weight: bold;
+	color: red;
 }
 .login-button{
 	height: 45px;
@@ -99,6 +137,7 @@ body {
 	cursor: pointer;
 	font-size:20px;
 	padding-top: 2px;
+	
 }
 </style>
 </head>
@@ -110,13 +149,19 @@ body {
 			<form action="/member/login" method="post" class="login-form" autocomplete="off">
 				<div class="login-input-wrap">
 					<input type="text" name="memberId" id = "memberId" placeholder="아이디"> 
-					<input type="password" name="memberPw" id = "memberPw" placeholder="비밀번호">
+						<input type="password" name="memberPw" id = "memberPw" placeholder="비밀번호">
+					<!--<i class="material-icons-outlined  input-icon1">remove_red_eye</i>
+						<i class="material-icons-outlined input-icon2">visibility_off</i>
+						<div class="password-wrap"></div>
+						 -->
 				</div>
 				<div class="login-option">
 					<span class="material-icons" id="checkBox">check_box</span>
 					<span class="material-icons" id="checkBoxOut" style="display:none">check_box_outline_blank</span>
 					<label for="login-remain">로그인 상태유지</label>
 				</div>
+				<span class="IdPw alert" id="IdPw" style="display:none;">아이디와 비밀번호를 입력해주세요.</span>
+				<span class="Pw alert" id="Pw" style="display:none;">비밀번호를 입력해주세요.</span>
 				<button type="submit" class="login-button">로그인</button>
 			</form>
 			<div class="login-footer">
@@ -138,7 +183,23 @@ body {
 		  $(this).hide();
 		  $("#checkBox").show();
 	  });
-	 $()
+	 $("#memberId").on("click", function(){
+		$(this).css("border", "1px solid #854836");
+	 });
+	 $(".login-button").on("click", function(){
+		const memberIdCheck = $("#memberId").val();
+		const memberPwCheck = $("#memberPw").val();
+		if((memberIdCheck === null && memberPwCheck === null)){
+			$("#IdPw").show();
+			$("#Pw").hide();
+		}else if(memberIdCheck !== null && memberPwCheck === null){
+			$("#IdPw").show();
+			$("#Pw").hide();
+		}else if(memberIdCheck === null && memberPwCheck !== null){
+			$("#IdPw").hide();
+			$("#Pw").show();
+		}
+	 });
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
