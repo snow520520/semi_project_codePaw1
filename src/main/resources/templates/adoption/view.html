@@ -10,7 +10,7 @@
 		<section>
 			<div>
 				<p th:text="${a.adoptionTitle}"></p>
-				<p th:text="${session.member.memberId}"></p>
+				<p th:text="${session.adoption.memberId}"></p>
 			</div>
 			<div>
 				<a th:href="@{/adoption/updateFrm(adoptionNo=${a.adoptionNo})}">수정</a>

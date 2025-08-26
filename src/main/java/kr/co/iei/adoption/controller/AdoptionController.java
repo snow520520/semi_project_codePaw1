@@ -28,9 +28,9 @@ public class AdoptionController {
 		return "adoption/list";
 	}
 	
-	@GetMapping(value="/adoptionWriteFrm")
+	@GetMapping(value="/writeFrm")
 	public String adoptionWriteFrm() {
-		return "adoption/adoptionWriteFrm";
+		return "adoption/writeFrm";
 	}
 	
 	@PostMapping(value="/write")
@@ -55,6 +55,27 @@ public class AdoptionController {
 		}else {
 			model.addAttribute("a", a);
 			return "adoption/view";
+		}
+	}
+	
+	@GetMapping(value="/updateFrm")
+	public String updateFrm(int adoptionNo, Model model) {
+		Adoption a = adoptionService.selectOneAdoption(adoptionNo);
+		model.addAttribute("a", a);
+		return "adoption/updateFrm";
+	}
+	
+	@PostMapping(value="/update")
+	public String update(Adoption a, Model model) {
+		int result = adoptionService.updateAdoption(a);
+		if(result>0) {
+			return "adoption/view";
+		}else {
+			model.addAttribute("title", "수정 실패");
+			model.addAttribute("text", "수정 실패");
+			model.addAttribute("icon", "info");
+			model.addAttribute("loc", "/adoption/view");
+			return "common/msg";
 		}
 	}
 }
