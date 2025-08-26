@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.iei.admission.model.service.AdmissionService;
+import kr.co.iei.admission.model.vo.AdmissionListData;
 
 @Controller
 @RequestMapping(value="/admission")
@@ -17,9 +18,11 @@ public class AdmissionController {
 	private AdmissionService admissionSerivce;
 	
 	@GetMapping(value="/list")
-	public String list(Model model) {
-		List list = admissionSerivce.selectAll();
-		model.addAttribute("list", list);
+	public String list(int reqPage, Model model) {
+		AdmissionListData ald = admissionSerivce.selectAdmissionList(reqPage);
+		
+		model.addAttribute("list", ald.getList());
+		model.addAttribute("pageNavi", ald.getPageNavi());
 		return "admission/list";
 	}
 }

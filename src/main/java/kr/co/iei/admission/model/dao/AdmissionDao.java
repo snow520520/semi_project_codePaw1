@@ -9,4 +9,6 @@ public interface AdmissionDao {
 
 	List selectAll();
 
+	int selectAdmissionCount();
+
 }

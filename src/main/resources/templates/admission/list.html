@@ -4,12 +4,20 @@
 <meta charset="UTF-8">
 <title>입소신청</title>
 <link rel="stylesheet" href="/css/admission.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
 			<div class="page-title">입소신청</div>
+			<div class="searchTitle">
+				<input type="text" name="searchTitle" placeholder="제목을 입력해주세요.">	
+				<button>				
+					<span class="material-icons">search</span>		
+				</button>
+			</div>
 			<table class="tbl tbl-hover">
 				<tr>
 					<th style="width: 10%">NO</th>

@@ -4,4 +4,7 @@
   <select id="selectAll" resultType="admission">
   	select * from admission order by admission_no desc
   </select>
+  <select id="selectAdmissionCount" resultType="int">
+  	select count(*) from admission
+  </select>
 </mapper>
