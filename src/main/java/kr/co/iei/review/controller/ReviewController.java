@@ -20,10 +20,18 @@ public class ReviewController {
 	
 	@GetMapping(value = "/list")
 	public String reviewList(int reqPage, Model model) {
-		ReviewListData rld = reviewService.selectReviewList(reqPage);
+		ReviewListData rld = reviewService.reviewList(reqPage);
 		model.addAttribute("list", rld.getList());
 		model.addAttribute("pageNavi", rld.getPageNavi());
 		return "review/list";
 		
 	}
+	
+	@GetMapping(value="/reviewWriteFrm")
+	public String reviewWriteFrm() {
+		return "review/reviewWriteFrm";
+	}
+	
+	
 }
+ 

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+.review-write-container {
+	display : flex;
+	justify-content : center;
+	align-items : center;
+}
+
+.review-write-wrap{
+	width : 1000px;
+}
+
+</style>
+</head>
+<body>
+	<th:block th:include = "common/header"></th:block>
+	<main class = "content review-write-container">
+		<section class = "section reivew-write-wrap">
+			<form action = "/review/write" method = "post" enctype = "multipart/form-data">
+				<table class ="tbl">
+					<th>
+						<div class="input-item">
+							<input type = "text" name ="reviewTitle" placeholder ="입양후기 제목을 입력해주세요">
+						</div>
+					</th>
+					<td>
+						<div class="input-item">
+							<textarea name = "reviewContent"></textarea>						
+						</div>
+					</td>
+				</table>
+				<tr>
+					<td colspan ="2">
+						<button type = "submit" class ="btn-primary lg">취소하기</button>
+						<button type = "submit" class ="btn-secondary lg">작성하기</button>
+					</td>
+				</tr>
+				</form>
+		</section>
+	</main>
+	<script src="/summernote"></script>
+	<script>
+		$("[name=reviewContent]").summernote({
+			height : 500,
+			lang : "ko-KR",
+			callbacks : {
+				onImageUpload : function(file){
+					uploadImage(file[0], this);
+				}
+				
+			}
+		});
+		
+		function uploadImage(file, editor){
+			const form = new FormData();
+			form.append("upfile", file);
+			
+			$.ajax({
+				url : "review/writeReviewFrm",
+				type : "post",
+				data : form,
+				processData : false,
+				contentType : false,
+				success : function(result){
+					$(editor).summernote("insertImage",
+							"/review/writeReview" + result);
+				}
+			});
+		}
+	</script>
+	<th:block th:include = "common/footer"></th:block>
+</body>
+</html>
