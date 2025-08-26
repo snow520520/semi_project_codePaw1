@@ -1,6 +1,9 @@
 package kr.co.iei.AllPage.controller;
 
 import jakarta.servlet.http.HttpSession;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +24,9 @@ public class AllPageController {
 
     // 전체 게시물 페이지
     @GetMapping(value="/allpage")
-    public String allpage() {
+    public String allpage(Model model) {
+        List<AllPage> list = allpageService.selectAllProtect();
+        model.addAttribute("list", list);
         return "mainAllpage/allpage";
     }
 
