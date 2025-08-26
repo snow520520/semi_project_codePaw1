@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.AllPage.model.dao.AllPageDao">
+    <select id="selectAnimalNo" parameterType="kr.co.iei.animal.model.vo.Animal" resultType="int">
+        SELECT animal_no
+        FROM animal_tbl
+        WHERE animal_name = #{animalName}
+          AND animal_age = #{animalAge}
+    </select>
+	
+	<insert id="insertProtect" parameterType="kr.co.iei.AllPage.model.vo.AllPage">
+        INSERT INTO protect_tbl (protect_no, member_no, animal_no, protect_title, protect_content, protect_date)
+        VALUES (#{protectNo}, #{memberNo}, #{animalNo}, #{protectTitle}, #{protectContent}, SYSDATE)
+    </insert>
+    
+    <select id="getNextProtectNo" resultType="int">
+        SELECT protect_seq.NEXTVAL FROM dual
+    </select>
 </mapper>
