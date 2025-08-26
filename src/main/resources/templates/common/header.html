@@ -3,8 +3,23 @@
 <header>
     <div class="header-top">
         <div class="links">
-            <a href="/member/loginFrm">로그인</a>
-            <a href="#">회원가입</a>
+        	<th:block th:if="${session.member == null}">
+	            <a href="/member/loginFrm">로그인</a>
+	            <a href="#">회원가입</a>
+        	</th:block>
+            <th:block th:if="${session.member != null && session.member.memberLevel == 3}">
+            	<a href="#" th:text="${session.member.memberId}"></a>
+	            <a href="/member/logout">로그아웃</a>
+            </th:block>
+            <th:block th:if="${session.member != null && session.member.memberLevel == 2}">
+            	<a href="#" th:text="${session.member.memberId}"></a>
+	            <a href="/member/logout">로그아웃</a>
+            </th:block>
+            <th:block th:if="${session.member != null && session.member.memberLevel == 1}">
+            	<a href="#">관리자페이지</a>
+            	<a href="#">마이페이지</a>
+	            <a href="/member/logout">로그아웃</a>
+            </th:block>
             <a href="#">공지사항</a>
         </div>
         <div class="logo">

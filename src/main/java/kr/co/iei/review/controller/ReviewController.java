@@ -1,5 +1,7 @@
 package kr.co.iei.review.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import kr.co.iei.review.model.service.ReviewService;
 public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
+<<<<<<< HEAD
 
 	
 	@GetMapping(value = "/list")
@@ -21,4 +24,14 @@ public class ReviewController {
 		
 	}
 
+=======
+	
+	@GetMapping(value = "/list")
+	public String reviewList(int reqPage, Model model) {
+		List List = reviewService.selectAllReview(reqPage);
+		model.addAttribute("list", list);
+		return "review/review
+		
+	}
+>>>>>>> main
 }
