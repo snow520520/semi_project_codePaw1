@@ -30,10 +30,13 @@ public class MemberController {
 
 		if(member == null) {
 			//member == null 이면 로그인이 안된경우 (id or pw가 틀렸다는 문구 다시 확인하세요)
+			/*
 			model.addAttribute("title", "로그인 실패");
 			model.addAttribute("text", "아이디와 비밀번호를 확인해주세요.");
 			model.addAttribute("icon", "error");
 			model.addAttribute("loc", "/member/loginFrm");
+			*/
+			return "member/login";
 			// alert css/js 넣고 처리해야함
 		}else {
 			//member != null 로그인 된 경우
@@ -56,5 +59,9 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/"; 
+	}
+	@GetMapping(value = "/joinFrm")
+	public String joinFrm() {
+		return "member/join";
 	}
 }
