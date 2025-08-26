@@ -6,7 +6,7 @@
         SELECT animal_no
         FROM animal
         WHERE animal_name = #{animalName}
-          AND animal_age = #{animalAge}
+        AND animal_age = #{animalAge}
     </select>
     
     <insert id="insertProtect" parameterType="kr.co.iei.AllPage.model.vo.AllPage">

@@ -7,6 +7,7 @@ html, body {
 
 .container {
     max-width: 1200px;
+	width: 800px;
     margin: 20px auto;
     background: #fff;
     padding: 20px;
@@ -47,6 +48,7 @@ form .form-row {
 
 form .form-group {
     width: 48%;
+	padding-bottom: 40px;
 }
 
 form label {
@@ -66,6 +68,7 @@ textarea {
     border-radius: 4px;
     font-size: 16px;
     resize: vertical;
+	height: 400px;
 }
 
 .buttons {

@@ -27,11 +27,11 @@ public class AllPageController {
 
     // 글 작성 페이지
     @GetMapping(value="/writeFrm")
-    public String writeFrm(HttpSession session, Model model) {
-        Member member = (Member) session.getAttribute("loginMember");
+    public String writeFrm(HttpSession session, Model model,Animal animal) {
+        Member member = (Member) session.getAttribute("member");
         if (member == null || member.getMemberLevel() != 1) {
             // 관리자가 아니면 접근 불가 → 전체 페이지로 이동
-            return "mainAllpage/writeFrm"; 
+        	return "redirect:/";
         }
         return "mainAllpage/writeFrm";
     }
@@ -39,16 +39,19 @@ public class AllPageController {
     // 글쓰기 처리 (테스트용: 페이지 이동 없이 메시지 표시)
     @PostMapping(value="/write")
     public String write(AllPage ap, Animal animal, HttpSession session, Model model) {
-        Member member = (Member) session.getAttribute("loginMember");
+        Member member = (Member) session.getAttribute("member");
         if (member == null || member.getMemberLevel() != 1) {
-            return "mainAllpage/writeFrm"; // 관리자가 아니면 작성 페이지로 다시
+        	return "redirect:/";
         }
-
+        
+        
         int result = allpageService.insertProtect(ap, member.getMemberNo(), animal);
 
         if (result > 0) {
+        	//등록 글 성공시
             System.out.println("등록 성공! protectNo = " + ap.getProtectNo());
         } else {
+        	//등록 글 실패시
             System.out.println("등록 실패!");
         }
 
