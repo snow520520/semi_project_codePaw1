@@ -1,8 +1,12 @@
-package kr.co.iei.admissiom.model.dao;
+package kr.co.iei.admission.model.dao;
+
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface AdmissionDao {
+
+	List selectAll();
 
 }

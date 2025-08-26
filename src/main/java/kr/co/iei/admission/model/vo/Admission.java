@@ -1,4 +1,4 @@
-package kr.co.iei.admissiom.model.vo;
+package kr.co.iei.admission.model.vo;
 
 import org.apache.ibatis.type.Alias;
 
