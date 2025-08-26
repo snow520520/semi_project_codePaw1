@@ -80,4 +80,10 @@ public class AdoptionService {
 		Adoption a = adoptionDao.selectOneAdoption(adoptionNo);
 		return a;
 	}
+	
+	@Transactional
+	public int updateAdoption(Adoption a) {
+		int result = adoptionDao.updateAdoption(a);
+		return result;
+	}
 }

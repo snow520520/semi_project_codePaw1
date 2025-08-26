@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section">
+			<form action="/adoption/update" method="post">
+				<p th:text="${a.adoptionTitle}"></p>
+				<input type="text" name="adoptionTitle" th:value="${a.adoptionTitle}">
+				<p th:text="${session.adoption.memberId}"></p>
+				<div>입양 희망자 정보</div>
+				<table>
+					<tr>
+						<th>이름</th>
+						<td>
+							<span th:text="${session.member.memberName}"></span>
+						</td>
+						<th>전화번호</th>
+						<td>
+							<span th:text="${session.member.memberPhone}"></span>
+						</td>
+						<th>주소</th>
+						<td>
+							<span th:text="${session.member.memberAddr}"></span>
+						</td>
+						<th>입양동기</th>
+						<td>
+							<span th:text="${adoption.adoptionContent}"></span>
+							<textarea name="adoptionContent" th:value="${a.adoptionContent}"></textarea>
+						</td>
+					</tr>
+				</table>
+				<div>아이 정보</div>
+				<table>
+					<tr>
+						<th>이름</th>
+						<td>
+							<span th:text="${animal.animalName}"></span>
+						</td>
+						<th>품종</th>
+						<td>
+							<span th:text="${animal.animalType}"></span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button type="button" onclick="/adoption/view">취소</button>
+							<button type="submit">수정하기</button>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</section>
+	</main>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>

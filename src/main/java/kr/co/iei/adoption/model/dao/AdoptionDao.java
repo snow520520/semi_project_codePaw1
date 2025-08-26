@@ -18,4 +18,5 @@ public interface AdoptionDao {
 
 	Adoption selectOneAdoption(int adoptionNo);
 
+	int updateAdoption(Adoption a);
 }

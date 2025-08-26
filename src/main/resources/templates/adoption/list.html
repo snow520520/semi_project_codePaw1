@@ -6,16 +6,16 @@
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
-	<main>
-		<section>
-			<div>입양신청목록</div>
+	<main class="content">
+		<section class="section">
+			<div class="page-title">입양신청목록</div>
 			<div>
-				<table>
+				<table class="tbl tbl-hover">
 					<tr>
-						<th>NO</th>
-						<th>제목</th>
-						<th>작성일</th>
-						<th>작성자</th>
+						<th style="width:10%">NO</th>
+						<th style="width:50%">제목</th>
+						<th style="width:20%">작성일</th>
+						<th style="width:20%">작성자</th>
 					</tr>
 					<tr th:each="adoption : ${list}">
 						<td th:text="${adoption.adoptionNo}"></td>
