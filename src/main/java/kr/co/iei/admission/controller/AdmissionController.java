@@ -24,4 +24,11 @@ public class AdmissionController {
 		model.addAttribute("pageNavi", ald.getPageNavi());
 		return "admission/list";
 	}
+	@GetMapping(value="/searchTitle")
+	public String searchTitle(String searchTitle, int reqPage, Model model) {
+		AdmissionListData ald = admissionSerivce.searchTitleAdmissionList(reqPage,searchTitle);
+		model.addAttribute("list", ald.getList());
+		model.addAttribute("pageNavi", ald.getPageNavi());
+		return "admission/list";
+	}
 }

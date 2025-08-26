@@ -14,10 +14,6 @@ public class AdmissionService {
 	@Autowired
 	private AdmissionDao admissionDao;
 
-	public List selectAll() {
-		List list = admissionDao.selectAll();
-		return list;
-	}
 
 	public AdmissionListData selectAdmissionList(int reqPage) {
 		int numPerPage = 10;
@@ -69,6 +65,63 @@ public class AdmissionService {
 		pageNavi += "</ul>";
 		
 		List list = admissionDao.selectAdmissionList(param);
+		
+		AdmissionListData ald = new AdmissionListData(list, pageNavi);
+		
+		return ald;
+	}
+
+	public AdmissionListData searchTitleAdmissionList(int reqPage, String searchTitle) {
+		int numPerPage = 10;
+		
+		int end = reqPage * numPerPage;
+		int start = end-numPerPage+1;
+		HashMap<String, Object> param = new HashMap<String,Object>();
+		param.put("start", start);
+		param.put("end", end);
+		
+		int totalCount = admissionDao.searchTitleCount(searchTitle);
+		int totalPage = (int)(Math.ceil(totalCount/(double)numPerPage));
+		
+		int pageNaviSize = 5;
+		
+		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize+1;
+		
+		String pageNavi = "<ul class='pagination circle-style'>";
+		if(pageNo != 1) {
+			pageNavi += "<li>";
+			pageNavi += "<a class='page-item' href='/admission/searchTitle?searchTitle="+searchTitle+"&reqPage="+(pageNo-1)+"'>";
+			pageNavi += "<span class='material-icons'>chevron_left</span>";
+			pageNavi += "</a>";
+			pageNavi += "</li>";
+		}
+		for(int i=0;i<pageNaviSize;i++) {
+			pageNavi += "<li>";
+			if(pageNo == reqPage) {
+				pageNavi += "<a class='page-item active-page' href='/admission/searchTitle?searchTitle="+searchTitle+"&reqPage="+pageNo+"'>";
+			}else {
+				pageNavi += "<a class='page-item' href='/admission/searchTitle?searchTitle="+searchTitle+"&reqPage="+pageNo+"'>";
+			}
+			pageNavi += pageNo;
+			pageNavi += "</a>";
+			pageNavi += "</li>";
+			
+			pageNo++;
+			if(pageNo > totalPage) {
+				break;
+			}
+		}
+		if(pageNo <= totalPage) {
+			pageNavi += "<li>";
+			pageNavi += "<a class='page-item' href='/admission/list?reqPage="+pageNo+"'>";
+			pageNavi += "<span class='material-icons'>chevron_right</span>";
+			pageNavi += "</a>";
+			pageNavi += "</li>";
+		}
+		pageNavi += "</ul>";
+		
+		param.put("searchTitle", searchTitle);
+		List list = admissionDao.searchTitleAdmission(param);
 		
 		AdmissionListData ald = new AdmissionListData(list, pageNavi);
 		

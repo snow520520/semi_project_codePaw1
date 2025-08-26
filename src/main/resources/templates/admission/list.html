@@ -18,10 +18,13 @@
 		<section class="section">
 			<div class="page-title">입소신청</div>
 			<div class="searchTitle">
-				<input type="text" name="searchTitle" placeholder="제목을 입력해주세요.">	
-				<button>				
-					<span class="material-icons">search</span>		
-				</button>
+				<form action="/admission/searchTitle" method="get">
+					<input type="text" name="searchTitle" placeholder="제목을 입력해주세요.">
+					<input type="hidden" name="reqPage" id="reqPage" value="1">	
+					<button type="submit">				
+						<span class="material-icons">search</span>		
+					</button>				
+				</form>
 			</div>
 			<table class="tbl tbl-hover">
 				<tr>
@@ -33,6 +36,7 @@
 				<tr th:each="admission : ${list}">
 					<td th:text="${admission.admissionNo}"></td>
 					<td>
+						<span class="material-icons lock">lock_outline</span>
 						<a th:href="@{/admission/view(admissionNo=${admission.admissionNo})}" th:text="${admission.admissionTitle}"></a>
 					</td>
 					<td th:text="${admission.admissionDate}"></td>
