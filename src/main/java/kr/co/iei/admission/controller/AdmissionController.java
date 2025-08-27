@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.co.iei.admission.model.service.AdmissionService;
 import kr.co.iei.admission.model.vo.Admission;
 import kr.co.iei.admission.model.vo.AdmissionListData;
+import kr.co.iei.animal.model.service.AnimalService;
+import kr.co.iei.animal.model.vo.Animal;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.member.model.vo.Member;
 
@@ -21,7 +23,8 @@ public class AdmissionController {
 	private AdmissionService admissionSerivce;
 	@Autowired
 	private MemberService memberService;
-	
+	@Autowired
+	private AnimalService animalService;
 	
 	@GetMapping(value="/list")
 	public String list(int reqPage, Model model) {
@@ -42,6 +45,9 @@ public class AdmissionController {
 		Admission admission = admissionSerivce.selectOneAdmission(admissionNo);
 		String memberId = admission.getMemberId();
 		Member m = memberService.selectMemberId(memberId);
+		int animalNo = admission.getAnimalNo();
+		Animal animal = animalService.selectAnimalNo(animalNo);
+		model.addAttribute("animal", animal);
 		model.addAttribute("member", m);
 		model.addAttribute("admission", admission);
 		return "admission/view";

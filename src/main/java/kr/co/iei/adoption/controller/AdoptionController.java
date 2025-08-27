@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import kr.co.iei.adoption.model.service.AdoptionService;
 import kr.co.iei.adoption.model.vo.Adoption;
 import kr.co.iei.adoption.model.vo.AdoptionListData;
+import kr.co.iei.animal.model.service.AnimalService;
 import kr.co.iei.animal.model.vo.Animal;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.member.model.vo.Member;
@@ -23,6 +24,8 @@ public class AdoptionController {
 	private AdoptionService adoptionService;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private AnimalService animalService;
 	
 	@GetMapping(value="/list")
 	public String adoptionList(int reqPage, Model model) {
@@ -51,7 +54,7 @@ public class AdoptionController {
 	public String adoptionView(int adoptionNo, Model model) {
 		Adoption a = adoptionService.selectOneAdoption(adoptionNo);
 		Member member = memberService.selectMemberId(a.getMemberId());
-		//Animal animal = animalService.selectAnimalProtectNo(a.getProtectNo());
+		Animal animal = animalService.selectAnimalNo(a.getAnimalNo());
 		if(a == null) {
 			model.addAttribute("title", "게시글 조회 실패");
 			model.addAttribute("text", "이미 삭제된 게시글 입니다");
@@ -61,7 +64,7 @@ public class AdoptionController {
 		}else {
 			model.addAttribute("a", a);
 			model.addAttribute("member", member);
-		    //model.addAttribute("animal", animal);
+		    model.addAttribute("animal", animal);
 			return "adoption/view";
 		}
 	}

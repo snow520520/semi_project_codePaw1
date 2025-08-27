@@ -6,8 +6,8 @@
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
-	<main>
-		<section>
+	<main class="content">
+		<section class="section">
 			<div>
 				<p th:text="${a.adoptionTitle}"></p>
 				<p th:text="${a.memberId}"></p>
@@ -42,11 +42,11 @@
 				<tr>
 					<th>이름</th>
 					<td>
-						<!-- <span th:text="${animal.animalName}"></span>  -->
+						<span th:text="${animal.animalName}"></span>
 					</td>
 					<th>품종</th>
 					<td>
-						<!-- <span th:text="${animal.animalType}"></span>  -->
+						<span th:text="${animal.animalType}"></span>
 					</td>
 				</tr>
 				<tr>
