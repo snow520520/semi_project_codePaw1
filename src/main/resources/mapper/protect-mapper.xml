@@ -44,4 +44,6 @@
 	<select id="selectMember" resultType="member" parameterType="int">
 	    SELECT * FROM member_tbl WHERE member_no = #{memberNo}
 	</select>
+	
+    
 </mapper>

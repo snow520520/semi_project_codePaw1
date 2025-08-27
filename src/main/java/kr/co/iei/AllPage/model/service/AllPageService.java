@@ -105,5 +105,6 @@ public class AllPageService {
     public Member selectMember(int memberNo) {
         return allpageDao.selectMember(memberNo);
     }
+    
 
 }
