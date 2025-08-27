@@ -161,22 +161,18 @@ body {
 	line-height: 35px;
 	padding-left: 10px;
 }
-
 input[type=text] {
 	width: 580px;
 	height: 28px;
 }
-
 input[type=password] {
 	width: 580px;
 }
-
 input[id=auto-code] {
 	width: 110px;
 	border: 1px solid #854836;
 	border-radius: 2px;
 }
-
 input[id=memberAddr] {
 	width: 250px;
 	margin-right: 55px;
@@ -206,7 +202,7 @@ input[id=memberAddr] {
 				<div class="input-pwRe">
 					<span class="material-icons-outlined">refresh</span> 
 					<input type="password" name="memberPwRe" id="memberPwRe" placeholder="비밀번호 확인">
-					<p class="checkPwRe-msg" style="font-size: 11px; font-weight: bold; display: none;"></p>
+					<p class="checkPwRe-msg" style="font-size: 11px; font-weight: bold; display: none ;"></p>
 				</div>
 				<div class="addr-div">
 					<span class="material-icons-outlined">email</span>
@@ -237,7 +233,7 @@ input[id=memberAddr] {
 		</section>
 	</main>
 	<script>
-		$("#memberId").on("change", function() {
+		$(".checkId-btn").on("click", function() {
 			const checkIdMsg = $(".checkId-msg");
 			checkIdMsg.removeClass("valid").removeClass("invalid");
 
@@ -245,7 +241,6 @@ input[id=memberAddr] {
 			const idReg = /^[a-zA-Z][a-zA-Z0-9]{5,12}$/; //대소문자, 숫자포함(특수문자 제외) 5~12자
 			const memberId = $("#memberId").val();
 			const regResult = idReg.test(memberId);
-
 			if (regResult) {
 				$.ajax({
 					url : "/member/checkId",
@@ -268,59 +263,61 @@ input[id=memberAddr] {
 				});
 			} else {
 				memberIdTag.css("width", "280px");
-				checkIdMsg.show().css("color", "red").text("영문 + 숫자 5~12글자로 입력해주세요.").addClass("invalid");
+				checkIdMsg.show().css("color", "red").text("영문 + 숫자 6~12글자로 입력해주세요.").addClass("invalid");
 			}
 		});
 		$("#memberPw").on("keyup", function() {
 			const checkPwMsg = $(".checkPw-msg");
 			const checkPwReMsg = $(".checkPwRe-msg");
 			checkPwMsg.remove("invalid").remove("valid");
-			checkPwReMsg.remove("invalid").remove("valid");
 
 			const memberPw = $("#memberPw");
 			const memberPwRe = $("#memberPwRe");
 			const memberPwVal = $("#memberPw").val();
 			const memberPwReVal = $("#memberPwRe").val();
-			let pwReg = /^(?=.[a-z])(?=.[A-Z])(?=.*\d).{6,12}$/; //6~12자 이내 대소문자, 숫자 각 1개 이상 포함
-			const regResult = pwReg.test(memberPwVal);
 			
+			const pwReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,15}$/; //6~15자 이내 대소문자, 숫자 각 1개 이상 포함
+			const regResult = pwReg.test(memberPwVal);
 			if (regResult) {
-				memberPw.css("width", "300px");
+				memberPw.css("width", "280px");
 				checkPwMsg.show();
 				checkPwMsg.css("color", "blue");
-				checkIdMsg.text("비밀번호가 유효합니다.");
-				checkIdMsg.addClass("valid");
+				checkPwMsg.text("비밀번호가 유효합니다.");
+				checkPwMsg.addClass("valid");
 			} else{
-				if(memberPwVal == /^(?=.[a-z])(?=.[A-Z])/){
-					memberPw.css("width", "300px");
-					checkPwMsg.show();
-					checkPwMsg.css("color", "red");
-					checkPwMsg.text("대소문자를 확인해주세요.");
-					checkPwMsg.addClass("invalid");	
-				}else if(memberPwVal == /^.{6,12}$/){
-					memberPw.css("width", "300px");
-					checkPwMsg.show();
-					checkPwMsg.css("color", "red");
-					checkPwMsg.text("최소 6자리 이상 입력해주세요.");
-					checkPwMsg.addClass("invalid");
-				}
+				memberPw.css("width", "270px");
+				checkPwMsg.show();
+				checkPwMsg.css("color", "red");
+				checkPwMsg.text("대소문자/숫자를 각 1개 이상 포함하여 6~15자 이내로 입력해주세요.");
+				checkPwMsg.addClass("invalid");	
 			}
+		});
 			$("#memberPwRe").on("keyup", function() {
-				if(memberPw === memberPwRe){
-					memberPwRe.css("width", "300px");
+				const checkPwMsg = $(".checkPw-msg");
+				const checkPwReMsg = $(".checkPwRe-msg");
+				checkPwReMsg.remove("invalid").remove("valid");
+
+				const memberPw = $("#memberPw");
+				const memberPwRe = $("#memberPwRe");
+				const memberPwVal = $("#memberPw").val();
+				const memberPwReVal = $("#memberPwRe").val();
+				
+				const pwReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,15}$/; //6~15자 이내 대소문자, 숫자 각 1개 이상 포함
+				const regResult = pwReg.test(memberPwVal);
+				if(memberPwVal === memberPwReVal){
+					memberPwRe.css("width", "280px");
 					checkPwReMsg.show();
 					checkPwReMsg.css("color", "blue");
 					checkPwReMsg.text("비밀번호 확인 완료");
 					checkPwReMsg.addClass("valid");
 				}else{
-					memberPwRe.css("width", "300px");
+					memberPwRe.css("width", "280px");
 					checkPwReMsg.show();
 					checkPwReMsg.css("color", "red");
 					checkPwReMsg.text("비밀번호를 확인해주세요.");
-					checkPwReMsg.addClass("valid");
+					checkPwReMsg.addClass("invalid");
 				}
 			});
-		});
 		
 	</script>
 	<th:block th:include="common/footer"></th:block>

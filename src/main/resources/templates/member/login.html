@@ -204,11 +204,11 @@ body {
 				$("#IdPw").show();
 				$("#Pw").hide();
 			}else if(memberIdCheck !== null && !memberPwCheck){
-				$("#IdPw").show();
-				$("#Pw").hide();
-			}else if(!memberIdCheck && memberPwCheck !== null){
-				$("#IdPw").hide();
 				$("#Pw").show();
+				$("#IdPw").hide();
+			}else if(!memberIdCheck && memberPwCheck !== null){
+				$("#Pw").hide();
+				$("#IdPw").show();
 			}
 		 });
 	</script>
