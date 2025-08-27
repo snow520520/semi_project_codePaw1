@@ -101,7 +101,7 @@ public class AllPageController {
         Animal animal = allpageService.selectAnimal(ap.getAnimalNo());
         Member writer = allpageService.selectMember(ap.getMemberNo());
         Member loginMember = (Member) session.getAttribute("member");
-
+        
         model.addAttribute("ap", ap);
         model.addAttribute("animal", animal);
         model.addAttribute("writer", writer); 
