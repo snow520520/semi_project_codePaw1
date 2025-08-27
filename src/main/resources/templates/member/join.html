@@ -39,20 +39,22 @@ body {
 }
 .join-form{
 	width: 80%;
-	display: flex;
+	flex: display;
 	justify-content: center;
-	align-items: center;
-	flex-direction: column;
 }
 .join-form>div{
 	display: flex;
 	align-items: center;
 	gap: 15px;
 	border: 1px solid #854836;
+ 	height: 50px;
+}
+.join-form>.input-name{
+	margin-top:70px;
 }
 .join-form input{
 	width: 100%;
-	height: 80%;
+	height: 60%;
 	font-size: 15px;
 	padding-left:10px;
 	border:1px solid #854836;
@@ -64,15 +66,23 @@ body {
 	font-size: 13px;
 }
 .checkId-wrap{
+	width: 100%;
 	display: flex;
-	justify-content:flex-end;
+	justify-content:space-between;
 	align-items: center;
 }
+.join-form>.input-id>.checkId-wrap>input{
+	width: 100%;
+	height: 60%;
+}
 .checkId-btn{
+	width: 15%;
+	height: 35px;
+	margin: 10px;
 	background-color: #ffb22c;
 	color: white;
 	border: none;
-	padding: 15px;
+	padding: 7px;
 	border-radius: 2px;
 	cursor: pointer;
 }
@@ -82,7 +92,7 @@ body {
 	align-items: center;
 	gap: 20px;
 }
-.addr-div input{
+.addr-div>.addr-form input{
 	height: 80%;
 }
 .addrCertify-div{
@@ -91,15 +101,18 @@ body {
 	align-items: center;
 	width: 100%;
 }
-.addrCertify-div input{
-	width: 100%;
+.addrCertify-div>input{
+	width: 80%;
 	height: 100%;
 }
 .addrCertify-div>button{
+	width: 15%;
+	height: 30px;
+	margin: 10px;
 	background-color: #ffb22c;
 	color: white;
 	border: none;
-	padding: 10px;
+	padding: 5px;
 	border-radius: 2px;
 	cursor: pointer;
 }
@@ -107,19 +120,23 @@ body {
 	text-align: center;
 }
 .submit-btn>button{
+	width: 60%;
 	color: white;
 	background-color: #ffb22c;
 	padding: 15px;
-	width: 80%;
 	border: none;
 	border-radius: 5px;
 	font-size: 20px;
 	cursor:pointer;
 }
 .join-form>.submit-btn{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 40%;
 	border: none;
 }
-.join-form>div>.material-icons-outlined{
+.material-icons-outlined{
 	cursor: pointer;
 	font-size:20px;
 	margin: auto 0;
@@ -150,15 +167,16 @@ body {
 					<input type="password" name="memberPwRe" id="memberPwRe" placeholder="비밀번호 확인">
 				</div>
 				<div class="addr-div">
-					<!-- <form action ="#" method="post" class="addr-form"> -->
 					<span class="material-icons-outlined">email</span>
-						<div class="addrCertify-div">
-							<input type="text" name="memberAddr" id="memberAddr" placeholder="이메일 주소">
-							<input type="text" name="addrCertify" placeholder="인증번호 입력">
-							<button type="button" class="auto-btn" id="auto-code" >인증</button>
-						</div>
-					<!-- </form>-->
+					<div class="addrCertify-div">
+						<input type="text" name="memberAddr" id="memberAddr" placeholder="이메일 주소">
+						<input type="text" id= "auto-code" placeholder="인증번호 입력">
+						<button type="button" class="btn-primary" id="auto-btn">인증</button>
+						<span id = "time-zone"></span>
+						<span id = "authMsg"></span>
+					</div>
 				</div>
+					
 				<div class="input-name">
 					<span class="material-icons-outlined">dns</span>
 					<input type="text" name="memberName" id = "memberName" placeholder="이름" >
