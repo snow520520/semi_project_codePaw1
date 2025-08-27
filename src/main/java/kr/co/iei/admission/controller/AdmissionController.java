@@ -41,7 +41,7 @@ public class AdmissionController {
 	public String view(int admissionNo, Model model) {
 		Admission admission = admissionSerivce.selectOneAdmission(admissionNo);
 		String memberId = admission.getMemberId();
-		
+		Member m = memberService.selectMemberId(memberId);
 		model.addAttribute("member", m);
 		model.addAttribute("admission", admission);
 		return "admission/view";
