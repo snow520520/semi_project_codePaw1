@@ -12,6 +12,15 @@
 	<main class="content">
 		<section class="section">
 			<div class="page-title">입양신청목록</div>
+			<div class="searchTitle">
+				<form action="/adoption/searchTitle" method="get">
+					<input type="text" name="searchTitle" placeholder="제목을 입력해주세요.">
+					<input type="hidden" name="reqPage" id="reqPage" value="1">
+					<button type="submit">
+						<span class="material-icons">search</span>
+					</button>
+				</form>
+			</div>
 			<div>
 				<table class="tbl tbl-hover">
 					<tr>

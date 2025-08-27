@@ -26,7 +26,7 @@ html, body {
 	display: inline-block;
 	float: right;
 }
-.searchTitle>input{
+.searchTitle>form>input{
 	width: 215px;
 	height: 35px;
 	border: none;
@@ -35,16 +35,17 @@ html, body {
 	border-radius: 50px;
 	padding-left: 15px;
 }
-.searchTitle>button{
+.searchTitle>form>button{
 	border: none;
 	background-color: #ffffff;
 	cursor: pointer;
 }
-button>.material-icons{
-	font-size: 20px;
+.searchTitle>button{
+	margin-top: 10px
 }
-button>span{
-	margin-top: 10px;
+.searchTitle>form>button>span.material-icons {
+    font-size: 21px;
+    vertical-align: middle; 
 }
 .tbl{
 	border-top: 1px solid #000000;
@@ -59,6 +60,10 @@ button>span{
 }
 .tbl th{
 	background-color: rgba(255, 178, 44, 0.1);
+}
+td>.lock{
+	font-size: 20px;
+	font-weight: 200;	
 }
 a{
 	text-decoration: none;
@@ -112,7 +117,4 @@ a{
   background-color: #FFB22C;
   color: #fff;
   font-weight: 600;
-}
-#pageNavi{
- margin-top: 30px;
 }

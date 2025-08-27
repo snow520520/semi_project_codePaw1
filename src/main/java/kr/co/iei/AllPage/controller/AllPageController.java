@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.iei.AllPage.model.service.AllPageService;
 import kr.co.iei.AllPage.model.vo.AllPage;
@@ -18,14 +19,14 @@ import kr.co.iei.animal.model.vo.Animal;
 import kr.co.iei.member.model.vo.Member;
 
 @Controller
-@RequestMapping(value="/mainAllpage")
+
 public class AllPageController {
 
     @Autowired
     private AllPageService allpageService;
 
     // 글 작성 페이지
-    @GetMapping(value="/writeFrm")
+    @GetMapping(value="/mainAllpage/writeFrm")
     public String writeFrm(HttpSession session, Model model,Animal animal) {
         Member member = (Member) session.getAttribute("member");
         if (member == null || member.getMemberLevel() != 1) {
@@ -36,7 +37,7 @@ public class AllPageController {
     }
 
     // 글쓰기 처리 (테스트용: 페이지 이동 없이 메시지 표시)
-    @PostMapping(value="/write")
+    @PostMapping(value="/mainAllpage/write")
     public String write(AllPage ap, Animal animal, HttpSession session, Model model) {
         Member member = (Member) session.getAttribute("member");
         if (member == null || member.getMemberLevel() != 1) {
@@ -58,7 +59,7 @@ public class AllPageController {
         return "mainAllpage/writeFrm";
     }
     
-    @GetMapping("/allpage")
+    @GetMapping("/mainAllpage/allpage")
     public String allpage(@RequestParam(value="page", defaultValue="1") int page,
                           Model model, HttpSession session) {
 
@@ -78,4 +79,22 @@ public class AllPageController {
 
         return "mainAllpage/allpage";
     }
+    
+    @GetMapping("/")
+    public String index(Model model) {
+        
+        List<AllPage> list = allpageService.selectPageList(1, 4);
+        System.out.println("Controller에서 가져온 list 크기: " + list.size());
+        model.addAttribute("list", list);
+        return "index";
+    }
+
+    @ResponseBody
+    @GetMapping("/mainAllpage/loadMore")
+    public List<AllPage> loadMore(@RequestParam("start") int start, @RequestParam("count") int count) {
+        
+        int end = start + count - 1;
+        return allpageService.selectPageListRead(start, end);
+    }
+
 }
