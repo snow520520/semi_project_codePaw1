@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>현재 입양 가능한 아이들</title>
     <link rel="stylesheet" href="/css/allpage.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	      rel="stylesheet">
 </head>
 <body>
     <th:block th:include="common/header"></th:block>
@@ -35,6 +37,7 @@
                     </div>
                 </div>
             </div>
+			<div id="pageNavi" th:utext="${pageNavi}"></div>
         </main>
     </div>
     <th:block th:include="common/footer"></th:block>
