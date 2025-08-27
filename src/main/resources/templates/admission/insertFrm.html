@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/admission.css">
+<style>
+	.section input{
+		width:350px;
+		height: 26px;
+		font-size: 26px;
+		border: none;
+		margin-bottom: 20px;
+		
+	}
+	.section>div:nth-child(2){
+		display: inline-block;
+	}	
+	.section>div:nth-child(3){
+		float: right;
+	}
+	.section>div:nth-child(4){
+		border-bottom: 1px solid #000000;
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+	}
+</style>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section">
+			<form action="/admission/insert" method="post">
+				<div>
+					<input type="text" name="admissionTitle" id="admissionTitle" placeholder="제목을 입력해주세요.">
+				</div>
+				<div th:text="${member.memberId}"></div>
+			</form>
+		</section>
+	</main>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>

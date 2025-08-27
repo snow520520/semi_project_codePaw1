@@ -26,6 +26,9 @@ html, body {
 	display: inline-block;
 	float: right;
 }
+input{
+	outline: none;
+}
 .searchTitle>form>input{
 	width: 215px;
 	height: 35px;
@@ -52,7 +55,7 @@ html, body {
 .tbl th,
 .tbl td{
 	text-align: center;
-	border-bottom: 1px solid #888888;
+	border-bottom: 1px solid #c8c8c8;
 	padding: 10px 20px;
 }
 .tbl th{
