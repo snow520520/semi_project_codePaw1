@@ -64,6 +64,7 @@ html, body {
 td>.lock{
 	font-size: 20px;
 	font-weight: 200;	
+	vertical-align: middle;
 }
 a{
 	text-decoration: none;
