@@ -41,9 +41,19 @@ public class AdoptionController {
 	}
 	
 	@PostMapping(value="/write")
-	public String adoptionWrite(Adoption a, Model model) {
+	public String adoptionWrite(Adoption a, Model model,@SessionAttribute(required = false) Member member) {
 		int result = adoptionService.insertAdoption(a);
-		model.addAttribute("title", "입양 신청 완료");
+		
+		if(member == null) {
+			model.addAttribute("title", "로그인 확인");
+			model.addAttribute("text", "로그인 후 이용 가능합니다.");
+			model.addAttribute("icon", "info");
+			model.addAttribute("loc", "/member/loginFrm");
+			return "common/msg";
+		}else {
+			model.addAttribute("member", member);
+		}
+		model.addAttribute("title", "입양 신청 등록 완료");
 		model.addAttribute("text", "입양 신청이 등록되었습니다.");
 		model.addAttribute("icon", "success");
 		model.addAttribute("loc", "/adoption/list?reqPage=1");
