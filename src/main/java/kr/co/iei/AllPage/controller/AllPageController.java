@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import kr.co.iei.AllPage.model.service.AllPageService;
 import kr.co.iei.AllPage.model.vo.AllPage;
 import kr.co.iei.animal.model.vo.Animal;
@@ -21,17 +23,6 @@ public class AllPageController {
 
     @Autowired
     private AllPageService allpageService;
-
-    // 전체 게시물 페이지
-    @GetMapping(value="/allpage")
-    public String allpage(Model model, HttpSession session) {
-        List<AllPage> list = allpageService.selectAllProtect();
-        model.addAttribute("list", list);
-
-        Member member = (Member) session.getAttribute("member");
-        model.addAttribute("member", member);
-        return "mainAllpage/allpage";
-    }
 
     // 글 작성 페이지
     @GetMapping(value="/writeFrm")
@@ -65,5 +56,26 @@ public class AllPageController {
 
         // 같은 작성 페이지로 머물면서 메시지 표시
         return "mainAllpage/writeFrm";
+    }
+    
+    @GetMapping("/allpage")
+    public String allpage(@RequestParam(value="page", defaultValue="1") int page,
+                          Model model, HttpSession session) {
+
+        int recordCountPerPage = 16; 
+        int naviCountPerPage = 5;
+
+        int totalCount = allpageService.getTotalCount();
+        List<AllPage> list = allpageService.selectPageList(page, recordCountPerPage);
+
+        String pageNavi = allpageService.getPageNavi(page, totalCount, recordCountPerPage, naviCountPerPage, "/mainAllpage/allpage");
+
+        model.addAttribute("list", list);
+        model.addAttribute("pageNavi", pageNavi);
+
+        Member member = (Member) session.getAttribute("member");
+        model.addAttribute("member", member);
+
+        return "mainAllpage/allpage";
     }
 }

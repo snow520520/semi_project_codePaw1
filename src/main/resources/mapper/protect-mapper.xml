@@ -20,11 +20,16 @@
         SELECT protect_seq.NEXTVAL FROM dual
     </select>
     
-    <select id="selectAllProtect" resultType="kr.co.iei.AllPage.model.vo.AllPage">
-    SELECT p.protect_no,
-           p.protect_title,
-           p.protect_date
-    FROM protect_tbl p
-    ORDER BY p.protect_no DESC
-</select>
+    <select id="selectPageProtect" resultType="kr.co.iei.AllPage.model.vo.AllPage">
+    SELECT * FROM (
+        SELECT ROW_NUMBER() OVER (ORDER BY protect_no DESC) AS rnum,
+               p.protect_no, p.protect_title, p.protect_date
+        FROM protect_tbl p
+    )
+    WHERE rnum BETWEEN #{start} AND #{end}
+	</select>
+
+	<select id="selectTotalCount" resultType="int">
+	    SELECT COUNT(*) FROM protect_tbl
+	</select>
 </mapper>
