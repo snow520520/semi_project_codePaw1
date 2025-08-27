@@ -15,4 +15,8 @@ public class MemberService {
 		Member member = memberDao.login(m);
 		return member;
 	}
+
+	public Member selectMemberId(String memberId) {
+		 return memberDao.selectMemberId(memberId);
+	}
 }
