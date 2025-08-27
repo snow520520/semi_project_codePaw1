@@ -36,18 +36,32 @@ public class AdoptionController {
 	}
 	
 	@GetMapping(value="/writeFrm")
-	public String adoptionWriteFrm(Model model,@SessionAttribute(required = false) Member member) {
-		if(member == null) {
-			model.addAttribute("title", "로그인 확인");
-			model.addAttribute("text", "로그인 후 이용 가능합니다.");
-			model.addAttribute("icon", "info");
-			model.addAttribute("loc", "/member/loginFrm");
-			return "common/msg";
-		}else {
-			model.addAttribute("member", member);
-		}
-		return "adoption/writeFrm";
+	public String writeFrm(
+	    @SessionAttribute(required = false) Member member,
+	    @SessionAttribute(required = false) Animal animal,
+	    Model model
+	) {
+	    if (member == null) {
+	        model.addAttribute("title", "로그인 확인");
+	        model.addAttribute("text", "로그인 후 이용 가능합니다.");
+	        model.addAttribute("icon", "info");
+	        model.addAttribute("loc", "/member/loginFrm");
+	        return "common/msg";
+	    }
+
+	    if (animal == null) {
+	        model.addAttribute("title", "오류");
+	        model.addAttribute("text", "아이 정보를 찾을 수 없습니다.");
+	        model.addAttribute("icon", "error");
+	        model.addAttribute("loc", "/mainAllpage/allpage");
+	        return "common/msg";
+	    }
+
+	    model.addAttribute("member", member);
+	    model.addAttribute("animal", animal);
+	    return "adoption/writeFrm";
 	}
+
 	
 	@PostMapping(value="/write")
 	public String adoptionWrite(Adoption a, Model model) {
