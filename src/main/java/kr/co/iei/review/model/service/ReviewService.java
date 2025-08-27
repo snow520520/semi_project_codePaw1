@@ -71,10 +71,10 @@ public class ReviewService {
 		return rld;
 	}
 
-	@Transactional
-	public int insertAdoption(Review r) {
+
+	public int insertReview(Review r) {
 		int result = reviewDao.insertReview(r);
-		return result;
+		return 0;
 	}
 
 }
