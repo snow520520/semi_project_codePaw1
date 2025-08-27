@@ -17,4 +17,12 @@ public class MemberService {
 		Member member = memberDao.login(m);
 		return member;
 	}
+
+	public Member checkId(String memberId) {
+		Member m = new Member();
+		m.setMemberId(memberId);
+		
+		Member member = memberDao.checkId(m);
+		return member;
+	}
 }
