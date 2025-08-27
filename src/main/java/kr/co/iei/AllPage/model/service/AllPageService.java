@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.iei.AllPage.model.dao.AllPageDao;
 import kr.co.iei.AllPage.model.vo.AllPage;
 import kr.co.iei.animal.model.vo.Animal;
+import kr.co.iei.member.model.vo.Member;
 
 @Service
 public class AllPageService {
@@ -92,5 +93,18 @@ public class AllPageService {
     public List<AllPage> selectPageListRead(int start, int end) {
         return allpageDao.selectPageProtect(start, end);
     }
+    
+    public AllPage selectOneProtect(int protectNo) {
+        return allpageDao.selectOneProtect(protectNo);
+    }
+
+    public Animal selectAnimal(int animalNo) {
+        return allpageDao.selectAnimal(animalNo);
+    }
+
+    public Member selectMember(int memberNo) {
+        return allpageDao.selectMember(memberNo);
+    }
+    
 
 }

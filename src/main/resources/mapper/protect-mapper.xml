@@ -32,4 +32,18 @@
 	<select id="selectTotalCount" resultType="int">
 	    SELECT COUNT(*) FROM protect_tbl
 	</select>
+	
+	<select id="selectOneProtect" resultType="allpage" parameterType="int">
+    SELECT * FROM protect_tbl WHERE protect_no = #{protectNo}
+	</select>
+	
+	<select id="selectAnimal" resultType="animal" parameterType="int">
+	    SELECT * FROM animal WHERE animal_no = #{animalNo}
+	</select>
+	
+	<select id="selectMember" resultType="member" parameterType="int">
+	    SELECT * FROM member_tbl WHERE member_no = #{memberNo}
+	</select>
+	
+    
 </mapper>

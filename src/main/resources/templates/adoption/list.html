@@ -32,6 +32,7 @@
 					<tr th:each="adoption : ${list}">
 						<td th:text="${adoption.adoptionNo}"></td>
 						<td>
+							<span class="material-icons lock">lock_outline</span>
 							<a th:href="@{/adoption/view(adoptionNo=${adoption.adoptionNo})}" th:text="${adoption.adoptionTitle}"></a>
 						</td>
 						<td th:text="${adoption.adoptionDate}"></td>
