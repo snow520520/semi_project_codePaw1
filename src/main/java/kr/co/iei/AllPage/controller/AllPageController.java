@@ -2,7 +2,10 @@ package kr.co.iei.AllPage.controller;
 
 import jakarta.servlet.http.HttpSession;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.AllPage.model.service.AllPageService;
 import kr.co.iei.AllPage.model.vo.AllPage;
@@ -18,43 +22,45 @@ import kr.co.iei.animal.model.vo.Animal;
 import kr.co.iei.member.model.vo.Member;
 
 @Controller
-
 public class AllPageController {
 
     @Autowired
     private AllPageService allpageService;
 
-    // 글 작성 페이지
     @GetMapping(value="/mainAllpage/writeFrm")
     public String writeFrm(HttpSession session, Model model,Animal animal) {
         Member member = (Member) session.getAttribute("member");
         if (member == null || member.getMemberLevel() != 1) {
-            // 관리자가 아니면 접근 불가 → 전체 페이지로 이동
-        	return "redirect:/";
+            return "redirect:/";
         }
         return "mainAllpage/writeFrm";
     }
 
-    // 글쓰기 처리 (테스트용: 페이지 이동 없이 메시지 표시)
     @PostMapping(value="/mainAllpage/write")
-    public String write(AllPage ap, Animal animal, HttpSession session, Model model) {
+    public String write(AllPage ap,
+                        @RequestParam("animalName") String animalName,
+                        @RequestParam("animalAge") String animalAgeStr,
+                        HttpSession session, Model model) {
+
         Member member = (Member) session.getAttribute("member");
         if (member == null || member.getMemberLevel() != 1) {
-        	return "redirect:/";
+            return "redirect:/";
         }
-        
-        
+
+        Animal animal = new Animal();
+        animal.setAnimalName(animalName);
+
+        try {
+            animal.setAnimalAge(Integer.parseInt(animalAgeStr));
+        } catch (NumberFormatException e) {
+            animal.setAnimalAge(0); 
+        }
+
         int result = allpageService.insertProtect(ap, member.getMemberNo(), animal);
-
-        if (result > 0) {
-        	//등록 글 성공시
-        } else {
-        	//등록 글 실패시
-        }
-
-        // 같은 작성 페이지로 머물면서 메시지 표시
-        return "mainAllpage";
+        
+        return "redirect:/";
     }
+
     
     @GetMapping("/mainAllpage/allpage")
     public String allpage(@RequestParam(value="page", defaultValue="1") int page,
@@ -109,4 +115,22 @@ public class AllPageController {
 
         return "mainAllpage/detail";
     }
+    
+    @PostMapping(value="/mainAllpage/editorImage", produces = "plain/text;charset=utf-8")
+    @ResponseBody
+    public String editorImage(MultipartFile upfile) {
+        String savePath = "C:/image/";
+        String filename = UUID.randomUUID() + "_" + upfile.getOriginalFilename();
+        File file = new File(savePath + filename);
+
+        try {
+            upfile.transferTo(file); 
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "fail"; 
+        }
+
+        return "/editorImage/" + filename;  
+    }
+    
 }
