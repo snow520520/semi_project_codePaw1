@@ -179,6 +179,7 @@ body {
 			  $(this).removeAttr("placeholder");
 		 });
 		  $("#memberId").on("focusout", function(){
+			  $(this).css('border', '1px solid #854836');
 			  $(this).attr('placeholder','아이디');
 		  });
 		  $("#memberPw").on("click", function(){
