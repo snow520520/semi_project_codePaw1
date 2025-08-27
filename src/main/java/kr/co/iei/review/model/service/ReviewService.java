@@ -77,4 +77,15 @@ public class ReviewService {
 		return 0;
 	}
 
+
+	public ReviewListData reviewList(int reqPage, String searchTitle) {
+		int numPerPage = 16;
+		
+		int end = reqPage * numPerPage;
+		int start = end - numPerPage + 1;
+		
+		
+		return "review/list";
+	}
+
 }

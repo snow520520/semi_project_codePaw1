@@ -3,37 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
 
+<style>
 .review-write-container {
-<<<<<<< Updated upstream
-	margin : 0;
-	padding : 0;
-	height : 100%;
-	background : #f0f0f0;
-}
-.review-write-wrap{
-	max-width: 1200px;
-	width: 800px;
-    margin: 20px auto;
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    height: 800px;
-}
-.review-write-wrap .input-item>input[type=text]{
-	padding : 10px;
-}
-.content .input-item>textarea{
-	min-height : 800px;
-	width : 800px;
-	padding-top : 10px;	
-	border-radius : 4px;
-	font-size : 16px;
-}
-.reviewTitle{
-=======
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -69,48 +41,11 @@
 
 .reviewTitle {
 	width: 500px;
->>>>>>> Stashed changes
 	border: none;
 	margin-top: 25px;
 	border-bottom: 1px solid #c8c8c8;
 	outline: none;
 	padding: 5px;
-<<<<<<< Updated upstream
-	width : 800px;
-	font-size : 25px;
-}
-.content .input-item{
-	padding-top : 20px;
-}
-.content .input-item > textarea{
-	font-size : 17px;
-	border-left : none;
-	border-right: none;
-}
-.btn{
-	display : flex;
-	justify-content : center;
-	gap : 10px;
-	margin-top : 20px;
-	margin-bottom : 40px;
-}
-.btn button{
-	padding : 10px 20px;
-	font-size : 18px;
-	border-radius : 8px;
-	cursor : pointer;
-	box-shadow : 0 2px 6px rgba(0,0,0,0.2);
-	border : none;
-	color: ""
-}
-.btn button:last-child{
-	background : #FFB22C;
-	color : #fff;
-}
-.btn button:hover{
-	transform : translateY(-2px);
-}
-=======
 	font-size: 20px;
 	margin-left : 100px;
 }
@@ -159,36 +94,11 @@
 .btn button:hover {
 	transform: translateY(-2px);
 }
->>>>>>> Stashed changes
 </style>
 </head>
+
+
 <body>
-<<<<<<< Updated upstream
-	<th:block th:include = "common/header"></th:block>
-	<main class = "content review-write-container">
-		<section class = "section reivew-write-wrap">
-			<table class ="tbl">
-				<tr>
-					<input type = "text" class ="reviewTitle" placeholder ="입양후기 제목을 입력해주세요">
-				</tr>
-				<tr>
-					<td>
-						<div class="content input-item">
-							<textarea id = "reviewContent"></textarea>						
-						</div>
-					</td>
-				</tr>	
-			</table>
-				<div class="btn">	
-					<a href = "/review">
-						<button type = "submit" class ="btn-primary lg">취소하기</button>
-					</a>
-					
-					<button type = "submit" class ="btn-secondary lg">작성하기</button>
-					
-				</div>
-			</form>
-=======
 	<th:block th:include="common/header"></th:block>
 
 	<main class="content review-write-container">
@@ -216,7 +126,6 @@
 					<button type="submit" class="btn-secondary lg">작성하기</button>
 				</a>
 			</div>
->>>>>>> Stashed changes
 		</section>
 	</main>
 
@@ -232,10 +141,7 @@
 				onImageUpload : function(file) {
 					uploadImage(file[0], this);
 				}
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 			}
 		});
 

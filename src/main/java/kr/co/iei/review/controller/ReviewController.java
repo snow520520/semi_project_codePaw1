@@ -20,7 +20,7 @@ import kr.co.iei.review.model.vo.ReviewListData;
 @Controller
 @RequestMapping (value = "/review")
 public class ReviewController {
-	
+
 	@Autowired
 	private ReviewService reviewService;
 	
@@ -30,7 +30,17 @@ public class ReviewController {
 		model.addAttribute("list", rld.getList());
 		model.addAttribute("pageNavi", rld.getPageNavi());
 		return "review/list";
-		
+	}
+	@GetMapping(value="/searchTitle")
+	public String searchTitle(String searchTitle, int reqPage, Model model) {
+		if(!searchTitle.isEmpty()) {
+			ReviewListData rld = reviewService.reviewList(reqPage, searchTitle);
+			if(rld != null) {
+			model.addAttribute("list", rld.getList());
+			model.addAttribute("pageNavi", rld.getPageNavi());
+			}
+		}
+		return "review/list";
 	}
 	
 	@GetMapping(value="/reviewWriteFrm")
