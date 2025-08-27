@@ -3,39 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <style>
+
 .review-write-container {
-	display : flex;
-	justify-content : center;
-	align-items : center;
-	max-width : 1200px;
-	margin : 20px auto;
-	background : #fff;
-	padding : 20px;
-	box-shadow : 0 2px 8px rgba(0,0,0,0.1);
-	border-radius : 8px;
-	
-}
-
-.review-write-wrap{
-	width : 1000px;
-	
-}
-
-.review-write-wrap .input-item>input[type=text]{
+	margin : 0;
 	padding : 0;
-	border-bottom : none;
-	
+	height : 100%;
+	background : #f0f0f0;
 }
-
-
+.review-write-wrap{
+	max-width: 1200px;
+	width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    height: 800px;
+}
+.review-write-wrap .input-item>input[type=text]{
+	padding : 10px;
+}
 .content .input-item>textarea{
 	min-height : 800px;
 	width : 800px;
-	padding-top : 10px;
+	padding-top : 10px;	
+	border-radius : 4px;
+	font-size : 16px;
 }
-
 .reviewTitle{
 	border: none;
 	border-bottom : 1px solid #000;
@@ -43,31 +38,22 @@
 	padding: 5px;
 	width : 800px;
 	font-size : 25px;
-	 
 }
-
 .content .input-item{
 	padding-top : 20px;
-	
-	
 }
-
 .content .input-item > textarea{
 	font-size : 17px;
 	border-left : none;
 	border-right: none;
 }
-
 .btn{
 	display : flex;
 	justify-content : center;
 	gap : 10px;
 	margin-top : 20px;
 	margin-bottom : 40px;
-	
-	
 }
-
 .btn button{
 	padding : 10px 20px;
 	font-size : 18px;
@@ -75,26 +61,19 @@
 	cursor : pointer;
 	box-shadow : 0 2px 6px rgba(0,0,0,0.2);
 	border : none;
-	color: """
-	
+	color: ""
 }
-
 .btn button:last-child{
 	background : #FFB22C;
 	color : #fff;
-	
 }
 .btn button:hover{
 	transform : translateY(-2px);
 }
-
 </style>
 </head>
-
-
 <body>
 	<th:block th:include = "common/header"></th:block>
-	
 	<main class = "content review-write-container">
 		<section class = "section reivew-write-wrap">
 			<table class ="tbl">
@@ -110,7 +89,7 @@
 				</tr>	
 			</table>
 				<div class="btn">	
-					<a href = "/">
+					<a href = "/review">
 						<button type = "submit" class ="btn-primary lg">취소하기</button>
 					</a>
 					
@@ -133,7 +112,6 @@
 				onImageUpload : function(file){
 					uploadImage(file[0], this);
 				}
-				
 			}
 		});
 		
