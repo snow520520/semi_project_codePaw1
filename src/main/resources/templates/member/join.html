@@ -256,16 +256,10 @@ input[id=memberAddr] {
 					success : function(result) {
 						if (result === 0) {
 							memberIdTag.css("width", "280px");
-							checkIdMsg.show();
-							checkIdMsg.css("color", "blue");
-							checkIdMsg.text("사용가능한 아이디 입니다.");
-							checkIdMsg.addClass("valid");
+							checkIdMsg.show().css("color", "blue").text("사용가능한 아이디 입니다.").addClass("valid");
 						} else if (result === 1) {
 							memberIdTag.css("width", "280px");
-							checkIdMsg.show();
-							checkIdMsg.css("color", "red");
-							checkIdMsg.text("이미 사용중인 아이디 입니다.");
-							checkIdMsg.addClass("invalid");
+							checkIdMsg.show().css("color", "red").text("이미 사용중인 아이디 입니다.").addClass("invalid");
 						}
 					},
 					error : function() {
@@ -274,10 +268,7 @@ input[id=memberAddr] {
 				});
 			} else {
 				memberIdTag.css("width", "280px");
-				checkIdMsg.show();
-				checkIdMsg.css("color", "red");
-				checkIdMsg.text("영문 + 숫자 5~12글자로 입력해주세요.");
-				checkIdMsg.addClass("invalid");
+				checkIdMsg.show().css("color", "red").text("영문 + 숫자 5~12글자로 입력해주세요.").addClass("invalid");
 			}
 		});
 		$("#memberPw").on("keyup", function() {
@@ -290,7 +281,7 @@ input[id=memberAddr] {
 			const memberPwRe = $("#memberPwRe");
 			const memberPwVal = $("#memberPw").val();
 			const memberPwReVal = $("#memberPwRe").val();
-			const pwReg = /^(?=.[a-z])(?=.[A-Z])(?=.*\d).{6,12}$/; //6~12자 이내 대소문자, 숫자 각 1개 이상 포함
+			let pwReg = /^(?=.[a-z])(?=.[A-Z])(?=.*\d).{6,12}$/; //6~12자 이내 대소문자, 숫자 각 1개 이상 포함
 			const regResult = pwReg.test(memberPwVal);
 			
 			if (regResult) {
@@ -318,6 +309,7 @@ input[id=memberAddr] {
 				
 			});
 		});
+		
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
