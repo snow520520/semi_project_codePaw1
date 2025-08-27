@@ -1,4 +1,4 @@
-package kr.co.iei.admissiom.model.vo;
+package kr.co.iei.admission.model.vo;
 
 import org.apache.ibatis.type.Alias;
 
@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 @Alias(value="admission")
 public class Admission {
-	private int addmissionNo;
-	private String addmissionTitle;
-	private String addmissionContent;
-	private String addmissionDate;
+	private int admissionNo;
+	private String admissionTitle;
+	private String admissionContent;
+	private String admissionDate;
 	private String memberId;
+	private int animalNo;
 }

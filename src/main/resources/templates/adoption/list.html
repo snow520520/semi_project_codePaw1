@@ -3,25 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/css/adoptionList.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
-	<main>
-		<section>
-			<div>입양신청목록</div>
+	<main class="content">
+		<section class="section">
+			<div class="page-title">입양신청목록</div>
+			<div class="searchTitle">
+				<form action="/adoption/searchTitle" method="get">
+					<input type="text" name="searchTitle" placeholder="제목을 입력해주세요.">
+					<input type="hidden" name="reqPage" id="reqPage" value="1">
+					<button type="submit">
+						<span class="material-icons">search</span>
+					</button>
+				</form>
+			</div>
 			<div>
-				<table>
+				<table class="tbl tbl-hover">
 					<tr>
-						<th>NO</th>
-						<th>제목</th>
-						<th>작성일</th>
-						<th>작성자</th>
+						<th style="width:10%">NO</th>
+						<th style="width:50%">제목</th>
+						<th style="width:20%">작성일</th>
+						<th style="width:20%">작성자</th>
 					</tr>
 					<tr th:each="adoption : ${list}">
 						<td th:text="${adoption.adoptionNo}"></td>
-						<td th:text="${adoption.adoptionTitle}"></td>
+						<td>
+							<span class="material-icons lock">lock_outline</span>
+							<a th:href="@{/adoption/view(adoptionNo=${adoption.adoptionNo})}" th:text="${adoption.adoptionTitle}"></a>
+						</td>
 						<td th:text="${adoption.adoptionDate}"></td>
-						<td th:text="${session.member.memberId}"></td>
+						<td th:text="${adoption.memberId}"></td>
 					</tr>
 				</table>
 			</div>

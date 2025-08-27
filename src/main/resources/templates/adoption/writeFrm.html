@@ -18,18 +18,18 @@
 					<tr>
 						<th>이름</th>
 						<td>
-							<span th:text="${session.member.memberName}"></span>
-							<input type="hidden" name="writerName" th:value="${session.member.memberName}">
+							<span th:text="${member.memberName}"></span>
+							<input type="hidden" name="memberName" th:value="${member.memberName}">
 						</td>
 						<th>전화번호</th>
 						<td>
-							<span th:text="${session.member.memberPhone}"></span>
-							<input type="hidden" name="writerPhone" th:value="${session.member.memberPhone}">
+							<span th:text="${member.memberPhone}"></span>
+							<input type="hidden" name="memberPhone" th:value="${member.memberPhone}">
 						</td>
 						<th>주소</th>
 						<td>
-							<span th:text="${session.member.memberAddr}"></span>
-							<input type="hidden" name="writerAddr" th:value="${session.member.memberAddr}">
+							<span th:text="${member.memberAddr}"></span>
+							<input type="hidden" name="memberAddr" th:value="${member.memberAddr}">
 						</td>
 						<th>입양동기</th>
 						<td>
@@ -44,13 +44,13 @@
 					<tr>
 						<th>이름</th>
 						<td>
-							<span th:text="${session.animal.animalName}"></span>
-							<input type="hidden" name="animalName" th:value="${session.animal.animalName}">
+							<span th:text="${animal.animalName}"></span>
+							<input type="hidden" name="animalName" th:value="${animal.animalName}">
 						</td>
 						<th>품종</th>
 						<td>
-							<span th:text="${session.animal.animalType}"></span>
-							<input type="hidden" name="animalType" th:value="${session.animal.animalType}">
+							<span th:text="${animal.animalType}"></span>
+							<input type="hidden" name="animalType" th:value="${animal.animalType}">
 						</td>
 					</tr>
 				</table>

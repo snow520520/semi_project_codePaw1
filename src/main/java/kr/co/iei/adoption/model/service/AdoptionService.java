@@ -18,7 +18,7 @@ public class AdoptionService {
 	private AdoptionDao adoptionDao;
 
 	public AdoptionListData selectAdoptionList(int reqPage) {
-		int numPerPage = 10;
+		int numPerPage = 13;
 		int end = reqPage * numPerPage;
 		int start = end - numPerPage + 1 ;
 		HashMap<String, Object> param = new HashMap<String, Object>();
@@ -73,6 +73,17 @@ public class AdoptionService {
 	@Transactional
 	public int insertAdoption(Adoption a) {
 		int result = adoptionDao.insertAdoption(a);
+		return result;
+	}
+
+	public Adoption selectOneAdoption(int adoptionNo) {
+		Adoption a = adoptionDao.selectOneAdoption(adoptionNo);
+		return a;
+	}
+	
+	@Transactional
+	public int updateAdoption(Adoption a) {
+		int result = adoptionDao.updateAdoption(a);
 		return result;
 	}
 }
