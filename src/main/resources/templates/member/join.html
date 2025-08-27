@@ -211,10 +211,10 @@ input[id=memberAddr] {
 				<div class="addr-div">
 					<span class="material-icons-outlined">email</span>
 					<div class="addrCertify-div">
-						<input type="text" name="memberAddr" id="memberAddr"
-							placeholder="이메일 주소"> <span id="time-zone"></span> <span
-							id="authMsg"></span> <input type="text" id="auto-code"
-							placeholder="인증번호 입력">
+						<input type="text" name="memberAddr" id="memberAddr" placeholder="이메일 주소"> 
+						<span id="time-zone"></span> 
+						<span id="authMsg"></span>
+						<input type="text" id="auto-code" placeholder="인증번호 입력">
 						<button type="button" class="btn-primary" id="auto-btn">인증</button>
 					</div>
 				</div>
@@ -292,13 +292,13 @@ input[id=memberAddr] {
 				checkIdMsg.addClass("valid");
 			} else{
 				if(memberPwVal == /^(?=.[a-z])(?=.[A-Z])/){
-					memberPwRe.css("width", "300px");
+					memberPw.css("width", "300px");
 					checkPwMsg.show();
 					checkPwMsg.css("color", "red");
 					checkPwMsg.text("대소문자를 확인해주세요.");
 					checkPwMsg.addClass("invalid");	
 				}else if(memberPwVal == /^.{6,12}$/){
-					memberPwRe.css("width", "300px");
+					memberPw.css("width", "300px");
 					checkPwMsg.show();
 					checkPwMsg.css("color", "red");
 					checkPwMsg.text("최소 6자리 이상 입력해주세요.");
@@ -306,7 +306,19 @@ input[id=memberAddr] {
 				}
 			}
 			$("#memberPwRe").on("keyup", function() {
-				
+				if(memberPw === memberPwRe){
+					memberPwRe.css("width", "300px");
+					checkPwReMsg.show();
+					checkPwReMsg.css("color", "blue");
+					checkPwReMsg.text("비밀번호 확인 완료");
+					checkPwReMsg.addClass("valid");
+				}else{
+					memberPwRe.css("width", "300px");
+					checkPwReMsg.show();
+					checkPwReMsg.css("color", "red");
+					checkPwReMsg.text("비밀번호를 확인해주세요.");
+					checkPwReMsg.addClass("valid");
+				}
 			});
 		});
 		
