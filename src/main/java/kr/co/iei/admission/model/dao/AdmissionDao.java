@@ -21,6 +21,8 @@ public interface AdmissionDao {
 
 	Admission selectOneAdmission(int admissionNo);
 
+	int deleteAdmissionNo(int admissionNo);
+
 	
 
 }

@@ -52,8 +52,8 @@
 			<div th:text="${admission.memberId}"></div>
 			<div th:text="${admission.admissionDate}"></div>
 			<div> </div>
-			<a href="/admission/update">수정</a>
-			<a href="/admission/delete">삭제</a>
+			<a class="updateAdmission">수정</a>
+			<a th:onclick="deleteAdmission([[${admission.admissionNo}]]);">삭제</a>
 			<div class="info-tbl">
 				<div>보호자 정보</div>
 				<table class="tbl member">
@@ -107,6 +107,37 @@
 			</div>
 		</section>
 	</main>
+	<script src="/js/sweetalert.min.js"></script>
+	<script>
+		function deleteAdmission(admissionNo){
+			console.log(admissionNo);
+			swal({
+				title : "게시물 삭제",
+				text : "게시물을 삭제하시겠습니까?",
+				icon : "warning",
+				buttons : {
+					cancel:{
+						text: "취소",
+						value: false,
+						visible: true,
+						ClassName :"btn-swal",
+						colseModal: true
+					},
+					confirm:{
+						text: "삭제하기",
+						value: true,
+						visible : true,
+						ClassName : "btn-swal-color",
+						closeModal : true
+					}
+				}
+			}).then(function(isConfirm){
+				if(isConfirm){
+					location.href="/admission/delete?admission="+admissionNo;
+				}
+			});
+		};
+	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>

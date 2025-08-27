@@ -16,7 +16,7 @@
 		where #{start} <![CDATA[ <= ]]> rnum and rnum <![CDATA[ <= ]]> #{end}
   </select>
   <select id="searchTitleCount" resultType="int">
-  	select count(*) from admission where admission_title like '%'||${searchTitle}||'%'
+  	select count(*) from admission where admission_title like '%'||'${searchTitle}'||'%'
   </select>
   <select id="searchTitleAdmission" resultType="admission"> 	
 	select * from
@@ -32,5 +32,7 @@
   <select id="selectOneAdmission" resultType="admission">
   	select * from admission where admission_no = ${admissionNo}
   </select>
-  
+  <delete id="deleteAdmissionNo">
+  	delete from admission where admission_no = ${admissionNo}
+  </delete>
 </mapper>

@@ -35,9 +35,16 @@ public class AdmissionController {
 	}
 	@GetMapping(value="/searchTitle")
 	public String searchTitle(String searchTitle, int reqPage, Model model) {
-		AdmissionListData ald = admissionSerivce.searchTitleAdmissionList(reqPage,searchTitle);
-		model.addAttribute("list", ald.getList());
-		model.addAttribute("pageNavi", ald.getPageNavi());
+		System.out.println("넣은 제목:"+searchTitle);
+		if(!searchTitle.isEmpty()) {
+			AdmissionListData ald = admissionSerivce.searchTitleAdmissionList(reqPage,searchTitle);
+			System.out.println("결과 : "+ald);
+			if(ald != null) {
+				model.addAttribute("list", ald.getList());
+				model.addAttribute("pageNavi", ald.getPageNavi());
+			}
+		}
+		
 		return "admission/list";
 	}
 	@GetMapping(value="/view")
@@ -51,5 +58,23 @@ public class AdmissionController {
 		model.addAttribute("member", m);
 		model.addAttribute("admission", admission);
 		return "admission/view";
+	}
+	@GetMapping(value="/delete")
+	public String delete(int admissionNo, Model model) {
+		int result = admissionSerivce.deleteAdmissionNo(admissionNo);
+		if(result>0) {
+			model.addAttribute("title", "삭제 성공");
+			model.addAttribute("msg", "게시글이 삭제되었습니다.");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/admission/list");
+			return "common/msg";
+		}else {
+			model.addAttribute("title", "삭제 실패");
+			model.addAttribute("msg", "잠시후 다시 시도해 주세요.");
+			model.addAttribute("icon", "warning");
+			model.addAttribute("loc", "/admission/list");
+			return "common/msg";
+		}
+		
 	}
 }
