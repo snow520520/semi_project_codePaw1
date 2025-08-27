@@ -18,4 +18,5 @@ public class Adoption {
 	private String adoptionStatus;
 	private String memberId;
 	private int protectNo;
+	private int animalNo;
 }

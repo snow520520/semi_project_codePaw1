@@ -40,8 +40,9 @@ html, body {
 	background-color: #ffffff;
 	cursor: pointer;
 }
-button>.material-icons{
-	font-size: 20px;
+.searchTitle>form>button>span.material-icons{
+	font-size: 21px;
+	vertical-align: middle;
 }
 button>span{
 	margin-top: 10px;
