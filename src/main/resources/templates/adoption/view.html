@@ -10,7 +10,7 @@
 		<section>
 			<div>
 				<p th:text="${a.adoptionTitle}"></p>
-				<p th:text="${adoption.memberId}"></p>
+				<p th:text="${a.memberId}"></p>
 			</div>
 			<div>
 				<a th:href="@{/adoption/updateFrm(adoptionNo=${a.adoptionNo})}">수정</a>
@@ -33,7 +33,7 @@
 					</td>
 					<th>입양동기</th>
 					<td>
-						<span th:text="${adoption.adoptionContent}"></span>
+						<span th:text="${a.adoptionContent}"></span>
 					</td>
 				</tr>
 			</table>
@@ -42,11 +42,11 @@
 				<tr>
 					<th>이름</th>
 					<td>
-						<span th:text="${animal.animalName}"></span>
+						<!-- <span th:text="${animal.animalName}"></span>  -->
 					</td>
 					<th>품종</th>
 					<td>
-						<span th:text="${animal.animalType}"></span>
+						<!-- <span th:text="${animal.animalType}"></span>  -->
 					</td>
 				</tr>
 				<tr>
