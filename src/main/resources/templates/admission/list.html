@@ -43,8 +43,8 @@
 					<td th:text="${admission.memberId}"></td>
 				</tr>
 			</table>
-			<button class="insertAdmission">
-				<a href="/admission/insert">작성하기</a>
+			<button class="insertAdmission" th:if="${session.member != null}">
+				<a href="/admission/insertFrm">작성하기</a>
 			</button>
 			<div id="pageNavi" th:utext="${pageNavi}"></div>
 		</section>

@@ -56,7 +56,7 @@
 			<a th:onclick="deleteAdmission([[${admission.admissionNo}]]);">삭제</a>
 			<div class="info-tbl">
 				<div>보호자 정보</div>
-				<table class="tbl member">
+				<table class="tbl">
 					<tr>
 						<th style="width: 20%">이름</th>
 						<td style="width: 80%" th:text="${member.memberName}"></td>
@@ -75,7 +75,7 @@
 					</tr>
 				</table>
 				<div>아이 정보</div>
-				<table class="tbl animal">
+				<table class="tbl">
 					<tr>
 						<th style="width: 20%">이름</th>
 						<td style="width: 80%" th:text="${animal.animalName}"></td>
@@ -133,7 +133,7 @@
 				}
 			}).then(function(isConfirm){
 				if(isConfirm){
-					location.href="/admission/delete?admission="+admissionNo;
+					location.href="/admission/delete?admissionNo="+admissionNo;
 				}
 			});
 		};
