@@ -109,5 +109,5 @@ public class AllPageController {
 
         return "mainAllpage/detail";
     }
-
+    
 }
