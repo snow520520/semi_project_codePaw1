@@ -16,4 +16,5 @@ public class Admission {
 	private String admissionContent;
 	private String admissionDate;
 	private String memberId;
+	private int animalNo;
 }

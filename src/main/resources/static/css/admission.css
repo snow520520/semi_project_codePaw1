@@ -118,3 +118,23 @@ a{
   color: #fff;
   font-weight: 600;
 }
+.btn-box{
+		width: 880px;
+		text-align: center;
+	}
+.btn-box>button{
+	border: none;
+	width: 200px;
+	height: 50px;
+	border-radius: 10px;
+	font-size: 16px;
+	font-weight: 400;
+	cursor: pointer;
+	transition-duration: 0.3s;
+}
+.btn-box>button:hover {
+	background-color:#FFB22C;
+	color: #ffffff;
+	font-weight: 400;
+	transition-duration: 0.3s; 
+}

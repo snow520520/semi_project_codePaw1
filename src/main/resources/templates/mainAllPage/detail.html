@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동물 상세보기</title>
+    <link rel="stylesheet" href="/css/detail.css">
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+    <div class="container">
+        <div class="top">
+            <h1>제목</h1>
+            <div class="info">
+				<span class="author" th:text="${writer != null ? writer.memberName : '작성자 없음'}">작성자</span>
+				<span class="date" th:text="${ap.protectDate}">2025-xx-xx</span>
+            </div>
+        </div>
+
+		<div th:if="${loginMember != null and loginMember.memberLevel == 1}">
+		    <div class="actions">
+		        <a href="#">수정하기</a> / <a href="#">삭제하기</a>
+		    </div>
+		</div>
+	
+		<table class="form-table">
+		    <tbody>
+		        <tr>
+		            <th>이름</th>
+		            <td th:text="${animal.animalName}"></td>
+		            <th>나이</th>
+		            <td th:text="${animal.animalAge}"></td>
+		        </tr>
+		        <tr>
+		            <th>접종</th>
+		            <td th:text="${animal.animalInocul}"></td>
+		            <th>중성화</th>
+		            <td th:text="${animal.animalNeuter}"></td>
+		        </tr>
+		        <tr>
+		            <th>품종</th>
+		            <td th:text="${animal.animalType}"></td>
+		            <th>성별</th>
+		            <td th:text="${animal.animalGender}"></td>
+		        </tr>
+		    </tbody>
+		</table>
+
+		<div class="image-box" th:text="${ap.protectContent}">
+		</div>
+		
+		<div class="buttons">
+		        <a href="/mainAllpage/allpage">
+		        <button type="button" class="submit-button">목록으로</button>
+		      </a>
+			  <a href="/adoption/writeFrm">
+		   <button type="submit" class="submit-button">입양하기</button>
+		   </a>
+		</div>
+    </div>
+	
+		<th:block th:include="common/footer"></th:block>
+</body>
+</html>
