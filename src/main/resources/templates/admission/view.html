@@ -5,18 +5,40 @@
 <title>입소신청 상세페이지</title>
 <link rel="stylesheet" href="/css/admission.css">
 <style>
-	.section>div:last-child{
-		float: right;
+	.section>div:first-child{
+		font-size: 26px;
+		font-weight: 400;
+		padding-bottom: 20px;
+	}
+	.section>div:nth-child(2){
+		display: inline-block;
 	}	
+	.section>div:nth-child(3){
+		float: right;
+	}
+	.section>div:nth-child(4){
+		border-bottom: 1px solid #000000;
+		padding-bottom: 20px;
+	}
 </style>
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
-			<div class="page-title" th:text="${admission.admissionTitle}"></div>
+			<div th:text="${admission.admissionTitle}"></div>
 			<div th:text="${admission.memberId}"></div>
 			<div th:text="${admission.admissionDate}"></div>
+			<div> </div>
+			<div class="info-tbl">
+				<div>보호자 정보</div>
+				<table class="tbl">
+					<tr>
+						<th>이름</th>
+						<td th:text="${member.memberName}"></td>
+					</tr>
+				</table>
+			</div>
 		</section>
 	</main>
 	<th:block th:include="common/footer"></th:block>

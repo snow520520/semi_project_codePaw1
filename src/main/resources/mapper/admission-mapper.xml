@@ -32,4 +32,5 @@
   <select id="selectOneAdmission" resultType="admission">
   	select * from admission where admission_no = ${admissionNo}
   </select>
+  
 </mapper>

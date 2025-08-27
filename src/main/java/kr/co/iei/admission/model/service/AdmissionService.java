@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.co.iei.admission.model.dao.AdmissionDao;
 import kr.co.iei.admission.model.vo.Admission;
 import kr.co.iei.admission.model.vo.AdmissionListData;
+import kr.co.iei.member.model.vo.Member;
 
 @Service
 public class AdmissionService {
@@ -133,4 +134,6 @@ public class AdmissionService {
 		Admission admission = admissionDao.selectOneAdmission(admissionNo);
 		return admission;
 	}
+
+	
 }

@@ -11,12 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.co.iei.admission.model.service.AdmissionService;
 import kr.co.iei.admission.model.vo.Admission;
 import kr.co.iei.admission.model.vo.AdmissionListData;
+import kr.co.iei.member.model.service.MemberService;
+import kr.co.iei.member.model.vo.Member;
 
 @Controller
 @RequestMapping(value="/admission")
 public class AdmissionController {
 	@Autowired
 	private AdmissionService admissionSerivce;
+	@Autowired
+	private MemberService memberService;
+	
 	
 	@GetMapping(value="/list")
 	public String list(int reqPage, Model model) {
@@ -35,6 +40,9 @@ public class AdmissionController {
 	@GetMapping(value="/view")
 	public String view(int admissionNo, Model model) {
 		Admission admission = admissionSerivce.selectOneAdmission(admissionNo);
+		String memberId = admission.getMemberId();
+		
+		model.addAttribute("member", m);
 		model.addAttribute("admission", admission);
 		return "admission/view";
 	}
