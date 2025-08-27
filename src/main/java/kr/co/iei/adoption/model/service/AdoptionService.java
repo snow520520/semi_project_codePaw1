@@ -18,7 +18,7 @@ public class AdoptionService {
 	private AdoptionDao adoptionDao;
 
 	public AdoptionListData selectAdoptionList(int reqPage) {
-		int numPerPage = 10;
+		int numPerPage = 13;
 		int end = reqPage * numPerPage;
 		int start = end - numPerPage + 1 ;
 		HashMap<String, Object> param = new HashMap<String, Object>();
