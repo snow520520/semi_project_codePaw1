@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -49,14 +48,12 @@ public class AllPageController {
 
         if (result > 0) {
         	//등록 글 성공시
-            System.out.println("등록 성공! protectNo = " + ap.getProtectNo());
         } else {
         	//등록 글 실패시
-            System.out.println("등록 실패!");
         }
 
         // 같은 작성 페이지로 머물면서 메시지 표시
-        return "mainAllpage/writeFrm";
+        return "mainAllpage";
     }
     
     @GetMapping("/mainAllpage/allpage")
@@ -84,7 +81,6 @@ public class AllPageController {
     public String index(Model model) {
         
         List<AllPage> list = allpageService.selectPageList(1, 4);
-        System.out.println("Controller에서 가져온 list 크기: " + list.size());
         model.addAttribute("list", list);
         return "index";
     }
@@ -95,6 +91,23 @@ public class AllPageController {
         
         int end = start + count - 1;
         return allpageService.selectPageListRead(start, end);
+    }
+    
+    @GetMapping("/mainAllpage/detail")
+    public String detail(@RequestParam("protectNo") int protectNo, Model model, HttpSession session) {
+        AllPage ap = allpageService.selectOneProtect(protectNo); 
+        if (ap == null) return "redirect:/mainAllpage/allpage";
+
+        Animal animal = allpageService.selectAnimal(ap.getAnimalNo());
+        Member writer = allpageService.selectMember(ap.getMemberNo());
+        Member loginMember = (Member) session.getAttribute("member");
+
+        model.addAttribute("ap", ap);
+        model.addAttribute("animal", animal);
+        model.addAttribute("writer", writer); 
+        model.addAttribute("loginMember", loginMember);
+
+        return "mainAllpage/detail";
     }
 
 }
