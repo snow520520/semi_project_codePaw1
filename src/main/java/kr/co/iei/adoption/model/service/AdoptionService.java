@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.iei.admission.model.vo.AdmissionListData;
 import kr.co.iei.adoption.model.dao.AdoptionDao;
 import kr.co.iei.adoption.model.vo.Adoption;
 import kr.co.iei.adoption.model.vo.AdoptionListData;
@@ -85,5 +86,67 @@ public class AdoptionService {
 	public int updateAdoption(Adoption a) {
 		int result = adoptionDao.updateAdoption(a);
 		return result;
+	}
+
+	public AdoptionListData searchTitleAdoptionList(int reqPage, String searchTitle) {
+        int numPerPage = 13;
+		
+		int end = reqPage * numPerPage;
+		int start = end-numPerPage+1;
+		HashMap<String, Object> param = new HashMap<String,Object>();
+		param.put("start", start);
+		param.put("end", end);
+		
+		int totalCount = adoptionDao.searchTitleCount(searchTitle);
+		if(totalCount > 0) {
+			int totalPage = (int)(Math.ceil(totalCount/(double)numPerPage));
+			
+			int pageNaviSize = 5;
+			
+			int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize+1;
+			
+			String pageNavi = "<ul class='pagination circle-style'>";
+			if(pageNo != 1) {
+				pageNavi += "<li>";
+				pageNavi += "<a class='page-item' href='/adoption/searchTitle?searchTitle="+searchTitle+"&reqPage="+(pageNo-1)+"'>";
+				pageNavi += "<span class='material-icons'>chevron_left</span>";
+				pageNavi += "</a>";
+				pageNavi += "</li>";
+			}
+			for(int i=0;i<pageNaviSize;i++) {
+				pageNavi += "<li>";
+				if(pageNo == reqPage) {
+					pageNavi += "<a class='page-item active-page' href='/adoption/searchTitle?searchTitle="+searchTitle+"&reqPage="+pageNo+"'>";
+				}else {
+					pageNavi += "<a class='page-item' href='/adoption/searchTitle?searchTitle="+searchTitle+"&reqPage="+pageNo+"'>";
+				}
+				pageNavi += pageNo;
+				pageNavi += "</a>";
+				pageNavi += "</li>";
+				
+				pageNo++;
+				if(pageNo > totalPage) {
+					break;
+				}
+			}
+			if(pageNo <= totalPage) {
+				pageNavi += "<li>";
+				pageNavi += "<a class='page-item' href='/adoption/list?reqPage="+pageNo+"'>";
+				pageNavi += "<span class='material-icons'>chevron_right</span>";
+				pageNavi += "</a>";
+				pageNavi += "</li>";
+			}
+			pageNavi += "</ul>";
+			
+			param.put("searchTitle", searchTitle);
+			List list = adoptionDao.searchTitleAdoption(param);
+			
+			
+			AdoptionListData ald = new AdoptionListData(list, pageNavi);
+			
+			return ald;
+		}else {
+			return null;
+		}
 	}
 }

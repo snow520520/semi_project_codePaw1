@@ -50,11 +50,11 @@
 		</div>
 		
 		<div class="buttons">
-		        <a href="/mainAllpage/allpage">
-		        <button type="button" class="submit-button">목록으로</button>
-		      </a>
-			  <a href="/adoption/writeFrm">
-		   <button type="submit" class="submit-button">입양하기</button>
+		   <a href="/mainAllpage/allpage">
+		   		<button type="button" class="submit-button">목록으로</button>
+		   </a>
+		   <a th:href="@{/adoption/writeFrm(protectNo=${ap.protectNo})}">
+		   		<button type="submit" class="submit-button">입양신청</button>
 		   </a>
 		</div>
     </div>

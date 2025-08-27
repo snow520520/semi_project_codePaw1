@@ -40,12 +40,9 @@ html, body {
 	background-color: #ffffff;
 	cursor: pointer;
 }
-.searchTitle>button{
-	margin-top: 10px
-}
-.searchTitle>form>button>span.material-icons {
-    font-size: 21px;
-    vertical-align: middle; 
+.searchTitle>form>button>span.material-icons{
+	font-size: 21px;
+	vertical-align: middle;
 }
 .tbl{
 	border-top: 1px solid #000000;
@@ -64,7 +61,7 @@ html, body {
 td>.lock{
 	font-size: 20px;
 	font-weight: 200;	
-	vertical-align: middle;
+	vertical-align : middle;
 }
 a{
 	text-decoration: none;
@@ -118,4 +115,26 @@ a{
   background-color: #FFB22C;
   color: #fff;
   font-weight: 600;
+}
+.btn-box{
+		width: 880px;
+		text-align: center;
+	}
+.btn-box>button{
+	border: 1px solid #888888;
+	background-color : #ffffff;
+	width: 200px;
+	height: 50px;
+	border-radius: 10px;
+	font-size: 16px;
+	font-weight: 400;
+	cursor: pointer;
+	transition-duration: 0.2s;
+}
+.btn-box>button:hover {
+	background-color:#FFB22C;
+	border : none;
+	color: #ffffff;
+	font-weight: 400;
+	transition-duration: 0.2s; 
 }
