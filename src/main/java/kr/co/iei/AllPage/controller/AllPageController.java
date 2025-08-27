@@ -72,9 +72,9 @@ public class AllPageController {
         int totalCount = allpageService.getTotalCount();
         List<AllPage> list = allpageService.selectPageList(page, recordCountPerPage);
 
-        String pageNavi = allpageService.getPageNavi(page, totalCount, recordCountPerPage, naviCountPerPage, "/mainAllpage/allpage");
-
         model.addAttribute("list", list);
+
+        String pageNavi = allpageService.getPageNavi(page, totalCount, recordCountPerPage, naviCountPerPage, "/mainAllpage/allpage");
         model.addAttribute("pageNavi", pageNavi);
 
         Member member = (Member) session.getAttribute("member");

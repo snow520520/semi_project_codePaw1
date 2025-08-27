@@ -3,49 +3,323 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+	rel="stylesheet">
+<style>
+body {
+	font-family: Nanum Gothic Coding, sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.content {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #f7f7f7;
+}
+
+.join-wrap {
+	width: 800px;
+	height: 1000px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	background-color: white;
+}
+
+.join-title {
+	color: #854836;
+	font-size: 32px;
+	font-weight: bold;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	text-align: center;
+}
+
+.join-form {
+	width: 80%;
+	flex: display;
+	justify-content: center;
+}
+
+.join-form>div {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	border: 1px solid #854836;
+	height: 50px;
+}
+
+.join-form>.input-name {
+	margin-top: 70px;
+}
+
+.join-form input {
+	width: 100%;
+	height: 60%;
+	font-size: 15px;
+	padding-left: 10px;
+	border: none;
+}
+
+.join-form>.addr-div>div>input>div:first-child {
+	height: 30px;
+	font-size: 13px;
+}
+
+.checkId-wrap {
+	width: 100%; display : flex;
+	justify-content: space-between;
+	align-items: center;
+	display: flex;
+}
+
+.join-form>.input-id>.checkId-wrap>input {
+	width: 480px;
+	margin-right: 10px;
+	height: 28px;
+}
+
+.checkId-btn {
+	width: 15%;
+	height: 35px;
+	margin: 10px;
+	background-color: #ffb22c;
+	color: white;
+	border: none;
+	padding: 7px;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.addr-div {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	gap: 20px;
+}
+
+.addrCertify-div {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+
+.addrCertify-div>input {
+	width: 80%;
+	height: 100%;
+}
+
+.addrCertify-div>button {
+	width: 15%;
+	height: 30px;
+	margin: 10px; 
+	color: white;
+	border: none;
+	padding: 5px;
+	border-radius: 2px;
+	cursor: pointer;
+	background-color: #ffb22c;
+}
+
+.submit-btn {
+	text-align: center;
+}
+
+.submit-btn>button {
+	width: 60%;
+	color: white;
+	background-color: #ffb22c;
+	padding: 15px;
+	border: none;
+	border-radius: 5px;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.join-form>.submit-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 40%;
+	border: none;
+}
+
+.material-icons-outlined {
+	cursor: pointer;
+	font-size: 20px;
+	margin: auto 0;
+	line-height: 35px;
+	padding-left: 10px;
+}
+input[type=text] {
+	width: 580px;
+	height: 28px;
+}
+input[type=password] {
+	width: 580px;
+}
+input[id=auto-code] {
+	width: 110px;
+	border: 1px solid #854836;
+	border-radius: 2px;
+}
+input[id=memberAddr] {
+	width: 250px;
+	margin-right: 55px;
+}
+</style>
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="join-wrap">
-			<h2>회원 가입</h2>
-			<form action="#" method="post" class="join-form" autocomplete="off">
-				<div>
-					<span></span>
-					<input type="text" name="memberId" id="memberId" placeholder="아이디 입력">
-				</div>
-				<div>
-					<span></span>
-					<input type="password" name="memberPw" id="memberPw" placeholder="비밀번호 입력">
-				</div>
-				<div>
-					<span></span>
-					<input type="password" name="memberPwRe" id="memberPwRe" placeholder="비밀번호 확인">
-				</div>
-				<div class="addr-box">
-					<span></span>
-					<input type="text" name="memberAddr" id="memberAddr" placeholder="이메일 주소">
-					<div class="addrCertify-box">
-						<input type="text" name="addrCertify" placeholder="인증번호 입력">
-						<button type="button">인증</button>
-						<span>시간넣어야함</span>
+			<div class="join-title">회원가입</div>
+			<form action="/member/join" method="post" class="join-form"
+				autocomplete="off">
+				<div class="input-id">
+					<span class="material-icons-outlined">account_circle</span>
+					<div class="checkId-wrap">
+						<input type="text" name="memberId" id="memberId" placeholder="아이디 입력">
+						<p class="checkId-msg" style="font-size: 11px; font-weight: bold; display: none;"></p>
+						<button type="button" class="checkId-btn">중복체크</button>
 					</div>
 				</div>
-				<div>
-					<input type="text" name="memberName" id = "memberName" placeholder="이름" >
+				<div class="input-pw">
+					<span class="material-icons-outlined">password</span>
+					<input type="password" name="memberPw" id="memberPw" placeholder="비밀번호 입력">
+					<p class="checkPw-msg" style="font-size: 11px; font-weight: bold; display: none;"></p>
 				</div>
-				<div>
-					<input type="text" name="memberPhone" id = "memberPhone" placeholder="전화번호">
+				<div class="input-pwRe">
+					<span class="material-icons-outlined">refresh</span> 
+					<input type="password" name="memberPwRe" id="memberPwRe" placeholder="비밀번호 확인">
+					<p class="checkPwRe-msg" style="font-size: 11px; font-weight: bold; display: none ;"></p>
 				</div>
-				<div class="birth-box">
-					
+				<div class="addr-div">
+					<span class="material-icons-outlined">email</span>
+					<div class="addrCertify-div">
+						<input type="text" name="memberAddr" id="memberAddr" placeholder="이메일 주소"> 
+						<span id="time-zone"></span> 
+						<span id="authMsg"></span>
+						<input type="text" id="auto-code" placeholder="인증번호 입력">
+						<button type="button" class="btn-primary" id="auto-btn">인증</button>
+					</div>
 				</div>
-				<div class="submit-box">
+				<div class="input-name">
+					<span class="material-icons-outlined">dns</span> <input type="text"
+						name="memberName" id="memberName" placeholder="이름">
+				</div>
+				<div class="input-phone">
+					<span class="material-icons-outlined">phone_android</span> <input
+						type="text" name="memberPhone" id="memberPhone" placeholder="전화번호">
+				</div>
+				<div class="input-age">
+					<span class="material-icons-outlined">badge</span> <input
+						type="text" name="memberAge" id="memberAge" placeholder="나이">
+				</div>
+				<div class="submit-btn">
 					<button type="submit" class="join-button">가입하기</button>
 				</div>
 			</form>
 		</section>
 	</main>
+	<script>
+		$(".checkId-btn").on("click", function() {
+			const checkIdMsg = $(".checkId-msg");
+			checkIdMsg.removeClass("valid").removeClass("invalid");
+
+			const memberIdTag = $("#memberId");
+			const idReg = /^[a-zA-Z][a-zA-Z0-9]{5,12}$/; //대소문자, 숫자포함(특수문자 제외) 5~12자
+			const memberId = $("#memberId").val();
+			const regResult = idReg.test(memberId);
+			if (regResult) {
+				$.ajax({
+					url : "/member/checkId",
+					type : "get",
+					data : {
+						memberId : memberId
+					},
+					success : function(result) {
+						if (result === 0) {
+							memberIdTag.css("width", "280px");
+							checkIdMsg.show().css("color", "blue").text("사용가능한 아이디 입니다.").addClass("valid");
+						} else if (result === 1) {
+							memberIdTag.css("width", "280px");
+							checkIdMsg.show().css("color", "red").text("이미 사용중인 아이디 입니다.").addClass("invalid");
+						}
+					},
+					error : function() {
+						console.log("error");
+					}
+				});
+			} else {
+				memberIdTag.css("width", "280px");
+				checkIdMsg.show().css("color", "red").text("영문 + 숫자 6~12글자로 입력해주세요.").addClass("invalid");
+			}
+		});
+		$("#memberPw").on("keyup", function() {
+			const checkPwMsg = $(".checkPw-msg");
+			const checkPwReMsg = $(".checkPwRe-msg");
+			checkPwMsg.remove("invalid").remove("valid");
+
+			const memberPw = $("#memberPw");
+			const memberPwRe = $("#memberPwRe");
+			const memberPwVal = $("#memberPw").val();
+			const memberPwReVal = $("#memberPwRe").val();
+			
+			const pwReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,15}$/; //6~15자 이내 대소문자, 숫자 각 1개 이상 포함
+			const regResult = pwReg.test(memberPwVal);
+			if (regResult) {
+				memberPw.css("width", "280px");
+				checkPwMsg.show();
+				checkPwMsg.css("color", "blue");
+				checkPwMsg.text("비밀번호가 유효합니다.");
+				checkPwMsg.addClass("valid");
+			} else{
+				memberPw.css("width", "270px");
+				checkPwMsg.show();
+				checkPwMsg.css("color", "red");
+				checkPwMsg.text("대소문자/숫자를 각 1개 이상 포함하여 6~15자 이내로 입력해주세요.");
+				checkPwMsg.addClass("invalid");	
+			}
+		});
+			$("#memberPwRe").on("keyup", function() {
+				const checkPwMsg = $(".checkPw-msg");
+				const checkPwReMsg = $(".checkPwRe-msg");
+				checkPwReMsg.remove("invalid").remove("valid");
+
+				const memberPw = $("#memberPw");
+				const memberPwRe = $("#memberPwRe");
+				const memberPwVal = $("#memberPw").val();
+				const memberPwReVal = $("#memberPwRe").val();
+				
+				const pwReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,15}$/; //6~15자 이내 대소문자, 숫자 각 1개 이상 포함
+				const regResult = pwReg.test(memberPwVal);
+				if(memberPwVal === memberPwReVal){
+					memberPwRe.css("width", "280px");
+					checkPwReMsg.show();
+					checkPwReMsg.css("color", "blue");
+					checkPwReMsg.text("비밀번호 확인 완료");
+					checkPwReMsg.addClass("valid");
+				}else{
+					memberPwRe.css("width", "280px");
+					checkPwReMsg.show();
+					checkPwReMsg.css("color", "red");
+					checkPwReMsg.text("비밀번호를 확인해주세요.");
+					checkPwReMsg.addClass("invalid");
+				}
+			});
+		
+	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>
