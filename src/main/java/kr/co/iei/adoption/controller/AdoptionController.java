@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import kr.co.iei.AllPage.model.service.AllPageService;
 import kr.co.iei.adoption.model.service.AdoptionService;
 import kr.co.iei.adoption.model.vo.Adoption;
 import kr.co.iei.adoption.model.vo.AdoptionListData;
@@ -23,6 +24,8 @@ public class AdoptionController {
 	private AdoptionService adoptionService;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private AllPageService allPageService;
 	
 	@GetMapping(value="/list")
 	public String adoptionList(int reqPage, Model model) {
