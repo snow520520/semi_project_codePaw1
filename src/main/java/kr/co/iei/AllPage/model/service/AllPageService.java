@@ -87,4 +87,10 @@ public class AllPageService {
         sb.append("</ul>");
         return sb.toString();
     }
+    
+
+    public List<AllPage> selectPageListRead(int start, int end) {
+        return allpageDao.selectPageProtect(start, end);
+    }
+
 }
