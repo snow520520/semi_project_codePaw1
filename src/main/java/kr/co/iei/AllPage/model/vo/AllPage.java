@@ -18,4 +18,5 @@ public class AllPage {
 	private int memberNo; //pk
 	private int animalNo; //pk
 	private String protectStatus;
+    private String thumbnailUrl;
 }

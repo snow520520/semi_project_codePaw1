@@ -1,6 +1,8 @@
 package kr.co.iei.AllPage.model.service;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +42,33 @@ public class AllPageService {
     public List<AllPage> selectPageList(int currentPage, int recordCountPerPage) {
         int start = (currentPage - 1) * recordCountPerPage + 1;
         int end = currentPage * recordCountPerPage;
-        return allpageDao.selectPageProtect(start, end);
+        
+        List<AllPage> list = allpageDao.selectPageProtect(start, end);
+
+        for (AllPage ap : list) {
+            if ("2".equals(ap.getProtectStatus())) {
+                ap.setThumbnailUrl("/image/complete.png");
+            } else {
+                String content = ap.getProtectContent();
+                String thumbnailUrl = extractFirstImageSrc(content);
+                ap.setThumbnailUrl(thumbnailUrl);
+            }
+        }
+        return list;
+    }
+
+    private String extractFirstImageSrc(String content) {
+        if (content == null) {
+            return "/image/slider/3.jpg";
+        }
+        Pattern pattern = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
+        Matcher matcher = pattern.matcher(content);
+
+        if (matcher.find()) {
+            return matcher.group(1);
+        } else {
+            return "/image/slider/3.jpg";
+        }
     }
 
     public int getTotalCount() {
@@ -61,8 +89,8 @@ public class AllPageService {
         sb.append("<ul class='pagination circle-style'>");
 
         if(needPrev) {
-            sb.append("<li><a class='page-item' href='" + url + "?page=" + (startNavi - 1) + "'>");
-            sb.append("<span class='material-icons'>chevron_left</span></a></li>");
+            sb.append("<li><a class='page-item' href='" + url + "?page=" + (startNavi - 1) + "'>"
+                    + "<span class='material-icons'>chevron_left</span></a></li>");
         }
 
         for(int i = startNavi; i <= endNavi; i++) {
@@ -74,8 +102,8 @@ public class AllPageService {
         }
 
         if(needNext) {
-            sb.append("<li><a class='page-item' href='" + url + "?page=" + (endNavi + 1) + "'>");
-            sb.append("<span class='material-icons'>chevron_right</span></a></li>");
+            sb.append("<li><a class='page-item' href='" + url + "?page=" + (endNavi + 1) + "'>"
+                    + "<span class='material-icons'>chevron_right</span></a></li>");
         }
 
         sb.append("</ul>");
@@ -83,18 +111,38 @@ public class AllPageService {
     }
     
     public List<AllPage> selectPageListRead(int start, int end) {
-        return allpageDao.selectPageProtect(start, end);
+        List<AllPage> list = allpageDao.selectPageProtect(start, end);
+
+        for (AllPage ap : list) {
+            if ("2".equals(ap.getProtectStatus())) {
+                ap.setThumbnailUrl("/image/complete.png");
+            } else {
+                String content = ap.getProtectContent();
+                String thumbnailUrl = extractFirstImageSrc(content);
+                ap.setThumbnailUrl(thumbnailUrl);
+            }
+        }
+
+        return list;
     }
     
     public AllPage selectOneProtect(int protectNo) {
-        return allpageDao.selectOneProtect(protectNo);
+        AllPage ap = allpageDao.selectOneProtect(protectNo);
+        if (ap != null && "2".equals(ap.getProtectStatus())) {
+            ap.setThumbnailUrl("/image/complete.png");
+        }
+        return ap;
     }
-
     public Animal selectAnimal(int animalNo) {
         return allpageDao.selectAnimal(animalNo);
     }
-
     public Member selectMember(int memberNo) {
         return allpageDao.selectMember(memberNo);
     }
+    
+    @Transactional
+    public int updateProtectContent(AllPage ap) {
+        return allpageDao.updateProtectContent(ap);
+    }
+    
 }
