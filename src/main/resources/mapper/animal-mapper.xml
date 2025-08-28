@@ -4,4 +4,11 @@
  <select id="selectAnimalNo" resultType="animal">
  	select * from animal where animal_no = ${animalNo}
  </select>
+ <insert id="insertAnimal">
+ 	insert into animal(animal_no, animal_type, animal_name, animal_gender, animal_age, animal_inocul, animal_neuter, member_no, animal_admission) 
+ 	values(animal_seq.nextval,#{animalType},#{animalName},#{animalGender},#{animalAge},#{animalInocul},#{animalNeuter},#{memberNo},'N')
+ </insert>
+ <select id="searchAnimalNo" resultType="int">
+ 	select animal_no from(select animal_no from animal where member_no = #{memberNo} order by animal_no desc) where rownum = 1
+ </select>
 </mapper>

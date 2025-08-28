@@ -23,6 +23,8 @@ public interface AdmissionDao {
 
 	int deleteAdmissionNo(int admissionNo);
 
+	int insertAdmission(Admission admission);
+
 	
 
 }
