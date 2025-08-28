@@ -122,7 +122,7 @@ public class AdmissionService {
 				pageNavi += "</a>";
 				pageNavi += "</li>";
 			}
-			pageNavi += "</ul>";
+			pageNavi += "</ul>";                    
 			
 			param.put("searchTitle", searchTitle);
 			List list = admissionDao.searchTitleAdmission(param);
