@@ -23,7 +23,7 @@
 	    	(select rownum as rnum, n.* from
 	        	(select 
 	            	admission_no, admission_title, member_id, admission_date 
-	        	from admission where admission_title like '%'||${searchTitle}||'%' 
+	        	from admission where admission_title like '%'||'${searchTitle}'||'%' 
 	        	order by admission_no desc
 	        	)n
 	    	)
