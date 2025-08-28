@@ -3,40 +3,52 @@
 <mapper namespace="kr.co.iei.AllPage.model.dao.AllPageDao">
 
     <select id="selectAnimalNo" parameterType="kr.co.iei.animal.model.vo.Animal" resultType="int">
-        SELECT animal_no
-        FROM animal
-        WHERE animal_name = #{animalName}
-        AND animal_age = #{animalAge}
-    </select>
-    
-    <insert id="insertProtect" parameterType="kr.co.iei.AllPage.model.vo.AllPage">
-        INSERT INTO protect_tbl 
-            (protect_no, protect_title, protect_content, protect_date, member_no, animal_no)
-        VALUES 
-            (#{protectNo}, #{protectTitle}, #{protectContent}, SYSDATE, #{memberNo}, #{animalNo})
-    </insert>
-
-    <select id="getNextProtectNo" resultType="int">
-        SELECT protect_seq.NEXTVAL FROM dual
-    </select>
-    
-    <select id="selectPageProtect" resultType="kr.co.iei.AllPage.model.vo.AllPage">
-    SELECT * FROM (
-        SELECT ROW_NUMBER() OVER (ORDER BY protect_no DESC) AS rnum,
-               p.protect_no, p.protect_title, p.protect_date, p.protect_content, p.protect_status
-        FROM protect_tbl p
-    )
-    WHERE rnum BETWEEN #{start} AND #{end}
+    SELECT animal_no
+    FROM animal
+    WHERE animal_name = #{animalName}
+      AND animal_age = #{animalAge}
 	</select>
-
+	
+	<select id="selectAnimalNoList" parameterType="kr.co.iei.animal.model.vo.Animal" resultType="int">
+	    SELECT animal_no
+	    FROM animal
+	    WHERE animal_name = #{animalName}
+	      AND animal_age = #{animalAge}
+	</select>
+	
+	<insert id="insertAnimal" parameterType="kr.co.iei.animal.model.vo.Animal" useGeneratedKeys="true" keyProperty="animalNo">
+	    INSERT INTO animal (animal_no, animal_name, animal_age)
+	    VALUES (animal_seq.NEXTVAL, #{animalName}, #{animalAge})
+	</insert>
+	
+	<insert id="insertProtect" parameterType="kr.co.iei.AllPage.model.vo.AllPage">
+	    INSERT INTO protect_tbl 
+	        (protect_no, protect_title, protect_content, protect_date, member_no, animal_no)
+	    VALUES 
+	        (#{protectNo}, #{protectTitle}, #{protectContent}, SYSDATE, #{memberNo}, #{animalNo})
+	</insert>
+	
+	<select id="getNextProtectNo" resultType="int">
+	    SELECT protect_seq.NEXTVAL FROM dual
+	</select>
+	
+	<select id="selectPageProtect" resultType="kr.co.iei.AllPage.model.vo.AllPage">
+	    SELECT * FROM (
+	        SELECT ROW_NUMBER() OVER (ORDER BY protect_no DESC) AS rnum,
+	               p.protect_no, p.protect_title, p.protect_date, p.protect_content, p.protect_status
+	        FROM protect_tbl p
+	    )
+	    WHERE rnum BETWEEN #{start} AND #{end}
+	</select>
+	
 	<select id="selectTotalCount" resultType="int">
 	    SELECT COUNT(*) FROM protect_tbl
 	</select>
 	
 	<select id="selectOneProtect" resultType="allpage" parameterType="int">
-    SELECT protect_no, protect_title, protect_content, protect_date, member_no, animal_no, protect_status
-    FROM protect_tbl
-    WHERE protect_no = #{protectNo}
+	    SELECT protect_no, protect_title, protect_content, protect_date, member_no, animal_no, protect_status
+	    FROM protect_tbl
+	    WHERE protect_no = #{protectNo}
 	</select>
 	
 	<select id="selectAnimal" resultType="animal" parameterType="int">
@@ -48,9 +60,9 @@
 	</select>
 	
 	<update id="updateProtectContent" parameterType="kr.co.iei.AllPage.model.vo.AllPage">
-    UPDATE protect_tbl
-    SET protect_content = #{protectContent}
-    WHERE protect_no = #{protectNo}
+	    UPDATE protect_tbl
+	    SET protect_content = #{protectContent}
+	    WHERE protect_no = #{protectNo}
 	</update>
 
 </mapper>

@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import kr.co.iei.AllPage.model.dao.AllPageDao;
 import kr.co.iei.AllPage.model.vo.AllPage;
 import kr.co.iei.animal.model.vo.Animal;
@@ -20,18 +21,16 @@ public class AllPageService {
 
     @Transactional
     public int insertProtect(AllPage ap, int memberNo, Animal animal) {
-        Integer animalNo = allpageDao.selectAnimalNo(animal);
+        List<Integer> existingAnimalList = allpageDao.selectAnimalNoList(animal);
+        if (!existingAnimalList.isEmpty()) return -1;
 
-        if (animalNo == null) {
-            return 0;
-        }
+        int newAnimalNo = allpageDao.insertAnimal(animal);
+        if (newAnimalNo <= 0) return 0;
 
         ap.setMemberNo(memberNo);
-        ap.setAnimalNo(animalNo);
-
+        ap.setAnimalNo(newAnimalNo);
         int newProtectNo = allpageDao.getNextProtectNo();
         ap.setProtectNo(newProtectNo);
-
         return allpageDao.insertProtect(ap);
     }
 
@@ -42,33 +41,20 @@ public class AllPageService {
     public List<AllPage> selectPageList(int currentPage, int recordCountPerPage) {
         int start = (currentPage - 1) * recordCountPerPage + 1;
         int end = currentPage * recordCountPerPage;
-        
         List<AllPage> list = allpageDao.selectPageProtect(start, end);
-
         for (AllPage ap : list) {
-            if ("2".equals(ap.getProtectStatus())) {
-                ap.setThumbnailUrl("/image/complete.png");
-            } else {
-                String content = ap.getProtectContent();
-                String thumbnailUrl = extractFirstImageSrc(content);
-                ap.setThumbnailUrl(thumbnailUrl);
-            }
+            if ("2".equals(ap.getProtectStatus())) ap.setThumbnailUrl("/image/complete.png");
+            else ap.setThumbnailUrl(extractFirstImageSrc(ap.getProtectContent()));
         }
         return list;
     }
 
     private String extractFirstImageSrc(String content) {
-        if (content == null) {
-            return "/image/slider/3.jpg";
-        }
+        if (content == null) return "/image/slider/3.jpg";
         Pattern pattern = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
         Matcher matcher = pattern.matcher(content);
-
-        if (matcher.find()) {
-            return matcher.group(1);
-        } else {
-            return "/image/slider/3.jpg";
-        }
+        if (matcher.find()) return matcher.group(1);
+        else return "/image/slider/3.jpg";
     }
 
     public int getTotalCount() {
@@ -77,72 +63,49 @@ public class AllPageService {
 
     public String getPageNavi(int currentPage, int totalCount, int recordCountPerPage, int naviCountPerPage, String url) {
         int totalPage = (int) Math.ceil((double) totalCount / recordCountPerPage);
-
         int startNavi = ((currentPage - 1) / naviCountPerPage) * naviCountPerPage + 1;
         int endNavi = startNavi + naviCountPerPage - 1;
         if(endNavi > totalPage) endNavi = totalPage;
-
         boolean needPrev = startNavi != 1;
         boolean needNext = endNavi != totalPage;
 
         StringBuilder sb = new StringBuilder();
         sb.append("<ul class='pagination circle-style'>");
-
-        if(needPrev) {
-            sb.append("<li><a class='page-item' href='" + url + "?page=" + (startNavi - 1) + "'>"
-                    + "<span class='material-icons'>chevron_left</span></a></li>");
-        }
-
+        if(needPrev) sb.append("<li><a class='page-item' href='" + url + "?page=" + (startNavi - 1) + "'><span class='material-icons'>chevron_left</span></a></li>");
         for(int i = startNavi; i <= endNavi; i++) {
-            if(i == currentPage) {
-                sb.append("<li><a class='page-item active-page' href='" + url + "?page=" + i + "'>" + i + "</a></li>");
-            } else {
-                sb.append("<li><a class='page-item' href='" + url + "?page=" + i + "'>" + i + "</a></li>");
-            }
+            if(i == currentPage) sb.append("<li><a class='page-item active-page' href='" + url + "?page=" + i + "'>" + i + "</a></li>");
+            else sb.append("<li><a class='page-item' href='" + url + "?page=" + i + "'>" + i + "</a></li>");
         }
-
-        if(needNext) {
-            sb.append("<li><a class='page-item' href='" + url + "?page=" + (endNavi + 1) + "'>"
-                    + "<span class='material-icons'>chevron_right</span></a></li>");
-        }
-
+        if(needNext) sb.append("<li><a class='page-item' href='" + url + "?page=" + (endNavi + 1) + "'><span class='material-icons'>chevron_right</span></a></li>");
         sb.append("</ul>");
         return sb.toString();
     }
-    
+
     public List<AllPage> selectPageListRead(int start, int end) {
         List<AllPage> list = allpageDao.selectPageProtect(start, end);
-
         for (AllPage ap : list) {
-            if ("2".equals(ap.getProtectStatus())) {
-                ap.setThumbnailUrl("/image/complete.png");
-            } else {
-                String content = ap.getProtectContent();
-                String thumbnailUrl = extractFirstImageSrc(content);
-                ap.setThumbnailUrl(thumbnailUrl);
-            }
+            if ("2".equals(ap.getProtectStatus())) ap.setThumbnailUrl("/image/complete.png");
+            else ap.setThumbnailUrl(extractFirstImageSrc(ap.getProtectContent()));
         }
-
         return list;
     }
-    
+
     public AllPage selectOneProtect(int protectNo) {
         AllPage ap = allpageDao.selectOneProtect(protectNo);
-        if (ap != null && "2".equals(ap.getProtectStatus())) {
-            ap.setThumbnailUrl("/image/complete.png");
-        }
+        if (ap != null && "2".equals(ap.getProtectStatus())) ap.setThumbnailUrl("/image/complete.png");
         return ap;
     }
+
     public Animal selectAnimal(int animalNo) {
         return allpageDao.selectAnimal(animalNo);
     }
+
     public Member selectMember(int memberNo) {
         return allpageDao.selectMember(memberNo);
     }
-    
+
     @Transactional
     public int updateProtectContent(AllPage ap) {
         return allpageDao.updateProtectContent(ap);
     }
-    
 }

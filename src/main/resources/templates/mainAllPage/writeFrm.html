@@ -35,14 +35,15 @@
                 <a href="/mainAllpage/allpage">
                     <button type="button">목록으로</button>
                 </a>
-                <button type="submit">작성하기</button>
+                <button type="button" onclick="confirminsert()">작성하기</button>
             </div>
         </form>
     </div>
 	<script src="/summernote/summernote-lite.js"></script>
 	<script src="/summernote/lang/summernote-ko-KR.js"></script>
+	<script src="/js/sweetalert.min.js"></script>
 	<link rel="stylesheet" href="/summernote/summernote-lite.css">
-	
+
 	<script>
 	$('#content').summernote({
 	    height: 600,
@@ -74,7 +75,25 @@
 		    }
 		});
 	}
+	function confirminsert() {
+		    swal({
+		        title: "글쓰기 확인",
+		        text: "정말 글을 작성하시겠습니까?",
+		        icon: "warning",
+				buttons: {
+				            cancel: "취소",
+				            confirm: "확인"
+				        },
+		        dangerMode: true
+		    }).then((willUpdate) => {
+		        if (willUpdate) {
+		            document.querySelector('form').submit();
+		        }
+		    });
+		}
 	</script>
+	
+	
     <th:block th:include="common/footer"></th:block>
 </body>
 </html>
