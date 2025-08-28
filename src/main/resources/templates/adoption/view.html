@@ -31,8 +31,8 @@
 		padding-bottom: 10px;
 		padding-top: 30px;
 	}
-	.admissionContent>th,
-	.admissionContent>td{
+	.adoptionContent>th,
+	.adoptionContent>td{
 		height: 120px;
 	}
 	th{
@@ -41,6 +41,7 @@
 	.section>a{
 		float: right;
 		margin-left: 20px;
+		cursor: pointer;
 	}
 </style>
 </head>
@@ -115,7 +116,7 @@
 			}
 		}).then(function(isConfirm){
 			if(isConfirm){
-				location.href="/adoption/delete?adoption="+adoptionNo;
+				location.href="/adoption/delete?adoptionNo="+adoptionNo;
 			}
 		});
 	};

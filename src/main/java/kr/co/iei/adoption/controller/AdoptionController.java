@@ -80,8 +80,8 @@ public class AdoptionController {
 	
 	@PostMapping(value="/write")
 	public String adoptionWrite(Adoption a, Model model,@RequestParam("protectNo") int protectNo) {
-		int result = adoptionService.insertAdoption(a);
 		a.setProtectNo(protectNo);
+		int result = adoptionService.insertAdoption(a);
 		Member member = memberService.selectMemberId(a.getMemberId());
 		model.addAttribute("member", member);
 		model.addAttribute("title", "입양 신청 등록 완료");
@@ -117,16 +117,24 @@ public class AdoptionController {
 	@GetMapping(value="/updateFrm")
 	public String updateFrm(int adoptionNo, Model model) {
 		Adoption a = adoptionService.selectOneAdoption(adoptionNo);
+		Member member = memberService.selectMemberId(a.getMemberId());
+		AllPage protect = allPageService.selectOneProtect(a.getProtectNo());
+		int animalNo = protect.getAnimalNo();
+	    Animal animal = animalService.selectAnimalNo(animalNo);
 		model.addAttribute("a", a);
+		model.addAttribute("member", member);
+		 model.addAttribute("animal", animal);
 		return "adoption/updateFrm";
 	}
 	
 	@PostMapping(value="/update")
 	public String update(Adoption a, Model model) {
 		int result = adoptionService.updateAdoption(a);
+		Member member = memberService.selectMemberId(a.getMemberId());
 		if(result>0) {
-			return "adoption/view";
+			return "redirect:/adoption/view?adoptionNo=" + a.getAdoptionNo();
 		}else {
+			model.addAttribute("member", member);
 			model.addAttribute("title", "수정 실패");
 			model.addAttribute("text", "수정 실패");
 			model.addAttribute("icon", "info");
