@@ -79,7 +79,6 @@ public class MemberController {
 	}
 	@PostMapping(value ="/join")
 	public String join(Member m, Model model) {
-		
 		int result = memberService.join(m);
 		
 		if(result == 0) {

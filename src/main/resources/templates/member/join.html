@@ -381,18 +381,18 @@ div[class=email-div],div[class=input-phone]{
 		});
 		$("#auto-btn").on("click", function(){
 			const inputCode = $("#auto-code").val();
-			if(mailCode === inputCode){
-				$("#autoMsg").css("color", "blue").css("margin-right", "20px");
-				$("#autoMsg").text("인증 완료");
-				window.clearInterval(intervalId);
-				$("#auto-code").hide();
-				$("#auto-btn").hide();
-				$("#time-zone").empty();
-				$("#time-zone").hide();
-				mailCode = null;
-			}else{
-				$("#autoMsg").text("인증번호 입력해주세요");
-				$("#autoMsg").css("color", "red");
+				if(mailCode.toLowerCase() === inputCode.toLowerCase()){
+					$("#autoMsg").css("color", "blue").css("margin-right", "20px");
+					$("#autoMsg").text("인증 완료");
+					window.clearInterval(intervalId);
+					$("#auto-code").hide();
+					$("#auto-btn").hide();
+					$("#time-zone").empty();
+					$("#time-zone").hide();
+					mailCode = null;
+				}else{
+					$("#autoMsg").text("인증번호 입력해주세요");
+					$("#autoMsg").css("color", "red");
 			}
 		});
 		let intervalId = null;
@@ -438,7 +438,7 @@ div[class=email-div],div[class=input-phone]{
 			console.log(memberAge);
 			if(memberAge === ""){
 				e.preventDefault();
-				alert("가입정보를 입력해주세요");
+				alert("정보를 입력한 후 회원가입을 해주세요.");
 			}
 		});
 	</script>
