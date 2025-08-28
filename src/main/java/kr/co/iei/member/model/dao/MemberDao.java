@@ -15,6 +15,8 @@ public interface MemberDao {
 
 	Member checkId(Member m);
 
+	int join(Member m);
+
 	
 
 }

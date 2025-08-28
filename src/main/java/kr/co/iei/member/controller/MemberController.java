@@ -77,4 +77,20 @@ public class MemberController {
 			return 1;
 		}
 	}
+	@PostMapping(value ="/join")
+	public String join(Member m, Model model) {
+		int result = memberService.join(m);
+		if(result == 0) {
+			 model.addAttribute("title", "회원가입 실패"); 
+			 model.addAttribute("text", "입력한 정보를 확인해주세요.");
+			 model.addAttribute("icon", "error");
+			 model.addAttribute("loc", "/member/join");
+		}else {
+			model.addAttribute("title", "회원가입 성공");
+			model.addAttribute("text", "회원가입이 완료되었습니다.");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/member/loginFrm");
+		}
+		return "common/msg"; 
+	}
 }

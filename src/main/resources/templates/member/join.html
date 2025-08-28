@@ -59,8 +59,8 @@ body {
 	margin-top: 70px;
 }
 
-.join-form input {
-	width: 100%;
+.join-form>div input {
+	width: 80%;
 	height: 60%;
 	font-size: 15px;
 	padding-left: 10px;
@@ -103,13 +103,15 @@ body {
 	align-items: center;
 	gap: 20px;
 }
+.email-div>div>input{
+	height: 28px;
+}
 .emailCertify-div {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
 }
-
 .emailCertify-div>input {
 	width: 80%;
 	height: 100%;
@@ -151,7 +153,17 @@ body {
 	height: 40%;
 	border: none;
 }
-
+.join-form>.input-addr>.addr-button{
+	width: 15%;
+	height: 35px;
+	margin: 10px;
+	background-color: #ffb22c;
+	color: white;
+	border: none;
+	padding: 7px;
+	border-radius: 2px;
+	cursor: pointer;
+}
 .material-icons-outlined {
 	cursor: pointer;
 	font-size: 20px;
@@ -170,10 +182,7 @@ input[id=auto-code] {
 	border: 1px solid #854836;
 	border-radius: 2px;
 }
-input[id=memberemail] {
-	width: 250px;
-	margin-right: 55px;
-}
+input:focus {outline:none;}
 </style>
 </head>
 <body>
@@ -181,8 +190,7 @@ input[id=memberemail] {
 	<main class="content">
 		<section class="join-wrap">
 			<div class="join-title">회원가입</div>
-			<form action="/member/join" method="post" class="join-form"
-				autocomplete="off">
+			<form action="/member/join" method="post" class="join-form" autocomplete="off">
 				<div class="input-id">
 					<span class="material-icons-outlined">account_circle</span>
 					<div class="checkId-wrap">
@@ -205,11 +213,11 @@ input[id=memberemail] {
 					<span class="material-icons-outlined">email</span>
 					<div class="emailCertify-div">
 						<input type="text" name="email" id="email" placeholder="이메일 주소"> 
-						<span id="autoMsg" style="font-size: 11px; font-weight: bold;"></span>
-						<span id="time-zone" style="font-size: 10px; font-weight: bold;"></span> 
+						<span id="autoMsg" style="font-size: 11px; font-weight: bold; display:none;"></span>
+						<span id="time-zone" style="font-size: 9px; font-weight: bold; display:none;"></span> 
 						<input type="text" id="auto-code" placeholder="인증번호 입력" style="display:none;">
-						<button type = "button" class="email-btn" id="email-btn" style="display:none;">인증요청</button>
-						<button type = "button" class="btn-primary" id="auto-btn">인증</button>
+						<button type = "button" class="email-btn" id="email-btn">인증요청</button>
+						<button type = "button" class="btn-primary" id="auto-btn"  style="display:none;">인증</button>
 					</div>
 				</div>
 				<div class="input-name">
@@ -223,6 +231,7 @@ input[id=memberemail] {
 				<div class="input-addr">
 					<span class="material-icons-outlined">home</span> 
 					<input type="text" name="memberAddr" id="memberAddr" placeholder="주소">
+					<button type = "button" class="addr-button" id = "addr-btn">주소찾기</button>
 				</div>
 				<div class="input-age">
 					<span class="material-icons-outlined">badge</span> 
@@ -234,6 +243,7 @@ input[id=memberemail] {
 			</form>
 		</section>
 	</main>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 		$(".checkId-btn").on("click", function() {
 			const checkIdMsg = $(".checkId-msg");
@@ -281,16 +291,16 @@ input[id=memberemail] {
 			const pwReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,15}$/; //6~15자 이내 대소문자, 숫자 각 1개 이상 포함
 			const regResult = pwReg.test(memberPwVal);
 			if (regResult) {
-				memberPw.css("width", "280px");
+				memberPw.css("width", "260px");
 				checkPwMsg.show();
 				checkPwMsg.css("color", "blue");
-				checkPwMsg.text("비밀번호가 유효합니다.");
+				checkPwMsg.text("비밀번호 사용가능");
 				checkPwMsg.addClass("valid");
 			} else{
 				memberPw.css("width", "260px");
 				checkPwMsg.show();
 				checkPwMsg.css("color", "red");
-				checkPwMsg.text("대소문자/숫자를 각 1개 이상 포함하여 6~15자 이내로 입력해주세요.");
+				checkPwMsg.text("대소문자+숫자를 각 1개 이상 포함하여 6~15자 이내로 입력해주세요.");
 				checkPwMsg.addClass("invalid");	
 			}
 		});
@@ -307,13 +317,13 @@ input[id=memberemail] {
 				const pwReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,15}$/; //6~15자 이내 대소문자, 숫자 각 1개 이상 포함
 				const regResult = pwReg.test(memberPwVal);
 				if(memberPwVal === memberPwReVal){
-					memberPwRe.css("width", "280px");
+					memberPwRe.css("width", "260px");
 					checkPwReMsg.show();
 					checkPwReMsg.css("color", "blue");
-					checkPwReMsg.text("비밀번호 확인 완료");
+					checkPwReMsg.text("비밀번호가 일치");
 					checkPwReMsg.addClass("valid");
 				}else{
-					memberPwRe.css("width", "280px");
+					memberPwRe.css("width", "260px");
 					checkPwReMsg.show();
 					checkPwReMsg.css("color", "red");
 					checkPwReMsg.text("비밀번호를 확인해주세요.");
@@ -324,27 +334,35 @@ input[id=memberemail] {
 		$("#email-btn").on("click", function(){
 			const email = $("#email").val();
 			$.ajax({
-				url: "/api/sendEmail",
+				url: "/api/emailCode",
 				type: "get",
 				data: {email : email},
 				success: function(code){
 					mailCode = code;
 					$("#auto-code").show();
 					$("#auto-btn").show();
-					authTime();
+					$("#time-zone").show();
+					$("#autoMsg").show();
+					$("#email-btn").hide();
+					autoTime();
 				}
 			});
 		});
 		$("#auto-btn").on("click", function(){
 			const inputCode = $("#auto-code").val();
 			if(mailCode === inputCode){
-				$("#autoMsg").text("인증 완료");
 				$("#autoMsg").css("color", "blue");
+				$("#autoMsg").text("인증 완료");
 				window.clearInterval(intervalId);
+				$("#auto-code").hide();
+				$("#auto-btn").hide();
+				$("#time-zone").hide();
+				$("#autoMsg").hide();
 				mailCode = null;
 				$("#time-zone").empty();
+
 			}else{
-				$("#autoMsg").text("인증번호 확인해주세요");
+				$("#autoMsg").text("인증번호 입력해주세요");
 				$("#autoMsg").css("color", "red");
 			}
 		});
@@ -375,6 +393,15 @@ input[id=memberemail] {
 				}
 			}, 1000);
 		}
+		$("#addr-btn").on("click", function(){
+		    new daum.Postcode({
+		        oncomplete: function(data) {
+		            console.log(data);
+		            $("#memberAddr").val(data.roadAddress);
+		            $("#memberAddr").focus();
+		        }
+		    }).open();
+		});
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
