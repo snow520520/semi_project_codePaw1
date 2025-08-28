@@ -133,12 +133,16 @@ public class AllPageService {
         }
         return ap;
     }
-
     public Animal selectAnimal(int animalNo) {
         return allpageDao.selectAnimal(animalNo);
     }
-
     public Member selectMember(int memberNo) {
         return allpageDao.selectMember(memberNo);
     }
+    
+    @Transactional
+    public int updateProtectContent(AllPage ap) {
+        return allpageDao.updateProtectContent(ap);
+    }
+    
 }
