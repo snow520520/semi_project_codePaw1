@@ -82,25 +82,23 @@ public class AdoptionController {
 	public String adoptionWrite(Adoption a, Model model,@RequestParam("protectNo") int protectNo) {
 		int result = adoptionService.insertAdoption(a);
 		a.setProtectNo(protectNo);
-		System.out.println("입양신청 데이터 확인");
-		System.out.println("제목: " + a.getAdoptionTitle());
-		System.out.println("내용: " + a.getAdoptionContent());
-		System.out.println("회원 ID: " + a.getMemberId());
-		System.out.println("보호번호: " + a.getProtectNo());
-		
+		Member member = memberService.selectMemberId(a.getMemberId());
+		model.addAttribute("member", member);
 		model.addAttribute("title", "입양 신청 등록 완료");
 		model.addAttribute("text", "입양 신청이 등록되었습니다.");
 		model.addAttribute("icon", "success");
 		model.addAttribute("loc", "/adoption/list?reqPage=1");
 		return "common/msg";
-		
 	}
 	
 	@GetMapping(value="/view")
 	public String adoptionView(int adoptionNo, Model model) {
 		Adoption a = adoptionService.selectOneAdoption(adoptionNo);
 		Member member = memberService.selectMemberId(a.getMemberId());
-		Animal animal = animalService.selectAnimalNo(a.getAnimalNo());
+		AllPage protect = allPageService.selectOneProtect(a.getProtectNo());
+	    int animalNo = protect.getAnimalNo();
+	    Animal animal = animalService.selectAnimalNo(animalNo);
+		
 		if(a == null) {
 			model.addAttribute("title", "게시글 조회 실패");
 			model.addAttribute("text", "이미 삭제된 게시글 입니다");
@@ -108,6 +106,7 @@ public class AdoptionController {
 			model.addAttribute("loc", "/adoption/list?reqPage=1");
 			return "common/msg";
 		}else {
+		
 			model.addAttribute("a", a);
 			model.addAttribute("member", member);
 		    model.addAttribute("animal", animal);
@@ -132,6 +131,24 @@ public class AdoptionController {
 			model.addAttribute("text", "수정 실패");
 			model.addAttribute("icon", "info");
 			model.addAttribute("loc", "/adoption/view");
+			return "common/msg";
+		}
+	}
+	
+	@GetMapping(value="/delete")
+	public String delete(int adoptionNo, Model model) {
+		int result = adoptionService.deleteAdoptionNo(adoptionNo);
+		if(result>0) {
+			model.addAttribute("title", "삭제 성공");
+			model.addAttribute("msg", "게시글이 삭제되었습니다.");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/adoption/list?reqPage=1");
+			return "common/msg";
+		}else {
+			model.addAttribute("title", "삭제 실패");
+			model.addAttribute("msg", "잠시후 다시 시도해 주세요.");
+			model.addAttribute("icon", "warning");
+			model.addAttribute("loc", "/adoption/list?reqPage=1");
 			return "common/msg";
 		}
 	}

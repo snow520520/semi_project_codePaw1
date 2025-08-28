@@ -92,8 +92,7 @@
 	</main>
 	<script src="/js/sweetalert.min.js"></script>
 	<script>
-	function deleteAdmission(admissionNo){
-		console.log(admissionNo);
+	function deleteAdoption(adoptionNo){
 		swal({
 			title : "게시물 삭제",
 			text : "게시물을 삭제하시겠습니까?",
@@ -116,7 +115,7 @@
 			}
 		}).then(function(isConfirm){
 			if(isConfirm){
-				location.href="/admission/delete?admission="+admissionNo;
+				location.href="/adoption/delete?adoption="+adoptionNo;
 			}
 		});
 	};

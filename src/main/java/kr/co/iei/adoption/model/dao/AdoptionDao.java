@@ -23,4 +23,6 @@ public interface AdoptionDao {
 	int searchTitleCount(String searchTitle);
 
 	List searchTitleAdoption(HashMap<String, Object> param);
+
+	int deleteAdoptionNo(int adoptionNo);
 }
