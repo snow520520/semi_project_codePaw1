@@ -25,4 +25,7 @@ public class AnimalService {
 		int animalNo = animalDao.searchAnimalNo(memberNo);
 		return animalNo;
 	}
+	
+	
+	
 }

@@ -151,4 +151,10 @@ public class ReviewService {
 		return result;
 	}
 
+	public Review selectOneReview(int reviewNo) {
+		Review review = reviewDao.selectOneReview(reviewNo);
+		
+		return null;
+	}
+
 }

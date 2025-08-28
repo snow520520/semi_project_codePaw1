@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>현재 입양 가능한 아이들</title>
 	<link rel="stylesheet" href="/css/review.css">
-	
-
-
-
 </head>
 <div>
     <th:block th:include="common/header"></th:block>
@@ -31,183 +24,18 @@
 		<hr>
 		<div class="all-review">
 		    <div class="all-card">
-				
+				<th:block  th:each="review : ${list}">
 				<div class="card-container">
 				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
+				        <img src="#.jpg" alt="아이1" th:href ="@{/review/view(reviewNo=${review.reviewNo})}">
 				    </div>
 				    <div class="card-info">
-				        <h3>이름1</h3>
+				        <h3 th:text="${review.reviewTitle}"></h3>
 				        <span class="like">좋아요</span>
 				    </div>
-				    <p class="date">2025-xx-xx</p>
+				    <p class="date" th:text="${review.reviewDate}"></p>
 				</div>
-				
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div> 
-				
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div>
-				
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div>
-				
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div>
-
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div> 
-
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div>
-
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div>
-				
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div>
-
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div> 
-
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div>
-
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div>
-				
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div>
-
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div> 
-
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div>
-
-				<div class="card-container">
-				    <div class="card">
-				        <img src="#.jpg" alt="아이1">
-				    </div>
-				    <div class="card-info">
-				        <h3>이름1</h3>
-				        <span class="like">좋아요</span>
-				    </div>
-				    <p class="date">2025-xx-xx</p>
-				</div>
-				
+				</th:block>
 				<div class="write-btn-wrapper">
 					<a href="/review/reviewWriteFrm">
 				    <button class="write-btn" >글쓰기</button>

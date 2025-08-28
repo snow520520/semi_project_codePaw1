@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.iei.animal.model.service.AnimalService;
+import kr.co.iei.animal.model.vo.Animal;
+import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.member.model.vo.Member;
 import kr.co.iei.review.model.service.ReviewService;
 import kr.co.iei.review.model.vo.Review;
@@ -25,7 +28,12 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reviewService;
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private AnimalService animalService;
 	
+	//목록 리스트 띄우기
 	@GetMapping(value = "/list")
 	public String reviewList(int reqPage, Model model) {
 		ReviewListData rld = reviewService.reviewList(reqPage);
@@ -33,6 +41,7 @@ public class ReviewController {
 		model.addAttribute("pageNavi", rld.getPageNavi());
 		return "review/list";
 	}
+	//검색
 	@GetMapping(value="/searchTitle")
 	public String searchTitle(String searchTitle, int reqPage, Model model) {
 		if(!searchTitle.isEmpty()) {
@@ -44,6 +53,35 @@ public class ReviewController {
 		}
 		return "review/list";
 	}
+	@GetMapping(value="/view")
+	public String view(int reviewNo, Model model) {
+		Review review = reviewService.selectOneReview(reviewNo);
+		if(review == null) {
+			model.addAttribute("title", "게시글 조회 실패");
+			model.addAttribute("text", "이미 삭제된 게시글입니다.");
+			model.addAttribute("icon", "info");
+			model.addAttribute("loc", "/review/list?reqPage=1");
+			return "common/msg";
+		}else {
+			int animalNo = review.getAnimalNo();
+			Animal animal = animalService.selectAnimalNo(animalNo);
+			model.addAttribute("review", review);
+			model.addAttribute("animalName", animal.getAnimalName());
+			return "review/view";
+			
+			
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@GetMapping(value="/reviewWriteFrm")
 	public String insertFrm(Member member, Model model) {
