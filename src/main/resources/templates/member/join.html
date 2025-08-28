@@ -46,15 +46,14 @@ body {
 	flex: display;
 	justify-content: center;
 }
-
 .join-form>div {
 	display: flex;
 	align-items: center;
 	gap: 15px;
 	border: 1px solid #854836;
+	border-bottom: none;
 	height: 50px;
 }
-
 .join-form>.input-name {
 	margin-top: 70px;
 }
@@ -163,6 +162,7 @@ body {
 	padding: 7px;
 	border-radius: 2px;
 	cursor: pointer;
+	
 }
 .material-icons-outlined {
 	cursor: pointer;
@@ -177,12 +177,11 @@ input[type=text] {
 input[type=password] {
 	width: 580px;
 }
-input[id=auto-code] {
-	width: 110px;
-	border: 1px solid #854836;
-	border-radius: 2px;
-}
 input:focus {outline:none;}
+
+div[class=email-div],div[class=input-age]{
+	border-bottom: 1px solid #854836;
+}
 </style>
 </head>
 <body>
@@ -213,11 +212,11 @@ input:focus {outline:none;}
 					<span class="material-icons-outlined">email</span>
 					<div class="emailCertify-div">
 						<input type="text" name="email" id="email" placeholder="이메일 주소"> 
-						<span id="autoMsg" style="font-size: 11px; font-weight: bold; display:none;"></span>
-						<span id="time-zone" style="font-size: 9px; font-weight: bold; display:none;"></span> 
-						<input type="text" id="auto-code" placeholder="인증번호 입력" style="display:none;">
-						<button type = "button" class="email-btn" id="email-btn">인증요청</button>
-						<button type = "button" class="btn-primary" id="auto-btn"  style="display:none;">인증</button>
+						<span id="autoMsg" style="font-size: 10px; font-weight: bold; display:none;"></span>
+						<span id="time-zone" style="font-size:13px; display:none; width: 40px;"></span> 
+						<input type="text" id="auto-code" placeholder="인증번호 입력" style="display:none; width:110px;  border: 1px solid #854836; border-radius: 2px;">
+						<button type = "button" class="email-button" id="email-btn">인증요청</button>
+						<button type = "button" class="btn-primary" id="auto-btn"  style="display:none;">인증완료</button>
 					</div>
 				</div>
 				<div class="input-name">
@@ -332,18 +331,19 @@ input:focus {outline:none;}
 			});
 		let mailCode = null;
 		$("#email-btn").on("click", function(){
-			const email = $("#email").val();
+			const receiver = $("#email").val();
 			$.ajax({
 				url: "/api/emailCode",
 				type: "get",
-				data: {email : email},
+				data: {receiver : receiver},
 				success: function(code){
 					mailCode = code;
+					$("#email-btn").hide();
 					$("#auto-code").show();
 					$("#auto-btn").show();
 					$("#time-zone").show();
 					$("#autoMsg").show();
-					$("#email-btn").hide();
+					$("#email").css("width", "230px");
 					autoTime();
 				}
 			});
@@ -356,19 +356,18 @@ input:focus {outline:none;}
 				window.clearInterval(intervalId);
 				$("#auto-code").hide();
 				$("#auto-btn").hide();
-				$("#time-zone").hide();
-				$("#autoMsg").hide();
-				mailCode = null;
 				$("#time-zone").empty();
-
+				$("#time-zone").hide();
+				mailCode = null;
 			}else{
 				$("#autoMsg").text("인증번호 입력해주세요");
 				$("#autoMsg").css("color", "red");
 			}
 		});
+		let intervalId = null;
 		function autoTime(){
 			$("#time-zone").html("<span id='minutes'>3</span> : <span id='seconds'>00</span>");
-			window.setInterVal(function(){
+			window.setInterval(function(){
 				const min = $("#minutes").text();
 				const sec = $("#seconds").text();
 				
@@ -376,19 +375,19 @@ input:focus {outline:none;}
 					if(min === "0"){
 						$("#autoMsg").text("인증시간 만료");
 						$("#autoMsg").css("color", "red");
-						window.clearInterVal(intervalId);
+						window.clearInterval(intervalId);
 						mailCode = null;
 					}else{
-						const clearMin = Number(min)-1;
-						$("#min").text(clearMin);
-						$("#sec").text(59);
+						const clearMin = Number(min) - 1;
+						$("#minutes").text(clearMin);
+						$("#seconds").text(59);
 					}
 				}else{
-					const clearSec = Number(sec)-1;
+					const clearSec = Number(sec) - 1;
 					if(clearSec < 10){
-						$("#sec").text("0"+clearSec);
+						$("#seconds").text("0"+clearSec);
 					}else{
-						$("#min").text(clearMin);
+						$("#seconds").text(clearSec);
 					}
 				}
 			}, 1000);

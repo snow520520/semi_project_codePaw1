@@ -18,7 +18,7 @@ public class ApiController {
 	
 	@ResponseBody
 	@GetMapping(value="/emailCode")
-	public String emailCode(String email) {
+	public String emailCode(String receiver) {
 		String emailTitle = "인증번호";
 		
 		Random r = new Random();
@@ -43,7 +43,7 @@ public class ApiController {
 		emailContent += sb.toString();
 		emailContent += "</span>";
 		emailContent += "]입니다.</h3>";
-		sendEmail.sendMail(emailTitle, email, emailContent);
+		sendEmail.sendMail(emailTitle, receiver, emailContent);
 		
 		return sb.toString();
 	}

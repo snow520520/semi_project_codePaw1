@@ -80,6 +80,14 @@ public class MemberController {
 	@PostMapping(value ="/join")
 	public String join(Member m, Model model) {
 		int result = memberService.join(m);
+		System.out.println(m);
+		if(m == null) {
+			 model.addAttribute("title", "회원가입 실패"); 
+			 model.addAttribute("text", "입력한 정보를 확인해주세요.");
+			 model.addAttribute("icon", "error");
+			 model.addAttribute("loc", "/member/joinFrm");
+			return "common/msg";
+		}
 		if(result == 0) {
 			 model.addAttribute("title", "회원가입 실패"); 
 			 model.addAttribute("text", "입력한 정보를 확인해주세요.");
@@ -92,5 +100,9 @@ public class MemberController {
 			model.addAttribute("loc", "/member/loginFrm");
 		}
 		return "common/msg"; 
+	}
+	@GetMapping(value = "/findIdFrm")
+	public String findIdFrm() {
+		return "member/findId";
 	}
 }
