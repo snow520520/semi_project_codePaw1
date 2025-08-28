@@ -3,34 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/css/adoption.css">
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
 			<form action="/adoption/update" method="post">
+				<input type="hidden" name="adoptionNo" th:value="${a.adoptionNo}">
+				<input type="hidden" name="memberId" th:value="${a.memberId}">
 				<p th:text="${a.adoptionTitle}"></p>
 				<input type="text" name="adoptionTitle" th:value="${a.adoptionTitle}">
-				<p th:text="${session.adoption.memberId}"></p>
+				<p th:text="${a.memberId}"></p>
 				<div>입양 희망자 정보</div>
 				<table>
 					<tr>
 						<th>이름</th>
 						<td>
-							<span th:text="${session.member.memberName}"></span>
+							<span th:text="${member.memberName}"></span>
 						</td>
+					</tr>
+					<tr>
 						<th>전화번호</th>
 						<td>
-							<span th:text="${session.member.memberPhone}"></span>
+							<span th:text="${member.memberPhone}"></span>
 						</td>
+					</tr>
+					<tr>
 						<th>주소</th>
 						<td>
-							<span th:text="${session.member.memberAddr}"></span>
+							<span th:text="${member.memberAddr}"></span>
 						</td>
+					</tr>
+					<tr>
 						<th>입양동기</th>
 						<td>
-							<span th:text="${adoption.adoptionContent}"></span>
-							<textarea name="adoptionContent" th:value="${a.adoptionContent}"></textarea>
+							<span th:text="${a.adoptionContent}"></span>
+							<textarea name="adoptionContent" th:text="${a.adoptionContent}"></textarea>
 						</td>
 					</tr>
 				</table>
@@ -41,6 +50,8 @@
 						<td>
 							<span th:text="${animal.animalName}"></span>
 						</td>
+					</tr>
+					<tr>
 						<th>품종</th>
 						<td>
 							<span th:text="${animal.animalType}"></span>
@@ -48,7 +59,7 @@
 					</tr>
 					<tr>
 						<td>
-							<button type="button" onclick="/adoption/view">취소</button>
+							<button type="button" onclick="location.href='/adoption/view?adoptionNo=[[${a.adoptionNo}]]'">취소</button>
 							<button type="submit">수정하기</button>
 						</td>
 					</tr>
