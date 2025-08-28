@@ -10,11 +10,8 @@
     <title>현재 입양 가능한 아이들</title>
 	<link rel="stylesheet" href="/css/review.css">
 	
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>현재 입양 가능한 아이들</title>
-	<link rel="stylesheet" href="/css/allpage.css">
-	
+
+
 
 </head>
 <div>
@@ -22,6 +19,15 @@
 	<div class="container">
 	<main>
 		<h2>입양사진 및 후기</h2>
+		<div class="searchTitle">
+			<form action ="/review/searchTitle" method ="get">
+				<input type="text" name ="searchTitle" placeholder="검색">
+				<input type="hidden" name ="reqPage" id="reqPage" value="1">
+				<button type ="submit">
+					<span class="material-icons">search</span>
+				</button>
+			</form>
+		</div>
 		<hr>
 		<div class="all-review">
 		    <div class="all-card">
@@ -207,6 +213,7 @@
 				    <button class="write-btn" >글쓰기</button>
 					</a>
 				</div>
+				<div id="pageNavi" th:utext="${pageNavi}"><</div>
 		    </div>
 		</div>
 	</main>

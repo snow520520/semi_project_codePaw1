@@ -1,13 +1,12 @@
 package kr.co.iei.admission.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+
 
 import kr.co.iei.admission.model.service.AdmissionService;
 import kr.co.iei.admission.model.vo.Admission;
@@ -21,7 +20,7 @@ import kr.co.iei.member.model.vo.Member;
 @RequestMapping(value="/admission")
 public class AdmissionController {
 	@Autowired
-	private AdmissionService admissionSerivce;
+	private AdmissionService admissionService;
 	@Autowired
 	private MemberService memberService;
 	@Autowired
@@ -29,17 +28,15 @@ public class AdmissionController {
 	
 	@GetMapping(value="/list")
 	public String list(int reqPage, Model model) {
-		AdmissionListData ald = admissionSerivce.selectAdmissionList(reqPage);
+		AdmissionListData ald = admissionService.selectAdmissionList(reqPage);
 		model.addAttribute("list", ald.getList());
 		model.addAttribute("pageNavi", ald.getPageNavi());
 		return "admission/list";
 	}
 	@GetMapping(value="/searchTitle")
 	public String searchTitle(String searchTitle, int reqPage, Model model) {
-		System.out.println("넣은 제목:"+searchTitle);
 		if(!searchTitle.isEmpty()) {
-			AdmissionListData ald = admissionSerivce.searchTitleAdmissionList(reqPage,searchTitle);
-			System.out.println("결과 : "+ald);
+			AdmissionListData ald = admissionService.searchTitleAdmissionList(reqPage,searchTitle);
 			if(ald != null) {
 				model.addAttribute("list", ald.getList());
 				model.addAttribute("pageNavi", ald.getPageNavi());
@@ -50,7 +47,7 @@ public class AdmissionController {
 	}
 	@GetMapping(value="/view")
 	public String view(int admissionNo, Model model) {
-		Admission admission = admissionSerivce.selectOneAdmission(admissionNo);
+		Admission admission = admissionService.selectOneAdmission(admissionNo);
 		String memberId = admission.getMemberId();
 		Member m = memberService.selectMemberId(memberId);
 		int animalNo = admission.getAnimalNo();
@@ -62,7 +59,7 @@ public class AdmissionController {
 	}
 	@GetMapping(value="/delete")
 	public String delete(int admissionNo, Model model) {
-		int result = admissionSerivce.deleteAdmissionNo(admissionNo);
+		int result = admissionService.deleteAdmissionNo(admissionNo);
 		if(result>0) {
 			model.addAttribute("title", "삭제 성공");
 			model.addAttribute("msg", "게시글이 삭제되었습니다.");
@@ -82,4 +79,5 @@ public class AdmissionController {
 		model.addAttribute("member", member);
 		return "admission/insertFrm";
 	}
+	
 }
