@@ -47,4 +47,10 @@
 	    SELECT * FROM member_tbl WHERE member_no = #{memberNo}
 	</select>
 	
+	<update id="updateProtectContent" parameterType="kr.co.iei.AllPage.model.vo.AllPage">
+    UPDATE protect_tbl
+    SET protect_content = #{protectContent}
+    WHERE protect_no = #{protectNo}
+	</update>
+
 </mapper>
