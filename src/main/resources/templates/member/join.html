@@ -179,7 +179,7 @@ input[type=password] {
 }
 input:focus {outline:none;}
 
-div[class=email-div],div[class=input-age]{
+div[class=email-div],div[class=input-phone]{
 	border-bottom: 1px solid #854836;
 }
 </style>
@@ -223,18 +223,19 @@ div[class=email-div],div[class=input-age]{
 					<span class="material-icons-outlined">dns</span>
 					<input type="text" name="memberName" id="memberName" placeholder="이름">
 				</div>
-				<div class="input-phone">
-					<span class="material-icons-outlined">phone_android</span> 
-					<input type="text" name="memberPhone" id="memberPhone" placeholder="전화번호">
+				<div class="input-age">
+					<span class="material-icons-outlined">badge</span> 
+					<input type="text" name="memberAge" id="memberAge" 
+					placeholder="나이">
 				</div>
 				<div class="input-addr">
 					<span class="material-icons-outlined">home</span> 
 					<input type="text" name="memberAddr" id="memberAddr" placeholder="주소">
 					<button type = "button" class="addr-button" id = "addr-btn">주소찾기</button>
 				</div>
-				<div class="input-age">
-					<span class="material-icons-outlined">badge</span> 
-					<input type="text" name="memberAge" id="memberAge" placeholder="나이">
+				<div class="input-phone">
+					<span class="material-icons-outlined">phone_android</span> 
+					<input type="text" name="memberPhone" id="memberPhone" placeholder="전화번호">
 				</div>
 				<div class="submit-btn">
 					<button type="submit" class="join-button">가입하기</button>
@@ -315,43 +316,73 @@ div[class=email-div],div[class=input-age]{
 				
 				const pwReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,15}$/; //6~15자 이내 대소문자, 숫자 각 1개 이상 포함
 				const regResult = pwReg.test(memberPwVal);
-				if(memberPwVal === memberPwReVal){
-					memberPwRe.css("width", "260px");
-					checkPwReMsg.show();
-					checkPwReMsg.css("color", "blue");
-					checkPwReMsg.text("비밀번호가 일치");
-					checkPwReMsg.addClass("valid");
+				if(regResult){
+					if(!memberPwReVal){
+						memberPwRe.css("width", "260px");
+						checkPwReMsg.show();
+						checkPwReMsg.css("color", "red");
+						checkPwReMsg.text("비밀번호를 입력해주세요.");
+						checkPwReMsg.addClass("invalid");
+					}else{
+						if(memberPwVal === memberPwReVal){
+							memberPwRe.css("width", "260px");
+							checkPwReMsg.show();
+							checkPwReMsg.css("color", "blue");
+							checkPwReMsg.text("비밀번호가 일치");
+							checkPwReMsg.addClass("valid");
+						}else{
+							memberPwRe.css("width", "260px");
+							checkPwReMsg.show();
+							checkPwReMsg.css("color", "red");
+							checkPwReMsg.text("비밀번호를 확인해주세요.");
+							checkPwReMsg.addClass("invalid");
+						}
+					}
 				}else{
-					memberPwRe.css("width", "260px");
-					checkPwReMsg.show();
-					checkPwReMsg.css("color", "red");
-					checkPwReMsg.text("비밀번호를 확인해주세요.");
-					checkPwReMsg.addClass("invalid");
+					if(memberPwVal !== memberPwReVal){
+						memberPwRe.css("width", "260px");
+						checkPwReMsg.show();
+						checkPwReMsg.css("color", "red");
+						checkPwReMsg.text("비밀번호를 다시 입력해주세요.");
+						checkPwReMsg.addClass("invalid");
+					}
 				}
 			});
 		let mailCode = null;
 		$("#email-btn").on("click", function(){
+			const emailReg = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/; // '계정@도메인.최상위도메인'
 			const receiver = $("#email").val();
-			$.ajax({
-				url: "/api/emailCode",
-				type: "get",
-				data: {receiver : receiver},
-				success: function(code){
-					mailCode = code;
-					$("#email-btn").hide();
-					$("#auto-code").show();
-					$("#auto-btn").show();
-					$("#time-zone").show();
-					$("#autoMsg").show();
-					$("#email").css("width", "230px");
-					autoTime();
+			const regResult = emailReg.test(receiver);
+			console.log(receiver);
+			if(regResult){
+				if(!receiver){
+					$("#autoMsg").css("color", "red").text("이메일을 입력해주세요.").show();
+				}else{
+					$("#autoMsg").text("good").css("color", "blue").css("font-size", "").show();
+					$.ajax({
+						url: "/api/emailCode",
+						type: "get",
+						data: {receiver : receiver},
+						success: function(code){
+							mailCode = code;
+							$("#email-btn").hide();
+							$("#auto-code").show();
+							$("#auto-btn").show();
+							$("#time-zone").show();
+							$("#email").css("width", "230px");
+							autoTime();
+						}
+					});
+						$("#autoMsg").isEmpty().hide();
 				}
-			});
+			}else{
+				$("#autoMsg").css("color", "red").text("이메일 형식에 맞게 입력해주세요.").show();
+			}
 		});
 		$("#auto-btn").on("click", function(){
 			const inputCode = $("#auto-code").val();
 			if(mailCode === inputCode){
-				$("#autoMsg").css("color", "blue");
+				$("#autoMsg").css("color", "blue").css("margin-right", "20px");
 				$("#autoMsg").text("인증 완료");
 				window.clearInterval(intervalId);
 				$("#auto-code").hide();
@@ -398,8 +429,17 @@ div[class=email-div],div[class=input-age]{
 		            console.log(data);
 		            $("#memberAddr").val(data.roadAddress);
 		            $("#memberAddr").focus();
+		            $("#memberAddr").attr("readonly");
 		        }
 		    }).open();
+		});
+		$("button[type=submit]").on("click",function(e){
+			let memberAge = $("#memberAge").val();
+			console.log(memberAge);
+			if(memberAge === ""){
+				e.preventDefault();
+				alert("가입정보를 입력해주세요");
+			}
 		});
 	</script>
 	<th:block th:include="common/footer"></th:block>
