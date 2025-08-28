@@ -52,7 +52,7 @@
 			<div th:text="${admission.memberId}"></div>
 			<div th:text="${admission.admissionDate}"></div>
 			<div> </div>
-			<a class="updateAdmission">수정</a>
+			<a class="updateAdmission" th:href="@{/admission/updateFrm(admissionNo=${admission.admissionNo},animalNo=${animal.animalNo})}">수정</a>
 			<a th:onclick="deleteAdmission([[${admission.admissionNo}]]);">삭제</a>
 			<div class="info-tbl">
 				<div>보호자 정보</div>
