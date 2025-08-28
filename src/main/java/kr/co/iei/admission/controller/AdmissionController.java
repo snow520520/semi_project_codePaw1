@@ -133,5 +133,13 @@ public class AdmissionController {
 		 model.addAttribute("loc", "/admission/list?reqPage=1");
 		 return "common/msg";
 	 }
+	 @GetMapping(value="/updateFrm")
+	 public String updateFrm(int admissionNo, int animalNo, Model model) {
+		 Admission admission = admissionService.selectOneAdmission(admissionNo);
+		 Animal animal = animalService.selectAnimalNo(animalNo);
+		 model.addAttribute("admission", admission);
+		 model.addAttribute("animal", animal);
+		 return "admission/updateFrm";
+	 }
 	
 }
