@@ -123,7 +123,7 @@ public class AdoptionController {
 	    Animal animal = animalService.selectAnimalNo(animalNo);
 		model.addAttribute("a", a);
 		model.addAttribute("member", member);
-		 model.addAttribute("animal", animal);
+		model.addAttribute("animal", animal);
 		return "adoption/updateFrm";
 	}
 	

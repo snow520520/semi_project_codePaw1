@@ -16,6 +16,14 @@ public interface ReviewDao {
 
 	int insertReview(Review r);
 
+	int searchTitleCount(String searchTitle);
+
+	List searchTitleReview(HashMap<String, Object> param);
+
+	int deleteReviewNo(int reviewNo);
+
+	Review selectOneReview(int reviewNo);
+
 	
 
 }

@@ -25,6 +25,7 @@ public interface AllPageDao {
     AllPage selectOneProtect(@Param("protectNo") int protectNo);
     Animal selectAnimal(@Param("animalNo") int animalNo);
     Member selectMember(@Param("memberNo") int memberNo);
-
     int updateProtectContent(AllPage ap);
+    List<Integer> selectAnimalNoList(Animal animal);
+	int insertAnimal(Animal animal);
 }
