@@ -23,7 +23,7 @@
     <select id="selectPageProtect" resultType="kr.co.iei.AllPage.model.vo.AllPage">
     SELECT * FROM (
         SELECT ROW_NUMBER() OVER (ORDER BY protect_no DESC) AS rnum,
-               p.protect_no, p.protect_title, p.protect_date
+               p.protect_no, p.protect_title, p.protect_date, p.protect_content
         FROM protect_tbl p
     )
     WHERE rnum BETWEEN #{start} AND #{end}
@@ -45,5 +45,4 @@
 	    SELECT * FROM member_tbl WHERE member_no = #{memberNo}
 	</select>
 	
-    
 </mapper>

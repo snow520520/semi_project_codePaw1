@@ -1,6 +1,8 @@
 package kr.co.iei.AllPage.model.service;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +42,30 @@ public class AllPageService {
     public List<AllPage> selectPageList(int currentPage, int recordCountPerPage) {
         int start = (currentPage - 1) * recordCountPerPage + 1;
         int end = currentPage * recordCountPerPage;
-        return allpageDao.selectPageProtect(start, end);
+        
+        List<AllPage> list = allpageDao.selectPageProtect(start, end);
+
+        for (AllPage ap : list) {
+            String content = ap.getProtectContent();
+            String thumbnailUrl = extractFirstImageSrc(content);
+            ap.setThumbnailUrl(thumbnailUrl);
+        }
+
+        return list;
+    }
+
+    private String extractFirstImageSrc(String content) {
+        if (content == null) {
+            return "/image/slider/3.jpg";
+        }
+        Pattern pattern = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
+        Matcher matcher = pattern.matcher(content);
+
+        if (matcher.find()) {
+            return matcher.group(1);
+        } else {
+            return "/image/slider/3.jpg";
+        }
     }
 
     public int getTotalCount() {
@@ -83,7 +108,15 @@ public class AllPageService {
     }
     
     public List<AllPage> selectPageListRead(int start, int end) {
-        return allpageDao.selectPageProtect(start, end);
+        List<AllPage> list = allpageDao.selectPageProtect(start, end);
+
+        for (AllPage ap : list) {
+            String content = ap.getProtectContent();
+            String thumbnailUrl = extractFirstImageSrc(content);
+            ap.setThumbnailUrl(thumbnailUrl);
+        }
+
+        return list;
     }
     
     public AllPage selectOneProtect(int protectNo) {
