@@ -46,11 +46,14 @@ public class AllPageService {
         List<AllPage> list = allpageDao.selectPageProtect(start, end);
 
         for (AllPage ap : list) {
-            String content = ap.getProtectContent();
-            String thumbnailUrl = extractFirstImageSrc(content);
-            ap.setThumbnailUrl(thumbnailUrl);
+            if ("2".equals(ap.getProtectStatus())) {
+                ap.setThumbnailUrl("/image/complete.png");
+            } else {
+                String content = ap.getProtectContent();
+                String thumbnailUrl = extractFirstImageSrc(content);
+                ap.setThumbnailUrl(thumbnailUrl);
+            }
         }
-
         return list;
     }
 
@@ -86,8 +89,8 @@ public class AllPageService {
         sb.append("<ul class='pagination circle-style'>");
 
         if(needPrev) {
-            sb.append("<li><a class='page-item' href='" + url + "?page=" + (startNavi - 1) + "'>");
-            sb.append("<span class='material-icons'>chevron_left</span></a></li>");
+            sb.append("<li><a class='page-item' href='" + url + "?page=" + (startNavi - 1) + "'>"
+                    + "<span class='material-icons'>chevron_left</span></a></li>");
         }
 
         for(int i = startNavi; i <= endNavi; i++) {
@@ -99,8 +102,8 @@ public class AllPageService {
         }
 
         if(needNext) {
-            sb.append("<li><a class='page-item' href='" + url + "?page=" + (endNavi + 1) + "'>");
-            sb.append("<span class='material-icons'>chevron_right</span></a></li>");
+            sb.append("<li><a class='page-item' href='" + url + "?page=" + (endNavi + 1) + "'>"
+                    + "<span class='material-icons'>chevron_right</span></a></li>");
         }
 
         sb.append("</ul>");
@@ -111,16 +114,24 @@ public class AllPageService {
         List<AllPage> list = allpageDao.selectPageProtect(start, end);
 
         for (AllPage ap : list) {
-            String content = ap.getProtectContent();
-            String thumbnailUrl = extractFirstImageSrc(content);
-            ap.setThumbnailUrl(thumbnailUrl);
+            if ("2".equals(ap.getProtectStatus())) {
+                ap.setThumbnailUrl("/image/complete.png");
+            } else {
+                String content = ap.getProtectContent();
+                String thumbnailUrl = extractFirstImageSrc(content);
+                ap.setThumbnailUrl(thumbnailUrl);
+            }
         }
 
         return list;
     }
     
     public AllPage selectOneProtect(int protectNo) {
-        return allpageDao.selectOneProtect(protectNo);
+        AllPage ap = allpageDao.selectOneProtect(protectNo);
+        if (ap != null && "2".equals(ap.getProtectStatus())) {
+            ap.setThumbnailUrl("/image/complete.png");
+        }
+        return ap;
     }
 
     public Animal selectAnimal(int animalNo) {

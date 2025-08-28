@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,7 +53,7 @@
 		   <a href="/mainAllpage/allpage">
 		   		<button type="button" class="submit-button">목록으로</button>
 		   </a>
-		   <a th:href="@{/adoption/writeFrm(protectNo=${ap.protectNo})}">
+           <a th:if="${ap.protectStatus == '1'}" th:href="@{/adoption/writeFrm(protectNo=${ap.protectNo})}">
 		   		<button type="submit" class="submit-button">입양신청</button>
 		   </a>
 		</div>
