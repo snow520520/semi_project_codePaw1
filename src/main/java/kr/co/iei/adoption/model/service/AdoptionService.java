@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.co.iei.admission.model.vo.AdmissionListData;
 import kr.co.iei.adoption.model.dao.AdoptionDao;
 import kr.co.iei.adoption.model.vo.Adoption;
 import kr.co.iei.adoption.model.vo.AdoptionListData;
@@ -148,5 +147,10 @@ public class AdoptionService {
 		}else {
 			return null;
 		}
+	}
+
+	public int deleteAdoptionNo(int adoptionNo) {
+		int result = adoptionDao.deleteAdoptionNo(adoptionNo);
+		return result;
 	}
 }

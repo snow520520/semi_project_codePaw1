@@ -27,8 +27,7 @@
                     <div class="card-container">
                         <a th:href="@{/mainAllpage/detail(protectNo=${ap.protectNo})}">
                             <div class="card">
-                                
-                                <img class="thumbnail" src="/image/slider/3.jpg" alt="썸네일" />
+                                <img class="thumbnail" th:src="${ap.thumbnailUrl}" alt="썸네일" />
                             </div>
                         </a>
                         <div class="card-info">
@@ -36,9 +35,6 @@
                             <span class="like">좋아요</span>
                         </div>
                         <p class="date" th:text="${ap.protectDate}">2025-xx-xx</p>
-
-
-                        <div class="content" th:utext="${ap.protectContent}" style="display:none"></div>
                     </div>
                 </div>
             </div>
@@ -48,30 +44,5 @@
     </div>
 
     <th:block th:include="common/footer"></th:block>
-
-
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-		    document.querySelectorAll('.card-container').forEach(card => {
-		        const content = card.querySelector('.content');
-		        const thumb = card.querySelector('.thumbnail');
-
-		        let firstImg = content.querySelector('img');
-		        if (firstImg) {
-		            thumb.src = firstImg.src;
-		            return;
-		        }
-
-
-		        const text = content.textContent.trim();
-		        const urlPattern = /(https?:\/\/[^\s]+|\S+\/editorImage\/[^\s]+)/i;
-		        const match = text.match(urlPattern);
-		        if (match) {
-		            thumb.src = match[0];
-		        }
-		    });
-		});
-	</script>
-
 </body>
 </html>

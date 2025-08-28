@@ -19,6 +19,5 @@ public class Animal {
 	private String animalInocul;
 	private String animalNeuter;
 	private int memberNo;
-	private int admissionNo;
 	private String animalAdmission;
 }

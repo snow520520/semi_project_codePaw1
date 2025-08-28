@@ -9,4 +9,8 @@ public interface AnimalDao {
 
 	Animal selectAnimalNo(int animalNo);
 
+	int insertAnimal(Animal animal);
+
+	int searchAnimalNo(int memberNo);
+
 }
