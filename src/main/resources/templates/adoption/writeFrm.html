@@ -12,6 +12,7 @@
 			<div>입양신청</div>
 			<form action="/adoption/write" method="post">
 			<input type="hidden" name="protectNo" th:value="${protectNo}">
+			<input type="hidden" name="memberId" th:value="${member.memberId}">
 				<div>
 					<input type="text" name="adoptionTitle" placeholder="제목">
 				</div>
