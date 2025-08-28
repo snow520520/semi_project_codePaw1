@@ -19,4 +19,10 @@ public interface AdoptionDao {
 	Adoption selectOneAdoption(int adoptionNo);
 
 	int updateAdoption(Adoption a);
+
+	int searchTitleCount(String searchTitle);
+
+	List searchTitleAdoption(HashMap<String, Object> param);
+
+	int deleteAdoptionNo(int adoptionNo);
 }

@@ -3,60 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/css/adoption.css">
+<style>
+	.section>div:first-child{
+		font-size: 26px;
+		font-weight: 400;
+		padding-bottom: 20px;
+	}
+	.section>div:nth-child(2){
+		display: inline-block;
+	}	
+	.section>div:nth-child(3){
+		float: right;
+	}
+	.section>div:nth-child(4){
+		border-bottom: 1px solid #000000;
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+	}
+	.info-tbl{
+		width: 880px;
+		margin: 0 auto;
+	}
+	.info-tbl>div{
+		font-size: 20px;
+		font-weight: 500;
+		padding-bottom: 10px;
+		padding-top: 30px;
+	}
+	.admissionContent>th,
+	.admissionContent>td{
+		height: 120px;
+	}
+	th{
+		font-weight: 500;
+	}
+	.section>a{
+		float: right;
+		margin-left: 20px;
+	}
+</style>
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
-			<div>
-				<p th:text="${a.adoptionTitle}"></p>
-				<p th:text="${a.memberId}"></p>
+			<div th:text="${a.adoptionTitle}"></div>
+			<div th:text="${a.memberId}"></div>
+			<div th:text="${a.adoptionDate}"></div>
+			<div> </div>
+			<a th:href="@{/adoption/updateFrm(adoptionNo=${a.adoptionNo})}">수정</a>
+			<a th:onclick="deleteAdoption([[${a.adoptionNo}]])">삭제</a>
+			<div class="info-tbl">
+				<div>입양 희망자 정보</div>
+				<table class="tbl member">
+					<tr>
+						<th style="width: 20%">이름</th>
+						<td style="width: 80%" th:text="${member.memberName}"></td>
+					</tr>
+					<tr>
+						<th style="width: 20%">전화번호</th>
+						<td style="width: 80%" th:text="${member.memberPhone}"></td>
+					</tr>						<tr>
+						<th style="width: 20%">주소</th>
+						<td style="width: 80%" th:text="${member.memberAddr}"></td>
+					</tr>
+					<tr>
+						<th style="width: 20%">입양동기</th>
+						<td style="width: 80%" th:text="${a.adoptionContent}"></td>
+					</tr>
+				</table>
+				<div>아이 정보</div>
+				<table class="tbl animal">
+					<tr>
+						<th style="width: 20%">이름</th>
+						<td style="width: 80%" th:text="${animal.animalName}"></td>
+					<tr>
+					<tr>
+						<th style="width: 20%">품종</th>
+						<td style="width: 80%" th:text="${animal.animalType}"></td>
+					</tr>
+				</table>
+				<div class="btn-box">
+					<button type="button" onclick="location.href='/adoption/list?reqPage=1'">목록으로</button>
+				</div>
 			</div>
-			<div>
-				<a th:href="@{/adoption/updateFrm(adoptionNo=${a.adoptionNo})}">수정</a>
-				<a th:onclick="deleteAdoption([[${a.adoptionNo}]])">삭제</a>
-			</div>
-			<div>입양 희망자 정보</div>
-			<table>
-				<tr>
-					<th>이름</th>
-					<td>
-						<span th:text="${member.memberName}"></span>
-					</td>
-					<th>전화번호</th>
-					<td>
-						<span th:text="${member.memberPhone}"></span>
-					</td>
-					<th>주소</th>
-					<td>
-						<span th:text="${member.memberAddr}"></span>
-					</td>
-					<th>입양동기</th>
-					<td>
-						<span th:text="${a.adoptionContent}"></span>
-					</td>
-				</tr>
-			</table>
-			<div>아이 정보</div>
-			<table>
-				<tr>
-					<th>이름</th>
-					<td>
-						<span th:text="${animal.animalName}"></span>
-					</td>
-					<th>품종</th>
-					<td>
-						<span th:text="${animal.animalType}"></span>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<button type="button" onclick="location.href='/adoption/list'">목록으로</button>
-					</td>
-				</tr>
-			</table>
 		</section>
 	</main>
+	<script src="/js/sweetalert.min.js"></script>
+	<script>
+	function deleteAdoption(adoptionNo){
+		swal({
+			title : "게시물 삭제",
+			text : "게시물을 삭제하시겠습니까?",
+			icon : "warning",
+			buttons : {
+				cancel:{
+					text: "취소",
+					value: false,
+					visible: true,
+					ClassName :"btn-swal",
+					colseModal: true
+				},
+				confirm:{
+					text: "삭제하기",
+					value: true,
+					visible : true,
+					ClassName : "btn-swal-color",
+					closeModal : true
+				}
+			}
+		}).then(function(isConfirm){
+			if(isConfirm){
+				location.href="/adoption/delete?adoption="+adoptionNo;
+			}
+		});
+	};
+	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>

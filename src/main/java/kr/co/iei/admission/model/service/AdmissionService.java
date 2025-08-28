@@ -146,6 +146,12 @@ public class AdmissionService {
 		int result = admissionDao.deleteAdmissionNo(admissionNo);
 		return result;
 	}
+	
+	@Transactional
+	public int insertAdmission(Admission admission) {
+		int result = admissionDao.insertAdmission(admission);
+		return result;
+	}
 
 	
 }

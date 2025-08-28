@@ -72,9 +72,9 @@ public class AllPageController {
         int totalCount = allpageService.getTotalCount();
         List<AllPage> list = allpageService.selectPageList(page, recordCountPerPage);
 
-        String pageNavi = allpageService.getPageNavi(page, totalCount, recordCountPerPage, naviCountPerPage, "/mainAllpage/allpage");
-
         model.addAttribute("list", list);
+
+        String pageNavi = allpageService.getPageNavi(page, totalCount, recordCountPerPage, naviCountPerPage, "/mainAllpage/allpage");
         model.addAttribute("pageNavi", pageNavi);
 
         Member member = (Member) session.getAttribute("member");
@@ -133,4 +133,45 @@ public class AllPageController {
         return "/editorImage/" + filename;  
     }
     
+    @GetMapping("/mainAllpage/updateFrm")
+    public String updateFrm(@RequestParam("protectNo") int protectNo, Model model, HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        if (member == null || member.getMemberLevel() != 1) {
+            return "redirect:/";
+        }
+
+        AllPage ap = allpageService.selectOneProtect(protectNo);
+        if (ap == null) {
+            return "redirect:/mainAllpage/allpage";
+        }
+
+        Animal animal = allpageService.selectAnimal(ap.getAnimalNo());
+
+        model.addAttribute("ap", ap);
+        model.addAttribute("animal", animal);
+
+        return "mainAllpage/updateFrm"; 
+    }
+
+    @PostMapping("/mainAllpage/update")
+    public String update(@RequestParam("protectNo") int protectNo,
+                         @RequestParam("protectContent") String protectContent,
+                         HttpSession session) {
+
+        Member member = (Member) session.getAttribute("member");
+        if (member == null || member.getMemberLevel() != 1) {
+            return "redirect:/";
+        }
+
+        AllPage ap = allpageService.selectOneProtect(protectNo);
+        if (ap == null) {
+            return "redirect:/mainAllpage/allpage";
+        }
+
+        ap.setProtectContent(protectContent);
+
+        allpageService.updateProtectContent(ap);
+
+        return "redirect:/mainAllpage/detail?protectNo=" + protectNo;
+    }
 }

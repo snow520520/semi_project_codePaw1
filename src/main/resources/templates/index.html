@@ -25,21 +25,21 @@
 			    <a href="/mainAllpage/allpage">전체보기</a>
 			</div>
 			<div class="all-card">
-			                <div th:each="ap : ${list}">
-			                    <div class="card-container">
-			                        <a th:href="@{/mainAllpage/detail(protectNo=${ap.protectNo})}">
-			                            <div class="card">
-			                                <img src="/image/slider/1.jpg" alt="이미지" />
-			                            </div>
-			                        </a>
-			                        <div class="card-info">
-			                            <h3 th:text="${ap.protectTitle}">제목</h3>
-			                            <span class="like">좋아요</span>
-			                        </div>
-			                        <p class="date" th:text="${ap.protectDate}">2025-xx-xx</p>
-			                    </div>
+			    <div th:each="ap : ${list}">
+			        <div class="card-container">
+			            <a th:href="@{/mainAllpage/detail(protectNo=${ap.protectNo})}">
+			                <div class="card">
+			                    <img th:src="${ap.thumbnailUrl}" alt="이미지" />
 			                </div>
+			            </a>
+			            <div class="card-info">
+			                <h3 th:text="${ap.protectTitle}">제목</h3>
+			                <span class="like">좋아요</span>
 			            </div>
+			            <p class="date" th:text="${ap.protectDate}">2025-xx-xx</p>
+			        </div>
+			    </div>
+			</div>
 
 	        <div class="more-btn-container">
 	            <button class="more-btn">더보기</button>
@@ -64,7 +64,7 @@
 	                    div.innerHTML = `
 	                        <a href="/mainAllpage/detail?protectNo=${ap.protectNo}">
 	                            <div class="card">
-	                                <img src="/image/slider/1.jpg" alt="이미지" />
+	                                <img class="thumbnail" src="${ap.thumbnailUrl}" alt="썸네일" />
 	                            </div>
 	                        </a>
 	                        <div class="card-info">

@@ -35,4 +35,7 @@
   <delete id="deleteAdmissionNo">
   	delete from admission where admission_no = ${admissionNo}
   </delete>
+  <insert id="insertAdmission">
+  	insert into admission values(admission_seq.nextval,#{admissionTitle},#{admissionContent},to_char(sysdate,'yyyy-mm-dd'),#{memberId},#{animalNo})
+  </insert>
 </mapper>

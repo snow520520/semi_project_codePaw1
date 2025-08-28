@@ -5,28 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>현재 입양 가능한 아이들</title>
     <link rel="stylesheet" href="/css/allpage.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <th:block th:include="common/header"></th:block>
+
     <div class="container">
         <main>
-			<div class="header-wrapper">
-            <h2>현재 입양 가능한 아이들</h2>
-			<div th:if="${member != null and member.memberLevel == 1}">
-			    <a href="/mainAllpage/writeFrm">
-			        <button class="write-btn">글쓰기</button>
-			    </a>
-			</div>
-			</div>
+            <div class="header-wrapper">
+                <h2>현재 입양 가능한 아이들</h2>
+                <div th:if="${member != null and member.memberLevel == 1}">
+                    <a href="/mainAllpage/writeFrm">
+                        <button class="write-btn">글쓰기</button>
+                    </a>
+                </div>
+            </div>
             <hr>
+
             <div class="all-card">  
                 <div th:each="ap : ${list}">
                     <div class="card-container">
                         <a th:href="@{/mainAllpage/detail(protectNo=${ap.protectNo})}">
                             <div class="card">
-                                <img src="/image/slider/1.jpg" alt="이미지" />
+                                <img class="thumbnail" th:src="${ap.thumbnailUrl}" alt="썸네일" />
                             </div>
                         </a>
                         <div class="card-info">
@@ -37,9 +38,11 @@
                     </div>
                 </div>
             </div>
-			<div id="pageNavi" th:utext="${pageNavi}"></div>
+
+            <div id="pageNavi" th:utext="${pageNavi}"></div>
         </main>
     </div>
+
     <th:block th:include="common/footer"></th:block>
 </body>
 </html>
