@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오시는 길</title>
+    <link rel="stylesheet" href="/css/Directions.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: #f0f0f0;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 1400px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            flex: 1;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 20px;
+            flex: 1;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 10px 0 20px 0;
+            width: 100%;
+        }
+
+        .contact-info {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #555;
+            padding-bottom: 100px;
+        }
+
+        .contact-info p {
+            margin: 5px 0;
+            font-size: 18px;
+            color: #777;
+        }
+
+        .address-wrap {
+            margin-bottom: 20px;
+        }
+
+        .address-wrap h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .address-wrap p {
+            font-size: 18px;
+            color: #777;
+        }
+
+        .Allselect-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px; 
+            padding-top: 50px;
+            align-items: flex-start;
+        }
+
+        .select-container {
+            width: 56%;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        #map {
+            width: 43%;
+            height: 540px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .address-wrap, .contact-info {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .address-wrap h3, .contact-info h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .address-wrap p, .contact-info p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .contact-info p {
+            margin-top: 10px;
+        }
+		.content-img img{
+			width: 100%;
+		}
+    </style>
+</head>
+<body>
+
+    <th:block th:include="common/header"></th:block>
+    <div class="container">
+        <main>
+            <div class="header-wrapper">
+                <h2>오시는 길</h2>
+            </div>
+            <hr>
+            <div class="Allselect-container">
+                <div class="select-container">
+                    <div class="address-wrap">
+                        <h3>주소</h3>
+                        <p>서울특별시 영등포구 선유동2로 57 이레빌딩(구관)</p>
+                    </div>
+
+                    <div class="contact-info">
+                        <h3>상담 전화</h3>
+                        <p>입사/입양: 010-1234-1234</p>
+                    </div>
+					<div class="content-img">
+						<img src="/image/directions.png">					
+					</div>
+              	  </div>
+                <div id="map"></div>
+            </div>
+        </main>
+    </div>
+
+    <th:block th:include="common/footer"></th:block>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=71vdn4d6s0"></script>
+	<script>
+	    const mapDiv = document.getElementById('map');
+	    const map = new naver.maps.Map(mapDiv, {
+	        center: new naver.maps.LatLng(37.5338151, 126.8969784),
+	        zoom: 17,
+	        zoomControl: true,
+	        zoomControlOptions: {
+	            position: naver.maps.Position.TOP_RIGHT,
+	            style: naver.maps.ZoomControlStyle.SMALL
+	        }
+	    });
+
+	    const marker = new naver.maps.Marker({
+	        position: new naver.maps.LatLng(37.533842, 126.896977),
+	        map: map
+	    });
+
+	    const infoWindow = new naver.maps.InfoWindow({
+	        content: '<div style="padding:10px;">서울시 영등포구 선유2로 57 이레빌딩 19층</div>',
+	        position: marker.getPosition() 
+	    });
+
+	    infoWindow.open(map, marker);
+
+
+	    
+	</script>
+
+</body>
+</html>

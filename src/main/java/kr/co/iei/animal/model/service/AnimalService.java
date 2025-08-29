@@ -30,6 +30,11 @@ public class AnimalService {
 		int result = animalDao.updateAnimal(animal);
 		return result;
 	}
+	@Transactional
+	public int admissionCheck(int animalNo) {
+		int result = animalDao.admissionCheck(animalNo);
+		return result;
+	}
 	
 	
 	

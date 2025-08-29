@@ -15,4 +15,6 @@ public interface AnimalDao {
 
 	int updateAnimal(Animal animal);
 
+	int admissionCheck(int animalNo);
+
 }
