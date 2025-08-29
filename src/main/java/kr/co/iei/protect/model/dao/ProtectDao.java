@@ -12,21 +12,25 @@ import kr.co.iei.protect.model.vo.Protect;
 @Mapper
 public interface ProtectDao {
 
-	Integer selectAnimalNo(Animal animal);
-	
-	int insertProtect(Protect ap);
-	int getNextProtectNo();
+    Integer selectAnimalNo(Animal animal);
 
-	List<Protect> selectAllProtect();
-	
-	List<Protect> selectPageProtect(@Param("start") int start, @Param("end") int end);
-	
+    int insertProtect(Protect ap);
+    int getNextProtectNo();
+
+    List<Protect> selectAllProtect();
+
+    List<Protect> selectPageProtect(@Param("start") int start, @Param("end") int end);
+
     int selectTotalCount();
-    
+
     Protect selectOneProtect(@Param("protectNo") int protectNo);
     Animal selectAnimal(@Param("animalNo") int animalNo);
     Member selectMember(@Param("memberNo") int memberNo);
     int updateProtectContent(Protect ap);
     List<Integer> selectAnimalNoList(Animal animal);
-	int insertAnimal(Animal animal);
+    int insertAnimal(Animal animal);
+
+    List<Animal> selectAnimalByNameAndAgeList(Animal animal);
+
+	List<Integer> selectAnimalNoListByNo(int animalNo);
 }

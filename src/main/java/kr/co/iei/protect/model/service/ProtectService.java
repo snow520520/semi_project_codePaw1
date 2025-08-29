@@ -21,21 +21,20 @@ public class ProtectService {
 
     @Transactional
     public int insertProtect(Protect ap, int memberNo, Animal animal) {
-        List<Integer> existingAnimalList = protectDao.selectAnimalNoList(animal);
-        if (!existingAnimalList.isEmpty()) return -1;
+        List<Animal> matchingAnimals = protectDao.selectAnimalByNameAndAgeList(animal);
+        if (matchingAnimals.isEmpty()) return -2;
 
-        int newAnimalNo = protectDao.insertAnimal(animal);
-        if (newAnimalNo <= 0) return 0;
+        Animal selectedAnimal = matchingAnimals.get(0);
+        List<Integer> existingProtects = protectDao.selectAnimalNoListByNo(selectedAnimal.getAnimalNo());
 
+        if (!existingProtects.isEmpty()) return -1; 
+
+        int nextProtectNo = protectDao.getNextProtectNo();
+        ap.setProtectNo(nextProtectNo);
         ap.setMemberNo(memberNo);
-        ap.setAnimalNo(newAnimalNo);
-        int newProtectNo = protectDao.getNextProtectNo();
-        ap.setProtectNo(newProtectNo);
-        return protectDao.insertProtect(ap);
-    }
+        ap.setAnimalNo(selectedAnimal.getAnimalNo());
 
-    public List<Protect> selectAllProtect() {
-        return protectDao.selectAllProtect();
+        return protectDao.insertProtect(ap);
     }
 
     public List<Protect> selectPageList(int currentPage, int recordCountPerPage) {
@@ -91,7 +90,7 @@ public class ProtectService {
     }
 
     public Protect selectOneProtect(int protectNo) {
-    	Protect ap = protectDao.selectOneProtect(protectNo);
+        Protect ap = protectDao.selectOneProtect(protectNo);
         if (ap != null && "2".equals(ap.getProtectStatus())) ap.setThumbnailUrl("/image/complete.png");
         return ap;
     }
@@ -108,5 +107,4 @@ public class ProtectService {
     public int updateProtectContent(Protect ap) {
         return protectDao.updateProtectContent(ap);
     }
-	
 }
