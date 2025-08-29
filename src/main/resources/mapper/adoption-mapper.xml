@@ -25,7 +25,7 @@
 	    	(select rownum as rnum, n.* from
 	        	(select 
 	            	adoption_no, adoption_title, member_id, adoption_date 
-	        	from adoption where adoption_title like '%'||${searchTitle}||'%' 
+	        	from adoption where adoption_title like '%'||'${searchTitle}'||'%' 
 	        	order by adoption_no desc
 	        	)n
 	    	)
