@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 <style>
 body {
 	font-family: Nanum Gothic Coding, sans-serif;
@@ -10,7 +12,6 @@ body {
 	align-items: center;
 	height: 100vh;
 }
-
 .content {
 	width: 100%;
 	height: 800px;
@@ -54,7 +55,7 @@ body {
 	margin: 0 auto;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
-	
+	border-collapse: collapse;
 }
 .admin-table>tbody>tr>td{
 	text-align: center;
@@ -70,7 +71,7 @@ body {
 	margin-right: 20px;
 }
 .ud-button>button{
-	width: 70px;
+	width: 100px;
 	height: 30px;
 	margin: 5px; 
 	padding: 3px;
@@ -86,7 +87,7 @@ body {
 	margin-right: 10px;
 }
 .search-div{
-	height: 70px;
+	height: 100px;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -94,9 +95,7 @@ body {
 .search-div>.allSearch-div{
 	margin-left: 50px;
 }
-.search-div>.selectChangeLevel{
-	margin-left: 650px;
-}
+
 .search-div>.allSearch-title{
 	color: #854836;
 	font-size: 20px;
@@ -110,7 +109,7 @@ body {
 	padding: 10px 15px;
 	border-bottom: 1px solid #c8c8c8;
 }
-.search-div button{
+.search-div>.allSearch-div>button{
 	width: 100px;
 	height: 30px;
 	margin: 5px; 
@@ -136,6 +135,47 @@ body {
 	font-size: 13px;
 	font-weight: 500;
 }
+
+.select-search{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-left: 580px;
+}
+.select-search>form{
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+.select-search>form>button{
+	border: none;
+	background-color: transparent;
+	margin-left: 10px;
+	margin-top: 2px;
+	cursor: pointer;
+}
+.select-search>.selectChange{
+	margin-left: 100px;
+}
+.selectChange-btn{
+	width: 100px;
+	height: 30px;
+	margin: 5px; 
+	padding: 3px;
+	color: white;
+	border: none;
+	border-radius: 15px;
+	cursor: pointer;
+	background-color: #ffb22c;
+	font-size: 13px;
+	font-weight: 500;
+}
+.chb-input{
+	border: none;
+}
+.admin-table th{
+	background-color: #F7F7F7;
+}
 </style>
 </head>
 <body>
@@ -153,17 +193,29 @@ body {
 					</div>
 					<div class="search-div">
 						<div class="allSearch-title">회원조회</div>
-						<div class="allSearch-title" style = "display: none">동물조회</div>
+						<div class="allSearch-title"style="display: none;">동물조회</div>
 						<div class="allSearch-div">
-							<button class="member-search">전체회원조회</button>
-							<button class="animal-search">전체동물조회</button>
+							<button class="member-search" >전체회원조회</button>
+							<button class="animal-search" >전체동물조회</button>
 						</div>
-						<div class="selectChangeLevel">
-							<button class="selectChangeLevel-btn">선택등급변경</button>
+						<div class="select-search">
+							<div class="selectChangeLevel">
+								<button class="selectChangeLevel-btn">선택등급변경</button>
+							</div>
+							<div class="animalSelectChange" style="display: none">
+								<button class="animalSelectChange-btn">선택변경</button>
+							</div>
+							<form action="/member/searchMemberName" method="get">
+								<input type="text" name="selectSearch" id="selectSearch" placeholder="회원이름 입력">
+								<input type="hidden" name="reqPage" id="reqPage" value="1">	
+								<button type="submit">				
+									<span class="material-icons">search</span>		
+								</button>				
+							</form>
 						</div>
 					</div>
 				</div>
-				<table class="admin-table">
+				<table class="admin-table" >
 					<tr class="table-title">
 						<th style = "width: 5%"></th>
 						<th style = "width: 7%">No</th>
@@ -175,7 +227,7 @@ body {
 						<th style = "width: 12%">가입날짜</th>
 						<th style = "width: 8%">등급변경</th>
 					</tr>
-					<tr th:each= "member, status : ${list}">
+					<tr th:each= "member, status : ${list}" class="tr-tbl">
 						<td>
 							<div class="input-wrap">
 								<input type = "checkbox" class="chb-input" th:id="${'chb-input'+status.count}">
@@ -187,19 +239,81 @@ body {
 						<td th:text="${member.memberName}"></td>
 						<td th:text="${member.memberPhone}"></td>
 						<td class="addr-td" th:text="${member.memberAddr}"></td>
-						<td th:text="${member.memberLevel}"></td>
+						<td>
+							<div class="select" th:switch="${member.memberLevel}">
+								<select th:case= "1">
+									<option value = "1" selected>관리자</option>
+									<option value = "2">입양회원</option>
+									<option value = "3">정회원</option>
+								</select>
+								<select th:case= "2">
+									<option value = "1">관리자</option>
+									<option value = "2" selected>입양회원</option>
+									<option value = "3">정회원</option>
+								</select>
+								<select th:case= "3">
+									<option value = "1">관리자</option>
+									<option value = "2">입양회원</option>
+									<option value = "3"selected>정회원</option>
+								</select>
+							</div>
+						</td>
 						<td th:text="${member.enrollDate}"></td>
 						<td>
 							<button class="chageLevel-btn">등급변경</button>
 						</td>
 					</tr>
 				</table>
-				<div class="paging">
-					
-				</div>
+				
+				<table class="admin-table" style="display: none;">
+					<tr class="table-title">
+						<th style = "width: 5%"></th>
+						<th style = "width: 10%">No</th>
+						<th style = "width: 12%">품 종</th>
+						<th style = "width: 13%">이 름</th>
+						<th style = "width: 10%">성 별</th>
+						<th style = "width: 10%">나 이</th>
+						<th style = "width: 10%">접종여부</th>
+						<th style = "width: 10%">중성화여부</th>
+						<th style = "width: 10%">회원번호</th>
+						<th style = "width: 10%">입소여부</th>
+					</tr>
+					<tr th:each= "a, status : ${list}" class="tr-tbl">
+						<td>
+							<div class="input-wrap">
+								<input type = "checkbox" class="chb-input" th:id="${'chb-input'+status.count}">
+								<label th:for="${'chb-input'+status.count}"></label>
+							</div>
+						</td>
+						<td th:text="${a.animalNo}"></td>
+						<td th:text="${a.animalType}"></td>
+						<td th:text="${a.animalName}"></td>
+						<td th:text="${a.animalGender}"></td>
+						<td th:text="${a.animalAge}"></td>
+						<td th:text="${a.animalInocul}"></td>
+						<td th:text="${a.animalNeuter}"></td>
+						<td th:text="${a.memberNo}"></td>
+						<td th:text="${a.admissionNo}"></td>
+						<td th:text="${a.animalAdmission}"></td>
+					</tr>
+				</table>
 			</div>
 		</section>
 	</main>
+	<script>
+		$(".member-search").on("click", function(){
+			const allMemberSearch = $(".tr-tbl");
+			$(this).css("background-color", "white").css("border", "1px solid #854836").css("color", "#854836");
+			allMemberSearch.show();
+			$(this).css("background-color", "#FFB22C").css("border", "none").css("color", "white");
+			allMemberSearch.hide();
+			allMemberSearch.hide();
+			allMemberSearch.show();
+		});
+		$(".animal-search").on("click", fcuntion(){
+			
+		});
+	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>
