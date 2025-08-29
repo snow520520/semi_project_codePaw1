@@ -92,26 +92,36 @@ public class AdoptionController {
 	}
 	
 	@GetMapping(value="/view")
-	public String adoptionView(int adoptionNo, Model model) {
-		Adoption a = adoptionService.selectOneAdoption(adoptionNo);
-		Member member = memberService.selectMemberId(a.getMemberId());
-		Protect protect = protectService.selectOneProtect(a.getProtectNo());
-	    int animalNo = protect.getAnimalNo();
-	    Animal animal = animalService.selectAnimalNo(animalNo);
-		
-		if(a == null) {
-			model.addAttribute("title", "게시글 조회 실패");
-			model.addAttribute("text", "이미 삭제된 게시글 입니다");
-			model.addAttribute("icon", "info");
-			model.addAttribute("loc", "/adoption/list?reqPage=1");
-			return "common/msg";
-		}else {
-		
-			model.addAttribute("a", a);
-			model.addAttribute("member", member);
-		    model.addAttribute("animal", animal);
-			return "adoption/view";
-		}
+	public String adoptionView(
+	        int adoptionNo,
+	        Model model,
+	        @SessionAttribute(required = false) Member member) {
+	    
+	    Adoption a = adoptionService.selectOneAdoption(adoptionNo);
+	    if (a == null) {
+	        model.addAttribute("title", "게시글 조회 실패");
+	        model.addAttribute("text", "이미 삭제된 게시글입니다.");
+	        model.addAttribute("icon", "info");
+	        model.addAttribute("loc", "/adoption/list?reqPage=1");
+	        return "common/msg";
+	    }
+	    
+	    if (member == null || (member.getMemberLevel() != 1 && !member.getMemberId().equals(a.getMemberId()))) {
+	        model.addAttribute("title", "권한 없음");
+	        model.addAttribute("text", "해당 글은 작성자와 관리자만 볼 수 있습니다.");
+	        model.addAttribute("icon", "warning");
+	        model.addAttribute("loc", "/adoption/list?reqPage=1");
+	        return "common/msg";
+	    }
+
+	    Member writer = memberService.selectMemberId(a.getMemberId());
+	    Protect protect = protectService.selectOneProtect(a.getProtectNo());
+	    Animal animal = animalService.selectAnimalNo(protect.getAnimalNo());
+
+	    model.addAttribute("a", a);
+	    model.addAttribute("member", writer);
+	    model.addAttribute("animal", animal);
+	    return "adoption/view";
 	}
 	
 	@GetMapping(value="/updateFrm")
