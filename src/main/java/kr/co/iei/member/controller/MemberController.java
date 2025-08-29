@@ -98,4 +98,5 @@ public class MemberController {
 	public String findIdFrm() {
 		return "member/findId";
 	}
+
 }

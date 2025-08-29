@@ -1,5 +1,6 @@
 package kr.co.iei.admin;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,10 @@ public class AdminController {
 		super();
 		memberService = new MemberService();
 	}
-	/*
-	@GetMapping(value = "/allMember")
+	@GetMapping(value = "/adminPageFrm")
 	public String allMember(Model model) {
-		List list = memberService.selectAllMember();
+		List list = memberService.allMember();
 		model.addAttribute("list", list);
-		return "admin/allMember";
-
-	}*/
+		return "admin/adminPage";
+	}
 }

@@ -34,6 +34,10 @@ public class MemberService {
 		int result = memberDao.join(m);
 		return result;
 	}
+	public List allMember() {
+		List list = memberDao.allMember();
+		return list;
+	}
 
 }
 

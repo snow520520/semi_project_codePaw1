@@ -25,4 +25,7 @@
 				to_char(sysdate, 'yyyy-mm-dd')
 				)
 	</insert>
+	<select id="allMember" resultType= "member">
+		select * from member_tbl order by 1
+	</select>
 </mapper>

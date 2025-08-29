@@ -17,6 +17,10 @@ public interface MemberDao {
 
 	int join(Member m);
 
+	List allMember();
+
+
+
 	
 
 }

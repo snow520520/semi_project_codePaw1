@@ -3,8 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+body {
+	font-family: Nanum Gothic Coding, sans-serif;
+	display: flex;
+	align-items: center;
+	height: 100vh;
+}
+
+.content {
+	width: 100%;
+	height: 800px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: #f7f7f7;
+}
+.section {
+	width: 1500px;
+	height: 1500px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	background-color: white;
+}
+.page-div {
+	width: 80%;
+	flex: display;
+	justify-content: center;
+}
+.admin-top{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	border-bottom: 1px solid #854836;
+	padding-bottom: 20px;
+}
+.admin-title {
+	color: #854836;
+	font-size: 25px;
+	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: left;
+	margin-left: 30px;
+}
+.admin-table{
+	margin: 0 auto;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	
+}
+.admin-table>tbody>tr>td{
+	text-align: center;
+}
+.admin-table>tbody>tr>.addr-td{
+	text-align: left;
+}
+.ud-button{
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	margin:10px;
+	margin-right: 20px;
+}
+.ud-button>button{
+	width: 70px;
+	height: 30px;
+	margin: 5px; 
+	padding: 3px;
+	color: white;
+	border: none;
+	border-radius: 2px;
+	cursor: pointer;
+	background-color: #ffb22c;
+	font-size: 15px;
+	font-weight: 500;
+}
+.ud-button>.update-btn{
+	margin-right: 10px;
+}
+.search-div{
+	height: 70px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.search-div>.allSearch-div{
+	margin-left: 50px;
+}
+.search-div>.selectChangeLevel{
+	margin-left: 650px;
+}
+.search-div>.allSearch-title{
+	color: #854836;
+	font-size: 20px;
+	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: left;
+	margin-left: 50px;
+}
+.admin-table th, .admin-table td{
+	padding: 10px 15px;
+	border-bottom: 1px solid #c8c8c8;
+}
+.search-div button{
+	width: 100px;
+	height: 30px;
+	margin: 5px; 
+	padding: 3px;
+	color: white;
+	border: none;
+	border-radius: 15px;
+	cursor: pointer;
+	background-color: #ffb22c;
+	font-size: 13px;
+	font-weight: 500;
+}
+.chageLevel-btn{
+	width: 70px;
+	height: 30px;
+	margin: 5px; 
+	padding: 3px;
+	color: white;
+	border: none;
+	border-radius: 2px;
+	cursor: pointer;
+	background-color: #ffb22c;
+	font-size: 13px;
+	font-weight: 500;
+}
+</style>
 </head>
 <body>
-
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section">
+			<div class="page-div">
+				<div class="admin-header">
+					<div class="admin-top">
+						<div class="admin-title">관리자 페이지</div>
+						<div class="ud-button">
+							<button class="update-btn">수 정</button>
+							<button class="delete-btn">삭 제</button>
+						</div>
+					</div>
+					<div class="search-div">
+						<div class="allSearch-title">회원조회</div>
+						<div class="allSearch-title" style = "display: none">동물조회</div>
+						<div class="allSearch-div">
+							<button class="member-search">전체회원조회</button>
+							<button class="animal-search">전체동물조회</button>
+						</div>
+						<div class="selectChangeLevel">
+							<button class="selectChangeLevel-btn">선택등급변경</button>
+						</div>
+					</div>
+				</div>
+				<table class="admin-table">
+					<tr class="table-title">
+						<th style = "width: 5%"></th>
+						<th style = "width: 7%">No</th>
+						<th style = "width: 10%">아이디</th>
+						<th style = "width: 10%">회원이름</th>
+						<th style = "width: 15%">전화번호</th>
+						<th style = "width: 23%">주 소</th>
+						<th style = "width: 10%">회원등급</th>
+						<th style = "width: 12%">가입날짜</th>
+						<th style = "width: 8%">등급변경</th>
+					</tr>
+					<tr th:each= "member, status : ${list}">
+						<td>
+							<div class="input-wrap">
+								<input type = "checkbox" class="chb-input" th:id="${'chb-input'+status.count}">
+								<label th:for="${'chb-input'+status.count}"></label>
+							</div>
+						</td>
+						<td th:text="${member.memberNo}"></td>
+						<td th:text="${member.memberId}"></td>
+						<td th:text="${member.memberName}"></td>
+						<td th:text="${member.memberPhone}"></td>
+						<td class="addr-td" th:text="${member.memberAddr}"></td>
+						<td th:text="${member.memberLevel}"></td>
+						<td th:text="${member.enrollDate}"></td>
+						<td>
+							<button class="chageLevel-btn">등급변경</button>
+						</td>
+					</tr>
+				</table>
+				<div class="paging">
+					
+				</div>
+			</div>
+		</section>
+	</main>
+	<th:block th:include="common/footer"></th:block>
 </body>
 </html>
