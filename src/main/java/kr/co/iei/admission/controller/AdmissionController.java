@@ -52,7 +52,7 @@ public class AdmissionController {
 		return "admission/list";
 	}
 	@GetMapping(value="/view")
-	public String view(int admissionNo, Model model) {
+	public String view(int admissionNo, Model model, @SessionAttribute(required = false) Member member) {
 		Admission admission = admissionService.selectOneAdmission(admissionNo);
 		if(admission == null) {
 			model.addAttribute("title", "게시글 조회 실패");
@@ -61,6 +61,13 @@ public class AdmissionController {
 			model.addAttribute("loc", "/notice/list?reqPage=1");
 			return "common/msg";
 		}else {
+			if (member == null || (member.getMemberLevel() != 1 && !member.getMemberId().equals(admission.getMemberId()))) {
+		        model.addAttribute("title", "권한 없음");
+		        model.addAttribute("text", "해당 글은 작성자와 관리자만 볼 수 있습니다.");
+		        model.addAttribute("icon", "warning");
+		        model.addAttribute("loc", "/adoption/list?reqPage=1");
+		        return "common/msg";
+		    }
 			String memberId = admission.getMemberId();
 			Member m = memberService.selectMemberId(memberId);
 			int animalNo = admission.getAnimalNo();
@@ -162,5 +169,6 @@ public class AdmissionController {
 		 model.addAttribute("loc", "/admission/view?admissionNo="+admission.getAdmissionNo());
 		 return "common/msg";			 
 	 }
+	 
 	
 }
