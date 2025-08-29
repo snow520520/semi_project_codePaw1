@@ -3,52 +3,87 @@
 <mapper namespace="kr.co.iei.adoption.model.dao.AdoptionDao">
 	<select id="selectAdoptionList" resultType="adoption">
 		select * from
-    		(select rownum as rnum, n.* from
-      		  (select
-         		   adoption_no, adoption_title, adoption_date, member_id
-      		  from adoption order by adoption_no desc
-       		 )n
-  		  )
-		where #{start} <![CDATA[ <= ]]>  rnum and rnum <![CDATA[ <= ]]> #{end}
+		(select rownum as rnum, n.* from
+		(select
+		adoption_no,
+		adoption_title, adoption_date, member_id
+		from adoption order by
+		adoption_no desc
+		)n
+		)
+		where #{start} <![CDATA[ <= ]]>
+		rnum and rnum <![CDATA[ <= ]]>
+		#{end}
 	</select>
-	
+
 	<select id="selectAdoptionTotalCount" resultType="int">
-		select count(*) from adoption
+		select count(*)
+		from adoption
 	</select>
-	
+
 	<select id="searchTitleCount" resultType="int">
-  		select count(*) from adoption where adoption_title like '%'||'${searchTitle}'||'%'
-    </select>
-    
-    <select id="searchTitleAdoption" resultType="adoption"> 	
-		select * from
-	    	(select rownum as rnum, n.* from
-	        	(select 
-	            	adoption_no, adoption_title, member_id, adoption_date 
-	        	from adoption where adoption_title like '%'||'${searchTitle}'||'%' 
-	        	order by adoption_no desc
-	        	)n
-	    	)
-		where #{start} <![CDATA[ <= ]]> rnum and rnum <![CDATA[ <= ]]> #{end}
-    </select>
-	
-	<insert id="insertAdoption">
-		insert into adoption values(adoption_seq.nextval,#{adoptionContent},to_char(sysdate,'yyyy-mm-dd'),#{adoptionTitle},#{memberId},#{protectNo},1)
-	</insert>
-	
-	<select id="selectOneAdoption">
-		select * from adoption where adoption_no = #{AdoptionNo}
+		select count(*) from
+		adoption where adoption_title like
+		'%'||'${searchTitle}'||'%'
 	</select>
-	
+
+	<select id="searchTitleAdoption" resultType="adoption">
+		select * from
+		(select rownum as rnum, n.* from
+		(select
+		adoption_no,
+		adoption_title, member_id, adoption_date
+		from adoption where
+		adoption_title like '%'||'${searchTitle}'||'%'
+		order by adoption_no
+		desc
+		)n
+		)
+		where #{start} <![CDATA[ <= ]]>
+		rnum and rnum <![CDATA[ <= ]]>
+		#{end}
+	</select>
+
+	<insert id="insertAdoption">
+		insert into adoption
+		values(adoption_seq.nextval,#{adoptionContent},to_char(sysdate,'yyyy-mm-dd'),#{adoptionTitle},#{memberId},#{protectNo},1)
+	</insert>
+
+	<select id="selectOneAdoption">
+		select * from adoption where adoption_no =
+		#{adoptionNo}
+	</select>
+
 	<update id="updateAdoption">
 		update adoption set
-			adoption_title=#{adoptionTitle},
-			adoption_content=#{adoptionContent}
+		adoption_title=#{adoptionTitle},
+		adoption_content=#{adoptionContent}
 		where
-			adoption_no=#{adoptionNo}
+		adoption_no=#{adoptionNo}
+	</update>
+
+	<delete id="deleteAdoptionNo">
+		delete from adoption where adoption_no =
+		#{adoptionNo}
+	</delete>
+
+	<update id="updateStatus">
+		update adoption
+		set adoption_status = #{adoptionStatus}
+		where adoption_no = #{adoptionNo}
+	</update>
+
+	<update id="updateOtherStatus">
+		update adoption
+		set adoption_status = #{adoptionStatus}
+		where protect_no = #{protectNo}
+		and adoption_no != #{adoptionNo}
 	</update>
 	
-	<delete id="deleteAdoptionNo">
-		delete from adoption where adoption_no = ${adoptionNo}
-	</delete>
+	<update id="updateMemberLevel" parameterType="string">
+	    update member_tbl
+	    set member_level = 2
+	    where member_id = #{memberId}
+	    and member_level = 3
+	</update>
 </mapper>
