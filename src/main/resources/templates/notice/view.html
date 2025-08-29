@@ -24,6 +24,7 @@
 	.noticeContent{
 		min-height: 600px;
 		text-align: center;
+		margin-top: 50px;
 	}
 	.info-tbl{
 		width: 880px;
@@ -34,6 +35,10 @@
 		font-weight: 500;
 		padding-bottom: 10px;
 		padding-top: 30px;
+	}
+	.section a{
+		float: right;
+		margin-left: 20px;
 	}
 </style>
 </head>
@@ -46,15 +51,46 @@
 			<div th:text="${notice.noticeDate}"></div>
 			<div class="line"> </div>
 			<th:block th:if="${session.member != null && session.member.memberLevel == 1}">
-			<a class="updateNotice" th:href="@{/admission/updateFrm(admissionNo=${admission.admissionNo},animalNo=${animal.animalNo})}">수정</a>
-			<a th:onclick="deleteAdmission([[${admission.admissionNo}]]);">삭제</a>
-			<div class="noticeContent" th:text="${notice.noticeContent}"></div>
+			<a class="updateNotice" th:href="@{/notice/updateFrm(noticeNo=${notice.noticeNo})}">수정</a>
+			<a th:onclick="deleteNotice([[${notice.noticeNo}]]);">삭제</a>
+			</th:block>
+			<div class="noticeContent" th:utext="${notice.noticeContent}"></div>
 			<div class="line"> </div>
 			<div class="btn-box">
 					<button type="button" onclick="location.href='/notice/list?reqPage=1'">목록으로</button>
 				</div>
 		</section>
 	</main>
+	<script src="/js/sweetalert.min.js"></script>
+	<script>
+	function deleteNotice(noticeNo){
+		swal({
+			title : "게시물 삭제",
+			text : "게시물을 삭제하시겠습니까?",
+			icon : "warning",
+			buttons : {
+				cancel:{
+					text: "취소",
+					value: false,
+					visible: true,
+					ClassName :"btn-swal",
+					colseModal: true
+				},
+				confirm:{
+					text: "삭제하기",
+					value: true,
+					visible : true,
+					ClassName : "btn-swal-color",
+					closeModal : true
+				}
+			}
+		}).then(function(isConfirm){
+			if(isConfirm){
+				location.href="/notice/delete?noticeNo="+noticeNo;
+			}
+		});
+	};
+	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>

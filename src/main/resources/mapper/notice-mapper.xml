@@ -31,4 +31,10 @@
  <select id="selectOneNotice" resultType="notice">
  	select * from notice where notice_no = #{noticeNo}
  </select>
+ <delete id="deleteNotice">
+ 	delete notice where notice_no = #{noticeNo}
+ </delete>
+ <insert id="insertNotice">
+ 	insert into notice values(notice_seq.nextval,#{noticeTitle},#{noticeContent},#{memberId},#{noticeDate})
+ </insert>
 </mapper>

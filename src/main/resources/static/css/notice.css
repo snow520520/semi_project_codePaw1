@@ -75,6 +75,7 @@ td>.lock{
 a{
 	text-decoration: none;
 	color: #000000;
+	cursor: pointer;
 }
 .insertNotice{
 	float: right;
@@ -151,3 +152,8 @@ a{
 	font-weight: 400;
 	transition-duration: 0.2s; 
 }
+.line{
+		border-bottom: 1px solid #000000;
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+	}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.co.iei.admission.model.vo.AdmissionListData;
@@ -139,5 +140,17 @@ int numPerPage = 13;
 	public Notice selectOnetNotice(int noticeNo) {
 		Notice notice = noticeDao.selectOneNotice(noticeNo);
 		return notice;
+	}
+	
+	@Transactional
+	public int deleteNotice(int noticeNo) {
+		int result = noticeDao.deleteNotice(noticeNo);
+		return result;
+	}
+	
+	@Transactional
+	public int insertNotice(Notice notice) {
+		int result = noticeDao.insertNotice(notice);
+		return result;
 	}
 }
