@@ -43,6 +43,15 @@
 		margin-left: 20px;
 		cursor: pointer;
 	}
+	.approve>button{
+		float: right;
+		width: 120px;
+		height: 35px;
+		font-size: 16px;
+		border: 1px solid #555555;
+		border-radius: 10px;
+		line-height: 32px;
+	}
 </style>
 </head>
 <body>
@@ -79,12 +88,17 @@
 					<tr>
 						<th style="width: 20%">이름</th>
 						<td style="width: 80%" th:text="${animal.animalName}"></td>
-					<tr>
+					</tr>
 					<tr>
 						<th style="width: 20%">품종</th>
 						<td style="width: 80%" th:text="${animal.animalType}"></td>
 					</tr>
 				</table>
+				<div class="btn-box approve" th:if="${session.member != null and session.member.memberLevel == 1}">
+   					 <button type="button" class="btn btn-primary" th:onclick="|approveAdoption(${a.adoptionNo}, ${a.protectNo})|">
+        				승인
+   					 </button>
+				</div>
 				<div class="btn-box">
 					<button type="button" onclick="location.href='/adoption/list?reqPage=1'">목록으로</button>
 				</div>
@@ -103,14 +117,14 @@
 					text: "취소",
 					value: false,
 					visible: true,
-					ClassName :"btn-swal",
-					colseModal: true
+					className :"btn-swal",
+					closeModal: true
 				},
 				confirm:{
 					text: "삭제하기",
 					value: true,
 					visible : true,
-					ClassName : "btn-swal-color",
+					className : "btn-swal-color",
 					closeModal : true
 				}
 			}
@@ -119,7 +133,34 @@
 				location.href="/adoption/delete?adoptionNo="+adoptionNo;
 			}
 		});
-	};
+	}
+	function approveAdoption(adoptionNo, protectNo){
+		swal({
+			title : "입소 승인",
+			text : "입소를 승인하시겠습니까?",
+			icon : "info",
+			buttons : {
+				cancel:{
+					text: "취소",
+					value: false,
+					visible: true,
+					className : "btn-swal",
+					closeModal: true
+				},
+				confirm:{
+					text: "승인하기",
+					value: true,
+					visible : true,
+					className : "btn-swal-color",
+					closeModal : true
+				}
+			}
+		}).then(function(isConfirm){
+			if(isConfirm){
+				location.href ="/adoption/approve?adoptionNo=" + adoptionNo + "&protectNo=" + protectNo;
+			}
+		});
+	}
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>

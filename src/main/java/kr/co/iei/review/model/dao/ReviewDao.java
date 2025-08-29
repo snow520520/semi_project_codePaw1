@@ -14,7 +14,7 @@ public interface ReviewDao {
 
 	int selectReviewList();
 
-	int insertReview(Review r);
+	int reviewWrite(Review r);
 
 	int searchTitleCount(String searchTitle);
 

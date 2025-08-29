@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>환영합니다!</title>
+    <title>CodePaw에 오신걸 환영합니다!</title>
     <link rel="stylesheet" href="/css/main.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        .like {
-            cursor: pointer;
-            font-size: 18px;
-        }
-        .like .heart {
-            font-size: 22px;
-            vertical-align: middle;
-        }
-        .like .count {
-            font-weight: bold;
-            margin-left: 4px;
+		.like {
+		    cursor: pointer;
+		    font-size: 14px;
+		    color: gray;
+			font-weight: bold;
+		    transition: color 0.3s;
+		}
+		.like.liked {
+		    color: red;
+		}
+		.like-count {
+		    margin-left: 5px;
+		    font-size: 12px;
 			color: black;
-        }
+		    font-weight: bold;
+		}
     </style>
 </head>
 <body>

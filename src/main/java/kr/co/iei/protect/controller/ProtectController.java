@@ -259,4 +259,11 @@ public class ProtectController {
         catch (IOException e) { e.printStackTrace(); return "fail"; }
         return "/editorImage/" + filename;
     }
+    
+    
+    @GetMapping(value="/mainAllpage/Directions")
+    public String Directions() {
+
+        return "mainAllpage/Directions";
+    }
 }

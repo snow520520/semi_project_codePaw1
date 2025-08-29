@@ -124,6 +124,38 @@ public class AdoptionController {
 	    return "adoption/view";
 	}
 	
+	@GetMapping(value="/approve")
+	public String approveAdoption(
+	        int adoptionNo,
+	        int protectNo,
+	        @SessionAttribute(required = false) Member member,
+	        Model model) {
+	    
+	    if (member == null || member.getMemberLevel() != 1) {
+	        model.addAttribute("title", "권한 없음");
+	        model.addAttribute("text", "승인은 관리자만 할 수 있습니다.");
+	        model.addAttribute("icon", "warning");
+	        model.addAttribute("loc", "/adoption/list?reqPage=1");
+	        return "common/msg";
+	    }
+
+	    int result = adoptionService.approveAdoption(adoptionNo, protectNo);
+
+	    if (result > 0) {
+	        model.addAttribute("title", "승인 완료");
+	        model.addAttribute("text", "입양 신청이 승인되었습니다.");
+	        model.addAttribute("icon", "success");
+	        model.addAttribute("loc", "/adoption/list?reqPage=1");
+	    } else {
+	        model.addAttribute("title", "승인 실패");
+	        model.addAttribute("text", "잠시 후 다시 시도해주세요.");
+	        model.addAttribute("icon", "error");
+	        model.addAttribute("loc", "/adoption/list?reqPage=1");
+	    }
+	    return "common/msg";
+	}
+
+	
 	@GetMapping(value="/updateFrm")
 	public String updateFrm(int adoptionNo, Model model) {
 		Adoption a = adoptionService.selectOneAdoption(adoptionNo);

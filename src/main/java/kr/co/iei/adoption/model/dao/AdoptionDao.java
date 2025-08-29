@@ -25,4 +25,11 @@ public interface AdoptionDao {
 	List searchTitleAdoption(HashMap<String, Object> param);
 
 	int deleteAdoptionNo(int adoptionNo);
+
+	int updateStatus(Adoption adoption);
+	
+	int updateOtherStatus(Adoption adoption);
+	
+	int updateMemberLevel(String memberId);
+
 }

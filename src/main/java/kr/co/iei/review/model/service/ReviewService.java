@@ -73,12 +73,14 @@ public class ReviewService {
 	}
 
 	// 후기 게시글 추가
-	public int insertReview(Review r) {
-		int result = reviewDao.insertReview(r);
+	@Transactional
+	public int reviewWrite(Review r) {
+		int result = reviewDao.reviewWrite(r);
 		return 0;
 	}
 
 	// 검색 목록
+	
 	public ReviewListData searchTitle(int reqPage, String searchTitle) {
 		int numPerPage = 16;
 
