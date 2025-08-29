@@ -2,7 +2,9 @@ package kr.co.iei.protect.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,13 +57,13 @@ public class ProtectController {
 
         Animal animal = new Animal();
         animal.setAnimalName(animalName);
-        try { 
-            animal.setAnimalAge(Integer.parseInt(animalAgeStr)); 
-        } catch (NumberFormatException e) { 
-            animal.setAnimalAge(0); 
+        try {
+            animal.setAnimalAge(Integer.parseInt(animalAgeStr));
+        } catch (NumberFormatException e) {
+            animal.setAnimalAge(0);
         }
 
-        if(animal.getAnimalName() == null || animal.getAnimalName().isEmpty() || animal.getAnimalAge() <= 0) {
+        if (animal.getAnimalName() == null || animal.getAnimalName().isEmpty() || animal.getAnimalAge() <= 0) {
             model.addAttribute("title", "등록 실패");
             model.addAttribute("text", "없는 동물입니다. 이름과 나이를 정확히 입력해주세요.");
             model.addAttribute("icon", "warning");
@@ -71,17 +73,17 @@ public class ProtectController {
 
         int result = protectService.insertProtect(ap, member.getMemberNo(), animal);
 
-        if(result == -2) {
+        if (result == -2) {
             model.addAttribute("title", "등록 실패");
             model.addAttribute("text", "존재하지 않는 동물입니다.");
             model.addAttribute("icon", "warning");
             model.addAttribute("loc", "/mainAllpage/writeFrm");
-        } else if(result == -1) {
+        } else if (result == -1) {
             model.addAttribute("title", "등록 실패");
             model.addAttribute("text", "이미 등록된 동물입니다.");
             model.addAttribute("icon", "warning");
             model.addAttribute("loc", "/mainAllpage/writeFrm");
-        } else if(result > 0) {
+        } else if (result > 0) {
             model.addAttribute("title", "작성 완료");
             model.addAttribute("text", "입양 글이 정상적으로 등록되었습니다.");
             model.addAttribute("icon", "success");
@@ -96,30 +98,79 @@ public class ProtectController {
     }
 
     @GetMapping("/mainAllpage/allpage")
-    public String allpage(@RequestParam(value="page", defaultValue="1") int page,
+    public String allpage(@RequestParam(value = "page", defaultValue = "1") int page,
                           Model model, HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        Integer memberNo = (member != null) ? member.getMemberNo() : null;
+
         int recordCountPerPage = 16;
         int naviCountPerPage = 5;
         int totalCount = protectService.getTotalCount();
-        List<Protect> list = protectService.selectPageList(page, recordCountPerPage);
+
+        List<Protect> list = protectService.selectPageList(page, recordCountPerPage, memberNo);
+
         model.addAttribute("list", list);
         model.addAttribute("pageNavi", protectService.getPageNavi(page, totalCount, recordCountPerPage, naviCountPerPage, "/mainAllpage/allpage"));
-        model.addAttribute("member", (Member) session.getAttribute("member"));
+        model.addAttribute("member", member);
         return "mainAllpage/allpage";
     }
 
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("list", protectService.selectPageList(1, 4));
+    @GetMapping({"/", "/index"})
+    public String index(Model model, HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        Integer memberNo = (member != null) ? member.getMemberNo() : null;
+
+        List<Protect> list = protectService.selectPageList(1, 4, memberNo);
+        model.addAttribute("list", list);
+        model.addAttribute("member", member);
         return "index";
+    }
+    
+    @ResponseBody
+    @GetMapping("/mainAllpage/loadMore")
+    public List<Protect> loadMore(@RequestParam("start") int start,
+                                  @RequestParam("count") int count,
+                                  HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        Integer memberNo = (member != null) ? member.getMemberNo() : null;
+
+        int end = start + count - 1;
+        return protectService.selectPageList(start, count, memberNo);
     }
 
     @ResponseBody
-    @GetMapping("/mainAllpage/loadMore")
-    public List<Protect> loadMore(@RequestParam("start") int start, @RequestParam("count") int count) {
-        return protectService.selectPageListRead(start, start + count - 1);
+    @PostMapping("/mainAllpage/toggleLike")
+    public Map<String, Object> toggleLike(@RequestParam("protectNo") int protectNo, HttpSession session) {
+        Map<String, Object> resultMap = new HashMap<>();
+        Member member = (Member) session.getAttribute("member");
+        if (member == null) {
+            resultMap.put("likedByUser", false);
+            resultMap.put("likeCount", 0);
+            return resultMap;
+        }
+
+        boolean liked = protectService.isLiked(member.getMemberNo(), protectNo);
+        if (liked) {
+            protectService.deleteProtectLike(member.getMemberNo(), protectNo);
+            liked = false;
+        } else {
+            protectService.insertProtectLike(member.getMemberNo(), protectNo);
+            liked = true;
+        }
+
+        resultMap.put("likedByUser", liked);
+        resultMap.put("likeCount", protectService.getLikeCount(protectNo));
+        return resultMap;
     }
 
+    @ResponseBody
+    @GetMapping("/mainAllpage/checkLike")
+    public boolean checkLike(@RequestParam("protectNo") int protectNo, HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        if (member == null) return false;
+        return protectService.isLiked(member.getMemberNo(), protectNo);
+    }
+    
     @GetMapping("/mainAllpage/detail")
     public String detail(@RequestParam("protectNo") int protectNo, Model model, HttpSession session) {
         Protect ap = protectService.selectOneProtect(protectNo);
@@ -136,17 +187,7 @@ public class ProtectController {
         model.addAttribute("loginMember", (Member) session.getAttribute("member"));
         return "mainAllpage/detail";
     }
-
-    @PostMapping(value="/mainAllpage/editorImage", produces = "plain/text;charset=utf-8")
-    @ResponseBody
-    public String editorImage(MultipartFile upfile) {
-        String savePath = "C:/image/";
-        String filename = UUID.randomUUID() + "_" + upfile.getOriginalFilename();
-        try { upfile.transferTo(new File(savePath + filename)); } 
-        catch (IOException e) { e.printStackTrace(); return "fail"; }
-        return "/editorImage/" + filename;
-    }
-
+    
     @GetMapping("/mainAllpage/updateFrm")
     public String updateFrm(@RequestParam("protectNo") int protectNo, Model model, HttpSession session) {
         Member member = (Member) session.getAttribute("member");
@@ -207,5 +248,15 @@ public class ProtectController {
             model.addAttribute("loc", "/mainAllpage/updateFrm?protectNo=" + protectNo);
         }
         return "common/msg";
+    }
+    
+    @PostMapping(value="/mainAllpage/editorImage", produces = "plain/text;charset=utf-8")
+    @ResponseBody
+    public String editorImage(MultipartFile upfile) {
+        String savePath = "C:/image/";
+        String filename = UUID.randomUUID() + "_" + upfile.getOriginalFilename();
+        try { upfile.transferTo(new File(savePath + filename)); } 
+        catch (IOException e) { e.printStackTrace(); return "fail"; }
+        return "/editorImage/" + filename;
     }
 }

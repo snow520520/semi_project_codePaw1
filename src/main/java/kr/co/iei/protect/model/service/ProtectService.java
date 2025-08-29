@@ -37,13 +37,16 @@ public class ProtectService {
         return protectDao.insertProtect(ap);
     }
 
-    public List<Protect> selectPageList(int currentPage, int recordCountPerPage) {
-        int start = (currentPage - 1) * recordCountPerPage + 1;
-        int end = currentPage * recordCountPerPage;
+    public List<Protect> selectPageList(int start, int count, Integer memberNo) {
+        int end = start + count - 1;
         List<Protect> list = protectDao.selectPageProtect(start, end);
+
         for (Protect ap : list) {
             if ("2".equals(ap.getProtectStatus())) ap.setThumbnailUrl("/image/complete.png");
             else ap.setThumbnailUrl(extractFirstImageSrc(ap.getProtectContent()));
+
+            if(memberNo != null) ap.setLikedByUser(isLiked(memberNo, ap.getProtectNo()));
+            ap.setLikeCount(getLikeCount(ap.getProtectNo()));
         }
         return list;
     }
@@ -106,5 +109,26 @@ public class ProtectService {
     @Transactional
     public int updateProtectContent(Protect ap) {
         return protectDao.updateProtectContent(ap);
+    }
+
+
+    public boolean isLiked(int memberNo, int protectNo) {
+        Integer result = protectDao.selectProtectLike(memberNo, protectNo);
+        return result != null && result > 0;
+    }
+
+    @Transactional
+    public void insertProtectLike(int memberNo, int protectNo) {
+        protectDao.insertProtectLike(memberNo, protectNo);
+    }
+
+    @Transactional
+    public void deleteProtectLike(int memberNo, int protectNo) {
+        protectDao.deleteProtectLike(memberNo, protectNo);
+    }
+
+    public int getLikeCount(int protectNo) {
+        Integer count = protectDao.selectLikeCount(protectNo);
+        return count == null ? 0 : count;
     }
 }

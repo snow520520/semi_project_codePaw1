@@ -18,4 +18,6 @@ public class Protect {
 	private int animalNo; //pk
 	private String protectStatus;
     private String thumbnailUrl;
+    private int likeCount;        
+    private boolean likedByUser;  
 }
