@@ -59,7 +59,7 @@
     function checkAccess(admissionNo, memberId) {
         // 1. 관리자면 바로 이동
         if (memberLevel === 1) {
-            location.href = "/adoption/view?admissionNo=" + admissionNo;
+            location.href = "/admission/view?admissionNo=" + admissionNo;
             return;
         }
 		if(memberId === 'null'){
@@ -67,7 +67,7 @@
 		}
         // 2. 작성자 본인 → 바로 이동
         if (memberId === memberId) {
-            location.href = "/adoption/view?admissionNo=" + admissionNo;
+            location.href = "/admission/view?admissionNo=" + admissionNo;
             return;
         }
 
