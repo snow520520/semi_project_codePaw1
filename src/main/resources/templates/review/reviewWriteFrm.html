@@ -4,171 +4,143 @@
 
 <style>
 .review-write-container {
-	display : flex;
-	justify-content : center;
-	align-items : center;
-	max-width : 1200px;
-	margin : 20px auto;
-	background : #fff;
-	padding : 20px;
-	box-shadow : 0 2px 8px rgba(0,0,0,0.1);
-	border-radius : 8px;
-	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 1200px;
+	margin: 20px auto;
+	background: #fff;
+	padding: 20px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
 }
-
-.review-write-wrap{
-	width : 1000px;
-	
+.review-write-wrap {
+	width: 1000px;
 }
-
-.review-write-wrap .input-item>input[type=text]{
-	padding : 0;
-	border-bottom : none;
-	
+.review-write-wrap .input-item>input[type=text] {
+	padding: 0;
+	border-bottom: none;
 }
-
-
-.content .input-item>textarea{
-	min-height : 800px;
-	width : 800px;
-	padding-top : 10px;
+.content .input-item>textarea {
+	min-height: 800px;
+	width: 800px;
+	padding-top: 10px;
 }
-
-.reviewTitle{
+.reviewTitle {
 	border: none;
-	border-bottom : 1px solid #000;
-	outline : none;
+	border-bottom: 1px solid #000;
+	outline: none;
 	padding: 5px;
-	width : 800px;
-	font-size : 25px;
-	 
+	width: 800px;
+	font-size: 25px;
 }
-
-.content .input-item{
-	padding-top : 20px;
-	
-	
+.content .input-item {
+	padding-top: 20px;
 }
-
-.content .input-item > textarea{
-	font-size : 17px;
-	border-left : none;
+.content .input-item>textarea {
+	font-size: 17px;
+	border-left: none;
 	border-right: none;
 }
-
-.btn{
-	display : flex;
-	justify-content : center;
-	gap : 10px;
-	margin-top : 20px;
-	margin-bottom : 40px;
-	
-	
+.btn {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	margin-top: 30px;
+	margin-bottom: 40px;
 }
-
-.btn button{
-	padding : 10px 20px;
-	font-size : 18px;
-	border-radius : 8px;
-	cursor : pointer;
-	box-shadow : 0 2px 6px rgba(0,0,0,0.2);
-	border : none;
-	color: """
-	
+.btn button {
+	padding: 10px 20px;
+	font-size: 18px;
+	border-radius: 8px;
+	cursor: pointer;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	border: none;
 }
-
-.btn button:last-child{
-	background : #FFB22C;
-	color : #fff;
-	
+#btn-primary {
+	background: #fff;
+	color: black;
+	border : 1px solid #000000;
 }
-.btn button:hover{
-	transform : translateY(-2px);
+#btn-secondary{
+	background: #FFB22C;
+	color: #ffffff;
 }
-
+.btn button:hover {
+	transform: translateY(-2px);
+}
 </style>
 </head>
-
-
 <body>
-	<th:block th:include = "common/header"></th:block>
-	
-	<main class = "content review-write-container">
-		<section class = "section reivew-write-wrap">
-			<form action = "/review/writeFrm" method = "post" enctype = "multipart/form-data">
-				<table class ="tbl">
-					<th>
-						<div class="input-item">
-							<input type = "text" name ="reviewTitle" placeholder ="입양후기 제목을 입력해주세요">
-						</div>
-					</th>
-			<table class ="tbl">
-				<tr>
-					<input type = "text" class ="reviewTitle" placeholder ="입양후기 제목을 입력해주세요">
-				</tr>
-				<tr>
-					<td>
-						<div class="input-item">
-							<textarea name = "reviewContent"></textarea>						
-						<div class="content input-item">
-							<textarea id = "reviewContent"></textarea>						
-						</div>
-					</td>
+	<th:block th:include="common/header"></th:block>
+	<main class="content review-write-container">
+		<section class="section reivew-write-wrap">
+			<form action="/review/writeFrm" method="post" enctype="multipart/form-data">
+				<table class="tbl">
+					<tr>
+						<input type="text" class="reviewTitle" placeholder="입양후기 제목을 입력해주세요">
+					</tr>
+					<tr>
+						<td>
+							<div class="input-item">
+								<textarea name="reviewContent"></textarea>
+							</div>
+						</td>
+					</tr>
 				</table>
 				<tr>
-					<td colspan ="2">
-				</tr>	
-			</table>
-				<div class="btn">	
-					<a href = "/">
-						<button type = "submit" class ="btn-primary lg">취소하기</button>
-						<button type = "submit" class ="btn-secondary lg">작성하기</button>
-					</td>
-				</tr>
-				</form>
-					</a>
-					
-					<button type = "submit" class ="btn-secondary lg">작성하기</button>
-					
+				<td colspan="2">
+					<div class="btn">
+					<button type="button" id="btn-primary" onclick="location.href='/review/list?reqPage=1'">취소하기</button>
+					<button type="submit" id="btn-secondary" onclick="location.href='/review/list?reqPage=1'">작성하기</button>
 				</div>
+				</td>
+				</tr>
 			</form>
 		</section>
 	</main>
 	<script src="/summernote"></script>
-	
-	
 	<script src="/summernote/summernote-lite.js"></script>
 	<script src="/summernote/lang/summernote-ko-KR.js"></script>
-	<link rel = "stylesheet" href="/summernote/summernote-lite.css">
+	<link rel="stylesheet" href="/summernote/summernote-lite.css">
 	<script>
 		$("[name=reviewContent]").summernote({
 			height : 500,
 			lang : "ko-KR",
+			toolbar:[
+				['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['height', ['height']],
+			    ['insert',['picture']],
+			    ['view', ['help']]
+			],
 			callbacks : {
-				onImageUpload : function(file){
-					uploadImage(file[0], this);
+				onImageUpload : function(file) {
+					for(let i = 0; i < files.length; i++){
+					uploadImage(file[i], this);
+					}
 				}
-				
 			}
 		});
-		
-		function uploadImage(file, editor){
+		function uploadImage(file, editor) {
 			const form = new FormData();
 			form.append("upfile", file);
-			
+
 			$.ajax({
 				url : "review/reviewWriteFrm",
 				type : "post",
 				data : form,
 				processData : false,
 				contentType : false,
-				success : function(result){
+				success : function(result) {
 					$(editor).summernote("insertImage",
 							"/review/reviewWriteFrm" + result);
 				}
 			});
 		}
 	</script>
-	<th:block th:include = "common/footer"></th:block>
+	<th:block th:include="common/footer"></th:block>
 </body>
 </html>
