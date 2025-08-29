@@ -18,7 +18,7 @@
 		<section class="section">
 			<div class="page-title">공지사항</div>	
 			<div class="searchTitle">
-				<form action="/admission/searchTitle" method="get">
+				<form action="/notice/searchTitle" method="get">
 					<input type="text" name="searchTitle" placeholder="제목을 입력해주세요.">
 					<input type="hidden" name="reqPage" id="reqPage" value="1">	
 					<button type="submit">				
@@ -36,8 +36,7 @@
 				<tr th:each="notice : ${list}">
 					<td th:text="${notice.noticeNo}"></td>
 					<td>
-						<a href="javascript:void(0);" 
-  							 th:onclick="checkAccess([[${notice.noticeNo}]], '[[${notice.memberId}]]')"
+						<a th:href="@{/notice/view(noticeNo=${notice.noticeNo})}"
    							th:text="${notice.noticeTitle}"></a>
 					</td>
 					<td th:text="${notice.noticeDate}"></td>

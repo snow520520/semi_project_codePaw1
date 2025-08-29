@@ -46,7 +46,11 @@ public class AdmissionController {
 			if(ald != null) {
 				model.addAttribute("list", ald.getList());
 				model.addAttribute("pageNavi", ald.getPageNavi());
+			}else {
+				model.addAttribute("list", "작성된 게시글이 존재하지 않습니다.");
 			}
+		}else {
+			model.addAttribute("list", "작성된 게시글이 존재하지 않습니다.");
 		}
 		
 		return "admission/list";
