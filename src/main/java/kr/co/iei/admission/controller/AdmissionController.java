@@ -141,5 +141,26 @@ public class AdmissionController {
 		 model.addAttribute("animal", animal);
 		 return "admission/updateFrm";
 	 }
+	 @PostMapping(value="/update")
+	 public String update(Admission admission, Animal animal, Model model) {
+		 //admission update : admissionTitle, admissionContent
+		 //animal update : animalName, animalType, animalAge, animalGender, animalInocul, animalNeuter
+		 int result = animalService.updateAnimal(animal);
+		 if(result > 0) {
+			 result = admissionService.updateAdmission(admission);
+			 if(result > 0) {
+				 model.addAttribute("title", "수정 성공");
+				 model.addAttribute("msg", "게시글이 수정되었습니다.");
+				 model.addAttribute("icon", "success");
+				 model.addAttribute("loc", "/admission/view?admissionNo="+admission.getAdmissionNo());
+				 return "common/msg";
+			 }
+		 }
+		 model.addAttribute("title", "수정 실패");
+		 model.addAttribute("msg", "잠시후 다시 시도해 주세요.");
+		 model.addAttribute("icon", "warning");
+		 model.addAttribute("loc", "/admission/view?admissionNo="+admission.getAdmissionNo());
+		 return "common/msg";			 
+	 }
 	
 }

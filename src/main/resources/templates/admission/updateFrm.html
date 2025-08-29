@@ -98,16 +98,19 @@
   		-webkit-appearance: none;
   		margin: 0;
 	}
+	.hidden{
+		display: none;
+	}
 </style>
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
-			<form action="/admission/insert" method="post">
+			<form action="/admission/update" method="post">
 				<div>
 					<input type="text" name="admissionTitle" id="admissionTitle" th:value="${admission.admissionTitle}" placeholder="제목을 입력해주세요.">
-					<input type="hidden" name="memberId" id="memberId" th:value="${session.member.memberId}">
+					<input type="hidden" name="admissionNo" id="admissionNo" th:value="${admission.admissionNo}">
 				</div>
 				<div class="line" th:text="${session.member.memberId}"></div>
 				<div class="info-tbl">
@@ -128,7 +131,8 @@
 						<tr class="admissionContent">
 							<th style="width: 20%">입소동기</th>
 							<td style="width: 80%">
-								<textarea name="admissionContent" id="admissionContent" th:value="${admission.admissionContent}" placeholder="입소동기를 입력해주세요." required></textarea>
+								<textarea name="admissionContent" id="admissionContent" placeholder="입소동기를 입력해주세요." required></textarea>
+								<p class="hidden" th:text="${admission.admissionContent}">
 							</td>
 						</tr>
 					</table>
@@ -138,6 +142,7 @@
 							<th style="width: 20%">이름</th>
 							<td style="width: 80%">
 								<input type="text" name="animalName" id="animalName" th:value="${animal.animalName}" placeholder="아이 이름을 입력해주세요." required="required">
+								<input type="hidden" name="animalNo" id="animalNo" th:value="${animal.animalNo}">
 							</td>
 						</tr>
 						<tr>
@@ -194,8 +199,9 @@
 	<script src="/summernote/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/summernote/summernote-lite.css">
 	<script>
+	
 	$('#admissionContent').summernote({
-	    height: 500,
+	    height: 600,
 	    toolbar: [
 		    // [groupName, [list of button]]
 		    ['fontname', ['fontname']],
@@ -214,6 +220,8 @@
 	        }
 	    }
 	});
+	const contentValue = $('.hidden').text();
+	$('#admissionContent').summernote('code',contentValue);
 	function uploadImage(file) {
 	    let formData = new FormData();
 	    formData.append("upfile", file);

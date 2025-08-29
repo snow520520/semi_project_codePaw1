@@ -25,6 +25,11 @@ public class AnimalService {
 		int animalNo = animalDao.searchAnimalNo(memberNo);
 		return animalNo;
 	}
+	@Transactional
+	public int updateAnimal(Animal animal) {
+		int result = animalDao.updateAnimal(animal);
+		return result;
+	}
 	
 	
 	
