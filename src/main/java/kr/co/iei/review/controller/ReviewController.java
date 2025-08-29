@@ -1,7 +1,9 @@
 package kr.co.iei.review.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,25 +75,28 @@ public class ReviewController {
 			
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//후기 작성 화면
 	@GetMapping(value="/reviewWriteFrm")
-	public String insertFrm(Member member, Model model) {
+	public String insertFrm(@SessionAttribute Member member, Model model) {
 		model.addAttribute("member", member);
 		return "review/reviewWriteFrm";
 	}
 	
-	@PostMapping(value="/reviewWrite")
+	@PostMapping(value="/reviewWriteFrm/editorImage", produces = "plain/text;charset=uft-8")
+	@ResponseBody
+	public String editorImage(MultipartFile upfile) {
+		String savePath = "C:/image";
+		String filename = UUID.randomUUID() + "_" + upfile.getOriginalFilename();
+		File file = new File (savePath + filename);
+	try {
+		upfile.transferTo(file);
+	} catch(IOException e) {
+	}
+	return "/editorImage/"+filename;
+	}
+	@PostMapping(value="/insert")
 	public String insertReview(Review r, Model model) {
-		int result = reviewService.insertReview(r);
+		int result = reviewService.reviewWrite(r);
 		model.addAttribute("title", "후기 작성 완료!");
 		model.addAttribute("text", "후기 등록이 완료되었습니다.");
 		model.addAttribute("icon", "success");
@@ -99,23 +104,7 @@ public class ReviewController {
 		return "review/list";
 	}
 	
-	@PostMapping("/uploadImage")
-	@ResponseBody
-	public String uploadImage(@RequestParam("upfile") MultipartFile file) {
-		//원본 파일 이름
-		String originalName = file.getOriginalFilename();
-		//저장할 경로(내가 지정)
-		
-		String savepath = "C:/upload/" + originalName;
-		
-		try {
-			file.transferTo(new File(savepath));
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	
-	return "/upload/" + originalName;
-	}
+
 	
 	@GetMapping(value="/delete")
 	public String delete (int reviewNo, Model model) {
