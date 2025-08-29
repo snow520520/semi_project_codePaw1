@@ -1,68 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="kr.co.iei.AllPage.model.dao.AllPageDao">
+<mapper namespace="kr.co.iei.protect.model.dao.ProtectDao">
 
+    <!-- 동물 번호 1개 조회 -->
     <select id="selectAnimalNo" parameterType="kr.co.iei.animal.model.vo.Animal" resultType="int">
-    SELECT animal_no
-    FROM animal
-    WHERE animal_name = #{animalName}
-      AND animal_age = #{animalAge}
-	</select>
-	
-	<select id="selectAnimalNoList" parameterType="kr.co.iei.animal.model.vo.Animal" resultType="int">
-	    SELECT animal_no
-	    FROM animal
-	    WHERE animal_name = #{animalName}
-	      AND animal_age = #{animalAge}
-	</select>
-	
-	<insert id="insertAnimal" parameterType="kr.co.iei.animal.model.vo.Animal" useGeneratedKeys="true" keyProperty="animalNo">
-	    INSERT INTO animal (animal_no, animal_name, animal_age)
-	    VALUES (animal_seq.NEXTVAL, #{animalName}, #{animalAge})
-	</insert>
-	
-	<insert id="insertProtect" parameterType="kr.co.iei.AllPage.model.vo.AllPage">
-	    INSERT INTO protect_tbl 
-	        (protect_no, protect_title, protect_content, protect_date, member_no, animal_no)
-	    VALUES 
-	        (#{protectNo}, #{protectTitle}, #{protectContent}, SYSDATE, #{memberNo}, #{animalNo})
-	</insert>
-	
-	<select id="getNextProtectNo" resultType="int">
-	    SELECT protect_seq.NEXTVAL FROM dual
-	</select>
-	
-	<select id="selectPageProtect" resultType="kr.co.iei.AllPage.model.vo.AllPage">
-	    SELECT * FROM (
-	        SELECT ROW_NUMBER() OVER (ORDER BY protect_no DESC) AS rnum,
-	               p.protect_no, p.protect_title, p.protect_date, p.protect_content, p.protect_status
-	        FROM protect_tbl p
-	    )
-	    WHERE rnum BETWEEN #{start} AND #{end}
-	</select>
-	
-	<select id="selectTotalCount" resultType="int">
-	    SELECT COUNT(*) FROM protect_tbl
-	</select>
-	
-	<select id="selectOneProtect" resultType="allpage" parameterType="int">
-	    SELECT protect_no, protect_title, protect_content, protect_date, member_no, animal_no, protect_status
-	    FROM protect_tbl
-	    WHERE protect_no = #{protectNo}
-	</select>
-	
-	<select id="selectAnimal" resultType="animal" parameterType="int">
-	    SELECT * FROM animal WHERE animal_no = #{animalNo}
-	</select>
-	
-	<select id="selectMember" resultType="member" parameterType="int">
-	    SELECT * FROM member_tbl WHERE member_no = #{memberNo}
-	</select>
-	
-	<update id="updateProtectContent" parameterType="kr.co.iei.AllPage.model.vo.AllPage">
-	    UPDATE protect_tbl
-	    SET protect_content = #{protectContent}
-	    WHERE protect_no = #{protectNo}
-	</update>
+        SELECT animal_no
+        FROM animal
+        WHERE animal_name = #{animalName}
+          AND animal_age = #{animalAge}
+    </select>
+
+    <!-- 동물 번호 리스트 조회 -->
+    <select id="selectAnimalNoList" parameterType="kr.co.iei.animal.model.vo.Animal" resultType="int">
+        SELECT animal_no
+        FROM animal
+        WHERE animal_name = #{animalName}
+          AND animal_age = #{animalAge}
+    </select>
+
+    <!-- 동물 등록 -->
+    <insert id="insertAnimal" parameterType="kr.co.iei.animal.model.vo.Animal" useGeneratedKeys="true" keyProperty="animalNo">
+        INSERT INTO animal (animal_no, animal_name, animal_age)
+        VALUES (animal_seq.NEXTVAL, #{animalName}, #{animalAge})
+    </insert>
+
+    <!-- 보호글 등록 -->
+    <insert id="insertProtect" parameterType="kr.co.iei.protect.model.vo.Protect">
+        INSERT INTO protect_tbl 
+            (protect_no, protect_title, protect_content, protect_date, member_no, animal_no)
+        VALUES 
+            (#{protectNo}, #{protectTitle}, #{protectContent}, SYSDATE, #{memberNo}, #{animalNo})
+    </insert>
+
+    <!-- 보호글 번호 시퀀스 -->
+    <select id="getNextProtectNo" resultType="int">
+        SELECT protect_seq.NEXTVAL FROM dual
+    </select>
+
+    <!-- 전체 보호글 조회 -->
+    <select id="selectAllProtect" resultType="kr.co.iei.protect.model.vo.Protect">
+        SELECT protect_no, protect_title, protect_content, protect_date, member_no, animal_no, protect_status
+        FROM protect_tbl
+        ORDER BY protect_no DESC
+    </select>
+
+    <!-- 페이징 보호글 조회 -->
+    <select id="selectPageProtect" resultType="kr.co.iei.protect.model.vo.Protect">
+        SELECT * FROM (
+            SELECT ROW_NUMBER() OVER (ORDER BY protect_no DESC) AS rnum,
+                   p.protect_no, p.protect_title, p.protect_date, p.protect_content, p.protect_status,
+                   p.member_no, p.animal_no
+            FROM protect_tbl p
+        )
+        WHERE rnum BETWEEN #{start} AND #{end}
+    </select>
+
+    <!-- 총 보호글 수 -->
+    <select id="selectTotalCount" resultType="int">
+        SELECT COUNT(*) FROM protect_tbl
+    </select>
+
+    <!-- 보호글 상세 조회 -->
+    <select id="selectOneProtect" resultType="kr.co.iei.protect.model.vo.Protect" parameterType="int">
+        SELECT protect_no, protect_title, protect_content, protect_date, member_no, animal_no, protect_status
+        FROM protect_tbl
+        WHERE protect_no = #{protectNo}
+    </select>
+
+    <!-- 동물 상세 조회 -->
+    <select id="selectAnimal" resultType="kr.co.iei.animal.model.vo.Animal" parameterType="int">
+        SELECT * FROM animal WHERE animal_no = #{animalNo}
+    </select>
+
+    <!-- 회원 상세 조회 -->
+    <select id="selectMember" resultType="kr.co.iei.member.model.vo.Member" parameterType="int">
+        SELECT * FROM member_tbl WHERE member_no = #{memberNo}
+    </select>
+
+    <!-- 보호글 내용 수정 -->
+    <update id="updateProtectContent" parameterType="kr.co.iei.protect.model.vo.Protect">
+        UPDATE protect_tbl
+        SET protect_content = #{protectContent}
+        WHERE protect_no = #{protectNo}
+    </update>
 
 </mapper>

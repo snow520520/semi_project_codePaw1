@@ -1,7 +1,6 @@
-package kr.co.iei.AllPage.model.vo;
+package kr.co.iei.protect.model.vo;
 
 import org.apache.ibatis.type.Alias;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias(value="allpage")
-public class AllPage {
+@Alias(value="protect")
+public class Protect {
 	private int protectNo;
 	private String protectTitle;
 	private String protectContent;

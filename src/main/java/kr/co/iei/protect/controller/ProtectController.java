@@ -1,6 +1,5 @@
-package kr.co.iei.AllPage.controller;
+package kr.co.iei.protect.controller;
 
-import jakarta.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -15,17 +14,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.iei.AllPage.model.service.AllPageService;
-import kr.co.iei.AllPage.model.vo.AllPage;
+import jakarta.servlet.http.HttpSession;
 import kr.co.iei.animal.model.vo.Animal;
 import kr.co.iei.member.model.vo.Member;
+import kr.co.iei.protect.model.service.ProtectService;
+import kr.co.iei.protect.model.vo.Protect;
 
 @Controller
-public class AllPageController {
-
-    @Autowired
-    private AllPageService allpageService;
-
+public class ProtectController {
+	@Autowired
+    private ProtectService protectService;
+	
     @GetMapping("/mainAllpage/writeFrm")
     public String writeFrm(HttpSession session, Model model) {
         Member member = (Member) session.getAttribute("member");
@@ -40,7 +39,7 @@ public class AllPageController {
     }
 
     @PostMapping("/mainAllpage/write")
-    public String write(AllPage ap,
+    public String write(Protect ap,
                         @RequestParam("animalName") String animalName,
                         @RequestParam("animalAge") String animalAgeStr,
                         HttpSession session, Model model) {
@@ -59,7 +58,7 @@ public class AllPageController {
         try { animal.setAnimalAge(Integer.parseInt(animalAgeStr)); } 
         catch (NumberFormatException e) { animal.setAnimalAge(0); }
 
-        int result = allpageService.insertProtect(ap, member.getMemberNo(), animal);
+        int result = protectService.insertProtect(ap, member.getMemberNo(), animal);
 
         if(result == -1) {
             model.addAttribute("title", "등록 실패");
@@ -86,30 +85,30 @@ public class AllPageController {
 
         int recordCountPerPage = 16;
         int naviCountPerPage = 5;
-        int totalCount = allpageService.getTotalCount();
-        List<AllPage> list = allpageService.selectPageList(page, recordCountPerPage);
+        int totalCount = protectService.getTotalCount();
+        List<Protect> list = protectService.selectPageList(page, recordCountPerPage);
 
         model.addAttribute("list", list);
-        model.addAttribute("pageNavi", allpageService.getPageNavi(page, totalCount, recordCountPerPage, naviCountPerPage, "/mainAllpage/allpage"));
+        model.addAttribute("pageNavi", protectService.getPageNavi(page, totalCount, recordCountPerPage, naviCountPerPage, "/mainAllpage/allpage"));
         model.addAttribute("member", (Member) session.getAttribute("member"));
         return "mainAllpage/allpage";
     }
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("list", allpageService.selectPageList(1, 4));
+        model.addAttribute("list", protectService.selectPageList(1, 4));
         return "index";
     }
 
     @ResponseBody
     @GetMapping("/mainAllpage/loadMore")
-    public List<AllPage> loadMore(@RequestParam("start") int start, @RequestParam("count") int count) {
-        return allpageService.selectPageListRead(start, start + count - 1);
+    public List<Protect> loadMore(@RequestParam("start") int start, @RequestParam("count") int count) {
+        return protectService.selectPageListRead(start, start + count - 1);
     }
 
     @GetMapping("/mainAllpage/detail")
     public String detail(@RequestParam("protectNo") int protectNo, Model model, HttpSession session) {
-        AllPage ap = allpageService.selectOneProtect(protectNo);
+    	Protect ap = protectService.selectOneProtect(protectNo);
         if (ap == null) {
             model.addAttribute("title", "게시물 없음");
             model.addAttribute("text", "해당 글이 삭제되었거나 존재하지 않습니다.");
@@ -119,8 +118,8 @@ public class AllPageController {
         }
 
         model.addAttribute("ap", ap);
-        model.addAttribute("animal", allpageService.selectAnimal(ap.getAnimalNo()));
-        model.addAttribute("writer", allpageService.selectMember(ap.getMemberNo()));
+        model.addAttribute("animal", protectService.selectAnimal(ap.getAnimalNo()));
+        model.addAttribute("writer", protectService.selectMember(ap.getMemberNo()));
         model.addAttribute("loginMember", (Member) session.getAttribute("member"));
         return "mainAllpage/detail";
     }
@@ -146,7 +145,7 @@ public class AllPageController {
             return "common/msg";
         }
 
-        AllPage ap = allpageService.selectOneProtect(protectNo);
+        Protect ap = protectService.selectOneProtect(protectNo);
         if (ap == null) {
             model.addAttribute("title", "글 없음");
             model.addAttribute("text", "수정할 글을 찾을 수 없습니다.");
@@ -156,7 +155,7 @@ public class AllPageController {
         }
 
         model.addAttribute("ap", ap);
-        model.addAttribute("animal", allpageService.selectAnimal(ap.getAnimalNo()));
+        model.addAttribute("animal", protectService.selectAnimal(ap.getAnimalNo()));
         return "mainAllpage/updateFrm";
     }
 
@@ -174,7 +173,7 @@ public class AllPageController {
             return "common/msg";
         }
 
-        AllPage ap = allpageService.selectOneProtect(protectNo);
+        Protect ap = protectService.selectOneProtect(protectNo);
         if (ap == null) {
             model.addAttribute("title", "수정 실패");
             model.addAttribute("text", "글을 찾을 수 없습니다.");
@@ -184,7 +183,7 @@ public class AllPageController {
         }
 
         ap.setProtectContent(protectContent);
-        int result = allpageService.updateProtectContent(ap);
+        int result = protectService.updateProtectContent(ap);
         if(result > 0) {
             model.addAttribute("title", "수정 완료");
             model.addAttribute("text", "글이 정상적으로 수정되었습니다.");
