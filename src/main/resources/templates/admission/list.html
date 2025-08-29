@@ -37,6 +37,8 @@
 					<td th:text="${admission.admissionNo}"></td>
 					<td>
 						<span class="material-icons lock">lock_outline</span>
+						<!--<a th:onclick="lock([[${admission.memberId}]])" th:text="${admission.admissionTitle}"></a>
+						 -->
 						<a th:href="@{/admission/view(admissionNo=${admission.admissionNo})}" th:text="${admission.admissionTitle}"></a>
 					</td>
 					<td th:text="${admission.admissionDate}"></td>
@@ -49,6 +51,9 @@
 			<div id="pageNavi" th:utext="${pageNavi}"></div>
 		</section>
 	</main>
+	<script src="/js/sweetalert.min.js"></script>
+	<script>
+	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>
