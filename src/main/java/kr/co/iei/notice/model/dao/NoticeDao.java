@@ -12,4 +12,8 @@ public interface NoticeDao {
 
 	List selectNoticeList(HashMap<String, Object> param);
 
+	int searchTitleCount(String searchTitle);
+
+	List searchTitleNotice(HashMap<String, Object> param);
+
 }

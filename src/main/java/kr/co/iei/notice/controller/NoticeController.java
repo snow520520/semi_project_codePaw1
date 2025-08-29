@@ -31,7 +31,12 @@ public class NoticeController {
 			if(nld != null) {
 				model.addAttribute("list", nld.getList());
 				model.addAttribute("pageNavi", nld.getPageNavi());
+			}else {
+				model.addAttribute("list", "작성된 게시글이 존재하지 않습니다.");
 			}
+		}else {
+			model.addAttribute("list", "작성된 게시글이 존재하지 않습니다.");
 		}
+		return "notice/list";
 	}
 }
