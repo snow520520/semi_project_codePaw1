@@ -52,15 +52,30 @@ public class AdmissionController {
 		return "admission/list";
 	}
 	@GetMapping(value="/view")
-	public String view(int admissionNo, Model model) {
+	public String view(int admissionNo, Model model, @SessionAttribute(required = false) Member member) {
 		Admission admission = admissionService.selectOneAdmission(admissionNo);
 		if(admission == null) {
 			model.addAttribute("title", "게시글 조회 실패");
 			model.addAttribute("text", "이미 삭제된 게시글입니다.");
 			model.addAttribute("icon", "info");
-			model.addAttribute("loc", "/notice/list?reqPage=1");
+			model.addAttribute("loc", "/admission/list?reqPage=1");
 			return "common/msg";
 		}else {
+			if(member == null) {
+				model.addAttribute("title", "로그인 확인");
+				model.addAttribute("text", "로그인 후 이용 가능합니다.");
+				model.addAttribute("icon", "info");
+				model.addAttribute("loc", "/member/loginFrm");
+				return "common/msg";
+			}else {				
+				if (member.getMemberLevel() != 1 && !member.getMemberId().equals(admission.getMemberId())) {
+					model.addAttribute("title", "권한 없음");
+					model.addAttribute("text", "해당 글은 작성자와 관리자만 볼 수 있습니다.");
+					model.addAttribute("icon", "warning");
+					model.addAttribute("loc", "/admission/list?reqPage=1");
+					return "common/msg";
+				}
+			}
 			String memberId = admission.getMemberId();
 			Member m = memberService.selectMemberId(memberId);
 			int animalNo = admission.getAnimalNo();
@@ -133,5 +148,52 @@ public class AdmissionController {
 		 model.addAttribute("loc", "/admission/list?reqPage=1");
 		 return "common/msg";
 	 }
+	 @GetMapping(value="/updateFrm")
+	 public String updateFrm(int admissionNo, int animalNo, Model model) {
+		 Admission admission = admissionService.selectOneAdmission(admissionNo);
+		 Animal animal = animalService.selectAnimalNo(animalNo);
+		 model.addAttribute("admission", admission);
+		 model.addAttribute("animal", animal);
+		 return "admission/updateFrm";
+	 }
+	 @PostMapping(value="/update")
+	 public String update(Admission admission, Animal animal, Model model) {
+		 //admission update : admissionTitle, admissionContent
+		 //animal update : animalName, animalType, animalAge, animalGender, animalInocul, animalNeuter
+		 int result = animalService.updateAnimal(animal);
+		 if(result > 0) {
+			 result = admissionService.updateAdmission(admission);
+			 if(result > 0) {
+				 model.addAttribute("title", "수정 성공");
+				 model.addAttribute("msg", "게시글이 수정되었습니다.");
+				 model.addAttribute("icon", "success");
+				 model.addAttribute("loc", "/admission/view?admissionNo="+admission.getAdmissionNo());
+				 return "common/msg";
+			 }
+		 }
+		 model.addAttribute("title", "수정 실패");
+		 model.addAttribute("msg", "잠시후 다시 시도해 주세요.");
+		 model.addAttribute("icon", "warning");
+		 model.addAttribute("loc", "/admission/view?admissionNo="+admission.getAdmissionNo());
+		 return "common/msg";			 
+	 }
+	 @GetMapping(value="/admissionCheck")
+	 public String admissionCheck(int animalNo, Model model) {
+		 int result = animalService.admissionCheck(animalNo);
+		 if(result > 0) {
+			 model.addAttribute("title", "승인 성공");
+			 model.addAttribute("msg", "입소 승인되었습니다.");
+			 model.addAttribute("icon", "success");
+			 model.addAttribute("loc", "/admission/list?reqPage=1");
+			 return "common/msg";
+		 }
+		 model.addAttribute("title", "승인 실패");
+		 model.addAttribute("msg", "잠시후 다시 시도해 주세요.");
+		 model.addAttribute("icon", "warning");
+		 model.addAttribute("loc", "/admission/list?reqPage=1");
+		 return "common/msg";
+		 
+	 }
+	 
 	
 }

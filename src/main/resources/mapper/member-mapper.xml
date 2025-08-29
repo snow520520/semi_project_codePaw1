@@ -10,5 +10,19 @@
   	
   	<select id="selectMemberId" resultType="member">
     select * from member_tbl where member_id = #{memberId}
-</select>
+	</select>
+	
+	<insert id="join">
+		insert into member_tbl values(
+				member_tbl_seq.nextval, 
+				#{memberId}, 
+				#{memberPw}, 
+				#{memberName}, 
+				#{memberAge}, 
+				#{memberAddr}, 
+				#{memberPhone},
+				3,
+				to_char(sysdate, 'yyyy-mm-dd')
+				)
+	</insert>
 </mapper>

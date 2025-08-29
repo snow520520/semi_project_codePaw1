@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/notice.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<style>
+	#pageNavi{
+		margin-top: 30px;
+	}
+</style>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section">
+			<div class="page-title">공지사항</div>	
+			<div class="searchTitle">
+				<form action="/admission/searchTitle" method="get">
+					<input type="text" name="searchTitle" placeholder="제목을 입력해주세요.">
+					<input type="hidden" name="reqPage" id="reqPage" value="1">	
+					<button type="submit">				
+						<span class="material-icons">search</span>		
+					</button>				
+				</form>
+			</div>
+			<table class="tbl tbl-hover">
+				<tr>
+					<th style="width: 10%">NO</th>
+					<th style="width: 50%">제목</th>
+					<th style="width: 20%">작성일</th>
+					<th style="width: 20%">작성자</th>
+				</tr>
+				<tr th:each="notice : ${list}">
+					<td th:text="${notice.noticeNo}"></td>
+					<td>
+						<a href="javascript:void(0);" 
+  							 th:onclick="checkAccess([[${notice.noticeNo}]], '[[${notice.memberId}]]')"
+   							th:text="${notice.noticeTitle}"></a>
+					</td>
+					<td th:text="${notice.noticeDate}"></td>
+					<td th:text="${notice.memberId}"></td>
+				</tr>
+			</table>
+			<button class="insertNotice" th:if="${session.member != null && session.member.memberLevel == 1}">
+				<a href="/notice/insertFrm">작성하기</a>
+			</button>
+			<div id="pageNavi" th:utext="${pageNavi}"></div>
+		</section>
+	</main>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>

@@ -152,6 +152,12 @@ public class AdmissionService {
 		int result = admissionDao.insertAdmission(admission);
 		return result;
 	}
+	
+	@Transactional
+	public int updateAdmission(Admission admission) {
+		int result = admissionDao.updateAdmission(admission);
+		return result;
+	}
 
 	
 }
