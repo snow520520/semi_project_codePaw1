@@ -82,7 +82,7 @@ public class ReviewController {
 		return "review/reviewWriteFrm";
 	}
 	
-	@PostMapping(value="/reviewWriteFrm/editorImage", produces = "plain/text;charset=uft-8")
+	@PostMapping(value="/reviewWriteFrm/editorImage", produces = "plain/text;charset=utf-8")
 	@ResponseBody
 	public String editorImage(MultipartFile upfile) {
 		String savePath = "C:/image";
