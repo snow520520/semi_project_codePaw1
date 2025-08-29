@@ -1,4 +1,4 @@
-package kr.co.iei.AllPage.model.service;
+package kr.co.iei.protect.model.service;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -8,43 +8,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.co.iei.AllPage.model.dao.AllPageDao;
-import kr.co.iei.AllPage.model.vo.AllPage;
 import kr.co.iei.animal.model.vo.Animal;
 import kr.co.iei.member.model.vo.Member;
+import kr.co.iei.protect.model.dao.ProtectDao;
+import kr.co.iei.protect.model.vo.Protect;
 
 @Service
-public class AllPageService {
+public class ProtectService {
 
     @Autowired
-    private AllPageDao allpageDao;
+    private ProtectDao protectDao;
 
     @Transactional
-    public int insertProtect(AllPage ap, int memberNo, Animal animal) {
-        List<Integer> existingAnimalList = allpageDao.selectAnimalNoList(animal);
-        if (!existingAnimalList.isEmpty()) return -1;
+    public int insertProtect(Protect ap, int memberNo, Animal animal) {
+        List<Animal> matchingAnimals = protectDao.selectAnimalByNameAndAgeList(animal);
+        if (matchingAnimals.isEmpty()) return -2;
 
-        int newAnimalNo = allpageDao.insertAnimal(animal);
-        if (newAnimalNo <= 0) return 0;
+        Animal selectedAnimal = matchingAnimals.get(0);
+        List<Integer> existingProtects = protectDao.selectAnimalNoListByNo(selectedAnimal.getAnimalNo());
 
+        if (!existingProtects.isEmpty()) return -1; 
+
+        int nextProtectNo = protectDao.getNextProtectNo();
+        ap.setProtectNo(nextProtectNo);
         ap.setMemberNo(memberNo);
-        ap.setAnimalNo(newAnimalNo);
-        int newProtectNo = allpageDao.getNextProtectNo();
-        ap.setProtectNo(newProtectNo);
-        return allpageDao.insertProtect(ap);
+        ap.setAnimalNo(selectedAnimal.getAnimalNo());
+
+        return protectDao.insertProtect(ap);
     }
 
-    public List<AllPage> selectAllProtect() {
-        return allpageDao.selectAllProtect();
-    }
+    public List<Protect> selectPageList(int start, int count, Integer memberNo) {
+        int end = start + count - 1;
+        List<Protect> list = protectDao.selectPageProtect(start, end);
 
-    public List<AllPage> selectPageList(int currentPage, int recordCountPerPage) {
-        int start = (currentPage - 1) * recordCountPerPage + 1;
-        int end = currentPage * recordCountPerPage;
-        List<AllPage> list = allpageDao.selectPageProtect(start, end);
-        for (AllPage ap : list) {
+        for (Protect ap : list) {
             if ("2".equals(ap.getProtectStatus())) ap.setThumbnailUrl("/image/complete.png");
             else ap.setThumbnailUrl(extractFirstImageSrc(ap.getProtectContent()));
+
+            if(memberNo != null) ap.setLikedByUser(isLiked(memberNo, ap.getProtectNo()));
+            ap.setLikeCount(getLikeCount(ap.getProtectNo()));
         }
         return list;
     }
@@ -58,7 +60,7 @@ public class AllPageService {
     }
 
     public int getTotalCount() {
-        return allpageDao.selectTotalCount();
+        return protectDao.selectTotalCount();
     }
 
     public String getPageNavi(int currentPage, int totalCount, int recordCountPerPage, int naviCountPerPage, String url) {
@@ -81,31 +83,52 @@ public class AllPageService {
         return sb.toString();
     }
 
-    public List<AllPage> selectPageListRead(int start, int end) {
-        List<AllPage> list = allpageDao.selectPageProtect(start, end);
-        for (AllPage ap : list) {
+    public List<Protect> selectPageListRead(int start, int end) {
+        List<Protect> list = protectDao.selectPageProtect(start, end);
+        for (Protect ap : list) {
             if ("2".equals(ap.getProtectStatus())) ap.setThumbnailUrl("/image/complete.png");
             else ap.setThumbnailUrl(extractFirstImageSrc(ap.getProtectContent()));
         }
         return list;
     }
 
-    public AllPage selectOneProtect(int protectNo) {
-        AllPage ap = allpageDao.selectOneProtect(protectNo);
+    public Protect selectOneProtect(int protectNo) {
+        Protect ap = protectDao.selectOneProtect(protectNo);
         if (ap != null && "2".equals(ap.getProtectStatus())) ap.setThumbnailUrl("/image/complete.png");
         return ap;
     }
 
     public Animal selectAnimal(int animalNo) {
-        return allpageDao.selectAnimal(animalNo);
+        return protectDao.selectAnimal(animalNo);
     }
 
     public Member selectMember(int memberNo) {
-        return allpageDao.selectMember(memberNo);
+        return protectDao.selectMember(memberNo);
     }
 
     @Transactional
-    public int updateProtectContent(AllPage ap) {
-        return allpageDao.updateProtectContent(ap);
+    public int updateProtectContent(Protect ap) {
+        return protectDao.updateProtectContent(ap);
+    }
+
+
+    public boolean isLiked(int memberNo, int protectNo) {
+        Integer result = protectDao.selectProtectLike(memberNo, protectNo);
+        return result != null && result > 0;
+    }
+
+    @Transactional
+    public void insertProtectLike(int memberNo, int protectNo) {
+        protectDao.insertProtectLike(memberNo, protectNo);
+    }
+
+    @Transactional
+    public void deleteProtectLike(int memberNo, int protectNo) {
+        protectDao.deleteProtectLike(memberNo, protectNo);
+    }
+
+    public int getLikeCount(int protectNo) {
+        Integer count = protectDao.selectLikeCount(protectNo);
+        return count == null ? 0 : count;
     }
 }

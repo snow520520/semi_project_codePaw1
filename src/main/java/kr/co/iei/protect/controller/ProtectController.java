@@ -1,9 +1,10 @@
-package kr.co.iei.AllPage.controller;
+package kr.co.iei.protect.controller;
 
-import jakarta.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.iei.AllPage.model.service.AllPageService;
-import kr.co.iei.AllPage.model.vo.AllPage;
+import jakarta.servlet.http.HttpSession;
 import kr.co.iei.animal.model.vo.Animal;
 import kr.co.iei.member.model.vo.Member;
+import kr.co.iei.protect.model.service.ProtectService;
+import kr.co.iei.protect.model.vo.Protect;
 
 @Controller
-public class AllPageController {
-
+public class ProtectController {
     @Autowired
-    private AllPageService allpageService;
+    private ProtectService protectService;
 
     @GetMapping("/mainAllpage/writeFrm")
     public String writeFrm(HttpSession session, Model model) {
@@ -40,7 +41,7 @@ public class AllPageController {
     }
 
     @PostMapping("/mainAllpage/write")
-    public String write(AllPage ap,
+    public String write(Protect ap,
                         @RequestParam("animalName") String animalName,
                         @RequestParam("animalAge") String animalAgeStr,
                         HttpSession session, Model model) {
@@ -56,17 +57,33 @@ public class AllPageController {
 
         Animal animal = new Animal();
         animal.setAnimalName(animalName);
-        try { animal.setAnimalAge(Integer.parseInt(animalAgeStr)); } 
-        catch (NumberFormatException e) { animal.setAnimalAge(0); }
+        try {
+            animal.setAnimalAge(Integer.parseInt(animalAgeStr));
+        } catch (NumberFormatException e) {
+            animal.setAnimalAge(0);
+        }
 
-        int result = allpageService.insertProtect(ap, member.getMemberNo(), animal);
+        if (animal.getAnimalName() == null || animal.getAnimalName().isEmpty() || animal.getAnimalAge() <= 0) {
+            model.addAttribute("title", "등록 실패");
+            model.addAttribute("text", "없는 동물입니다. 이름과 나이를 정확히 입력해주세요.");
+            model.addAttribute("icon", "warning");
+            model.addAttribute("loc", "/mainAllpage/writeFrm");
+            return "common/msg";
+        }
 
-        if(result == -1) {
+        int result = protectService.insertProtect(ap, member.getMemberNo(), animal);
+
+        if (result == -2) {
+            model.addAttribute("title", "등록 실패");
+            model.addAttribute("text", "존재하지 않는 동물입니다.");
+            model.addAttribute("icon", "warning");
+            model.addAttribute("loc", "/mainAllpage/writeFrm");
+        } else if (result == -1) {
             model.addAttribute("title", "등록 실패");
             model.addAttribute("text", "이미 등록된 동물입니다.");
             model.addAttribute("icon", "warning");
             model.addAttribute("loc", "/mainAllpage/writeFrm");
-        } else if(result > 0) {
+        } else if (result > 0) {
             model.addAttribute("title", "작성 완료");
             model.addAttribute("text", "입양 글이 정상적으로 등록되었습니다.");
             model.addAttribute("icon", "success");
@@ -81,35 +98,82 @@ public class AllPageController {
     }
 
     @GetMapping("/mainAllpage/allpage")
-    public String allpage(@RequestParam(value="page", defaultValue="1") int page,
+    public String allpage(@RequestParam(value = "page", defaultValue = "1") int page,
                           Model model, HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        Integer memberNo = (member != null) ? member.getMemberNo() : null;
 
         int recordCountPerPage = 16;
         int naviCountPerPage = 5;
-        int totalCount = allpageService.getTotalCount();
-        List<AllPage> list = allpageService.selectPageList(page, recordCountPerPage);
+        int totalCount = protectService.getTotalCount();
+
+        List<Protect> list = protectService.selectPageList(page, recordCountPerPage, memberNo);
 
         model.addAttribute("list", list);
-        model.addAttribute("pageNavi", allpageService.getPageNavi(page, totalCount, recordCountPerPage, naviCountPerPage, "/mainAllpage/allpage"));
-        model.addAttribute("member", (Member) session.getAttribute("member"));
+        model.addAttribute("pageNavi", protectService.getPageNavi(page, totalCount, recordCountPerPage, naviCountPerPage, "/mainAllpage/allpage"));
+        model.addAttribute("member", member);
         return "mainAllpage/allpage";
     }
 
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("list", allpageService.selectPageList(1, 4));
+    @GetMapping({"/", "/index"})
+    public String index(Model model, HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        Integer memberNo = (member != null) ? member.getMemberNo() : null;
+
+        List<Protect> list = protectService.selectPageList(1, 4, memberNo);
+        model.addAttribute("list", list);
+        model.addAttribute("member", member);
         return "index";
+    }
+    
+    @ResponseBody
+    @GetMapping("/mainAllpage/loadMore")
+    public List<Protect> loadMore(@RequestParam("start") int start,
+                                  @RequestParam("count") int count,
+                                  HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        Integer memberNo = (member != null) ? member.getMemberNo() : null;
+
+        int end = start + count - 1;
+        return protectService.selectPageList(start, count, memberNo);
     }
 
     @ResponseBody
-    @GetMapping("/mainAllpage/loadMore")
-    public List<AllPage> loadMore(@RequestParam("start") int start, @RequestParam("count") int count) {
-        return allpageService.selectPageListRead(start, start + count - 1);
+    @PostMapping("/mainAllpage/toggleLike")
+    public Map<String, Object> toggleLike(@RequestParam("protectNo") int protectNo, HttpSession session) {
+        Map<String, Object> resultMap = new HashMap<>();
+        Member member = (Member) session.getAttribute("member");
+        if (member == null) {
+            resultMap.put("likedByUser", false);
+            resultMap.put("likeCount", 0);
+            return resultMap;
+        }
+
+        boolean liked = protectService.isLiked(member.getMemberNo(), protectNo);
+        if (liked) {
+            protectService.deleteProtectLike(member.getMemberNo(), protectNo);
+            liked = false;
+        } else {
+            protectService.insertProtectLike(member.getMemberNo(), protectNo);
+            liked = true;
+        }
+
+        resultMap.put("likedByUser", liked);
+        resultMap.put("likeCount", protectService.getLikeCount(protectNo));
+        return resultMap;
     }
 
+    @ResponseBody
+    @GetMapping("/mainAllpage/checkLike")
+    public boolean checkLike(@RequestParam("protectNo") int protectNo, HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        if (member == null) return false;
+        return protectService.isLiked(member.getMemberNo(), protectNo);
+    }
+    
     @GetMapping("/mainAllpage/detail")
     public String detail(@RequestParam("protectNo") int protectNo, Model model, HttpSession session) {
-        AllPage ap = allpageService.selectOneProtect(protectNo);
+        Protect ap = protectService.selectOneProtect(protectNo);
         if (ap == null) {
             model.addAttribute("title", "게시물 없음");
             model.addAttribute("text", "해당 글이 삭제되었거나 존재하지 않습니다.");
@@ -117,24 +181,13 @@ public class AllPageController {
             model.addAttribute("loc", "/mainAllpage/allpage");
             return "common/msg";
         }
-
         model.addAttribute("ap", ap);
-        model.addAttribute("animal", allpageService.selectAnimal(ap.getAnimalNo()));
-        model.addAttribute("writer", allpageService.selectMember(ap.getMemberNo()));
+        model.addAttribute("animal", protectService.selectAnimal(ap.getAnimalNo()));
+        model.addAttribute("writer", protectService.selectMember(ap.getMemberNo()));
         model.addAttribute("loginMember", (Member) session.getAttribute("member"));
         return "mainAllpage/detail";
     }
-
-    @PostMapping(value="/mainAllpage/editorImage", produces = "plain/text;charset=utf-8")
-    @ResponseBody
-    public String editorImage(MultipartFile upfile) {
-        String savePath = "C:/image/";
-        String filename = UUID.randomUUID() + "_" + upfile.getOriginalFilename();
-        try { upfile.transferTo(new File(savePath + filename)); } 
-        catch (IOException e) { e.printStackTrace(); return "fail"; }
-        return "/editorImage/" + filename;
-    }
-
+    
     @GetMapping("/mainAllpage/updateFrm")
     public String updateFrm(@RequestParam("protectNo") int protectNo, Model model, HttpSession session) {
         Member member = (Member) session.getAttribute("member");
@@ -145,8 +198,7 @@ public class AllPageController {
             model.addAttribute("loc", "/member/loginFrm");
             return "common/msg";
         }
-
-        AllPage ap = allpageService.selectOneProtect(protectNo);
+        Protect ap = protectService.selectOneProtect(protectNo);
         if (ap == null) {
             model.addAttribute("title", "글 없음");
             model.addAttribute("text", "수정할 글을 찾을 수 없습니다.");
@@ -154,9 +206,8 @@ public class AllPageController {
             model.addAttribute("loc", "/mainAllpage/allpage");
             return "common/msg";
         }
-
         model.addAttribute("ap", ap);
-        model.addAttribute("animal", allpageService.selectAnimal(ap.getAnimalNo()));
+        model.addAttribute("animal", protectService.selectAnimal(ap.getAnimalNo()));
         return "mainAllpage/updateFrm";
     }
 
@@ -174,7 +225,7 @@ public class AllPageController {
             return "common/msg";
         }
 
-        AllPage ap = allpageService.selectOneProtect(protectNo);
+        Protect ap = protectService.selectOneProtect(protectNo);
         if (ap == null) {
             model.addAttribute("title", "수정 실패");
             model.addAttribute("text", "글을 찾을 수 없습니다.");
@@ -184,7 +235,7 @@ public class AllPageController {
         }
 
         ap.setProtectContent(protectContent);
-        int result = allpageService.updateProtectContent(ap);
+        int result = protectService.updateProtectContent(ap);
         if(result > 0) {
             model.addAttribute("title", "수정 완료");
             model.addAttribute("text", "글이 정상적으로 수정되었습니다.");
@@ -197,5 +248,15 @@ public class AllPageController {
             model.addAttribute("loc", "/mainAllpage/updateFrm?protectNo=" + protectNo);
         }
         return "common/msg";
+    }
+    
+    @PostMapping(value="/mainAllpage/editorImage", produces = "plain/text;charset=utf-8")
+    @ResponseBody
+    public String editorImage(MultipartFile upfile) {
+        String savePath = "C:/image/";
+        String filename = UUID.randomUUID() + "_" + upfile.getOriginalFilename();
+        try { upfile.transferTo(new File(savePath + filename)); } 
+        catch (IOException e) { e.printStackTrace(); return "fail"; }
+        return "/editorImage/" + filename;
     }
 }

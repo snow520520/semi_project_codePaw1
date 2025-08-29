@@ -11,4 +11,17 @@
  <select id="searchAnimalNo" resultType="int">
  	select animal_no from(select animal_no from animal where member_no = #{memberNo} order by animal_no desc) where rownum = 1
  </select>
+ <update id="updateAnimal">
+ 	update animal set 
+ 		animal_name = #{animalName},
+ 		animal_type = #{animalType},
+ 		animal_age = #{animalAge},
+ 		animal_gender = #{animalGender},
+ 		animal_inocul = #{animalInocul},
+ 		animal_neuter = #{animalNeuter}
+ 	where animal_no = #{animalNo}
+ </update>
+ <update id="admissionCheck">
+ 	update animal set animal_admission = 'Y' where animal_no = #{animalNo}
+ </update>
 </mapper>

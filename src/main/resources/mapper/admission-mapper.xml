@@ -38,4 +38,7 @@
   <insert id="insertAdmission">
   	insert into admission values(admission_seq.nextval,#{admissionTitle},#{admissionContent},to_char(sysdate,'yyyy-mm-dd'),#{memberId},#{animalNo})
   </insert>
+  <update id="updateAdmission">
+  	update admission set admission_title = #{admissionTitle}, admission_content = #{admissionContent} where admission_no = #{admissionNo}
+  </update>
 </mapper>

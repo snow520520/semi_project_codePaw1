@@ -25,6 +25,8 @@ public interface AdmissionDao {
 
 	int insertAdmission(Admission admission);
 
+	int updateAdmission(Admission admission);
+
 	
 
 }
