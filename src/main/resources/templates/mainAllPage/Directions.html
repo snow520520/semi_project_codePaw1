@@ -86,7 +86,7 @@
 
         #map {
             width: 43%;
-            height: 500px;
+            height: 540px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
@@ -113,6 +113,9 @@
         .contact-info p {
             margin-top: 10px;
         }
+		.content-img img{
+			width: 100%;
+		}
     </style>
 </head>
 <body>
@@ -127,16 +130,18 @@
             <div class="Allselect-container">
                 <div class="select-container">
                     <div class="address-wrap">
-                        <h3>주소:</h3>
+                        <h3>주소</h3>
                         <p>서울특별시 영등포구 선유동2로 57 이레빌딩(구관)</p>
                     </div>
 
                     <div class="contact-info">
-                        <h3>상담 전화:</h3>
+                        <h3>상담 전화</h3>
                         <p>입사/입양: 010-1234-1234</p>
                     </div>
-                </div>
-
+					<div class="content-img">
+						<img src="/image/directions.png">					
+					</div>
+              	  </div>
                 <div id="map"></div>
             </div>
         </main>
@@ -144,51 +149,33 @@
 
     <th:block th:include="common/footer"></th:block>
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=71vdn4d6s0"></script>
-    <script>
-        const mapDiv = document.getElementById('map');
-        const map = new naver.maps.Map(mapDiv, {
-            center: new naver.maps.LatLng(37.5338151, 126.8969784),
-            zoom: 17,
-            zoomControl: true,
-            zoomControlOptions: {
-                position: naver.maps.Position.TOP_RIGHT,
-                style: naver.maps.ZoomControlStyle.SMALL
-            }
-        });
+	<script>
+	    const mapDiv = document.getElementById('map');
+	    const map = new naver.maps.Map(mapDiv, {
+	        center: new naver.maps.LatLng(37.5338151, 126.8969784),
+	        zoom: 17,
+	        zoomControl: true,
+	        zoomControlOptions: {
+	            position: naver.maps.Position.TOP_RIGHT,
+	            style: naver.maps.ZoomControlStyle.SMALL
+	        }
+	    });
 
-        const marker = new naver.maps.Marker({
-            position: new naver.maps.LatLng(37.533842, 126.896977),
-            map: map
-        });
+	    const marker = new naver.maps.Marker({
+	        position: new naver.maps.LatLng(37.533842, 126.896977),
+	        map: map
+	    });
 
-        const infoWindow = new naver.maps.InfoWindow({
-            content: '<div style="padding:10px;">서울시 영등포구 선유2로 57 이레빌딩 19층</div>'
-        });
+	    const infoWindow = new naver.maps.InfoWindow({
+	        content: '<div style="padding:10px;">서울시 영등포구 선유2로 57 이레빌딩 19층</div>',
+	        position: marker.getPosition() 
+	    });
 
-        naver.maps.Event.addListener(marker, "click", function() {
-            infoWindow.open(map, marker);
-        });
+	    infoWindow.open(map, marker);
 
-        naver.maps.Event.addListener(map, "click", function(e) {
-            marker.setPosition(e.coord);
-            map.setCenter(e.coord);
 
-            naver.maps.Service.reverseGeocoder({
-                location: e.coord
-            }, function(status, response) {
-                if(status === naver.maps.Service.Status.OK){
-                    const addr = response.result.items[0].address;
-                    $("#address").val(addr);
-                } else {
-                    alert("주소를 찾을 수 없습니다.");
-                }
-            });
-
-            if(infoWindow.getMap()){
-                infoWindow.close();
-            }
-        });
-    </script>
+	    
+	</script>
 
 </body>
 </html>
