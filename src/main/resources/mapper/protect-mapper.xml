@@ -70,5 +70,25 @@
     FROM protect_tbl
     WHERE animal_no = #{animalNo}
 	</select>
-	
+
+    <select id="selectProtectLike" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM protect_like
+        WHERE member_no = #{memberNo} AND protect_no = #{protectNo}
+    </select>
+
+    <insert id="insertProtectLike" parameterType="map">
+        INSERT INTO protect_like(member_no, protect_no)
+        VALUES (#{memberNo}, #{protectNo})
+    </insert>
+
+    <delete id="deleteProtectLike" parameterType="map">
+        DELETE FROM protect_like
+        WHERE member_no = #{memberNo} AND protect_no = #{protectNo}
+    </delete>
+
+    <select id="selectLikeCount" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM protect_like
+        WHERE protect_no = #{protectNo}
+    </select>
+
 </mapper>

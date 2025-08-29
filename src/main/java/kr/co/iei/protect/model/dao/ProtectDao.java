@@ -31,6 +31,10 @@ public interface ProtectDao {
     int insertAnimal(Animal animal);
 
     List<Animal> selectAnimalByNameAndAgeList(Animal animal);
+    List<Integer> selectAnimalNoListByNo(int animalNo);
 
-	List<Integer> selectAnimalNoListByNo(int animalNo);
+    Integer selectProtectLike(@Param("memberNo") int memberNo, @Param("protectNo") int protectNo);
+    void insertProtectLike(@Param("memberNo") int memberNo, @Param("protectNo") int protectNo);
+    void deleteProtectLike(@Param("memberNo") int memberNo, @Param("protectNo") int protectNo);
+    Integer selectLikeCount(@Param("protectNo") int protectNo);
 }
