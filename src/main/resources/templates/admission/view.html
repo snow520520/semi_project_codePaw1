@@ -16,7 +16,7 @@
 	.section>div:nth-child(3){
 		float: right;
 	}
-	.section>div:nth-child(4){
+	.line{
 		border-bottom: 1px solid #000000;
 		padding-bottom: 20px;
 		margin-bottom: 20px;
@@ -38,7 +38,7 @@
 	th{
 		font-weight: 500;
 	}
-	.section>a{
+	.section a{
 		float: right;
 		margin-left: 20px;
 	}
@@ -51,9 +51,11 @@
 			<div th:text="${admission.admissionTitle}"></div>
 			<div th:text="${admission.memberId}"></div>
 			<div th:text="${admission.admissionDate}"></div>
-			<div> </div>
+			<div class="line"> </div>
+			<th:block th:if="${session.member != null && session.member.memberId == member.memberId}">
 			<a class="updateAdmission" th:href="@{/admission/updateFrm(admissionNo=${admission.admissionNo},animalNo=${animal.animalNo})}">수정</a>
 			<a th:onclick="deleteAdmission([[${admission.admissionNo}]]);">삭제</a>
+			</th:block>
 			<div class="info-tbl">
 				<div>보호자 정보</div>
 				<table class="tbl">
