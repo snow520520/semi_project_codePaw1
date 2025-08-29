@@ -16,7 +16,7 @@
 	.section>div:nth-child(3){
 		float: right;
 	}
-	.section>div:nth-child(4){
+	.line{
 		border-bottom: 1px solid #000000;
 		padding-bottom: 20px;
 		margin-bottom: 20px;
@@ -52,7 +52,7 @@
 			<div th:text="${a.adoptionTitle}"></div>
 			<div th:text="${a.memberId}"></div>
 			<div th:text="${a.adoptionDate}"></div>
-			<div> </div>
+			<div class="line"> </div>
 			<a th:href="@{/adoption/updateFrm(adoptionNo=${a.adoptionNo})}">수정</a>
 			<a th:onclick="deleteAdoption([[${a.adoptionNo}]])">삭제</a>
 			<div class="info-tbl">
@@ -69,7 +69,7 @@
 						<th style="width: 20%">주소</th>
 						<td style="width: 80%" th:text="${member.memberAddr}"></td>
 					</tr>
-					<tr>
+					<tr class="adoptionContent">
 						<th style="width: 20%">입양동기</th>
 						<td style="width: 80%" th:text="${a.adoptionContent}"></td>
 					</tr>
