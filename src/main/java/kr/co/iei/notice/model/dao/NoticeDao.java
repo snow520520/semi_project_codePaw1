@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.iei.notice.model.vo.Notice;
+
 @Mapper
 public interface NoticeDao {
 
@@ -15,5 +17,7 @@ public interface NoticeDao {
 	int searchTitleCount(String searchTitle);
 
 	List searchTitleNotice(HashMap<String, Object> param);
+
+	Notice selectOneNotice(int noticeNo);
 
 }

@@ -135,4 +135,9 @@ int numPerPage = 13;
 			return null;
 		}
 	}
+
+	public Notice selectOnetNotice(int noticeNo) {
+		Notice notice = noticeDao.selectOneNotice(noticeNo);
+		return notice;
+	}
 }

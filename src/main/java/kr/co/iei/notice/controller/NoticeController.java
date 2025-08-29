@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.iei.notice.model.service.NoticeService;
+import kr.co.iei.notice.model.vo.Notice;
 import kr.co.iei.notice.model.vo.NoticeListData;
 
 @Controller
@@ -38,5 +39,11 @@ public class NoticeController {
 			model.addAttribute("list", "작성된 게시글이 존재하지 않습니다.");
 		}
 		return "notice/list";
+	}
+	@GetMapping(value="/view")
+	public String view(int noticeNo, Model model) {
+		Notice notice = noticeService.selectOnetNotice(noticeNo);
+		model.addAttribute("notice", notice);
+		return "notice/view";
 	}
 }

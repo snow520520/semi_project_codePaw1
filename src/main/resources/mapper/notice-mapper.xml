@@ -28,4 +28,7 @@
 	    	)
 		where #{start} <![CDATA[ <= ]]> rnum and rnum <![CDATA[ <= ]]> #{end}
  </select>
+ <select id="selectOneNotice" resultType="notice">
+ 	select * from notice where notice_no = #{noticeNo}
+ </select>
 </mapper>

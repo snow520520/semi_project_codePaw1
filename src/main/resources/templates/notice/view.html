@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/notice.css">
+<style>
+.section>div:first-child{
+		font-size: 26px;
+		font-weight: 400;
+		padding-bottom: 20px;
+	}
+	.section>div:nth-child(2){
+		display: inline-block;
+	}	
+	.section>div:nth-child(3){
+		float: right;
+	}
+	.line{
+		border-bottom: 1px solid #000000;
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+	}
+	.noticeContent{
+		min-height: 600px;
+		text-align: center;
+	}
+	.info-tbl{
+		width: 880px;
+		margin: 0 auto;
+	}
+	.info-tbl>div{
+		font-size: 20px;
+		font-weight: 500;
+		padding-bottom: 10px;
+		padding-top: 30px;
+	}
+</style>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section">
+			<div th:text="${notice.noticeTitle}"></div>
+			<div th:text="${notice.memberId}"></div>
+			<div th:text="${notice.noticeDate}"></div>
+			<div class="line"> </div>
+			<th:block th:if="${session.member != null && session.member.memberLevel == 1}">
+			<a class="updateNotice" th:href="@{/admission/updateFrm(admissionNo=${admission.admissionNo},animalNo=${animal.animalNo})}">수정</a>
+			<a th:onclick="deleteAdmission([[${admission.admissionNo}]]);">삭제</a>
+			<div class="noticeContent" th:text="${notice.noticeContent}"></div>
+			<div class="line"> </div>
+			<div class="btn-box">
+					<button type="button" onclick="location.href='/notice/list?reqPage=1'">목록으로</button>
+				</div>
+		</section>
+	</main>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>
