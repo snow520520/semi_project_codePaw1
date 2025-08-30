@@ -1,6 +1,6 @@
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>입양후기 작성 화면</title>
 
 <style>
 .review-write-container {
@@ -14,34 +14,42 @@
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	border-radius: 8px;
 }
+
 .review-write-wrap {
 	width: 1000px;
 }
+
 .review-write-wrap .input-item>input[type=text] {
 	padding: 0;
 	border-bottom: none;
 }
+
 .content .input-item>textarea {
 	min-height: 800px;
 	width: 800px;
 	padding-top: 10px;
 }
+
 .reviewTitle {
 	border: none;
 	border-bottom: 1px solid #000;
 	outline: none;
 	padding: 5px;
 	width: 800px;
-	font-size: 25px;
+	font-size: 23px;
 }
+
 .content .input-item {
 	padding-top: 20px;
+	width: 800px;
 }
+
 .content .input-item>textarea {
 	font-size: 17px;
 	border-left: none;
 	border-right: none;
 }
+
 .btn {
 	display: flex;
 	justify-content: center;
@@ -49,6 +57,7 @@
 	margin-top: 30px;
 	margin-bottom: 40px;
 }
+
 .btn button {
 	padding: 10px 20px;
 	font-size: 18px;
@@ -57,17 +66,33 @@
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 	border: none;
 }
+
 #btn-primary {
 	background: #fff;
 	color: black;
-	border : 1px solid #000000;
+	border: 1px solid #000000;
 }
-#btn-secondary{
+
+#btn-secondary {
 	background: #FFB22C;
 	color: #ffffff;
 }
+
 .btn button:hover {
 	transform: translateY(-2px);
+}
+
+.note-editor {
+	border: none;
+	box-shadow: none;
+}
+
+.note-editable {
+	resize: none;
+	outline: none; } 
+	
+.note-resizebar {
+	display: none;
 }
 </style>
 </head>
@@ -75,10 +100,12 @@
 	<th:block th:include="common/header"></th:block>
 	<main class="content review-write-container">
 		<section class="section reivew-write-wrap">
-			<form action="/review/writeFrm" method="post" enctype="multipart/form-data">
+			<form action="/review/writeFrm" method="post"
+				enctype="multipart/form-data">
 				<table class="tbl">
 					<tr>
-						<input type="text" class="reviewTitle" placeholder="입양후기 제목을 입력해주세요">
+						<input type="text" class="reviewTitle"
+							placeholder="입양후기 제목을 입력해주세요">
 					</tr>
 					<tr>
 						<td>
@@ -89,12 +116,14 @@
 					</tr>
 				</table>
 				<tr>
-				<td colspan="2">
-					<div class="btn">
-					<button type="button" id="btn-primary" onclick="location.href='/review/list?reqPage=1'">취소하기</button>
-					<button type="submit" id="btn-secondary" onclick="location.href='/review/list?reqPage=1'">작성하기</button>
-				</div>
-				</td>
+					<td colspan="2">
+						<div class="btn">
+							<button type="button" id="btn-primary"
+								onclick="location.href='/review/list?reqPage=1'">취소하기</button>
+							<button type="submit" id="btn-secondary"
+								onclick="location.href='/review/list?reqPage=1'">작성하기</button>
+						</div>
+					</td>
 				</tr>
 			</form>
 		</section>
@@ -104,26 +133,30 @@
 	<script src="/summernote/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/summernote/summernote-lite.css">
 	<script>
-		$("[name=reviewContent]").summernote({
-			height : 500,
-			lang : "ko-KR",
-			toolbar:[
-				['fontname', ['fontname']],
-			    ['fontsize', ['fontsize']],
-			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-			    ['color', ['forecolor','color']],
-			    ['height', ['height']],
-			    ['insert',['picture']],
-			    ['view', ['help']]
-			],
-			callbacks : {
-				onImageUpload : function(file) {
-					for(let i = 0; i < files.length; i++){
-					uploadImage(file[i], this);
-					}
-				}
-			}
-		});
+		$("[name=reviewContent]")
+				.summernote(
+						{
+							height : 545,
+							lang : "ko-KR",
+							toolbar : [
+									[ 'fontname', [ 'fontname' ] ],
+									[ 'fontsize', [ 'fontsize' ] ],
+									[
+											'style',
+											[ 'bold', 'italic', 'underline',
+													'strikethrough', 'clear' ] ],
+									[ 'color', [ 'forecolor', 'color' ] ],
+									[ 'height', [ 'height' ] ],
+									[ 'insert', [ 'picture' ] ],
+									[ 'view', [ 'help' ] ] ],
+							callbacks : {
+								onImageUpload : function(file) {
+									for (let i = 0; i < files.length; i++) {
+										uploadImage(file[i], this);
+									}
+								}
+							}
+						});
 		function uploadImage(file, editor) {
 			const form = new FormData();
 			form.append("upfile", file);
@@ -141,6 +174,9 @@
 			});
 		}
 	</script>
+
+
+
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>
