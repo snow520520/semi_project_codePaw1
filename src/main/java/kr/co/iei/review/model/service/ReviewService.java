@@ -1,11 +1,14 @@
 package kr.co.iei.review.model.service;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.admission.model.vo.AdmissionListData;
 import kr.co.iei.review.model.dao.ReviewDao;
@@ -71,16 +74,10 @@ public class ReviewService {
 
 		return rld;
 	}
-
 	// 후기 게시글 추가
-	@Transactional
-	public int reviewWrite(Review r) {
-		int result = reviewDao.reviewWrite(r);
-		return 0;
-	}
 
 	// 검색 목록
-	
+	/*
 	public ReviewListData searchTitle(int reqPage, String searchTitle) {
 		int numPerPage = 16;
 
@@ -147,16 +144,5 @@ public class ReviewService {
 			return null;
 		}
 	}
-	@Transactional
-	public int deleteReviewNo(int reviewNo) {
-		int result = reviewDao.deleteReviewNo(reviewNo);
-		return result;
-	}
-
-	public Review selectOneReview(int reviewNo) {
-		Review review = reviewDao.selectOneReview(reviewNo);
-		
-		return null;
-	}
-
+*/
 }

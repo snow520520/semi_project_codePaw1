@@ -95,13 +95,13 @@ public class AdmissionController {
 		int result = admissionService.deleteAdmissionNo(admissionNo);
 		if(result>0) {
 			model.addAttribute("title", "삭제 성공");
-			model.addAttribute("msg", "게시글이 삭제되었습니다.");
+			model.addAttribute("text", "게시글이 삭제되었습니다.");
 			model.addAttribute("icon", "success");
 			model.addAttribute("loc", "/admission/list?reqPage=1");
 			return "common/msg";
 		}else {
 			model.addAttribute("title", "삭제 실패");
-			model.addAttribute("msg", "잠시후 다시 시도해 주세요.");
+			model.addAttribute("text", "잠시후 다시 시도해 주세요.");
 			model.addAttribute("icon", "warning");
 			model.addAttribute("loc", "/admission/view?admissionNo="+admissionNo);
 			return "common/msg";
@@ -139,7 +139,7 @@ public class AdmissionController {
 				 result = admissionService.insertAdmission(admission);
 				 if(result>0) {
 					 	model.addAttribute("title", "작성 성공");
-						model.addAttribute("msg", "게시글이 작성되었습니다.");
+						model.addAttribute("text", "게시글이 작성되었습니다.");
 						model.addAttribute("icon", "success");
 						model.addAttribute("loc", "/admission/list?reqPage=1");
 						return "common/msg";
@@ -147,7 +147,7 @@ public class AdmissionController {
 			 }
 		 }
 		 model.addAttribute("title", "작성 실패");
-		 model.addAttribute("msg", "잠시후 다시 시도해 주세요.");
+		 model.addAttribute("text", "잠시후 다시 시도해 주세요.");
 		 model.addAttribute("icon", "warning");
 		 model.addAttribute("loc", "/admission/list?reqPage=1");
 		 return "common/msg";
@@ -169,14 +169,14 @@ public class AdmissionController {
 			 result = admissionService.updateAdmission(admission);
 			 if(result > 0) {
 				 model.addAttribute("title", "수정 성공");
-				 model.addAttribute("msg", "게시글이 수정되었습니다.");
+				 model.addAttribute("text", "게시글이 수정되었습니다.");
 				 model.addAttribute("icon", "success");
 				 model.addAttribute("loc", "/admission/view?admissionNo="+admission.getAdmissionNo());
 				 return "common/msg";
 			 }
 		 }
 		 model.addAttribute("title", "수정 실패");
-		 model.addAttribute("msg", "잠시후 다시 시도해 주세요.");
+		 model.addAttribute("text", "잠시후 다시 시도해 주세요.");
 		 model.addAttribute("icon", "warning");
 		 model.addAttribute("loc", "/admission/view?admissionNo="+admission.getAdmissionNo());
 		 return "common/msg";			 
@@ -186,13 +186,13 @@ public class AdmissionController {
 		 int result = animalService.admissionCheck(animalNo);
 		 if(result > 0) {
 			 model.addAttribute("title", "승인 성공");
-			 model.addAttribute("msg", "입소 승인되었습니다.");
+			 model.addAttribute("text", "입소 승인되었습니다.");
 			 model.addAttribute("icon", "success");
 			 model.addAttribute("loc", "/admission/list?reqPage=1");
 			 return "common/msg";
 		 }
 		 model.addAttribute("title", "승인 실패");
-		 model.addAttribute("msg", "잠시후 다시 시도해 주세요.");
+		 model.addAttribute("text", "잠시후 다시 시도해 주세요.");
 		 model.addAttribute("icon", "warning");
 		 model.addAttribute("loc", "/admission/list?reqPage=1");
 		 return "common/msg";
