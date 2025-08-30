@@ -19,6 +19,8 @@ public interface MemberDao {
 
 	List allMember();
 
+	List allAnimal();
+
 
 
 	

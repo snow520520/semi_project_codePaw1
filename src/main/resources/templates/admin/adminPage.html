@@ -145,7 +145,6 @@ body {
 .select-search>form{
 	display: flex;
 	justify-content: center;
-	margin-top: 20px;
 }
 .select-search>form>button{
 	border: none;
@@ -176,6 +175,23 @@ body {
 .admin-table th{
 	background-color: #F7F7F7;
 }
+.selectChangeLevel>.selectChangeLevel-btn{
+	width: 100px;
+	height: 30px;
+	margin: 5px; 
+	padding: 3px;
+	color: white;
+	border: none;
+	border-radius: 15px;
+	cursor: pointer;
+	background-color: #ffb22c;
+	font-size: 13px;
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+.selectChangeLevel{
+	margin-left: 50px;
+}
 </style>
 </head>
 <body>
@@ -187,20 +203,20 @@ body {
 					<div class="admin-top">
 						<div class="admin-title">관리자 페이지</div>
 						<div class="ud-button">
-							<button class="update-btn">수 정</button>
+							<button class="update-btn">수 정</button> <!-- button 클릭 시  -->
 							<button class="delete-btn">삭 제</button>
 						</div>
 					</div>
 					<div class="search-div">
-						<div class="allSearch-title">회원조회</div>
-						<div class="allSearch-title"style="display: none;">동물조회</div>
+						<div class="allSearch-title" style="display: none;">회원조회</div>
+						<div class="allSearch-title-animal" style="display: none;">동물조회</div>
 						<div class="allSearch-div">
-							<button class="member-search" >전체회원조회</button>
-							<button class="animal-search" >전체동물조회</button>
+							<button class="member-search">전체회원조회</button>
+							<button class="animal-search">전체동물조회</button>
 						</div>
 						<div class="select-search">
-							<div class="selectChangeLevel">
-								<button class="selectChangeLevel-btn">선택등급변경</button>
+							<div class="selectChangeLevel" style="display: none">
+								<button class="selectChangeLevel-btn" >선택등급변경</button>
 							</div>
 							<div class="animalSelectChange" style="display: none">
 								<button class="animalSelectChange-btn">선택변경</button>
@@ -215,8 +231,8 @@ body {
 						</div>
 					</div>
 				</div>
-				<table class="admin-table" >
-					<tr class="table-title">
+				<table class="admin-table">
+					<tr class="table-title" style="display: none">
 						<th style = "width: 5%"></th>
 						<th style = "width: 7%">No</th>
 						<th style = "width: 10%">아이디</th>
@@ -227,7 +243,7 @@ body {
 						<th style = "width: 12%">가입날짜</th>
 						<th style = "width: 8%">등급변경</th>
 					</tr>
-					<tr th:each= "member, status : ${list}" class="tr-tbl">
+					<tr th:each= "member, status : ${listMember}" class="tr-tbl" style="display: none">
 						<td>
 							<div class="input-wrap">
 								<input type = "checkbox" class="chb-input" th:id="${'chb-input'+status.count}">
@@ -264,21 +280,21 @@ body {
 						</td>
 					</tr>
 				</table>
-				
-				<table class="admin-table" style="display: none;">
-					<tr class="table-title">
+				<table class="admin-table">
+					<tr class="table-title-animal"  style="display: none;">
 						<th style = "width: 5%"></th>
 						<th style = "width: 10%">No</th>
 						<th style = "width: 12%">품 종</th>
 						<th style = "width: 13%">이 름</th>
 						<th style = "width: 10%">성 별</th>
 						<th style = "width: 10%">나 이</th>
-						<th style = "width: 10%">접종여부</th>
-						<th style = "width: 10%">중성화여부</th>
-						<th style = "width: 10%">회원번호</th>
-						<th style = "width: 10%">입소여부</th>
+						<th style = "width: 8%">접종여부</th>
+						<th style = "width: 8%">중성화여부</th>
+						<th style = "width: 8%">입소번호</th>
+						<th style = "width: 8%">회원번호</th>
+						<th style = "width: 8%">입소여부</th>
 					</tr>
-					<tr th:each= "a, status : ${list}" class="tr-tbl">
+					<tr th:each= "a, status : ${listAnimal}" class="tr-tbl-animal" style="display: none;">
 						<td>
 							<div class="input-wrap">
 								<input type = "checkbox" class="chb-input" th:id="${'chb-input'+status.count}">
@@ -302,15 +318,17 @@ body {
 	</main>
 	<script>
 		$(".member-search").on("click", function(){
-			const allMemberSearch = $(".tr-tbl");
-			$(this).css("background-color", "white").css("border", "1px solid #854836").css("color", "#854836");
-			allMemberSearch.show();
-			$(this).css("background-color", "#FFB22C").css("border", "none").css("color", "white");
-			allMemberSearch.hide();
-			allMemberSearch.hide();
-			allMemberSearch.show();
+			$(".allSearch-title").slideToggle(100);
+			$(".selectChangeLevel").slideToggle(100);
+			$(".table-title").slideToggle(100);
+			$(".tr-tbl").slideToggle(100);
+			
 		});
-		$(".animal-search").on("click", fcuntion(){
+		$(".animal-search").on("click", function(){
+			$(".allSearch-title-animal").slideToggle(100);
+			$(".animalSelectChange").slideToggle(100);
+			$(".table-title-animal").slideToggle(100);
+			$(".tr-tbl-animal").slideToggle(100);
 			
 		});
 	</script>

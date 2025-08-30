@@ -18,6 +18,7 @@ public class Animal {
 	private Integer animalAge;
 	private String animalInocul;
 	private String animalNeuter;
+	private String admissionNo;
 	private int memberNo;
 	private String animalAdmission;
 }

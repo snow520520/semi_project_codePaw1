@@ -35,8 +35,12 @@ public class MemberService {
 		return result;
 	}
 	public List allMember() {
-		List list = memberDao.allMember();
-		return list;
+		List listMember = memberDao.allMember();
+		return listMember;
+	}
+	public List allAnimal() {
+		List listAnimal = memberDao.allAnimal();
+		return listAnimal;
 	}
 
 }
