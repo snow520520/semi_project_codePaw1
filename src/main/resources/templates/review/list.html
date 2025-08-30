@@ -2,13 +2,29 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<meta charset="UTF-8">
+<title>입양후기 목록</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/css/review.css">
+
+
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+	rel="stylesheet">
+
+<link
+	href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+	rel="stylesheet">
+
+<style>
+.like-icon {
+	cursor: pointer;
+	font-size: 23px; 
+	vertical-align: middle;
+	color: #e57373; 
+}
+</style>
+
 </head>
+<body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
@@ -22,52 +38,55 @@
 					</button>
 				</form>
 			</div>
-			<hr>
+			<hr class="border">
 			<div class="all-review">
 				<div class="all-card">
 					<th:block th:each="review : ${list}">
-						<div class="card-container" > 
+						<div class="card-container">
 							<div class="card">
 								<img src="#.jpg" alt="아이1"
 									th:href="@{/review/view(reviewNo=${review.reviewNo})}">
 							</div>
 							<div class="card-info">
 								<h3 th:text="${review.reviewTitle}"></h3>
-								<span class="like">좋아요</span>
+								<!-- 좋아요 아이콘 -->
+								<span class="material-icons-outlined like-icon">favorite_border</span>
 							</div>
 							<p class="date" th:text="${review.reviewDate}"></p>
 						</div>
 					</th:block>
 					<div class="write-btn-wrapper">
-						<a href="/review/reviewWriteFrm">
-							<button class="write-btn" th:if="${session.member != null}">글쓰기</button>
+						<a
+							th:if="${session.member != null and (session.member.memberLevel == 1 or session.member.memberLevel == 2)}"
+							href="/review/reviewWriteFrm">
+							<button class="write-btn">글쓰기</button>
 						</a>
 					</div>
-					<div id="pageNavi" th:utext="${pageNavi}"><</div>
 				</div>
 			</div>
+			<div id="pageNavi" th:utext="${pageNavi}"></div>
 		</section>
 	</main>
-	<script src="/js/sweetalert.min.js"></script>
-	<script th:inline="javascript">
-		const memberNo = 'null';
-		const memberLevel = 0;
-		
-		function checkAccess(memberNo, memberLevel){
-			if(memberLevel === 1){
-				location.href = "/review/reviewWriteFrm = "+ reviewNo;
-				return;
-			}
-			if(memberId === 'null'){
-				swal("로그인 후 이용 가능합니다.","")
-			}
-			if(memberId === memberId){
-				location.href="/review/reviewWriteFrm ="+ reviewNo;
-				return;
-			}
-			swal("정회원만 작성 가능합니다.","","warning");
-		}
-		</script>
 	<th:block th:include="common/footer"></th:block>
-	</body>
+
+	<script>
+	  document.addEventListener("DOMContentLoaded", function() {
+	    const likeIcons = document.querySelectorAll(".like-icon");
+
+	    likeIcons.forEach(icon => {
+	      icon.addEventListener("click", function() {
+	        if (this.textContent === "favorite_border") {
+	          this.textContent = "favorite";   
+	          this.classList.remove("material-icons-outlined");
+	          this.classList.add("material-icons");
+	        } else {
+	          this.textContent = "favorite_border"; 
+	          this.classList.remove("material-icons");
+	          this.classList.add("material-icons-outlined");
+	        }
+	      });
+	    });
+	  });
+	</script>
+</body>
 </html>

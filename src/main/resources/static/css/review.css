@@ -10,7 +10,7 @@ html, body {
 }
 .section{
 	width: 1200px;
-	padding: 20px 100px 20px 100px;
+	padding: 20px 30px 20px 30px;
 	background-color: #ffffff;
 	margin: 20px;
 	border-radius: 8px;
@@ -51,10 +51,6 @@ input{
 	font-size: 21px;
 }
 
-main {
-	height: 1400PX;
-	flex: 1;
-}
 
 .all-review{
 	padding-top: 20px;
@@ -64,7 +60,7 @@ main {
 
 .all-card {
     display: grid;
-    grid-template-columns: repeat(4, 220px); 
+    grid-template-columns: repeat(4, 230px); 
     justify-content: center; 
     gap: 50px;
     margin-top: 20px;
@@ -129,10 +125,9 @@ main {
 }
 
 .write-btn-wrapper {
-    width : 880px;
+    width : 1000px;
     text-align: right;       
 	margin: 0 auto;
-	margin-top: 30px;
 }
 .write-btn {
     bottom: 30px;        
@@ -168,7 +163,6 @@ main {
   justify-content: center;
   align-items: center;
   padding-top: 20px;
-  padding-left: 100px;
 }
 .pagination > li {
   width: 40px;
@@ -185,6 +179,7 @@ main {
   width: 100%;
   height: 100%;
   font-size: 18px;
+  text-decoration: none;
 }
 .pagination > li > a.page-item > span.material-icons {
   display: block;
@@ -196,10 +191,5 @@ main {
   background-color: #FFB22C;
   color: #fff;
   font-weight: 600;
+  
 }
-
-
-
-
-
-

@@ -2,42 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.review.model.dao.ReviewDao">
 
-  <select id="reviewList" resultType = "review">
-  	select * from 
-  		(select rownum as rnum, n.* from
-  			(select
-  				review_no, review_content, review_title, review_date
-  			from animal_review order by review_no desc
-  			)n
-  		)
-  		where #{start} <![CDATA[ <= ]]> rnum and rnum <![CDATA[ <= ]]> #{end}
-  </select>
-  
-  <select id="selectReviewList" resultType = "int">
-  	select count(*) from animal_review
-  </select>
-  
-  <select id="searchTitleCount" resultType = "int">
-  	select count(*) from animal_review where review_title like '%'||'${searchTitle}'||'%'
-  </select>
-  
-  <select id="searchTitleReview" resultType ="review">
-  	select * from 
-  		(select rownum as rnum, n.* from
-  			(select
-  				review_no, review_content, review_title, review_date
-  			from animal_review order by review_no desc 
-  			)n
-  		)
-  	where #{start} <![CDATA[ <= ]]> rnum and rnum <![CDATA[ <= ]]> #{end}
-  </select>
-  
-  <delete id="deleteReviewNo">
-  	delete from animal_review where review_no =${reviewNo}
-  </delete>
-  
-  <insert id="insert">
-  	insert into review values(review_seq.nextval,#{reviewTitle},#{reviewContent},to_char(sysdate,'yyyy-mm-dd'),#{memberId})
-  </insert>
-  
+	<select id="reviewList" resultType="review">
+		select * from
+		(select rownum as rnum, n.* from
+		(select
+		review_no, review_content, review_title, review_date
+		from animal_review order by review_no desc
+		)n
+		)
+		where #{start} <![CDATA[ <= ]]>
+		rnum and rnum <![CDATA[ <= ]]>
+		#{end}
+	</select>
+
+	<select id="selectReviewList" resultType="int">
+		select count(*) from animal_review
+	</select>
+
+	<select id="searchTitleCount" resultType="int">
+		select count(*) from animal_review where review_title like
+		'%'||'${searchTitle}'||'%'
+	</select>
+
+	<select id="searchTitleReview" resultType="review">
+		select * from
+		(select rownum as rnum, n.* from
+		(select
+		review_no, review_content, review_title, review_date
+		from animal_review order by review_no desc
+		)n
+		)
+		where #{start} <![CDATA[ <= ]]>
+		rnum and rnum <![CDATA[ <= ]]>
+		#{end}
+	</select>
+
+	<delete id="deleteReviewNo">
+		delete from animal_review where review_no =${reviewNo}
+	</delete>
+
+	<insert id="insert">
+		insert into review
+		values(review_seq.nextval,#{reviewTitle},#{reviewContent},to_char(sysdate,'yyyy-mm-dd'),#{memberNo})
+	</insert>
+
 </mapper>
