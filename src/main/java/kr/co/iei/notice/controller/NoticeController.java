@@ -59,13 +59,13 @@ public class NoticeController {
 		int result = noticeService.deleteNotice(noticeNo);
 		if(result > 0) {
 			model.addAttribute("title", "삭제 성공");
-			model.addAttribute("msg", "게시글이 삭제되었습니다.");
+			model.addAttribute("text", "게시글이 삭제되었습니다.");
 			model.addAttribute("icon", "success");
 			model.addAttribute("loc", "/notice/list?reqPage=1");
 			return "common/msg";
 		}else {
 			model.addAttribute("title", "삭제 실패");
-			model.addAttribute("msg", "잠시후 다시 시도해 주세요.");
+			model.addAttribute("text", "잠시후 다시 시도해 주세요.");
 			model.addAttribute("icon", "warning");
 			model.addAttribute("loc", "/notice/view?noticeNo="+noticeNo);
 			return "common/msg";
@@ -94,15 +94,38 @@ public class NoticeController {
 		int result = noticeService.insertNotice(notice);
 		if(result > 0) {
 			model.addAttribute("title", "작성 성공");
-			model.addAttribute("msg", "게시글이 작성되었습니다.");
+			model.addAttribute("text", "게시글이 작성되었습니다.");
 			model.addAttribute("icon", "success");
 			model.addAttribute("loc", "/notice/list?reqPage=1");
 			return "common/msg";
 		}else {
 			model.addAttribute("title", "작성 실패");
-			model.addAttribute("msg", "잠시후 다시 시도해 주세요.");
+			model.addAttribute("text", "잠시후 다시 시도해 주세요.");
 			model.addAttribute("icon", "warning");
 			model.addAttribute("loc", "/notice/list?reqPage=1");
+			return "common/msg";
+		}
+	}
+	@GetMapping(value="/updateFrm")
+	public String updateFrm(int noticeNo, Model model) {
+		Notice notice = noticeService.selectOnetNotice(noticeNo);
+		model.addAttribute("notice", notice);
+		return "notice/updateFrm";
+	}
+	@PostMapping(value="/update")
+	public String update(Notice notice, Model model) {
+		int result = noticeService.updateNotice(notice);
+		if(result >0) {
+			model.addAttribute("title", "수정 성공");
+			model.addAttribute("text", "게시글이 수정되었습니다.");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/notice/view?noticeNo="+notice.getNoticeNo());
+			return "common/msg";
+		}else {
+			model.addAttribute("title", "수정 실패");
+			model.addAttribute("text", "잠시후 다시 시도해 주세요.");
+			model.addAttribute("icon", "warning");
+			model.addAttribute("loc", "/notice/view?noticeNo="+notice.getNoticeNo());
 			return "common/msg";
 		}
 	}
