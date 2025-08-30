@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/notice.css">
+<style>
+	#noticeTitle{
+		width:500px;
+		height: 28px;
+		font-size: 26px;
+		border: none;
+		margin-bottom: 20px;
+		text-align: left;
+	}
+	.section div:first-child{
+		margin-top: 20px;
+	}
+	input{
+		text-align: left;
+		font-size: 20px;
+	}
+	textarea{
+		width: 650px;
+		height: 85px;
+		border: none;
+		outline: none;
+		text-align: center;
+		font-size: 16px;
+	}
+	.note-handle{
+		display: none;
+		border: none;
+	}
+	.note-toolbar{
+		height: 65px;
+	}
+	nput::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+  		-webkit-appearance: none;
+  		margin: 0;
+	}
+	.note-editor {
+	  border: none ;
+	  box-shadow: none ;
+	}
+	
+	.note-editable {
+	  resize: none ;
+	  outline: none;
+	}
+	
+	.note-resizebar {
+	  display: none ;
+	}
+</style>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section">
+			<form action="/notice/insert" method="post">
+				<div>
+					<input type="text" name="noticeTitle" id="noticeTitle" placeholder="제목을 입력해주세요.">
+					<input type="hidden" name="memberId" id="memberId" th:value="${session.member.memberId}">
+				</div>
+				<div class="line" th:text="${session.member.memberId}"></div>
+				<textarea name="noticeContent" id="noticeContent" required></textarea>
+				<div class="line"> </div>
+				<div class="btn-box">
+					<button type="button" onclick="location.href='/notice/list?reqPage=1'">취소하기</button>
+					<button type="submit"id="submit">작성하기</button>
+				</div>
+			</form>
+		</section>
+	</main>
+	<script src="/summernote/summernote-lite.js"></script>
+	<script src="/summernote/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/summernote/summernote-lite.css">
+	<script>
+	$('#noticeContent').summernote({
+	    height: 600,
+	    toolbar: [
+		    // [groupName, [list of button]]
+		    ['fontname', ['fontname']],
+		    ['fontsize', ['fontsize']],
+		    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+		    ['color', ['forecolor','color']],
+		    ['height', ['height']],
+		    ['insert',['picture']],
+		    ['view', ['help']]
+		  ],
+	    callbacks: {
+	        onImageUpload: function(files) {
+	            for (let i = 0; i < files.length; i++) {
+	                uploadImage(files[i]);
+	            }
+	        }
+	    }
+	});
+	function uploadImage(file) {
+	    let formData = new FormData();
+	    formData.append("upfile", file);
+		$.ajax({
+		    url: "/notice/insertFrm/editorImage",
+		    type: "POST",
+		    data: formData,
+		    contentType: false,
+		    processData: false,
+		    success: function(url) {
+		        $('#noticeContent').summernote('insertImage', url);
+		    },
+		    error: function(xhr, status, error) {
+		        console.log("AJAX 에러", status, error);
+		        alert("이미지 업로드 실패");
+		    }
+		});
+	}
+	</script>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>
