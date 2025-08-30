@@ -5,6 +5,9 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/notice.css">
 <style>
+	.hidden{
+		display: none;
+	}
 	#noticeTitle{
 		width:500px;
 		height: 28px;
@@ -38,11 +41,14 @@
 	  resize: none ;
 	  outline: none;
 	}
-	.note-placeholder{
-		width: 1000px;
-	}
+	
 	.note-resizebar {
 	  display: none ;
+	}
+	button:hover>a{
+		font-size: 16px;
+		color: #ffffff;
+		font-weight: 400;
 	}
 	.note-editor.note-frame, .note-editor.note-airframe{
 		text-align: center;
@@ -53,17 +59,18 @@
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
-			<form action="/notice/insert" method="post">
+			<form action="/notice/update" method="post">
 				<div class="title">
-					<input type="text" name="noticeTitle" id="noticeTitle" placeholder="제목을 입력해주세요.">
-					<input type="hidden" name="memberId" id="memberId" th:value="${session.member.memberId}">
+					<input type="hidden" name="noticeNo" id="noticeNo" th:value="${notice.noticeNo}">
+					<input type="text" name="noticeTitle" id="noticeTitle" placeholder="제목을 입력해주세요." th:value="${notice.noticeTitle}">
 				</div>
-				<div class="line" th:text="${session.member.memberId}"></div>
+				<div class="line" th:text="${notice.memberId}"></div>
 				<textarea name="noticeContent" id="noticeContent" required></textarea>
+				<p class="hidden" th:text="${notice.noticeContent}">
 				<div class="line"> </div>
 				<div class="btn-box">
-					<button type="button" onclick="location.href='/notice/list?reqPage=1'">취소하기</button>
-					<button type="submit"id="submit">작성하기</button>
+					<button type="button" th:onclick="|location.href='@{/notice/view(noticeNo=${notice.noticeNo})}'|">취소하기</button>
+					<button type="submit"id="submit">수정하기</button>
 				</div>
 			</form>
 		</section>
@@ -72,8 +79,10 @@
 	<script src="/summernote/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/summernote/summernote-lite.css">
 	<script>
+	
 	$('#noticeContent').summernote({
 	    height: 600,
+	    placeholder: "내용을 입력해주세요.",
 	    toolbar: [
 		    // [groupName, [list of button]]
 		    ['fontname', ['fontname']],
@@ -92,6 +101,8 @@
 	        }
 	    }
 	});
+	const contentValue = $('.hidden').text();
+	$('#noticeContent').summernote('code',contentValue);
 	function uploadImage(file) {
 	    let formData = new FormData();
 	    formData.append("upfile", file);
@@ -110,14 +121,6 @@
 		    }
 		});
 	}
-	$('#noticeTitle').on("focus",function(){
-		const noticeTitle = $("#noticeTitle");
-		noticeTitle.attr("placeholder","");			
-	});
-	$('#noticeTitle').on("blur",function(){
-		const noticeTitle = $("#noticeTitle");	
-		noticeTitle.attr("placeholder","제목을 입력해주세요.");
-	});
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>

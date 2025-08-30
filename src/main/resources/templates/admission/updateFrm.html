@@ -16,7 +16,7 @@
 	#animalAge{
 		width: 200px;
 	}
-	.section div:first-child{
+	.title{
 		margin-top: 20px;
 	}
 	.line{
@@ -43,14 +43,6 @@
 	}
 	input{
 		text-align: center;
-	}
-	textarea{
-		width: 650px;
-		height: 85px;
-		border: none;
-		outline: none;
-		text-align: center;
-		font-size: 16px;
 	}
 	label{
 		margin-right: 20px;
@@ -84,14 +76,8 @@
 		font-size: 18px;
 		color: #333333;
 	}
-	.note-toolbar{
-		height: 50px;
-	}
 	.note-handle{
 		display: none;
-	}
-	.note-toolbar{
-		height: 65px;
 	}
 	nput::-webkit-outer-spin-button,
 	input::-webkit-inner-spin-button {
@@ -121,7 +107,7 @@
 	<main class="content">
 		<section class="section">
 			<form action="/admission/update" method="post">
-				<div>
+				<div class="title">
 					<input type="text" name="admissionTitle" id="admissionTitle" th:value="${admission.admissionTitle}" placeholder="제목을 입력해주세요.">
 					<input type="hidden" name="admissionNo" id="admissionNo" th:value="${admission.admissionNo}">
 				</div>

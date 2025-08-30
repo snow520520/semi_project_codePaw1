@@ -35,6 +35,9 @@
  	delete notice where notice_no = #{noticeNo}
  </delete>
  <insert id="insertNotice">
- 	insert into notice values(notice_seq.nextval,#{noticeTitle},#{noticeContent},#{memberId},#{noticeDate})
+ 	insert into notice values(notice_seq.nextval,#{noticeTitle},#{noticeContent},#{memberId},to_char(sysdate,'yyyy-mm-dd'))
  </insert>
+ <update id="updateNotice">
+ 	update notice set notice_title = #{noticeTitle}, notice_content = #{noticeContent} where notice_no = #{noticeNo}
+ </update>
 </mapper>

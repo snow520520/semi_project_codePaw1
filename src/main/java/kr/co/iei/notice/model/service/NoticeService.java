@@ -153,4 +153,10 @@ int numPerPage = 13;
 		int result = noticeDao.insertNotice(notice);
 		return result;
 	}
+	
+	@Transactional
+	public int updateNotice(Notice notice) {
+		int result = noticeDao.updateNotice(notice);
+		return result;
+	}
 }
