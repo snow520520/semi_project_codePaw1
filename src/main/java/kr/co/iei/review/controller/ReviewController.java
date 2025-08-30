@@ -70,22 +70,18 @@ public class ReviewController {
 			model.addAttribute("review", review);
 			model.addAttribute("animalName", animal.getAnimalName());
 			return "review/view";
-			
-			
-			
 		}
 	}
 	//후기 작성 화면
-	@GetMapping("/review/reviewWriteFrm")
+	@GetMapping("/reviewWriteFrm")
 	public String reviewWriteFrm() {
 		return "review/reviewWriteFrm";
 	}
-
 	//이미지 받아오기
 	@PostMapping(value="/reviewWriteFrm/editorImage", produces = "plain/text;charset=utf-8")
 	@ResponseBody
 	public String editorImage(MultipartFile upfile) {
-		String savePath = "C:/image";
+		String savePath = "C:/image/";
 		String filename = UUID.randomUUID() + "_" + upfile.getOriginalFilename();
 		File file = new File (savePath + filename);
 	try {
@@ -96,10 +92,11 @@ public class ReviewController {
 	}
 	
 	
-	//게시글 받아오고 작성
-	@PostMapping(value="/review/reviewWriteFrm")
-	public String insertReview(Review r, Model model) {
-		int result = reviewService.reviewWrite(r);
+	//게시글 받아오고 저장
+	@PostMapping(value="/reviewWriteFrm")
+	public String insertReview(Review r, MultipartFile upfile, Model model) {
+		int result = reviewService.reviewWrite(r, upfile);
+		
 		model.addAttribute("title", "후기 작성 완료!");
 		model.addAttribute("text", "후기 등록이 완료되었습니다.");
 		model.addAttribute("icon", "success");

@@ -1,11 +1,14 @@
 package kr.co.iei.review.model.service;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.admission.model.vo.AdmissionListData;
 import kr.co.iei.review.model.dao.ReviewDao;
@@ -74,10 +77,21 @@ public class ReviewService {
 
 	// 후기 게시글 추가
 	@Transactional
-	public int reviewWrite(Review r) {
-		int result = reviewDao.reviewWrite(r);
-		return 0;
+	public int reviewWrite(Review r, MultipartFile upfile) {
+		// 파일 저장 로직
+		if(upfile != null && !upfile.isEmpty()) {
+			String filename = UUID.randomUUID() + "_" + upfile.getOriginalFilename();
+			String savePath = "C:/image/";
+		}try {
+			upfile.transferTo(new File(savePath + filename));
+			r.setFilepath(filename);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	
 	}
+	return reviewDao.inserReview(r);
+}
 
 	// 검색 목록
 	
