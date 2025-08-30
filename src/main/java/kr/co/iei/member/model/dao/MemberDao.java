@@ -1,5 +1,6 @@
 package kr.co.iei.member.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -20,6 +21,11 @@ public interface MemberDao {
 	List allMember();
 
 	List allAnimal();
+
+	int selectMemberCount();
+
+	List selectMemberList(HashMap<String, Object> param);
+	
 
 
 

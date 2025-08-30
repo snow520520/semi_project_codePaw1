@@ -25,10 +25,11 @@ body {
 	width: 1500px;
 	height: 1500px;
 	display: flex;
-	justify-content: center;
 	flex-direction: column;
 	align-items: center;
 	background-color: white;
+	margin-top: 20px;
+	padding-top: 30px;
 }
 .page-div {
 	width: 80%;
@@ -52,6 +53,7 @@ body {
 	margin-left: 30px;
 }
 .admin-table{
+	width:100%;
 	margin: 0 auto;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
@@ -103,7 +105,16 @@ body {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	text-align: left;
-	margin-left: 50px;
+	margin-left: 40px;
+}
+.search-div>.allSearch-title-animal{
+	color: #854836;
+	font-size: 20px;
+	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: left;
+	margin-left: 40px;
 }
 .admin-table th, .admin-table td{
 	padding: 10px 15px;
@@ -135,12 +146,11 @@ body {
 	font-size: 13px;
 	font-weight: 500;
 }
-
 .select-search{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-left: 580px;
+	margin-left: 700px;
 }
 .select-search>form{
 	display: flex;
@@ -188,9 +198,86 @@ body {
 	font-size: 13px;
 	font-weight: 500;
 	margin-bottom: 10px;
+	margin-left: 50px;
+}
+.animalSelectChange>.animalSelectChange-btn{
+	width: 100px;
+	height: 30px;
+	margin: 5px; 
+	padding: 3px;
+	color: white;
+	border: none;
+	border-radius: 15px;
+	cursor: pointer;
+	background-color: #ffb22c;
+	font-size: 13px;
+	font-weight: 500;
+	margin-bottom: 10px;
+	margin-left: 50px;
 }
 .selectChangeLevel{
 	margin-left: 50px;
+}
+.animalSelectChange{
+	margin-left: 50px;
+}
+.pagination {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+.pagination > li {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  overflow: hidden;
+}
+.pagination.circle-style > li {
+  border-radius: 50%;
+}
+.pagination > li > a.page-item {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+}
+.pagination > li > a.page-item > span.material-icons {
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 40px;
+}
+.pagination .page-item.active-page {
+  background-color: #FFB22C;
+  color: #fff;
+  font-weight: 600;
+}
+.btn-box{
+		width: 880px;
+		text-align: center;
+		margin: 0 auto;
+		margin-top: 30px;
+	}
+.btn-box>button{
+	border: 1px solid #888888;
+	background-color: #ffffff;
+	width: 200px;
+	height: 50px;
+	border-radius: 10px;
+	font-size: 16px;
+	font-weight: 400;
+	cursor: pointer;
+	transition-duration: 0.2s;
+}
+.btn-box>button:hover {
+	background-color:#FFB22C;
+	border: none;
+	color: #ffffff;
+	font-weight: 400;
+	transition-duration: 0.2s; 
 }
 </style>
 </head>
@@ -208,21 +295,21 @@ body {
 						</div>
 					</div>
 					<div class="search-div">
-						<div class="allSearch-title" style="display: none;">회원조회</div>
+						<div class="allSearch-title">회원조회</div>
 						<div class="allSearch-title-animal" style="display: none;">동물조회</div>
 						<div class="allSearch-div">
-							<button class="member-search">전체회원조회</button>
+							<button class="member-search" style="display: none;">전체회원조회</button>
 							<button class="animal-search">전체동물조회</button>
 						</div>
 						<div class="select-search">
-							<div class="selectChangeLevel" style="display: none">
+							<div class="selectChangeLevel">
 								<button class="selectChangeLevel-btn" >선택등급변경</button>
 							</div>
 							<div class="animalSelectChange" style="display: none">
 								<button class="animalSelectChange-btn">선택변경</button>
 							</div>
 							<form action="/member/searchMemberName" method="get">
-								<input type="text" name="selectSearch" id="selectSearch" placeholder="회원이름 입력">
+								<input type="text" name="selectSearch" id="selectSearch" placeholder="검색" style="padding-left: 10px;">
 								<input type="hidden" name="reqPage" id="reqPage" value="1">	
 								<button type="submit">				
 									<span class="material-icons">search</span>		
@@ -232,7 +319,7 @@ body {
 					</div>
 				</div>
 				<table class="admin-table">
-					<tr class="table-title" style="display: none">
+					<tr class="table-title">
 						<th style = "width: 5%"></th>
 						<th style = "width: 7%">No</th>
 						<th style = "width: 10%">아이디</th>
@@ -243,7 +330,7 @@ body {
 						<th style = "width: 12%">가입날짜</th>
 						<th style = "width: 8%">등급변경</th>
 					</tr>
-					<tr th:each= "member, status : ${listMember}" class="tr-tbl" style="display: none">
+					<tr th:each= "member, status : ${listMember}" class="tr-tbl">
 						<td>
 							<div class="input-wrap">
 								<input type = "checkbox" class="chb-input" th:id="${'chb-input'+status.count}">
@@ -283,13 +370,13 @@ body {
 				<table class="admin-table">
 					<tr class="table-title-animal"  style="display: none;">
 						<th style = "width: 5%"></th>
-						<th style = "width: 10%">No</th>
+						<th style = "width: 8%">No</th>
 						<th style = "width: 12%">품 종</th>
 						<th style = "width: 13%">이 름</th>
 						<th style = "width: 10%">성 별</th>
 						<th style = "width: 10%">나 이</th>
 						<th style = "width: 8%">접종여부</th>
-						<th style = "width: 8%">중성화여부</th>
+						<th style = "width: 10%">중성화여부</th>
 						<th style = "width: 8%">입소번호</th>
 						<th style = "width: 8%">회원번호</th>
 						<th style = "width: 8%">입소여부</th>
@@ -314,6 +401,8 @@ body {
 					</tr>
 				</table>
 			</div>
+			<div id="pageNavi" th:utext="${pageNavi}"></div>
+			<div id="pageNavi-ani" th:utext="${pageNaviAni}" style = "display:none;"></div>
 		</section>
 	</main>
 	<script>
@@ -322,14 +411,30 @@ body {
 			$(".selectChangeLevel").slideToggle(100);
 			$(".table-title").slideToggle(100);
 			$(".tr-tbl").slideToggle(100);
+			$(".animal-search").show();
+			$(this).hide();
+			$("#pageNavi").show()
+			$("#pageNavi-ani").hide();
 			
+			$(".allSearch-title-animal").slideToggle(100);
+			$(".animalSelectChange").slideToggle(100);
+			$(".table-title-animal").slideToggle(100);
+			$(".tr-tbl-animal").slideToggle(100);
 		});
 		$(".animal-search").on("click", function(){
 			$(".allSearch-title-animal").slideToggle(100);
 			$(".animalSelectChange").slideToggle(100);
 			$(".table-title-animal").slideToggle(100);
 			$(".tr-tbl-animal").slideToggle(100);
+			$(".member-search").show();
+			$(this).hide();
+			$("#pageNavi-ani").show();
+			$("#pageNavi").hide();
 			
+			$(".allSearch-title").slideToggle(100);
+			$(".selectChangeLevel").slideToggle(100);
+			$(".table-title").slideToggle(100);
+			$(".tr-tbl").slideToggle(100);
 		});
 	</script>
 	<th:block th:include="common/footer"></th:block>

@@ -24,4 +24,20 @@
  <update id="admissionCheck">
  	update animal set animal_admission = 'Y' where animal_no = #{animalNo}
  </update>
+ <select id="selectAnimalCount" resultType="int">
+ 	select count(*) from animal
+ </select>
+ <select id="selectAnimalList" resultType="animal">
+ 	select * from
+	    	(select rownum as rnum, n.* from
+	        	(select 
+                    animal_no, animal_type, animal_name, animal_gender, animal_age, animal_inocul, animal_neuter, member_no,
+                    animal_admission 
+                    from animal
+                    join member_tbl using (member_no)
+                    order by animal_no desc
+	        	)n
+	    	)
+		where rnum between #{start} and #{end}
+ </select>
 </mapper>

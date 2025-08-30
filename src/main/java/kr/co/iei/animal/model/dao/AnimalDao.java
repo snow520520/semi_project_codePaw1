@@ -1,5 +1,8 @@
 package kr.co.iei.animal.model.dao;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.animal.model.vo.Animal;
@@ -16,5 +19,9 @@ public interface AnimalDao {
 	int updateAnimal(Animal animal);
 
 	int admissionCheck(int animalNo);
+
+	int selectAnimalCount();
+
+	List selectAnimalList(HashMap<String, Object> param);
 
 }

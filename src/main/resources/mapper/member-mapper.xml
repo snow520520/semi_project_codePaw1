@@ -26,9 +26,22 @@
 				)
 	</insert>
 	<select id="allMember" resultType= "member">
-		select * from member_tbl order by member_level, member_no
+		select * from member_tbl order by member_no
 	</select>
 	<select id="allAnimal" resultType = "animal">
 		select * from animal order by 1
 	</select>
+	<select id="selectMemberCount" resultType="int">
+  		select count(*) from member_tbl
+    </select>
+  	<select id="selectMemberList" resultType="member">
+  		select * from
+	    	(select rownum as rnum, n.* from
+	        	(select 
+	            	member_no, member_id, member_name, member_age, member_addr, member_phone, member_level, enroll_date 
+	        	from member_tbl order by member_no desc
+	        	)n
+	    	)
+		where rnum between #{start} and #{end}
+  	</select>
 </mapper>
