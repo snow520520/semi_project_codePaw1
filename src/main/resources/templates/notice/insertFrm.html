@@ -47,18 +47,43 @@
 	.note-editor.note-frame, .note-editor.note-airframe{
 		text-align: center;
 	}
+	#noticeFile{
+		font-size: 16px;
+		padding-left: 10px;
+		width: 270px;
+	}
+	input[type=file]::file-selector-button{
+		height : 33px;
+		border:1px solid #555555;
+		background-color : #ffffff;
+		border-radius: 50px;
+		padding-right: 10px;
+		padding-left: 10px;
+		cursor: pointer;
+		margin-right: 10px;
+	}
+	.inline{
+		display: inline-block;
+	}
+	label{
+		font-size: 18px;
+	}
 </style>
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
-			<form action="/notice/insert" method="post">
+			<form action="/notice/insert" method="post" enctype="multipart/form-data">
 				<div class="title">
 					<input type="text" name="noticeTitle" id="noticeTitle" placeholder="제목을 입력해주세요.">
 					<input type="hidden" name="memberId" id="memberId" th:value="${session.member.memberId}">
 				</div>
 				<div class="line" th:text="${session.member.memberId}"></div>
+				<div class="line inline">
+					<label for="noticeFile">첨부파일</label>
+					<input type="file" name="noticeFile" id="noticeFile" multiple>
+				</div>
 				<textarea name="noticeContent" id="noticeContent" required></textarea>
 				<div class="line"> </div>
 				<div class="btn-box">
