@@ -23,7 +23,7 @@ import kr.co.iei.member.model.vo.Member;
 import kr.co.iei.review.model.service.ReviewService;
 import kr.co.iei.review.model.vo.Review;
 import kr.co.iei.review.model.vo.ReviewListData;
-
+/*
 @Controller
 @RequestMapping (value = "/review")
 public class ReviewController {
@@ -55,6 +55,7 @@ public class ReviewController {
 		}
 		return "review/list";
 	}
+	
 	@GetMapping(value="/view")
 	public String view(int reviewNo, Model model) {
 		Review review = reviewService.selectOneReview(reviewNo);
@@ -90,8 +91,8 @@ public class ReviewController {
 	}
 	return "/editorImage/"+filename;
 	}
-	
-	
+	*/
+	/*
 	//게시글 받아오고 저장
 	@PostMapping(value="/reviewWriteFrm")
 	public String insertReview(Review r, MultipartFile upfile, Model model) {
@@ -104,7 +105,7 @@ public class ReviewController {
 		return "review/list";
 	}
 	
-
+*/
 	/*
 	@GetMapping(value="/delete")
 	public String delete (int reviewNo, Model model) {
@@ -123,6 +124,6 @@ public class ReviewController {
 			return "common/msg";
 		}
 	}
-	*/
+	
 }
- 
+ */
