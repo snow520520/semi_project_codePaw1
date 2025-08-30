@@ -74,27 +74,10 @@ public class ReviewService {
 
 		return rld;
 	}
-
 	// 후기 게시글 추가
-	@Transactional
-	public int reviewWrite(Review r, MultipartFile upfile) {
-		// 파일 저장 로직
-		if(upfile != null && !upfile.isEmpty()) {
-			String filename = UUID.randomUUID() + "_" + upfile.getOriginalFilename();
-			String savePath = "C:/image/";
-		}try {
-			upfile.transferTo(new File(savePath + filename));
-			r.setFilepath(filename);
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-	
-	}
-	return reviewDao.inserReview(r);
-}
 
 	// 검색 목록
-	
+	/*
 	public ReviewListData searchTitle(int reqPage, String searchTitle) {
 		int numPerPage = 16;
 
@@ -161,16 +144,5 @@ public class ReviewService {
 			return null;
 		}
 	}
-	@Transactional
-	public int deleteReviewNo(int reviewNo) {
-		int result = reviewDao.deleteReviewNo(reviewNo);
-		return result;
-	}
-
-	public Review selectOneReview(int reviewNo) {
-		Review review = reviewDao.selectOneReview(reviewNo);
-		
-		return null;
-	}
-
+*/
 }
