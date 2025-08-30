@@ -81,7 +81,7 @@ public class ReviewController {
 		model.addAttribute("member", member);
 		return "review/reviewWriteFrm";
 	}
-	
+	//이미지 받아오기
 	@PostMapping(value="/reviewWriteFrm/editorImage", produces = "plain/text;charset=utf-8")
 	@ResponseBody
 	public String editorImage(MultipartFile upfile) {
@@ -94,7 +94,9 @@ public class ReviewController {
 	}
 	return "/editorImage/"+filename;
 	}
-	@PostMapping(value="/insert")
+	
+	//게시글 받아오고 작성
+	@PostMapping(value="/review/view")
 	public String insertReview(Review r, Model model) {
 		int result = reviewService.reviewWrite(r);
 		model.addAttribute("title", "후기 작성 완료!");
@@ -105,7 +107,7 @@ public class ReviewController {
 	}
 	
 
-	
+	/*
 	@GetMapping(value="/delete")
 	public String delete (int reviewNo, Model model) {
 		int result = reviewService.deleteReviewNo(reviewNo);
@@ -123,6 +125,6 @@ public class ReviewController {
 			return "common/msg";
 		}
 	}
-	
+	*/
 }
  

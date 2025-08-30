@@ -26,7 +26,7 @@
 			<div class="all-review">
 				<div class="all-card">
 					<th:block th:each="review : ${list}">
-						<div class="card-container">
+						<div class="card-container" > 
 							<div class="card">
 								<img src="#.jpg" alt="아이1"
 									th:href="@{/review/view(reviewNo=${review.reviewNo})}">
@@ -48,7 +48,26 @@
 			</div>
 		</section>
 	</main>
-
+	<script src="/js/sweetalert.min.js"></script>
+	<script th:inline="javascript">
+		const memberNo = 'null';
+		const memberLevel = 0;
+		
+		function checkAccess(memberNo, memberLevel){
+			if(memberLevel === 1){
+				location.href = "/review/reviewWriteFrm = "+ reviewNo;
+				return;
+			}
+			if(memberId === 'null'){
+				swal("로그인 후 이용 가능합니다.","")
+			}
+			if(memberId === memberId){
+				location.href="/review/reviewWriteFrm ="+ reviewNo;
+				return;
+			}
+			swal("정회원만 작성 가능합니다.","","warning");
+		}
+		</script>
 	<th:block th:include="common/footer"></th:block>
 	</body>
 </html>

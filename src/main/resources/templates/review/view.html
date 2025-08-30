@@ -2,11 +2,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>입양후기 상세페이지</title>
 </head>
 <body>
-<th:block th:include="common/header"></th:block>
-	<div>확인</div>
-<th:block th:include="common/footer"></th:block>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section">
+			<div th:text="${review.reviewTitle}"></div>
+			<div th:text="${review.memberNo}"></div>
+			<div th:text="${review.reviewDate}"></div>
+			<div class="line"></div>
+			<th:block th:if="${session.member != null && (session.member.memberNo == member.memberNo || session.member.memberLevel == 1)}">
+				<a class="updateReview" th:href="@/review/updateFrm(reviewNo=${review.reviewNo})">수정</a>
+				<a th:onclick = "deleteReview([[${review.reviewNo]]);">삭제</a>
+			</th:block>
+			<tr>
+				<td class="content">
+					<div id="reviewContent" th:utext="${review.reviewCotentBr}"></div>
+				</td>
+			</tr>
+		</section>
+	</main>	
+	<th:block th:include="common/footer"></th:block>
 </body>
 </html>

@@ -36,7 +36,7 @@
   	delete from animal_review where review_no =${reviewNo}
   </delete>
   
-  <insert id="insertReview">
+  <insert id="insert">
   	insert into review values(review_seq.nextval,#{reviewTitle},#{reviewContent},to_char(sysdate,'yyyy-mm-dd'),#{memberId})
   </insert>
   
