@@ -153,4 +153,26 @@ public class AdoptionService {
 		int result = adoptionDao.deleteAdoptionNo(adoptionNo);
 		return result;
 	}
+
+	@Transactional
+	public int approveAdoption(int adoptionNo, int protectNo) {
+	    Adoption approve = new Adoption();
+	    approve.setAdoptionNo(adoptionNo);
+	    approve.setAdoptionStatus("2"); 
+	    int result1 = adoptionDao.updateStatus(approve);
+
+	    Adoption reject = new Adoption();
+	    reject.setProtectNo(protectNo);
+	    reject.setAdoptionNo(adoptionNo);
+	    reject.setAdoptionStatus("3"); 
+	    int result2 = adoptionDao.updateOtherStatus(reject);
+
+	    Adoption adoption = adoptionDao.selectOneAdoption(adoptionNo);
+	    String applicantId = adoption.getMemberId();
+
+	    int result3 = adoptionDao.updateMemberLevel(applicantId);
+
+	    return result1 + result2 + result3;
+	}
+
 }

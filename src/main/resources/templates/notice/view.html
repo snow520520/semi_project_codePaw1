@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/notice.css">
+<style>
+.section>div:first-child{
+		font-size: 26px;
+		font-weight: 400;
+		padding-bottom: 20px;
+	}
+	.section>div:nth-child(2){
+		display: inline-block;
+	}	
+	.section>div:nth-child(3){
+		float: right;
+	}
+	.line{
+		border-bottom: 1px solid #000000;
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+	}
+	.noticeContent{
+		min-height: 600px;
+		text-align: center;
+		margin-top: 50px;
+	}
+	.info-tbl{
+		width: 880px;
+		margin: 0 auto;
+	}
+	.info-tbl>div{
+		font-size: 20px;
+		font-weight: 500;
+		padding-bottom: 10px;
+		padding-top: 30px;
+	}
+	.section a{
+		float: right;
+		margin-left: 20px;
+	}
+</style>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section">
+			<div th:text="${notice.noticeTitle}"></div>
+			<div th:text="${notice.memberId}"></div>
+			<div th:text="${notice.noticeDate}"></div>
+			<div class="line"> </div>
+			<th:block th:if="${session.member != null && session.member.memberLevel == 1}">
+			<a class="updateNotice" th:href="@{/notice/updateFrm(noticeNo=${notice.noticeNo})}">수정</a>
+			<a th:onclick="deleteNotice([[${notice.noticeNo}]]);">삭제</a>
+			</th:block>
+			<div class="noticeContent" th:utext="${notice.noticeContent}"></div>
+			<div class="line"> </div>
+			<div class="btn-box">
+					<button type="button" onclick="location.href='/notice/list?reqPage=1'">목록으로</button>
+				</div>
+		</section>
+	</main>
+	<script src="/js/sweetalert.min.js"></script>
+	<script>
+	function deleteNotice(noticeNo){
+		swal({
+			title : "게시물 삭제",
+			text : "게시물을 삭제하시겠습니까?",
+			icon : "warning",
+			buttons : {
+				cancel:{
+					text: "취소",
+					value: false,
+					visible: true,
+					ClassName :"btn-swal",
+					colseModal: true
+				},
+				confirm:{
+					text: "삭제하기",
+					value: true,
+					visible : true,
+					ClassName : "btn-swal-color",
+					closeModal : true
+				}
+			}
+		}).then(function(isConfirm){
+			if(isConfirm){
+				location.href="/notice/delete?noticeNo="+noticeNo;
+			}
+		});
+	};
+	</script>
+	<th:block th:include="common/footer"></th:block>
+</body>
+</html>

@@ -46,7 +46,11 @@ public class AdmissionController {
 			if(ald != null) {
 				model.addAttribute("list", ald.getList());
 				model.addAttribute("pageNavi", ald.getPageNavi());
+			}else {
+				model.addAttribute("list", "작성된 게시글이 존재하지 않습니다.");
 			}
+		}else {
+			model.addAttribute("list", "작성된 게시글이 존재하지 않습니다.");
 		}
 		
 		return "admission/list";
@@ -99,7 +103,7 @@ public class AdmissionController {
 			model.addAttribute("title", "삭제 실패");
 			model.addAttribute("msg", "잠시후 다시 시도해 주세요.");
 			model.addAttribute("icon", "warning");
-			model.addAttribute("loc", "/admission/list?reqPage=1");
+			model.addAttribute("loc", "/admission/view?admissionNo="+admissionNo);
 			return "common/msg";
 		}
 	}

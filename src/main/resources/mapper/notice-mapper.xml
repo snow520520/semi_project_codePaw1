@@ -14,4 +14,27 @@
 	    	)
 		where #{start} <![CDATA[ <= ]]> rnum and rnum <![CDATA[ <= ]]> #{end}
  </select>
+ <select id="searchTitleCount" resultType="int">
+ 	select count(*) from notice where notice_title like '%'||'${searchTitle}'||'%'
+ </select>
+ <select id="searchTitleNotice" resultType="notice">
+ 	select * from
+	    	(select rownum as rnum, n.* from
+	        	(select 
+	            	notice_no, notice_title, member_id, notice_date 
+	        	from notice where notice_title like '%'||'${searchTitle}'||'%' 
+	        	order by notice_no desc
+	        	)n
+	    	)
+		where #{start} <![CDATA[ <= ]]> rnum and rnum <![CDATA[ <= ]]> #{end}
+ </select>
+ <select id="selectOneNotice" resultType="notice">
+ 	select * from notice where notice_no = #{noticeNo}
+ </select>
+ <delete id="deleteNotice">
+ 	delete notice where notice_no = #{noticeNo}
+ </delete>
+ <insert id="insertNotice">
+ 	insert into notice values(notice_seq.nextval,#{noticeTitle},#{noticeContent},#{memberId},#{noticeDate})
+ </insert>
 </mapper>
