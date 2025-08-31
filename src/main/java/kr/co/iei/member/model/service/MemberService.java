@@ -2,11 +2,14 @@ package kr.co.iei.member.model.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.iei.animal.model.dao.AnimalDao;
+import kr.co.iei.animal.model.vo.AnimalListData;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.vo.Member;
 import kr.co.iei.member.model.vo.MemberListData;
@@ -16,7 +19,6 @@ public class MemberService {
 	
 	@Autowired
 	private MemberDao memberDao;
-
 	public Member login(Member m) {
 		Member member = memberDao.login(m);
 		return member;
@@ -54,6 +56,7 @@ public class MemberService {
 		param.put("end", end);
 		
 		int totalCount = memberDao.selectMemberCount();
+		
 		int totalPage = totalCount / numPerPage;
 		if(totalCount % numPerPage != 0) {
 			totalPage += 1;
@@ -66,7 +69,7 @@ public class MemberService {
 		String pageNavi = "<ul class='pagination circle-style'>";
 		if(pageNo != 1) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+(pageNo-1)+"&reqPageAni="+(pageNo-1)+"'>";
+			pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+(pageNo-1)+"'>";
 			pageNavi += "<span class='material-icons'>chevron_left</span>";
 			pageNavi += "</a>";
 			pageNavi += "</li>";
@@ -74,9 +77,9 @@ public class MemberService {
 		for(int i=0;i<pageNaviSize;i++) {
 			pageNavi += "<li>";
 			if(pageNo == reqPage) {
-				pageNavi += "<a class='page-item active-page' href='/admin/adminPageFrm?reqPage="+pageNo+"&reqPageAni="+pageNo+"'>";
+				pageNavi += "<a class='page-item active-page' href='/admin/adminPageFrm?reqPage="+pageNo+"'>";
 			}else {
-				pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+pageNo+"&reqPageAni="+pageNo+"'>";
+				pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+pageNo+"'>";
 			}
 			pageNavi += pageNo;
 			pageNavi += "</a>";
@@ -89,7 +92,7 @@ public class MemberService {
 		}
 		if(pageNo <= totalPage) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+pageNo+"&reqPageAni="+pageNo+"'>";
+			pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+pageNo+"'>";
 			pageNavi += "<span class='material-icons'>chevron_right</span>";
 			pageNavi += "</a>";
 			pageNavi += "</li>";
@@ -99,8 +102,34 @@ public class MemberService {
 		List list = memberDao.selectMemberList(param);
 		
 		MemberListData mld = new MemberListData(list, pageNavi);
-		
 		return mld;
 	}
+	@Transactional
+	public int changeLevel(Member m) {
+		int result = memberDao.changeLevel(m);
+		return result;
+	}
+	@Transactional
+	public boolean checkedChangeLevel(String no, String level) {
+		StringTokenizer sT1 = new StringTokenizer(no, "/");
+		StringTokenizer sT2 = new StringTokenizer(level, "/");
+		
+		int result = 0;
+		int count = sT1.countTokens();
+		
+		while(sT1.hasMoreTokens()) {
+			String stringNo = sT1.nextToken();
+			int memberNo = Integer.parseInt(stringNo);
+			String stringLevel = sT2.nextToken();
+			int memberLevel = Integer.parseInt(stringLevel);
+			
+			Member m = new Member();
+			m.setMemberNo(memberNo);
+			m.setMemberLevel(memberLevel);
+			result += memberDao.changeLevel(m);
+		}
+		return result == count;
+	}
+	
 }
 

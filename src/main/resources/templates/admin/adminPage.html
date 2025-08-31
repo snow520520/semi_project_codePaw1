@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+      rel="stylesheet"> 
 <style>
 body {
 	font-family: Nanum Gothic Coding, sans-serif;
@@ -14,22 +16,23 @@ body {
 }
 .content {
 	width: 100%;
-	height: 800px;
+	max-height: 950px;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+	justify-content: center;
 	align-items: center;
 	background-color: #f7f7f7;
 }
 .section {
 	width: 1500px;
-	height: 1500px;
+	max-height: 950px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	background-color: white;
-	margin-top: 20px;
+	margin-top: 100px;
 	padding-top: 30px;
+	margin-bottom:100px;
 }
 .page-div {
 	width: 80%;
@@ -133,7 +136,7 @@ body {
 	font-size: 13px;
 	font-weight: 500;
 }
-.chageLevel-btn{
+.changeLevel-btn{
 	width: 70px;
 	height: 30px;
 	margin: 5px; 
@@ -221,6 +224,7 @@ body {
 .animalSelectChange{
 	margin-left: 50px;
 }
+/*페이징 처리 css */
 .pagination {
   list-style-type: none;
   display: flex;
@@ -255,6 +259,20 @@ body {
   color: #fff;
   font-weight: 600;
 }
+.input-wrap>.material-icons{
+	font-size:18px;
+	padding-top: 6px;
+	cursor: pointer;
+	color: #FFB22C;
+}
+.input-wrap>.material-icons-outlined{
+	font-size:18px;
+	padding-top: 6px;
+	cursor: pointer;
+	color:  #FFB22C;
+}
+/*페이징 처리 css */
+
 .btn-box{
 		width: 880px;
 		text-align: center;
@@ -333,8 +351,10 @@ body {
 					<tr th:each= "member, status : ${listMember}" class="tr-tbl">
 						<td>
 							<div class="input-wrap">
-								<input type = "checkbox" class="chb-input" th:id="${'chb-input'+status.count}">
-								<label th:for="${'chb-input'+status.count}"></label>
+								<span class="material-icons-outlined" th:id="${'material-icons-outlined'+status.count}">check_circle</span>
+								<label th:for="${'material-icons-outlined'+status.count}" class="lab-in"></label>
+								<span class="material-icons" th:id="${'material-icons'+status.count}" style="display:none;">check_circle</span>
+								<label th:for="${'material-icons'+status.count}" class="lab-out" style="display:none;"></label>
 							</div>
 						</td>
 						<td th:text="${member.memberNo}"></td>
@@ -363,7 +383,7 @@ body {
 						</td>
 						<td th:text="${member.enrollDate}"></td>
 						<td>
-							<button class="chageLevel-btn">등급변경</button>
+							<button class="changeLevel-btn" style="cursor:pointer">등급변경</button>
 						</td>
 					</tr>
 				</table>
@@ -384,8 +404,10 @@ body {
 					<tr th:each= "a, status : ${listAnimal}" class="tr-tbl-animal" style="display: none;">
 						<td>
 							<div class="input-wrap">
-								<input type = "checkbox" class="chb-input" th:id="${'chb-input'+status.count}">
-								<label th:for="${'chb-input'+status.count}"></label>
+								<span class="material-icons-outlined" th:id="${'material-icons-outlined'+status.count}">check_circle</span>
+								<label th:for="${'material-icons-outlined'+status.count}" class="lab-in"></label>
+								<span class="material-icons" th:id="${'material-icons'+status.count}" style="display:none;">check_circle</span>
+								<label th:for="${'material-icons'+status.count}" class="lab-out" style="display:none;"></label>
 							</div>
 						</td>
 						<td th:text="${a.animalNo}"></td>
@@ -401,8 +423,8 @@ body {
 					</tr>
 				</table>
 			</div>
-			<div id="pageNavi" th:utext="${pageNavi}"></div>
-			<div id="pageNavi-ani" th:utext="${pageNaviAni}" style = "display:none;"></div>
+			<div id="pageNavi" th:utext="${pageNavi}" style="height:100px;"></div>
+			<div id="pageNaviAni" th:utext="${pageNaviAni}" style = "display:none;"></div>
 		</section>
 	</main>
 	<script>
@@ -413,8 +435,8 @@ body {
 			$(".tr-tbl").slideToggle(100);
 			$(".animal-search").show();
 			$(this).hide();
-			$("#pageNavi").show()
-			$("#pageNavi-ani").hide();
+			$("#pageNavi").slideToggle(100);
+			$("#pageNaviAni").css("height", "100px").hide();
 			
 			$(".allSearch-title-animal").slideToggle(100);
 			$(".animalSelectChange").slideToggle(100);
@@ -428,13 +450,42 @@ body {
 			$(".tr-tbl-animal").slideToggle(100);
 			$(".member-search").show();
 			$(this).hide();
-			$("#pageNavi-ani").show();
+			$("#pageNaviAni").css("height", "100px").slideToggle(100);
 			$("#pageNavi").hide();
 			
 			$(".allSearch-title").slideToggle(100);
 			$(".selectChangeLevel").slideToggle(100);
 			$(".table-title").slideToggle(100);
 			$(".tr-tbl").slideToggle(100);
+		});
+		$(".changeLevel-btn").on("click", function(){
+			const memberNo = $(this).parent().parent().children().eq(1).text();
+			const memberLevel = $(this).parent().prev().prev().children().children().val();
+			location.href= "/admin/changeLevel?memberNo="+memberNo+"&memberLevel="+memberLevel;
+		});
+		$(".material-icons-outlined").on("click", function(){
+			$(this).parent().children().eq(2).show();
+			$(this).hide();
+		});
+		$(".material-icons").on("click", function(){
+			$(this).parent().children().eq(0).show();
+			$(this).hide();
+		});
+		$(".selectChangeLevel-btn").on("click", function(){
+			 const checked = $(".material-icons-outlined.checked");
+			 
+			 if(checked.length === 0){
+				 return;
+			 }
+			 const no = new Array();
+			 const level = new Array();
+			 checked.each(function(index, item){
+				 const memberNo = $(item).parent().parent().next().text();
+				 no.push(memberNo);
+				 const memberLevel = $(item).parent().parent().parent().find("select").val();
+				 level.push(memberLevel);
+			 });
+			 location.href="/admin/checkedChangeLevel?no="+no.join("/")+"&level="+level.join("/");
 		});
 	</script>
 	<th:block th:include="common/footer"></th:block>

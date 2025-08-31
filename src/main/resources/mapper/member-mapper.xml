@@ -44,4 +44,7 @@
 	    	)
 		where rnum between #{start} and #{end}
   	</select>
+  	<update id="changeLevel">
+  		update member_tbl set member_level = #{memberLevel} where member_no = #{memberNo}
+  	</update>
 </mapper>

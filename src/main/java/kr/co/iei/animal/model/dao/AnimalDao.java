@@ -20,8 +20,9 @@ public interface AnimalDao {
 
 	int admissionCheck(int animalNo);
 
+	List selectAnimalList(HashMap<String, Object> param);
+
 	int selectAnimalCount();
 
-	List selectAnimalList(HashMap<String, Object> param);
 
 }

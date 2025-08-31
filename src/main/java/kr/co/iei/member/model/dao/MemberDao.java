@@ -25,8 +25,9 @@ public interface MemberDao {
 	int selectMemberCount();
 
 	List selectMemberList(HashMap<String, Object> param);
-	
 
+	int changeLevel(Member m);
+	
 
 
 	

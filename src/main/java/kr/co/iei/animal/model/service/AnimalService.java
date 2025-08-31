@@ -39,16 +39,17 @@ public class AnimalService {
 		int result = animalDao.admissionCheck(animalNo);
 		return result;
 	}
-	public AnimalListData selectAnimalList(int reqPageAni) {
+	public AnimalListData selectAnimalList(int reqPage) {
 		int numPerPage = 10;
 		
-		int end = reqPageAni * numPerPage;
+		int end = reqPage * numPerPage;
 		int start = (end-numPerPage)+1;
 		HashMap<String, Object> param = new HashMap<String,Object>();
 		param.put("start", start);
 		param.put("end", end);
 		
 		int totalCount = animalDao.selectAnimalCount();
+		
 		int totalPage = totalCount / numPerPage;
 		if(totalCount % numPerPage != 0) {
 			totalPage += 1;
@@ -56,22 +57,22 @@ public class AnimalService {
 		
 		int pageNaviSize = 5;
 		
-		int pageNo = ((reqPageAni-1)/pageNaviSize)*pageNaviSize+1;
+		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize+1;
 		
 		String pageNavi = "<ul class='pagination circle-style'>";
 		if(pageNo != 1) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+(pageNo-1)+"&reqPageAni="+(pageNo-1)+"'>";
+			pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+(pageNo-1)+"'>";
 			pageNavi += "<span class='material-icons'>chevron_left</span>";
 			pageNavi += "</a>";
 			pageNavi += "</li>";
 		}
 		for(int i=0;i<pageNaviSize;i++) {
 			pageNavi += "<li>";
-			if(pageNo == reqPageAni) {
-				pageNavi += "<a class='page-item active-page' href='/admin/adminPageFrm?reqPage="+pageNo+"&reqPageAni="+pageNo+"'>";
+			if(pageNo == reqPage) {
+				pageNavi += "<a class='page-item active-page' href='/admin/adminPageFrm?reqPage="+pageNo+"'>";
 			}else {
-				pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+pageNo+"&reqPageAni="+pageNo+"'>";
+				pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+pageNo+"'>";
 			}
 			pageNavi += pageNo;
 			pageNavi += "</a>";
@@ -84,7 +85,7 @@ public class AnimalService {
 		}
 		if(pageNo <= totalPage) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+pageNo+"&reqPageAni="+pageNo+"'>";
+			pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+pageNo+"'>";
 			pageNavi += "<span class='material-icons'>chevron_right</span>";
 			pageNavi += "</a>";
 			pageNavi += "</li>";
@@ -94,7 +95,8 @@ public class AnimalService {
 		List list = animalDao.selectAnimalList(param);
 		
 		AnimalListData ald = new AnimalListData(list, pageNavi);
-		
 		return ald;
+		
 	}
+	
 }
