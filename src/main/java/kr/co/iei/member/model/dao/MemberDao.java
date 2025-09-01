@@ -29,7 +29,4 @@ public interface MemberDao {
 	int changeLevel(Member m);
 	
 
-
-	
-
 }

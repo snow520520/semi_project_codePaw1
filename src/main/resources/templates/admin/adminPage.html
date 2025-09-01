@@ -472,7 +472,7 @@ body {
 			$(this).hide();
 		});
 		$(".selectChangeLevel-btn").on("click", function(){
-			 const checked = $(".material-icons-outlined.checked");
+			 const checked = $(this).find(".material-icons-outlined").addClass("checked");
 			 
 			 if(checked.length === 0){
 				 return;
