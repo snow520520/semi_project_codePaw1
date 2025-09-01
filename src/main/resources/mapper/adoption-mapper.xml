@@ -17,14 +17,11 @@
 	</select>
 
 	<select id="selectAdoptionTotalCount" resultType="int">
-		select count(*)
-		from adoption
+		select count(*) from adoption
 	</select>
 
 	<select id="searchTitleCount" resultType="int">
-		select count(*) from
-		adoption where adoption_title like
-		'%'||'${searchTitle}'||'%'
+		select count(*) from adoption where adoption_title like '%'||'${searchTitle}'||'%'
 	</select>
 
 	<select id="searchTitleAdoption" resultType="adoption">
@@ -50,27 +47,22 @@
 	</insert>
 
 	<select id="selectOneAdoption">
-		select * from adoption where adoption_no =
-		#{adoptionNo}
+		select * from adoption where adoption_no = #{adoptionNo}
 	</select>
 
 	<update id="updateAdoption">
 		update adoption set
 		adoption_title=#{adoptionTitle},
 		adoption_content=#{adoptionContent}
-		where
-		adoption_no=#{adoptionNo}
+		where adoption_no=#{adoptionNo}
 	</update>
 
 	<delete id="deleteAdoptionNo">
-		delete from adoption where adoption_no =
-		#{adoptionNo}
+		delete from adoption where adoption_no = #{adoptionNo}
 	</delete>
 
 	<update id="updateStatus">
-		update adoption
-		set adoption_status = #{adoptionStatus}
-		where adoption_no = #{adoptionNo}
+		update adoption set adoption_status = #{adoptionStatus} where adoption_no = #{adoptionNo}
 	</update>
 
 	<update id="updateOtherStatus">
