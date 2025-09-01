@@ -91,4 +91,7 @@
         WHERE protect_no = #{protectNo}
     </select>
 
+	<update id="updateProtectStatus">
+	    update protect_tbl set protect_status = #{status} where protect_no = #{protectNo}
+	</update>
 </mapper>

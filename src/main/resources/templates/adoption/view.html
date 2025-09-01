@@ -52,6 +52,11 @@
 		border-radius: 10px;
 		line-height: 32px;
 	}
+	.approveStatus{
+		font-size: 18px; 
+		font-weight: bold; 
+		text-align: right;
+	}
 </style>
 </head>
 <body>
@@ -94,11 +99,13 @@
 						<td style="width: 80%" th:text="${animal.animalType}"></td>
 					</tr>
 				</table>
-				<div class="btn-box approve" th:if="${session.member != null and session.member.memberLevel == 1}">
+				<div class="btn-box approve" th:if="${session.member != null and session.member.memberLevel == 1 and a.adoptionStatus == 1}">
    					 <button type="button" class="btn btn-primary" th:onclick="|approveAdoption(${a.adoptionNo}, ${a.protectNo})|">
         				승인
    					 </button>
 				</div>
+				<div class="approveStatus" th:if="${a.adoptionStatus == 2}">입양 완료</div>
+				<div class="approveStatus" th:if="${a.adoptionStatus == 3}">입양 거절</div>
 				<div class="btn-box">
 					<button type="button" onclick="location.href='/adoption/list?reqPage=1'">목록으로</button>
 				</div>

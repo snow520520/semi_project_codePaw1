@@ -37,4 +37,6 @@ public interface ProtectDao {
     void insertProtectLike(@Param("memberNo") int memberNo, @Param("protectNo") int protectNo);
     void deleteProtectLike(@Param("memberNo") int memberNo, @Param("protectNo") int protectNo);
     Integer selectLikeCount(@Param("protectNo") int protectNo);
+
+    int updateProtectStatus(@Param("protectNo") int protectNo, @Param("status") int status);
 }
