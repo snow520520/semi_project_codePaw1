@@ -1,241 +1,257 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-<style>
-body {
-	font-family: Nanum Gothic Coding, sans-serif;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-}
-.content{
-	width: 100%;
-	display:flex;
-	justify-content: center;
-	align-items: center;
-	background-color: #f7f7f7;
-}
-.login-wrap {
-	width: 500px;
-	background-color: white;
-	padding: 30px;
-	text-align: center;
-	border-radius : 10px;
-	margin-top : 10%;
-	margin-bottom: 150px;
-}
-.login-title {
-	color: #854836;
-	font-size: 25px;
-	font-weight: bold;
-	padding: 30px;
-	padding-bottom: 40px;
-}
-.login-form{
-	display: flex;
-	flex-direction: column;
-	gap: 5px;
-}
-.login-form>.login-input-wrap{
-	display: flex;
-	flex-direction: column;
-	gap: 5px;
-	margin: 30px;
-	margin-bottom: 10px;
-}
-.login-form>.login-input-wrap>input{
-	font-size: 16px;
-	height:40px;
-	padding: 10px;
-	border: 1px solid #854836;
-	border-radius: 2px;
-}
-/*
-.password-wrap{
-	position: relative;
-	display: inline-block;
-}
-/*
-.input-icon{
-	position: absolute;
-	left: 10px;
-	transform: translateY(-50%);
-}
-*/
-.password-wrap>input{
-	font-size: 16px;
-	height:40px;
-	padding: 10px;
-	border: 1px solid #854836;
-	border-radius: 2px;
-}
-.login-form>.login-input-wrap>input:last-child{
-	margin-top: 5px;
-}
-.login-form>.login-input-wrap>input:hover{
-	font-size: 14px;
-	font-style: inherit;
-}
-.login-option{
-	display: flex;
-	justify-content: left;
-	align-items: center;
-	margin-left: 30px;
-	cursor: pointer;
-}
-.login-option>label{
-	padding-left: 5px;
-}
-.alert{
-	margin-left: 35px;
-	text-align: left;
-	font-size: small;
-	font-weight: bold;
-	color: red;
-}
-.login-button{
-	height: 45px;
-	border: 0;
-	border-radius: 15px;
-	color: white;
-	background: #FFB22C;
-	cursor: pointer;
-	font-size: 18px;
-	font-weight: 500;
-	margin: 30px;
-}
-.login-footer{
-	display: flex;
-	justify-content: space-between;
-	margin-top: 15px;
-	font-size: 15px;
-}
-.login-footer a{
-	text-decoration: none;
-	color: #854836;
-}
-.login-footer a:hover{
-	font-weight: bold; 
-}
-.material-icons-outlined{
-	cursor: pointer;
-	font-size:20px;
-	padding-top: 2px;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        body {
+            font-family: Nanum Gothic Coding, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .content {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f7f7f7;
+        }
+
+        .login-wrap {
+            width: 500px;
+            background-color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 10%;
+            margin-bottom: 150px;
+        }
+
+        .login-title {
+            color: #854836;
+            font-size: 25px;
+            font-weight: bold;
+            padding: 30px;
+            padding-bottom: 40px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .login-form > .login-input-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin: 30px;
+            margin-bottom: 10px;
+        }
+
+        .login-form > .login-input-wrap > input {
+            font-size: 16px;
+            height: 40px;
+            padding: 10px;
+            border: 1px solid #854836;
+            border-radius: 2px;
+        }
+
+        .password-wrap > input {
+            font-size: 16px;
+            height: 40px;
+            padding: 10px;
+            border: 1px solid #854836;
+            border-radius: 2px;
+        }
+
+        .login-form > .login-input-wrap > input:last-child {
+            margin-top: 5px;
+        }
+
+        .login-form > .login-input-wrap > input:hover {
+            font-size: 14px;
+            font-style: inherit;
+        }
+
+        .login-option {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            margin-left: 30px;
+            cursor: pointer;
+        }
+
+        .login-option > label {
+            padding-left: 5px;
+        }
+
+        .alert {
+            margin-left: 35px;
+            text-align: left;
+            font-size: small;
+            font-weight: bold;
+            color: red;
+        }
+
+        .login-button {
+            height: 45px;
+            border: 0;
+            border-radius: 15px;
+            color: white;
+            background: #FFB22C;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 30px;
+        }
+
+        .login-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 15px;
+        }
+
+        .login-footer a {
+            text-decoration: none;
+            color: #854836;
+        }
+
+        .login-footer a:hover {
+            font-weight: bold;
+        }
+
+        .material-icons-outlined {
+            cursor: pointer;
+            font-size: 20px;
+            padding-top: 2px;
+        }
+    </style>
 </head>
 <body>
-	<th:block th:include="common/header"></th:block>
-	<main class="content">
-		<section class="login-wrap">
-			<div class="login-title">로그인</div>
-			<form action="/member/login" method="post" class="login-form" autocomplete="off">
-				<div class="login-input-wrap">
-					<input type="text" name="memberId" id = "memberId" placeholder="아이디" style="outline: none;"> 
-					<input type="password" name="memberPw" id = "memberPw" placeholder="비밀번호" style="outline: none;">
-					<!--<span class="material-icons-outlined  input-icon1">remove_red_eye</span>
-						<span class="material-icons-outlined input-icon2">visibility_off</span>
-						<div class="password-wrap"></div>
-						 -->
-				</div>
-				<div class="login-option">
-					<span class="material-icons" id="checkBoxOut"  style="font-size: 20px;">check_box_outline_blank</span>
-					<span class="material-icons" id="checkBox"  style="display:none; font-size:20px;">check_box</span>
-					<label for="login-remain">로그인 정보저장</label>
-				</div>
-				<span class="IdPw alert" id="IdPw" style="display:none;">아이디와 비밀번호를 입력해주세요.</span>
-				<span class="Pw alert" id="Pw" style="display:none;">비밀번호를 입력해주세요.</span>
-				<button type="submit" class="login-button">로그인</button>
-			</form>
-			<div class="login-footer">
-				<a href="/member/joinFrm">회원가입</a>
-				<span> 
-					<a href="/member/findIdFrm">아이디</a> 
-					<span style="color: #854836">|</span> 
-					<a href="#">비밀번호 찾기</a>
-				</span>
-			</div>
-		</section>
-	</main>
-	<script>
-		  $("#memberId").on("click", function(){
-			  $(this).css('border', '1px solid #854836');
-			  $(this).removeAttr("placeholder");
-		 });
-		  $("#memberId").on("focusout", function(){
-			  $(this).css('border', '1px solid #854836');
-			  $(this).attr('placeholder','아이디');
-		  });
-		  $("#memberPw").on("click", function(){
-			  $(this).css('border', '1px solid #854836');
-			  $(this).removeAttr("placeholder");
-		  });
-		  $("#memberPw").on("focusout", function(){
-		  	  $(this).attr('placeholder','비밀번호');
-		  });
-		  $("#checkBox").on("click", function(){
-			  $(this).hide();
-			  $("#checkBoxOut").show();
-		  });
-		  $("#checkBoxOut").on("click", function(){
-			  $(this).hide();
-			  $("#checkBox").show();
-		  });
-		 $(".login-button").on("click", function(){
-			const memberIdCheck = $("#memberId").val();
-			const memberPwCheck = $("#memberPw").val();
-			if((!memberIdCheck && !memberPwCheck)){
-				$("#IdPw").show();
-				$("#Pw").hide();
-			}else if(memberIdCheck !== null && !memberPwCheck){
-				$("#Pw").show();
-				$("#IdPw").hide();
-			}else if(!memberIdCheck && memberPwCheck !== null){
-				$("#Pw").hide();
-				$("#IdPw").show();
-			}
-		 });
-	      /*
-	        function setCookie(name, value, days) {
-	            const d = new Date();
-	            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-	            let expires = "expires=" + d.toUTCString();
-	            document.cookie = name + "=" + value + ";" + expires + ";path=/";
-	        }
-	        function getCookie(name) {
-	            let nameEq = name + "=";
-	            let ca = document.cookie.split(';');
-	            for (let i = 0; i < ca.length; i++) {
-	                let c = ca[i].trim();
-	                if (c.indexOf(nameEq) === 0) {
-	                    return c.substring(nameEq.length, c.length);
-	                }
-	            }
-	            return "";
-	        }
-	        function login() {
-	            const userId = document.getElementById('userId').value;
-	            if (userId) {
-	                setCookie('userId', userId, 7);
-	                alert('로그인 성공! 아이디가 저장되었습니다.');
-	            } else {
-	                alert('아이디를 입력해주세요.');
-	            }
-	        }
-	        window.onload = function() {
-	            const savedUserId = getCookie('userId');
-	            if (savedUserId) {
-	                document.getElementById('userId').value = savedUserId;
-	            }
-	        }
-	        */
-	    </script>
-	</script>
-	<th:block th:include="common/footer"></th:block>
+    <th:block th:include="common/header"></th:block>
+    <main class="content">
+        <section class="login-wrap">
+            <div class="login-title">로그인</div>
+            <form action="/member/login" method="post" class="login-form" autocomplete="off">
+                <div class="login-input-wrap">
+                    <input type="text" name="memberId" id="memberId" placeholder="아이디" th:value="${savedId}" style="outline:none;">
+                    <input type="password" name="memberPw" id="memberPw" placeholder="비밀번호" style="outline:none;">
+                </div>
+                <div class="login-option">
+                    <span class="material-icons" id="checkBoxOut" style="font-size: 20px;">check_box_outline_blank</span>
+                    <span class="material-icons" id="checkBox" style="display:none; font-size:20px;">check_box</span>
+                    <input type="checkbox" name="saveId" id="login-remain" style="display:none;">
+                    <label for="login-remain">로그인 정보저장</label>
+                </div>
+                <span class="IdPw alert" id="IdPw" style="display:none;">아이디와 비밀번호를 입력해주세요.</span>
+                <span class="Pw alert" id="Pw" style="display:none;">비밀번호를 입력해주세요.</span>
+                <button type="submit" class="login-button">로그인</button>
+            </form>
+            <div class="login-footer">
+                <a href="/member/joinFrm">회원가입</a>
+                <span>
+                    <a href="/member/findIdFrm">아이디</a>
+                    <span style="color: #854836">|</span>
+                    <a href="#">비밀번호 찾기</a>
+                </span>
+            </div>
+        </section>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $("#memberId").on("click", function() {
+            $(this).css('border', '1px solid #854836');
+            $(this).removeAttr("placeholder");
+        });
+
+        $("#memberId").on("focusout", function() {
+            $(this).css('border', '1px solid #854836');
+            $(this).attr('placeholder','아이디');
+        });
+
+        $("#memberPw").on("click", function() {
+            $(this).css('border', '1px solid #854836');
+            $(this).removeAttr("placeholder");
+        });
+
+        $("#memberPw").on("focusout", function() {
+            $(this).attr('placeholder','비밀번호');
+        });
+
+        $("#checkBoxOut, #checkBox").on("click", function() {
+            $("#checkBoxOut, #checkBox").toggle();
+            $("#login-remain").prop("checked", $("#checkBox").is(":visible"));
+        });
+
+        $(".login-button").on("click", function() {
+            const memberIdCheck = $("#memberId").val();
+            const memberPwCheck = $("#memberPw").val();
+            if((!memberIdCheck && !memberPwCheck)) {
+                $("#IdPw").show();
+                $("#Pw").hide();
+            } else if(memberIdCheck !== null && !memberPwCheck) {
+                $("#Pw").show();
+                $("#IdPw").hide();
+            } else if(!memberIdCheck && memberPwCheck !== null) {
+                $("#Pw").hide();
+                $("#IdPw").show();
+            }
+        });
+
+        window.onload = function() {
+            if($("#memberId").val() !== "") {
+                $("#checkBox").show();
+                $("#checkBoxOut").hide();
+                $("#login-remain").prop("checked", true);
+            } else {
+                $("#checkBox").hide();
+                $("#checkBoxOut").show();
+                $("#login-remain").prop("checked", false);
+            }
+        }
+		
+		/*
+			        function setCookie(name, value, days) {
+			            const d = new Date();
+			            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+			            let expires = "expires=" + d.toUTCString();
+			            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+			        }
+			        function getCookie(name) {
+			            let nameEq = name + "=";
+			            let ca = document.cookie.split(';');
+			            for (let i = 0; i < ca.length; i++) {
+			                let c = ca[i].trim();
+			                if (c.indexOf(nameEq) === 0) {
+			                    return c.substring(nameEq.length, c.length);
+			                }
+			            }
+			            return "";
+			        }
+			        function login() {
+			            const userId = document.getElementById('userId').value;
+			            if (userId) {
+			                setCookie('userId', userId, 7);
+			                alert('로그인 성공! 아이디가 저장되었습니다.');
+			            } else {
+			                alert('아이디를 입력해주세요.');
+			            }
+			        }
+			        window.onload = function() {
+			            const savedUserId = getCookie('userId');
+			            if (savedUserId) {
+			                document.getElementById('userId').value = savedUserId;
+			            }
+			        }
+			        */
+    </script>
+    <th:block th:include="common/footer"></th:block>
 </body>
 </html>
