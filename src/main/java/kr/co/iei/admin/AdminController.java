@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.iei.animal.model.service.AnimalService;
+import kr.co.iei.animal.model.vo.Animal;
 import kr.co.iei.animal.model.vo.AnimalListData;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.member.model.vo.Member;
@@ -25,27 +26,23 @@ public class AdminController {
     private AnimalService animalService;
 
     @GetMapping(value = "/adminPage")
-    public String allMember(
-            @RequestParam(defaultValue = "1", name="memberPage") int memberPage,
-            @RequestParam(defaultValue = "1", name="animalPage") int animalPage,
-            Model model) {
-    	//위에 파라미터 받아오는걸 페이지 2개를 받아올거면 수정
+    public String allMember(int memberPage, Model model) {
+    	
         MemberListData mld = memberService.selectMemberList(memberPage);
         model.addAttribute("memberList", mld.getList());
-        model.addAttribute("pageNaviMember", mld.getPageNavi());
-
-        AnimalListData ald = animalService.selectAnimalList(animalPage);
-        model.addAttribute("animalList", ald.getList());
-        model.addAttribute("pageNaviAnimal", ald.getPageNavi());
-
-        List<Member> listMember = memberService.allMember();
-        List<?> listAnimal = memberService.allAnimal();
-        model.addAttribute("listMember", listMember);
-        model.addAttribute("listAnimal", listAnimal);
+        model.addAttribute("pageNaviMember", mld.getPageNaviMember());
 
         return "admin/adminPage";
     }
+    @GetMapping(value = "/adminPageAni")
+    public String allAnimal(int animalPage, Model model) {
 
+        AnimalListData ald = animalService.selectAnimalList(animalPage);
+        model.addAttribute("animalList", ald.getList());
+        model.addAttribute("pageNaviAni", ald.getPageNaviAni());
+
+        return "admin/adminPageAni";
+    }
     @GetMapping(value = "/changeLevel")
     public String changeLevel(Member m, Model model) {
         int result = memberService.changeLevel(m);

@@ -39,10 +39,10 @@ public class AnimalService {
 		int result = animalDao.admissionCheck(animalNo);
 		return result;
 	}
-	public AnimalListData selectAnimalList(int reqPage) {
+	public AnimalListData selectAnimalList(int animalPage) {
 		int numPerPage = 10;
 		
-		int end = reqPage * numPerPage;
+		int end = animalPage * numPerPage;
 		int start = (end-numPerPage)+1;
 		HashMap<String, Object> param = new HashMap<String,Object>();
 		param.put("start", start);
@@ -57,26 +57,26 @@ public class AnimalService {
 		
 		int pageNaviSize = 5;
 		
-		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize+1;
+		int pageNo = ((animalPage-1)/pageNaviSize)*pageNaviSize+1;
 		
-		String pageNavi = "<ul class='pagination circle-style'>";
+		String pageNaviAni = "<ul class='pagination circle-style'>";
 		if(pageNo != 1) {
-			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/adminPage?reqPage="+(pageNo-1)+"'>";
-			pageNavi += "<span class='material-icons'>chevron_left</span>";
-			pageNavi += "</a>";
-			pageNavi += "</li>";
+			pageNaviAni += "<li>";
+			pageNaviAni += "<a class='page-item' href='/admin/adminPageAni?animalPage="+(pageNo-1)+"'>";
+			pageNaviAni += "<span class='material-icons'>chevron_left</span>";
+			pageNaviAni += "</a>";
+			pageNaviAni += "</li>";
 		}
 		for(int i=0;i<pageNaviSize;i++) {
-			pageNavi += "<li>";
-			if(pageNo == reqPage) {
-				pageNavi += "<a class='page-item active-page' href='/admin/adminPage?reqPage="+pageNo+"'>";
+			pageNaviAni += "<li>";
+			if(pageNo == animalPage) {
+				pageNaviAni += "<a class='page-item active-page' href='/admin/adminPageAni?animalPage="+pageNo+"'>";
 			}else {
-				pageNavi += "<a class='page-item' href='/admin/adminPage?reqPage="+pageNo+"'>";
+				pageNaviAni += "<a class='page-item' href='/admin/adminPageAni?animalPage="+pageNo+"'>";
 			}
-			pageNavi += pageNo;
-			pageNavi += "</a>";
-			pageNavi += "</li>";
+			pageNaviAni += pageNo;
+			pageNaviAni += "</a>";
+			pageNaviAni += "</li>";
 			
 			pageNo++;
 			if(pageNo > totalPage) {
@@ -84,17 +84,17 @@ public class AnimalService {
 			}
 		}
 		if(pageNo <= totalPage) {
-			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/adminPage?reqPage="+pageNo+"'>";
-			pageNavi += "<span class='material-icons'>chevron_right</span>";
-			pageNavi += "</a>";
-			pageNavi += "</li>";
+			pageNaviAni += "<li>";
+			pageNaviAni += "<a class='page-item' href='/admin/adminPageAni?animalPage="+pageNo+"'>";
+			pageNaviAni += "<span class='material-icons'>chevron_right</span>";
+			pageNaviAni += "</a>";
+			pageNaviAni += "</li>";
 		}
-		pageNavi += "</ul>";
+		pageNaviAni += "</ul>";
 		
 		List list = animalDao.selectAnimalList(param);
 		
-		AnimalListData ald = new AnimalListData(list, pageNavi);
+		AnimalListData ald = new AnimalListData(list, pageNaviAni);
 		return ald;
 		
 	}
