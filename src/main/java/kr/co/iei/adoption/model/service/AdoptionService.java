@@ -10,12 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.iei.adoption.model.dao.AdoptionDao;
 import kr.co.iei.adoption.model.vo.Adoption;
 import kr.co.iei.adoption.model.vo.AdoptionListData;
+import kr.co.iei.protect.model.dao.ProtectDao;
 
 @Service
 public class AdoptionService {
 
 	@Autowired
 	private AdoptionDao adoptionDao;
+	@Autowired
+	private ProtectDao protectDao;
 
 	public AdoptionListData selectAdoptionList(int reqPage) {
 		int numPerPage = 13;
@@ -158,21 +161,22 @@ public class AdoptionService {
 	public int approveAdoption(int adoptionNo, int protectNo) {
 	    Adoption approve = new Adoption();
 	    approve.setAdoptionNo(adoptionNo);
-	    approve.setAdoptionStatus("2"); 
+	    approve.setAdoptionStatus(2); 
 	    int result1 = adoptionDao.updateStatus(approve);
 
 	    Adoption reject = new Adoption();
 	    reject.setProtectNo(protectNo);
 	    reject.setAdoptionNo(adoptionNo);
-	    reject.setAdoptionStatus("3"); 
+	    reject.setAdoptionStatus(3); 
 	    int result2 = adoptionDao.updateOtherStatus(reject);
 
 	    Adoption adoption = adoptionDao.selectOneAdoption(adoptionNo);
 	    String applicantId = adoption.getMemberId();
-
 	    int result3 = adoptionDao.updateMemberLevel(applicantId);
 
-	    return result1 + result2 + result3;
+	    int result4 = protectDao.updateProtectStatus(protectNo, 2);
+	    
+	    return result1 + result2 + result3 + result4;
 	}
 
 }

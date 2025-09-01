@@ -15,7 +15,7 @@ public class Adoption {
 	private String adoptionContent;
 	private String adoptionDate;
 	private String adoptionTitle;
-	private String adoptionStatus;
+	private int adoptionStatus;
 	private String memberId;
 	private int protectNo;
 }
