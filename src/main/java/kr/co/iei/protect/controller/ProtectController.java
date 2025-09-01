@@ -120,7 +120,7 @@ public class ProtectController {
         Member member = (Member) session.getAttribute("member");
         Integer memberNo = (member != null) ? member.getMemberNo() : null;
 
-        List<Protect> list = protectService.selectPageList(1, 4, memberNo);
+        List<Protect> list = protectService.selectPageList(1, 8, memberNo);
         model.addAttribute("list", list);
         model.addAttribute("member", member);
         return "index";
