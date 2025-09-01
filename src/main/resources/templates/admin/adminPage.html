@@ -348,7 +348,7 @@ body {
 						<th style = "width: 12%">가입날짜</th>
 						<th style = "width: 8%">등급변경</th>
 					</tr>
-					<tr th:each= "member, status : ${listMember}" class="tr-tbl">
+					<tr th:each="member, status : ${memberList}" class="tr-tbl">
 						<td>
 							<div class="input-wrap">
 								<span class="material-icons-outlined" th:id="${'material-icons-outlined'+status.count}">check_circle</span>
@@ -401,7 +401,7 @@ body {
 						<th style = "width: 8%">회원번호</th>
 						<th style = "width: 8%">입소여부</th>
 					</tr>
-					<tr th:each= "a, status : ${listAnimal}" class="tr-tbl-animal" style="display: none;">
+					<tr th:each="a, status : ${animalList}" class="tr-tbl-animal" style="display: none;">
 						<td>
 							<div class="input-wrap">
 								<span class="material-icons-outlined" th:id="${'material-icons-outlined'+status.count}">check_circle</span>
@@ -423,41 +423,45 @@ body {
 					</tr>
 				</table>
 			</div>
-			<div id="pageNavi" th:utext="${pageNavi}" style="height:100px;"></div>
-			<div id="pageNaviAni" th:utext="${pageNaviAni}" style = "display:none;"></div>
+			<div id="pageNavi" style="height:100px;" th:utext="${pageNaviMember}"></div>
+			<div id="pageNaviAni" style="height:100px; display:none;" th:utext="${pageNaviAnimal}"></div>
 		</section>
 	</main>
 	<script>
 		$(".member-search").on("click", function(){
-			$(".allSearch-title").slideToggle(100);
-			$(".selectChangeLevel").slideToggle(100);
-			$(".table-title").slideToggle(100);
-			$(".tr-tbl").slideToggle(100);
-			$(".animal-search").show();
-			$(this).hide();
-			$("#pageNavi").slideToggle(100);
-			$("#pageNaviAni").css("height", "100px").hide();
-			
-			$(".allSearch-title-animal").slideToggle(100);
-			$(".animalSelectChange").slideToggle(100);
-			$(".table-title-animal").slideToggle(100);
-			$(".tr-tbl-animal").slideToggle(100);
+		    $(".allSearch-title").slideToggle(100);
+		    $(".selectChangeLevel").slideToggle(100);
+		    $(".table-title").slideToggle(100);
+		    $(".tr-tbl").slideToggle(100);
+		    $(".animal-search").show();
+		    $(this).hide();
+
+		    $("#pageNavi").slideToggle(100);
+		    $("#pageNaviAni").css("height", "100px").hide();
+
+		    $(".allSearch-title-animal").slideToggle(100);
+		    $(".animalSelectChange").slideToggle(100);
+		    $(".table-title-animal").slideToggle(100);
+		    $(".tr-tbl-animal").slideToggle(100);
 		});
+
 		$(".animal-search").on("click", function(){
-			$(".allSearch-title-animal").slideToggle(100);
-			$(".animalSelectChange").slideToggle(100);
-			$(".table-title-animal").slideToggle(100);
-			$(".tr-tbl-animal").slideToggle(100);
-			$(".member-search").show();
-			$(this).hide();
-			$("#pageNaviAni").css("height", "100px").slideToggle(100);
-			$("#pageNavi").hide();
-			
-			$(".allSearch-title").slideToggle(100);
-			$(".selectChangeLevel").slideToggle(100);
-			$(".table-title").slideToggle(100);
-			$(".tr-tbl").slideToggle(100);
+		    $(".allSearch-title-animal").slideToggle(100);
+		    $(".animalSelectChange").slideToggle(100);
+		    $(".table-title-animal").slideToggle(100);
+		    $(".tr-tbl-animal").slideToggle(100);
+		    $(".member-search").show();
+		    $(this).hide();
+
+		    $("#pageNaviAni").css("height", "100px").slideToggle(100);
+		    $("#pageNavi").hide();
+
+		    $(".allSearch-title").slideToggle(100);
+		    $(".selectChangeLevel").slideToggle(100);
+		    $(".table-title").slideToggle(100);
+		    $(".tr-tbl").slideToggle(100);
 		});
+		
 		$(".changeLevel-btn").on("click", function(){
 			const memberNo = $(this).parent().parent().children().eq(1).text();
 			const memberLevel = $(this).parent().prev().prev().children().children().val();
