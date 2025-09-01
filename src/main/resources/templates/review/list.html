@@ -6,10 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/css/review.css">
 
-
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-
 <link
 	href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
 	rel="stylesheet">
@@ -17,18 +15,33 @@
 <style>
 .like-icon {
 	cursor: pointer;
-	font-size: 23px; 
+	font-size: 23px;
 	vertical-align: middle;
-	color: #e57373; 
-}
-.card{
-	cursor: pointer;
-}
-.card-info h3{
-	cursor: pointer;
+	color: #e57373;
 }
 
+.card {
+	cursor: pointer;
+	width: 250px;
+	height: 200px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #f9f9f9;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+}
 
+.card img {
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: cover;
+}
+
+.card-info h3 {
+	cursor: pointer;
+}
 </style>
 
 </head>
@@ -52,19 +65,21 @@
 					<th:block th:each="review : ${list}">
 						<div class="card-container">
 							<div class="card" th:data-reviewNo="${review.reviewNo}">
-								<img th:src="@{/image/sample.jpg}" alt="아이1">
+								<img th:src="${review.thumbnail}" alt="후기 이미지">
 							</div>
+							
+
 							<div class="card-info">
-								<h3 class="review-title"
-								th:data-reviewNo="${review.reviewNo}" 
-								th:text="${review.reviewTitle}"></h3>
+								<h3 class="review-title" th:data-reviewNo="${review.reviewNo}"
+									th:text="${review.reviewTitle}"></h3>
 								<span class="material-icons-outlined like-icon">favorite_border</span>
 							</div>
 							<p class="date" th:text="${review.reviewDate}"></p>
 						</div>
 					</th:block>
 					<div class="write-btn-wrapper">
-						<a th:if="${session.member != null and (session.member.memberLevel == 1 or session.member.memberLevel == 2)}"
+						<a
+							th:if="${session.member != null and (session.member.memberLevel == 1 or session.member.memberLevel == 2)}"
 							href="/review/reviewWriteFrm">
 							<button class="write-btn">글쓰기</button>
 						</a>
@@ -93,22 +108,23 @@
 	        }
 	      });
 	    });
-		//이미지 클릭
-	     document.querySelectorAll(".card").forEach(card =>{
+
+	    // 카드 클릭 -> 상세 페이지 이동
+	    document.querySelectorAll(".card").forEach(card =>{
 	    	 card.addEventListener("click",function() {
 	    		 const reviewNo = this.dataset.reviewno;
 	    		 location.href= "/review/view?reviewNo=" + reviewNo;
 	    	 })
-	     });
-	    	
-	     // 제목 클릭
-	     document.querySelectorAll(".review-title").forEach(title => {
+	    });
+	    
+	    // 제목 클릭 -> 상세 페이지 이동
+	    document.querySelectorAll(".review-title").forEach(title => {
 	       title.addEventListener("click", function() {
 	         const reviewNo = this.dataset.reviewno;
 	         location.href = "/review/view?reviewNo=" + reviewNo;
 	       });
-	     });
-	   });
+	    });
+	  });
 	 </script>
 </body>
 </html>

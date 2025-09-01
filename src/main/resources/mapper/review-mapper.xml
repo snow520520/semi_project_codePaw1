@@ -6,8 +6,10 @@
 		select * from
 		(select rownum as rnum, n.* from
 		(select
-		review_no, review_content, review_title, review_date
-		from animal_review order by review_no desc
+		review_no,
+		review_content, review_title, review_date
+		from animal_review order by
+		review_no desc
 		)n
 		)
 		where #{start} <![CDATA[ <= ]]>
@@ -16,11 +18,13 @@
 	</select>
 
 	<select id="selectReviewList" resultType="int">
-		select count(*) from animal_review
+		select count(*) from
+		animal_review
 	</select>
 
 	<select id="searchTitleCount" resultType="int">
-		select count(*) from animal_review where review_title like
+		select count(*) from
+		animal_review where review_title like
 		'%'||'${searchTitle}'||'%'
 	</select>
 
@@ -28,8 +32,10 @@
 		select * from
 		(select rownum as rnum, n.* from
 		(select
-		review_no, review_content, review_title, review_date
-		from animal_review order by review_no desc
+		review_no,
+		review_content, review_title, review_date
+		from animal_review order by
+		review_no desc
 		)n
 		)
 		where #{start} <![CDATA[ <= ]]>
@@ -38,24 +44,35 @@
 	</select>
 
 	<delete id="deleteReviewNo">
-		delete from animal_review where review_no =${reviewNo}
+		delete from animal_review where review_no
+		=${reviewNo}
 	</delete>
 
-	<insert id="insert">
-		insert into review
-		values(review_seq.nextval,#{reviewTitle},#{reviewContent},to_char(sysdate,'yyyy-mm-dd'),#{memberNo})
+	<insert id="reviewWrite">
+		INSERT INTO animal_review
+		(review_no, review_title, review_content, review_date, member_no, animal_no,
+		adoption_no)
+		VALUES (
+		review_seq.nextval,
+		#{reviewTitle},
+		#{reviewContent},
+		TO_CHAR(SYSDATE, 'yyyy-mm-dd'),
+		#{memberNo},
+		#{animalNo,jdbcType=INTEGER},
+		#{adoptionNo,jdbcType=INTEGER}
+		)
 	</insert>
-	
-	<select id="selectOneReview"
-			resultType = "review">
-		SELECT 
-			review_title AS reviewTitle,
-			review_no AS reviewNo,
-			review_content AS reviewContent,
-			member_no AS memberNo,
-			review_date AS reviewDate
-		    FROM animal_review
-    	WHERE review_no = #{reviewNo}
+
+
+	<select id="selectOneReview" resultType="review">
+		SELECT
+		review_title AS reviewTitle,
+		review_no AS reviewNo,
+		review_content AS reviewContent,
+		member_no AS memberNo,
+		review_date AS reviewDate
+		FROM animal_review
+		WHERE review_no = #{reviewNo}
 	</select>
 
 </mapper>
