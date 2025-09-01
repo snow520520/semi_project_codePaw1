@@ -321,10 +321,10 @@ body {
 						</div>
 						<div class="select-search">
 							<div class="selectChangeLevel">
-								<button class="selectChangeLevel-btn" >선택등급변경</button>
+								<button class="selectChangeLevel-btn" style="cursor: pointer;">선택등급변경</button>
 							</div>
 							<div class="animalSelectChange" style="display: none">
-								<button class="animalSelectChange-btn">선택변경</button>
+								<button class="animalSelectChange-btn" style="cursor: pointer;">선택변경</button>
 							</div>
 							<form action="/member/searchMemberName" method="get">
 								<input type="text" name="selectSearch" id="selectSearch" placeholder="검색" style="padding-left: 10px;">
@@ -472,7 +472,9 @@ body {
 			$(this).hide();
 		});
 		$(".selectChangeLevel-btn").on("click", function(){
-			 const checked = $(this).find(".material-icons-outlined").addClass("checked");
+			const checked = $(".material-icons-outlined").addClass("checked");
+			
+			 //const checked = $(this).find(".material-icons-outlined").addClass("checked");
 			 
 			 if(checked.length === 0){
 				 return;
@@ -485,7 +487,9 @@ body {
 				 const memberLevel = $(item).parent().parent().parent().find("select").val();
 				 level.push(memberLevel);
 			 });
-			 location.href="/admin/checkedChangeLevel?no="+no.join("/")+"&level="+level.join("/");
+			 console.log(no.join("/"));
+			 console.log(level.join("/"));
+			 location.href = "/admin/checkedChangeLevel?no="+no.join("/")+"&level="+level.join("/");
 		});
 	</script>
 	<th:block th:include="common/footer"></th:block>
