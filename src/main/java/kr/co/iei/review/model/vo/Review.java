@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Review {
 	private int reviewNo;
 	private String reviewTitle;
-	private String reviewCotent;
+	private String reviewContent;
 	private String reviewDate;
 	private int memberNo; //작성자
 	private int animalNo;

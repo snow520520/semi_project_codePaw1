@@ -23,7 +23,7 @@ import kr.co.iei.member.model.vo.Member;
 import kr.co.iei.review.model.service.ReviewService;
 import kr.co.iei.review.model.vo.Review;
 import kr.co.iei.review.model.vo.ReviewListData;
-/*
+
 @Controller
 @RequestMapping (value = "/review")
 public class ReviewController {
@@ -35,7 +35,7 @@ public class ReviewController {
 	@Autowired
 	private AnimalService animalService;
 	
-	//목록 리스트 띄우기
+	//후기 목록
 	@GetMapping(value = "/list")
 	public String reviewList(int reqPage, Model model) {
 		ReviewListData rld = reviewService.reviewList(reqPage);
@@ -51,28 +51,21 @@ public class ReviewController {
 			if(rld != null) {
 			model.addAttribute("list", rld.getList());
 			model.addAttribute("pageNavi", rld.getPageNavi());
+			}else {
+				model.addAttribute("list", "작성된 게시글이 존재하지 않습니다.");
 			}
 		}
 		return "review/list";
 	}
 	
+	//게시글 상세페이지
 	@GetMapping(value="/view")
 	public String view(int reviewNo, Model model) {
 		Review review = reviewService.selectOneReview(reviewNo);
-		if(review == null) {
-			model.addAttribute("title", "게시글 조회 실패");
-			model.addAttribute("text", "이미 삭제된 게시글입니다.");
-			model.addAttribute("icon", "info");
-			model.addAttribute("loc", "/review/list?reqPage=1");
-			return "common/msg";
-		}else {
-			int animalNo = review.getAnimalNo();
-			Animal animal = animalService.selectAnimalNo(animalNo);
-			model.addAttribute("review", review);
-			model.addAttribute("animalName", animal.getAnimalName());
-			return "review/view";
-		}
+		model.addAttribute("review", review);
+		return "review/view";
 	}
+	
 	//후기 작성 화면
 	@GetMapping("/reviewWriteFrm")
 	public String reviewWriteFrm() {
@@ -91,8 +84,8 @@ public class ReviewController {
 	}
 	return "/editorImage/"+filename;
 	}
-	*/
-	/*
+	
+	
 	//게시글 받아오고 저장
 	@PostMapping(value="/reviewWriteFrm")
 	public String insertReview(Review r, MultipartFile upfile, Model model) {
@@ -105,8 +98,8 @@ public class ReviewController {
 		return "review/list";
 	}
 	
-*/
-	/*
+
+	
 	@GetMapping(value="/delete")
 	public String delete (int reviewNo, Model model) {
 		int result = reviewService.deleteReviewNo(reviewNo);
@@ -126,4 +119,3 @@ public class ReviewController {
 	}
 	
 }
- */

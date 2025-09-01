@@ -3,6 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <title>입양후기 상세페이지</title>
+<link rel="stylesheet" href="css/review.css">
+<style>
+.section>div:first-child {
+	font-size: 26px;
+	font-weight: 400;
+	padding-bottom: 20px;
+}
+
+.section>div:nth-child(2) {
+	display: inline-block;
+}
+
+.section>div:nth-child(3) {
+	float: right;
+}
+
+.line {
+	border-bottom: 1px solid #000000;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+}
+
+.reviewContent {
+	min-height: 600px;
+	text-align: center;
+	margin-top: 50px;
+}
+
+.content{
+	margin: 0 auto;
+}
+
+.section{
+	width: 1200px;
+	padding: 20px 30px 20px 30px;
+	background-color: #ffffff;
+	margin: 20px;
+	border-radius: 8px;
+	overflow: hidden;
+}
+</style>
+
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
@@ -12,17 +54,51 @@
 			<div th:text="${review.memberNo}"></div>
 			<div th:text="${review.reviewDate}"></div>
 			<div class="line"></div>
-			<th:block th:if="${session.member != null && (session.member.memberNo == member.memberNo || session.member.memberLevel == 1)}">
-				<a class="updateReview" th:href="@/review/updateFrm(reviewNo=${review.reviewNo})">수정</a>
-				<a th:onclick = "deleteReview([[${review.reviewNo]]);">삭제</a>
+			<th:block
+				th:if="${session.member != null 
+					  && (session.member.memberNo == review.memberNo || session.member.memberLevel == 1)}">
+				<a class="updateReview"
+					th:href="@{/review/updateFrm(reviewNo=${review.reviewNo})}">수정</a>
+				<a onclick="deleteReview(${review.reviewNo});">삭제</a>
 			</th:block>
-			<tr>
-				<td class="content">
-					<div id="reviewContent" th:utext="${review.reviewCotentBr}"></div>
-				</td>
-			</tr>
+			<div class="reviewContent" th:utext="${review.reviewContent}"></div>
+			<div class="line"></div>
+			<div class="btn-box">
+				<button type="button"
+					onclick="location.href='/review/list?reqPage=1'">목록으로</button>
+			</div>
 		</section>
-	</main>	
+	</main>
+	<script src="/js/sweetalert.min.js"></script>
+	<script>
+	function deleteReview(reviewNo){
+		swal({
+			title : "게시물 삭제",
+			text : "게시물을 삭제하시겠습니까?",
+		    icon : "warning",
+		    buttons : {
+		    	cancel:{
+		    		text : "취소",
+		    		value : false,
+		    		visible : true,
+		    		ClassName : "btn-swal",
+		    		closeModal : true
+		    	},
+		    	confirm : {
+		    	 	text : "삭제",
+		    		value : true,
+		    		visible : true,
+		    		ClassName : "btn-swal-color",
+		    		closeModal : true
+		    	}	
+			}
+		}).then(function(isConfirm){
+			if(isConfirm){
+				location.href="/review/delete?reviewNo="+reviewNo;
+			}
+		});
+	};
+	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>

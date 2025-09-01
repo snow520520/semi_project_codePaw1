@@ -21,6 +21,14 @@
 	vertical-align: middle;
 	color: #e57373; 
 }
+.card{
+	cursor: pointer;
+}
+.card-info h3{
+	cursor: pointer;
+}
+
+
 </style>
 
 </head>
@@ -43,21 +51,20 @@
 				<div class="all-card">
 					<th:block th:each="review : ${list}">
 						<div class="card-container">
-							<div class="card">
-								<img src="#.jpg" alt="아이1"
-									th:href="@{/review/view(reviewNo=${review.reviewNo})}">
+							<div class="card" th:data-reviewNo="${review.reviewNo}">
+								<img th:src="@{/image/sample.jpg}" alt="아이1">
 							</div>
 							<div class="card-info">
-								<h3 th:text="${review.reviewTitle}"></h3>
-								<!-- 좋아요 아이콘 -->
+								<h3 class="review-title"
+								th:data-reviewNo="${review.reviewNo}" 
+								th:text="${review.reviewTitle}"></h3>
 								<span class="material-icons-outlined like-icon">favorite_border</span>
 							</div>
 							<p class="date" th:text="${review.reviewDate}"></p>
 						</div>
 					</th:block>
 					<div class="write-btn-wrapper">
-						<a
-							th:if="${session.member != null and (session.member.memberLevel == 1 or session.member.memberLevel == 2)}"
+						<a th:if="${session.member != null and (session.member.memberLevel == 1 or session.member.memberLevel == 2)}"
 							href="/review/reviewWriteFrm">
 							<button class="write-btn">글쓰기</button>
 						</a>
@@ -86,7 +93,22 @@
 	        }
 	      });
 	    });
-	  });
-	</script>
+		//이미지 클릭
+	     document.querySelectorAll(".card").forEach(card =>{
+	    	 card.addEventListener("click",function() {
+	    		 const reviewNo = this.dataset.reviewno;
+	    		 location.href= "/review/view?reviewNo=" + reviewNo;
+	    	 })
+	     });
+	    	
+	     // 제목 클릭
+	     document.querySelectorAll(".review-title").forEach(title => {
+	       title.addEventListener("click", function() {
+	         const reviewNo = this.dataset.reviewno;
+	         location.href = "/review/view?reviewNo=" + reviewNo;
+	       });
+	     });
+	   });
+	 </script>
 </body>
 </html>
