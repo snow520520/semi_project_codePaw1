@@ -69,7 +69,7 @@ public class MemberService {
 		String pageNavi = "<ul class='pagination circle-style'>";
 		if(pageNo != 1) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+(pageNo-1)+"'>";
+			pageNavi += "<a class='page-item' href='/admin/adminPage?reqPage="+(pageNo-1)+"'>";
 			pageNavi += "<span class='material-icons'>chevron_left</span>";
 			pageNavi += "</a>";
 			pageNavi += "</li>";
@@ -77,9 +77,9 @@ public class MemberService {
 		for(int i=0;i<pageNaviSize;i++) {
 			pageNavi += "<li>";
 			if(pageNo == reqPage) {
-				pageNavi += "<a class='page-item active-page' href='/admin/adminPageFrm?reqPage="+pageNo+"'>";
+				pageNavi += "<a class='page-item active-page' href='/admin/adminPage?reqPage="+pageNo+"'>";
 			}else {
-				pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+pageNo+"'>";
+				pageNavi += "<a class='page-item' href='/admin/adminPage?reqPage="+pageNo+"'>";
 			}
 			pageNavi += pageNo;
 			pageNavi += "</a>";
@@ -92,7 +92,7 @@ public class MemberService {
 		}
 		if(pageNo <= totalPage) {
 			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/adminPageFrm?reqPage="+pageNo+"'>";
+			pageNavi += "<a class='page-item' href='/admin/adminPage?reqPage="+pageNo+"'>";
 			pageNavi += "<span class='material-icons'>chevron_right</span>";
 			pageNavi += "</a>";
 			pageNavi += "</li>";
