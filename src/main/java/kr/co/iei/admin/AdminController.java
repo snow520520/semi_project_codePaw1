@@ -50,19 +50,25 @@ public class AdminController {
             model.addAttribute("title", "등급변경 실패");
             model.addAttribute("content", "재시도 해주세요.");
             model.addAttribute("icon", "error");
-            model.addAttribute("loc", "/admin/adminPage?memberPage=1&animalPage=1");
+            model.addAttribute("loc", "/admin/adminPage?memberPage=1");
         } else {
             model.addAttribute("title", "등급변경 완료");
             model.addAttribute("content", "Success");
             model.addAttribute("icon", "success");
-            model.addAttribute("loc", "/admin/adminPage?memberPage=1&animalPage=1");
+            model.addAttribute("loc", "/admin/adminPage?memberPage=1");
         }
         return "common/msg";
     }
 
     @GetMapping(value = "/checkedChangeLevel")
-    public String checkedChangeLevel(String no, String level) {
+    public String checkedChangeLevel(String no, String level, Model model) {
         boolean result = memberService.checkedChangeLevel(no, level);
-        return "redirect:/admin/adminPage?memberPage=1&animalPage=1";
+        if(result) {
+        	 model.addAttribute("title", "등급변경 완료");
+             model.addAttribute("content", "Success");
+             model.addAttribute("icon", "success");
+             model.addAttribute("loc", "/admin/adminPage?memberPage=1");
+        }
+        return "common/msg";
     }
 }

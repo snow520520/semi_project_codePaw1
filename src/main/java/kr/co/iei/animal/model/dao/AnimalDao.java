@@ -24,7 +24,5 @@ public interface AnimalDao {
 
 	int selectAnimalCount();
 
-	List allAnimal();
-
 
 }

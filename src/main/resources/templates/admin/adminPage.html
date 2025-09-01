@@ -25,6 +25,7 @@ body {
 }
 .section {
 	width: 1500px;
+	min-height: 950px;
 	max-height: 950px;
 	display: flex;
 	flex-direction: column;
@@ -46,6 +47,9 @@ body {
 	justify-content: space-between;
 	border-bottom: 1px solid #854836;
 	padding-bottom: 20px;
+}
+.admin-header{
+	position: static;
 }
 .admin-title {
 	color: #854836;
@@ -123,6 +127,9 @@ body {
 .admin-table th, .admin-table td{
 	padding: 10px 15px;
 	border-bottom: 1px solid #c8c8c8;
+}
+.admin-table>tr>td{
+	max-height: 50px;
 }
 .search-div>.allSearch-div>button{
 	width: 100px;
@@ -325,18 +332,17 @@ body {
 				<div class="admin-header">
 					<div class="admin-top">
 						<div class="admin-title">관리자 페이지</div>
-						<div class="ud-button">
-							<button class="update-btn">수 정</button> <!-- button 클릭 시  -->
-							<button class="delete-btn">삭 제</button>
-						</div>
 					</div>
-					
 					<div class="search-div">
-						<div class="allSearch-title">회원조회</div>
+						<div class="allSearch-title member">회원조회</div>
+						<div class="allSearch-title ani" style="display:none;">동물조회</div>
 						<div class="allSearch-div">
-							<button class="member-search" style="display:none;">전체회원조회</button>
-							<form action="/admin/adminPageAni" method="get" class="animal-form">
+							<a href="/admin/adminPage?memberPage=1">
+								<button class="member-search" style="display: none;">전체회원조회</button>
+							</a>
+							<form action="/admin/adminPageAni?animalPage=1" method="get" class="animal-form">
 								<button type="submit" class="animal-search">전체동물조회</button>
+								<input type="hidden" name="animalPage" value="1">
 							</form>
 						</div>
 						<div class="select-search">
@@ -345,8 +351,8 @@ body {
 							</div>
 							<form action="/member/searchMemberName" method="get">
 								<input type="text" name="selectSearch" id="selectSearch" placeholder="검색" style="padding-left: 10px;">
-								<input type="hidden" name="reqPage" id="reqPage" value="1">	
-								<button type="submit">				
+								<input type="hidden" name="memberPage" id="memberPage" value="1">	
+								<button type="submit" class="selectSearch-btn">				
 									<span class="material-icons">search</span>		
 								</button>				
 							</form>
@@ -356,7 +362,7 @@ body {
 			</div>	
 				<table class="admin-table">
 					<tr class="table-title">
-						<th style = "width: 5%"></th>
+						<th style = "width: 5%" ></th>
 						<th style = "width: 7%">No</th>
 						<th style = "width: 10%">아이디</th>
 						<th style = "width: 10%">회원이름</th>
@@ -367,7 +373,7 @@ body {
 						<th style = "width: 8%">등급변경</th>
 					</tr>
 					<tr th:each="member, status : ${memberList}" class="tr-tbl">
-						<td>
+						<td style="height:50px;">
 							<div class="input-wrap">
 								<span class="material-icons-outlined" th:id="${'material-icons-outlined'+status.count}">check_circle</span>
 								<label th:for="${'material-icons-outlined'+status.count}" class="lab-in"></label>
@@ -375,13 +381,13 @@ body {
 								<label th:for="${'material-icons'+status.count}" class="lab-out" style="display:none;"></label>
 							</div>
 						</td>
-						<td th:text="${member.memberNo}"></td>
-						<td th:text="${member.memberId}"></td>
-						<td th:text="${member.memberName}"></td>
-						<td th:text="${member.memberPhone}"></td>
-						<td class="addr-td" th:text="${member.memberAddr}"></td>
-						<td>
-							<div class="select" th:switch="${member.memberLevel}">
+						<td th:text="${member.memberNo}" style="height:50px;"></td>
+						<td th:text="${member.memberId}" style="height:50px;"></td>
+						<td th:text="${member.memberName}" style="height:50px;"></td>
+						<td th:text="${member.memberPhone}" style="height:50px;"></td>
+						<td class="addr-td" th:text="${member.memberAddr}" style="height:50px;"></td>
+						<td style="height:50px;">
+							<div class="select" th:switch="${member.memberLevel}" >
 								<select th:case= "1">
 									<option value = "1" selected>관리자</option>
 									<option value = "2">입양회원</option>
@@ -399,7 +405,7 @@ body {
 								</select>
 							</div>
 						</td>
-						<td th:text="${member.enrollDate}"></td>
+						<td th:text="${member.enrollDate}" style="height:50px;"></td>
 						<td>
 							<button class="changeLevel-btn" style="cursor:pointer">등급변경</button>
 						</td>
@@ -410,11 +416,11 @@ body {
 	</main>
 	<script>
 		$(".animal-search").on("click",function(){
-			$(".member-search").show();
+			$(".member-search").toggle();
 			$(this).hide();
 		});
 		$(".member-search").on("click",function(){
-			$(".animal-search").show();
+			$(".animal-search").toggle();
 			$(this).hide();
 		});
 		$(".changeLevel-btn").on("click", function(){

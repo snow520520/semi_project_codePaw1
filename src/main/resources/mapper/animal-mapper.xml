@@ -42,7 +42,7 @@
                     animal_admission 
                     from animal
                     join member_tbl using (member_no)
-                    order by animal_no desc
+                    order by animal_no
 	        	)n
 	    	)
 		where rnum between #{start} and #{end}
