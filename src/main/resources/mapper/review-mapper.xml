@@ -45,5 +45,17 @@
 		insert into review
 		values(review_seq.nextval,#{reviewTitle},#{reviewContent},to_char(sysdate,'yyyy-mm-dd'),#{memberNo})
 	</insert>
+	
+	<select id="selectOneReview"
+			resultType = "review">
+		SELECT 
+			review_title AS reviewTitle,
+			review_no AS reviewNo,
+			review_content AS reviewContent,
+			member_no AS memberNo,
+			review_date AS reviewDate
+		    FROM animal_review
+    	WHERE review_no = #{reviewNo}
+	</select>
 
 </mapper>

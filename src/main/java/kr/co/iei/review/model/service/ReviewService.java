@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.admission.model.vo.AdmissionListData;
@@ -74,10 +75,8 @@ public class ReviewService {
 
 		return rld;
 	}
-	// 후기 게시글 추가
-
-	// 검색 목록
-	/*
+	
+	// 검색 
 	public ReviewListData searchTitle(int reqPage, String searchTitle) {
 		int numPerPage = 16;
 
@@ -144,5 +143,12 @@ public class ReviewService {
 			return null;
 		}
 	}
-*/
+
+	public Review selectOneReview(int reviewNo) {
+		//Review review = reviewDao.selectOneReview(reviewNo);
+		return reviewDao.selectOneReview(reviewNo);
+	}
+
+
+
 }

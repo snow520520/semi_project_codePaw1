@@ -106,10 +106,12 @@ input{
     height: 180px;
     border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-
+	color: inherit;
+	text-decoration: none;
 }
 
 .card img {
+	cursor: hover;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -122,8 +124,8 @@ input{
     text-align: left;
     font-size: 16px;
     color: #333;
+    cursor: hover;
 }
-
 .write-btn-wrapper {
     width : 1000px;
     text-align: right;       
