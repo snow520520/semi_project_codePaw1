@@ -10,13 +10,10 @@
 <style>
 body {
 	font-family: Nanum Gothic Coding, sans-serif;
-	display: flex;
-	align-items: center;
-	height: 100vh;
 }
 .content {
 	width: 100%;
-	max-height: 950px;
+	max-height: 980px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -25,7 +22,8 @@ body {
 }
 .section {
 	width: 1500px;
-	max-height: 950px;
+	min-height: 980px;
+	max-height: 980px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -196,6 +194,14 @@ body {
 	font-size: 13px;
 	font-weight: 500;
 }
+.select>select{
+	width: 80px;
+	height: 25px;
+	font-size: 15px;
+	border-color: black;
+ 	border-radius: 5px;
+ 	cursor: pointer;
+}
 .chb-input{
 	border: none;
 }
@@ -340,7 +346,7 @@ body {
 						</div>
 						<div class="select-search">
 							<div class="selectChangeLevel">
-								<button class="selectChangeLevel-btn" style="cursor: pointer;">수정하기</button>
+								<button class="selectChangeLevel-btn" style="cursor: pointer;">선택수정</button>
 							</div>
 							<form action="/animal/searchAnimalName" method="get">
 								<input type="text" name="selectSearch" id="selectSearch" placeholder="검색" style="padding-left: 10px;">
@@ -356,16 +362,16 @@ body {
 				<table class="admin-table">
 					<tr class="table-title-animal">
 						<th style = "width: 5%"></th>
-						<th style = "width: 8%">No</th>
+						<th style = "width: 6%">No</th>
 						<th style = "width: 12%">품 종</th>
 						<th style = "width: 13%">이 름</th>
-						<th style = "width: 10%">성 별</th>
-						<th style = "width: 10%">나 이</th>
-						<th style = "width: 8%">접종여부</th>
+						<th style = "width: 8%">성 별</th>
+						<th style = "width: 8%">나 이</th>
+						<th style = "width: 10%">접종여부</th>
 						<th style = "width: 10%">중성화여부</th>
-						<th style = "width: 8%">입소번호</th>
-						<th style = "width: 8%">회원번호</th>
-						<th style = "width: 8%">입소여부</th>
+						<th style = "width: 10%">회원번호</th>
+						<th style = "width: 10%">입소여부</th>
+						<th style = "width: 8%">비 고</th>
 					</tr>
 					<tr th:each="a, status : ${animalList}" class="tr-tbl-animal">
 						<td>
@@ -381,11 +387,46 @@ body {
 						<td th:text="${a.animalName}"></td>
 						<td th:text="${a.animalGender}"></td>
 						<td th:text="${a.animalAge}"></td>
-						<td th:text="${a.animalInocul}"></td>
-						<td th:text="${a.animalNeuter}"></td>
+						<td>
+							<div class="select" th:switch="${a.animalInocul}" id="animalInocul" >
+								<select th:case= "Y">
+									<option value = "Y" selected>접종</option>
+									<option value = "N">미접종</option>
+								</select>
+								<select th:case= "N">
+									<option value = "Y">접종</option>
+									<option value = "N" selected>미접종</option>
+								</select>
+							</div>
+						</td>
+						<td>
+							<div class="select" th:switch="${a.animalNeuter}" id="animalNeuter">
+								<select th:case= "Y">
+									<option value = "Y" selected>O</option>
+									<option value = "N">X</option>
+								</select>
+								<select th:case= "N">
+									<option value = "Y">O</option>
+									<option value = "N" selected>X</option>
+								</select>
+							</div>
+						</td>
 						<td th:text="${a.memberNo}"></td>
-						<td th:text="${a.admissionNo}"></td>
-						<td th:text="${a.animalAdmission}"></td>
+						<td style="height:50px;">
+							<div class="select" th:switch="${a.animalAdmission}" id=animalAdmission>
+								<select th:case= "Y">
+									<option value = "Y" selected>입소완료</option>
+									<option value = "N">검토중</option>
+								</select>
+								<select th:case= "N">
+									<option value = "Y">입소완료</option>
+									<option value = "N" selected>검토중</option>
+								</select>
+							</div>
+						</td>
+						<td>
+							<button class="changeLevel-btn" style="cursor:pointer">수 정</button>
+						</td>
 					</tr>
 				</table>
 			<div id="pageNavi" style="height:100px;" th:utext="${pageNaviAni}"></div>
@@ -401,9 +442,11 @@ body {
 			$(this).hide();
 		});
 		$(".changeLevel-btn").on("click", function(){
-			const memberNo = $(this).parent().parent().children().eq(1).text();
-			const memberLevel = $(this).parent().prev().prev().children().children().val();
-			location.href= "/admin/changeLevel?memberNo="+memberNo+"&memberLevel="+memberLevel;
+			const animalNo = $(this).parent().parent().children().eq(1).text();
+			const animalAdmission = $(this).parent().prev().children().children().val();
+			const animalInocul = $(this).parent().prev().prev().prev().prev().children().children().val();
+			const animalNeuter = $(this).parent().prev().prev().prev().children().children().val();
+			location.href= "/admin/changeAdmission?animalNo="+animalNo+"&animalAdmission="+animalAdmission+"&animalInocul="+animalInocul+"&animalNeuter="+animalNeuter;
 		});
 		$(".material-icons-outlined").on("click", function(){
 			$(this).parent().children().eq(2).show();
@@ -413,7 +456,6 @@ body {
 			$(this).parent().children().eq(0).show();
 			$(this).hide();
 		});
-		/*
 		$(".selectChangeLevel-btn").on("click", function(){
 			const checked = $(".material-icons-outlined").addClass("checked");
 			
@@ -421,17 +463,26 @@ body {
 				 return;
 			 }
 			 const no = new Array();
-			 const level = new Array();
+			 const admission = new Array();
+			 const inocul = new Array();
+			 const neuter = new Array();
 			 checked.each(function(index, item){
-				 const memberNo = $(item).parent().parent().next().text();
-				 no.push(memberNo);
-				 const memberLevel = $(item).parent().parent().parent().find("select").val();
-				 level.push(memberLevel);
+				const animalNo = $(item).parent().parent().next().text();
+				const animalAdmission = $(item).parent().parent().siblings().find("#animalAdmission").children().val();
+				const animalInocul = $(item).parent().parent().siblings().find("#animalInocul").children().val();
+				const animalNeuter = $(item).parent().parent().siblings().find("#animalNeuter").children().val();
+				no.push(animalNo);
+				admission.push(animalAdmission);
+				inocul.push(animalInocul);
+				neuter.push(animalNeuter);
+			 
 			 });
 			 console.log(no.join("/"));
-			 console.log(level.join("/"));
-			 location.href = "/admin/checkedChangeLevel?no="+no.join("/")+"&level="+level.join("/");
-		});*/
+			 console.log(admission.join("/"));
+			 console.log(inocul.join("/"));
+			 console.log(neuter.join("/"));
+			 location.href = "/admin/checkedChangeAdmission?no="+no.join("/")+"&admission="+admission.join("/")+"&inocul="+inocul.join("/")+"&neuter="+neuter.join("/");
+		});
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>

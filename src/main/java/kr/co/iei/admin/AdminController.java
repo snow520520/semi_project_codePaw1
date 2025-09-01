@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.iei.animal.model.service.AnimalService;
 import kr.co.iei.animal.model.vo.Animal;
@@ -68,6 +67,54 @@ public class AdminController {
              model.addAttribute("content", "Success");
              model.addAttribute("icon", "success");
              model.addAttribute("loc", "/admin/adminPage?memberPage=1");
+        }
+        return "common/msg";
+    }
+	@GetMapping(value ="/searchMemberName")
+    public String searchMemberName(String memberName, int memberPage, Model model) {
+    	if(!memberName.isEmpty()) {
+    		MemberListData mld = memberService.selectMemberNameList(memberPage, memberName);
+    		if(mld != null) {
+    			model.addAttribute("memberList", mld.getList());
+    			model.addAttribute("pageNaviMember", mld.getPageNaviMember());
+    		}else{
+    			model.addAttribute("title", "검색 실패");
+    			model.addAttribute("content", "error");
+    			model.addAttribute("icon", "error");
+    			model.addAttribute("loc", "/admin/adminPage?memberPage=1");
+    		}
+    	}else {
+    		model.addAttribute("title", "이름을 입력하세요.");
+			model.addAttribute("content", "error");
+			model.addAttribute("icon", "error");
+			model.addAttribute("loc", "/admin/adminPage?memberPage=1");
+	    }
+    	return "common/msg";
+    }
+	@GetMapping(value = "/changeAdmission")
+	public String changeAdmission(Animal a, Model model) {
+		int result = animalService.changeAdmission(a);
+		if(result == 0) {
+			model.addAttribute("title", "Fail");
+			model.addAttribute("content", "Fail");
+			model.addAttribute("icon", "error");
+			model.addAttribute("loc", "/admin/adminPageAni?animalPage=1");
+		}else {
+			model.addAttribute("title", "입소처리 완료");
+			model.addAttribute("content", "입소 완료");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/admin/adminPageAni?animalPage=1");
+		}
+		return "common/msg";
+	}
+	@GetMapping(value = "/checkedChangeAdmission")
+    public String checkedChangeAdmission(String no, String admission, String inocul, String neuter, Model model) {
+        boolean result = animalService.checkedChangeAdmission(no, admission, inocul, neuter);
+        if(result) {
+        	 model.addAttribute("title", "등급변경 완료");
+             model.addAttribute("content", "Success");
+             model.addAttribute("icon", "success");
+             model.addAttribute("loc", "/admin/adminPageAni?animalPage=1");
         }
         return "common/msg";
     }

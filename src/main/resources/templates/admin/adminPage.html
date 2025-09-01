@@ -16,7 +16,7 @@ body {
 }
 .content {
 	width: 100%;
-	max-height: 950px;
+	max-height: 980px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -25,8 +25,8 @@ body {
 }
 .section {
 	width: 1500px;
-	min-height: 950px;
-	max-height: 950px;
+	min-height: 980px;
+	max-height: 980px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -203,6 +203,14 @@ body {
 	font-size: 13px;
 	font-weight: 500;
 }
+.select>select{
+	width: 80px;
+	height: 25px;
+	font-size: 15px;
+	border-color: black;
+ 	border-radius: 5px;
+ 	cursor: pointer;
+}
 .chb-input{
 	border: none;
 }
@@ -349,8 +357,8 @@ body {
 							<div class="selectChangeLevel">
 								<button class="selectChangeLevel-btn" style="cursor: pointer;">선택등급변경</button>
 							</div>
-							<form action="/member/searchMemberName" method="get">
-								<input type="text" name="selectSearch" id="selectSearch" placeholder="검색" style="padding-left: 10px;">
+							<form action="/admin/searchMemberName" method="get">
+								<input type="text" name="memberName" id="memberName" placeholder="검색" style="padding-left: 10px;">
 								<input type="hidden" name="memberPage" id="memberPage" value="1">	
 								<button type="submit" class="selectSearch-btn">				
 									<span class="material-icons">search</span>		
@@ -438,9 +446,6 @@ body {
 		});
 		$(".selectChangeLevel-btn").on("click", function(){
 			const checked = $(".material-icons-outlined").addClass("checked");
-			
-			 //const checked = $(this).find(".material-icons-outlined").addClass("checked");
-			 
 			 if(checked.length === 0){
 				 return;
 			 }
@@ -456,6 +461,14 @@ body {
 			 console.log(level.join("/"));
 			 location.href = "/admin/checkedChangeLevel?no="+no.join("/")+"&level="+level.join("/");
 		});
+		/*
+		$(".selectSearch-btn").on("click", function(){
+			const searchVal = $("#selectSearch").val();
+			$.ajax({
+				url: 
+			});
+		});
+		*/
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>

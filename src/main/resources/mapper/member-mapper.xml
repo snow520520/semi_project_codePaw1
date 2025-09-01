@@ -41,4 +41,17 @@
   	<update id="changeLevel">
   		update member_tbl set member_level = #{memberLevel} where member_no = #{memberNo}
   	</update>
+  	<select id="selectMemberNameCount" resultType="int">
+  		select count(*) from member_tbl where member_name like '%'||'${memberName}'||'%'
+    </select>
+  	<select id="selectMemberNameList" resultType="member">
+  		select * from
+	    	(select rownum as rnum, n.* from
+	        	(select 
+	            	member_no, member_id, member_name, member_age, member_addr, member_phone, member_level, enroll_date 
+	        	from member_tbl where member_name like '%'||'${memberName}'||'%' order by 1
+	        	)n
+	    	)
+		where rnum between #{start} and #{end}
+  	</select>
 </mapper>

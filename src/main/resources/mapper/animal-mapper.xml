@@ -47,4 +47,17 @@
 	    	)
 		where rnum between #{start} and #{end}
  </select>
+ <update id="changeAdmission">
+ 	update animal set
+ 		<if test="animalAdmission != null">
+ 			animal_admission=#{animalAdmission},
+ 		</if>
+ 		<if test="animalInocul != null">
+ 			animal_inocul=#{animalInocul},
+ 		</if>
+ 		<if test="animalNeuter != null">
+ 			animal_neuter=#{animalNeuter} 
+ 		</if>
+ 	where animal_no=#{animalNo}
+ </update>
 </mapper>

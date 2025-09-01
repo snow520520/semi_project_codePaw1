@@ -96,6 +96,68 @@ public class MemberService {
 		MemberListData mld = new MemberListData(list, pageNaviMember);
 		return mld;
 	}
+	
+	public MemberListData selectMemberNameList(int memberPage, String memberName) {
+		
+		int numPerPage = 10;
+		
+		int end = memberPage * numPerPage;
+		int start = (end-numPerPage)+1;
+		HashMap<String, Object> param = new HashMap<String,Object>();
+		param.put("start", start);
+		param.put("end", end);
+		
+		int totalCount = memberDao.selectMemberNameCount(memberName);
+		
+		int totalPage = totalCount / numPerPage;
+		if(totalCount % numPerPage != 0) {
+			totalPage += 1;
+		
+			int pageNaviSize = 5;
+			
+			int pageNo = ((memberPage-1)/pageNaviSize)*pageNaviSize+1;
+			
+			String pageNaviMember = "<ul class='pagination circle-style'>";
+			if(pageNo != 1) {
+				pageNaviMember += "<li>";
+				pageNaviMember += "<a class='page-item' href='/admin/adminPage?memberName="+memberName+"&memberPage="+(pageNo-1)+"'>";
+				pageNaviMember += "<span class='material-icons'>chevron_left</span>";
+				pageNaviMember += "</a>";
+				pageNaviMember += "</li>";
+			}
+			for(int i=0;i<pageNaviSize;i++) {
+				pageNaviMember += "<li>";
+				if(pageNo == memberPage) {
+					pageNaviMember += "<a class='page-item active-page' href='/admin/adminPage?memberName="+memberName+"&memberPage="+pageNo+"'>";
+				}else {
+					pageNaviMember += "<a class='page-item' href='/admin/adminPage?memberName="+memberName+"&memberPage="+pageNo+"'>";
+				}
+				pageNaviMember += pageNo;
+				pageNaviMember += "</a>";
+				pageNaviMember += "</li>";
+				
+				pageNo++;
+				if(pageNo > totalPage) {
+					break;
+				}
+			}
+			if(pageNo <= totalPage) {
+				pageNaviMember += "<li>";
+				pageNaviMember += "<a class='page-item' href='/admin/adminPage?memberId="+memberName+"&memberPage="+pageNo+"'>";
+				pageNaviMember += "<span class='material-icons'>chevron_right</span>";
+				pageNaviMember += "</a>";
+				pageNaviMember += "</li>";
+			}
+			pageNaviMember += "</ul>";
+			param.put("memberName", memberName);
+			List list = memberDao.selectMemberNameList(param);
+			
+			MemberListData mld = new MemberListData(list, pageNaviMember);
+			return mld;
+		}else {
+			return null;
+		}
+	}
 	@Transactional
 	public int changeLevel(Member m) {
 		int result = memberDao.changeLevel(m);
@@ -122,6 +184,5 @@ public class MemberService {
 		}
 		return result == count;
 	}
-	
 }
 

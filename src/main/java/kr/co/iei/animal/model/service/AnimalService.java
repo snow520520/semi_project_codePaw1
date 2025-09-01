@@ -2,6 +2,7 @@ package kr.co.iei.animal.model.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,5 +99,35 @@ public class AnimalService {
 		return ald;
 		
 	}
-	
+	@Transactional
+	public int changeAdmission(Animal a) {
+		int result = animalDao.changeAdmission(a);
+		return result;
+	}
+	@Transactional
+	public boolean checkedChangeAdmission(String no, String admission, String inocul, String neuter) {
+		StringTokenizer sT1 = new StringTokenizer(no, "/");
+		StringTokenizer sT2 = new StringTokenizer(admission, "/");
+		StringTokenizer sT3 = new StringTokenizer(inocul, "/");
+		StringTokenizer sT4 = new StringTokenizer(neuter, "/");
+		int result = 0;
+		int count = sT1.countTokens();
+		
+		while(sT1.hasMoreTokens()) {
+			String stringNo = sT1.nextToken();
+			int animalNo = Integer.parseInt(stringNo);
+			String stringAdmission = sT2.nextToken();
+			String stringInocul = sT3.nextToken();
+			String stringNeuter = sT4.nextToken();
+			
+			Animal a = new Animal();
+			a.setAnimalNo(animalNo);
+			a.setAnimalAdmission(stringAdmission);
+			a.setAnimalInocul(stringInocul);
+			a.setAnimalNeuter(stringNeuter);
+			System.out.println(a);
+			result += animalDao.changeAdmission(a);
+		}
+		return result == count;
+	}
 }

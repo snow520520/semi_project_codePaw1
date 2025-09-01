@@ -24,5 +24,8 @@ public interface AnimalDao {
 
 	int selectAnimalCount();
 
+	int changeAdmission(Animal a);
+
+	int checkedChangeAdmission(Animal a);
 
 }
