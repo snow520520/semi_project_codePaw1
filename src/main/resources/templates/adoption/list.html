@@ -37,11 +37,9 @@
 					</tr>
 					<tr th:each="adoption : ${list}">
 						<td th:text="${adoption.adoptionNo}"></td>
-						<td>
+						<td th:onclick="checkAccess([[${adoption.adoptionNo}]], '[[${adoption.memberId}]]')">
 							<span class="material-icons lock">lock_outline</span>
-							<a href="javascript:void(0);" 
-  							 th:onclick="checkAccess([[${adoption.adoptionNo}]], '[[${adoption.memberId}]]')"
-   							th:text="${adoption.adoptionTitle}"></a>
+   							<span th:text="${adoption.adoptionTitle}"></span>
 						</td>
 						<td th:text="${adoption.adoptionDate}"></td>
 						<td th:text="${adoption.memberId}"></td>
@@ -56,19 +54,16 @@
     const memberLevel = /*[[${session.member != null ? session.member.memberLevel : 0}]]*/ 0;
 
     function checkAccess(adoptionNo, memberId) {
-        // 1. 관리자면 바로 이동
         if (memberLevel === 1) {
             location.href = "/adoption/view?adoptionNo=" + adoptionNo;
             return;
         }
 
-        // 2. 작성자 본인 → 바로 이동
         if (memberId === memberId) {
             location.href = "/adoption/view?adoptionNo=" + adoptionNo;
             return;
         }
 
-        // 3. 그 외 사용자 접근 불가
         swal("해당 글은 작성자와 관리자만 열람할 수 있습니다.","","warning");
     }
 	</script>
