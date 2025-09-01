@@ -1,52 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>통합 페이지</title>
 <link rel="stylesheet" href="/css/default.css">
 <script src="/js/jquery-3.6.0.js"></script>
-
-<header>
-    <div class="header-top">
-        <div class="links">
-            <th:block th:if="${session.member == null}">
-                <a href="/member/loginFrm">로그인</a>
-                <a href="/member/joinFrm">회원가입</a>
-            </th:block>
-            <th:block th:if="${session.member != null && session.member.memberLevel == 3}">
-                <a href="#" th:text="${session.member.memberId}"></a>
-                <a href="/member/logout">로그아웃</a>
-            </th:block>
-            <th:block th:if="${session.member != null && session.member.memberLevel == 2}">
-                <a href="#" th:text="${session.member.memberId}"></a>
-                <a href="/member/logout">로그아웃</a>
-            </th:block>
-            <th:block th:if="${session.member != null && session.member.memberLevel == 1}">
-                <a href="/admin/adminPage?reqPage=1">관리자페이지</a>
-                <a href="#">마이페이지</a>
-                <a href="/member/logout">로그아웃</a>
-            </th:block>
-            <a href="/notice/list?reqPage=1">공지사항</a>
-        </div>
-        <div class="logo">
-            <a href="/">
-                <img src="/image/logo1.jpg" alt="Logo">
-            </a>
-        </div>
-        <nav class="header-menu">
-            <ul class="menu">
-                <li><a href="/">HOME</a></li>
-                <li><a href="/mainAllpage/allpage">보호중인 아이들</a></li>
-                <li><a href="/admission/list?reqPage=1">입소신청</a></li>
-                <li><a href="/adoption/list?reqPage=1">입양신청목록</a></li>
-                <li><a href="/review/list?reqPage=1">입양사진 및 후기</a></li>
-                <li><a href="/mainAllpage/Directions">오시는길</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<div class="scroll-buttons">
-    <button id="scrollTop">▲</button>
-    <button id="scrollBottom">▼</button>
-</div>
-
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
+.notice-button {
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    z-index: 1000;
+}
+.notice-button button {
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    border: none;
+    background: #ffb22c;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10px;
+    transition: width 0.4s ease;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.notice-button button:hover {
+    width: 140px; 
+}
+.icon-text {
+    display: flex;
+    align-items: center; 
+    gap: 8px;
+
+}
+.material-icons {
+	align-items: center;
+    font-size: 24px;
+	padding-right: 8px;
+}
+.notice-text-hover {
+    font-size: 16px;
+	align-items: center;
+    font-weight: bold;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.notice-button button:hover .notice-text-hover {
+    opacity: 1;
+}
+.new-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 12px;
+}
+
 .scroll-buttons {
     position: fixed;
     right: 20px;
@@ -57,7 +76,6 @@
     gap: 40px;
     z-index: 1000;
 }
-
 .scroll-buttons button {
     width: 50px;
     height: 50px;
@@ -67,21 +85,70 @@
     color: #fff;
     font-size: 18px;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
-
 .scroll-buttons button:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
 }
-
 .scroll-buttons button:active {
     transform: scale(0.95);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    background-color: #e6a100;
 }
 </style>
+</head>
+<body>
+
+<header>
+<div class="header-top">
+    <div class="links">
+        <th:block th:if="${session.member == null}">
+            <a href="/member/loginFrm">로그인</a>
+            <a href="/member/joinFrm">회원가입</a>
+        </th:block>
+        <th:block th:if="${session.member != null && session.member.memberLevel == 3}">
+            <a href="#" th:text="${session.member.memberId}"></a>
+            <a href="/member/logout">로그아웃</a>
+        </th:block>
+        <th:block th:if="${session.member != null && session.member.memberLevel == 2}">
+            <a href="#" th:text="${session.member.memberId}"></a>
+            <a href="/member/logout">로그아웃</a>
+        </th:block>
+        <th:block th:if="${session.member != null && session.member.memberLevel == 1}">
+            <a href="/admin/adminPage?reqPage=1">관리자페이지</a>
+            <a href="#">마이페이지</a>
+            <a href="/member/logout">로그아웃</a>
+        </th:block>
+        <a href="/notice/list?reqPage=1">공지사항</a>
+    </div>
+    <div class="logo">
+        <a href="/"><img src="/image/logo1.jpg" alt="Logo"></a>
+    </div>
+    <nav class="header-menu">
+        <ul class="menu">
+            <li><a href="/">HOME</a></li>
+            <li><a href="/mainAllpage/allpage">보호중인 아이들</a></li>
+            <li><a href="/admission/list?reqPage=1">입소신청</a></li>
+            <li><a href="/adoption/list?reqPage=1">입양신청목록</a></li>
+            <li><a href="/review/list?reqPage=1">입양사진 및 후기</a></li>
+            <li><a href="/mainAllpage/Directions">오시는길</a></li>
+        </ul>
+    </nav>
+</div>
+</header>
+
+<div class="notice-button">
+    <button id="noticeBtn">
+        <div class="icon-text">
+            <span class="material-icons">chat_bubble_outline</span>
+            <span class="notice-text-hover">공지사항</span>
+        </div>
+        <span id="noticeBadge" class="new-badge" style="display:none;">New</span>
+    </button>
+</div>
+
+<div class="scroll-buttons">
+    <button id="scrollTop">▲</button>
+    <button id="scrollBottom">▼</button>
+</div>
 
 <script>
 $(document).ready(function(){
@@ -91,5 +158,19 @@ $(document).ready(function(){
     $("#scrollBottom").click(function(){
         $("html, body").animate({ scrollTop: $(document).height() }, 500);
     });
+
+    const noticeBadge = $("#noticeBadge");
+    const hasVisitedNotice = sessionStorage.getItem('hasVisitedNotice');
+    if (!hasVisitedNotice) {
+        noticeBadge.show();
+    }
+    $("#noticeBtn").click(function(){
+        sessionStorage.setItem('hasVisitedNotice', 'true');
+        noticeBadge.hide();
+        window.location.href = "/notice/list?reqPage=1";
+    });
 });
 </script>
+
+</body>
+</html>
