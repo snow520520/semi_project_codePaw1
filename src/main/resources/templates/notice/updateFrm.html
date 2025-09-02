@@ -76,7 +76,7 @@
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
-			<form action="/notice/update" method="post">
+			<form action="/notice/update" method="post" enctype="multipart/form-data">
 				<div class="title">
 					<input type="hidden" name="noticeNo" id="noticeNo" th:value="${notice.noticeNo}">
 					<input type="text" name="noticeTitle" id="noticeTitle" placeholder="제목을 입력해주세요." th:value="${notice.noticeTitle}">
@@ -150,7 +150,7 @@
 	}
 	function deleteFile(noticeFileNo, obj){
 		const input = $("<input>");
-		input.attr("name","deletFileNo");
+		input.attr("name","deleteFileNo");
 		input.attr("type","hidden");
 		input.val(noticeFileNo);
 		$(".section>form").append(input);

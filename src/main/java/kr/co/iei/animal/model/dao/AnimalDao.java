@@ -32,5 +32,7 @@ public interface AnimalDao {
 
 	int searchAnimalNameCountList(String animalName);
 
+	int admissionReject(int animalNo);
+
 
 }

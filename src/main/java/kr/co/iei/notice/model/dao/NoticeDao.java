@@ -35,4 +35,6 @@ public interface NoticeDao {
 
 	NoticeFile selectOneNoticeFile(int noticeFileNo);
 
+	int deleteNoticeFile(int noticeFileNo);
+
 }
