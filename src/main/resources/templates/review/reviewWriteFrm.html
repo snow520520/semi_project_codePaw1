@@ -7,7 +7,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	max-width: 1200px;
+	max-width: 1400px;
 	margin: 20px auto;
 	background: #fff;
 	padding: 20px;
@@ -90,7 +90,7 @@
 .note-editable img {
 	display: block;
 	margin: 10px auto;
-	max-width: 100%; 
+	max-width: 100%;
 	height: auto;
 }
 
@@ -133,14 +133,14 @@
 					<button type="submit" id="btn-secondary">작성하기</button>
 				</div>
 			</form>
-
+		</section>
+		</main>
+		<th:block th:include="common/footer"></th:block>
 			<script src="/summernote"></script>
 			<script src="/summernote/summernote-lite.js"></script>
 			<script src="/summernote/lang/summernote-ko-KR.js"></script>
 			<link rel="stylesheet" href="/summernote/summernote-lite.css">
-
 			<script>
-				// Summernote 초기화
 				$("[name=reviewContent]")
 						.summernote(
 								{
@@ -167,8 +167,6 @@
 										}
 									}
 								});
-
-				// 이미지 업로드
 				function uploadImage(file, editor) {
 					const form = new FormData();
 					form.append("upfile", file);
@@ -184,8 +182,6 @@
 						}
 					});
 				}
-
-				// 작성하기 버튼 눌렀을 때 제목/내용 
 				document
 						.getElementById("reviewForm")
 						.addEventListener(
@@ -212,6 +208,5 @@
 									}
 								});
 			</script>
-			<th:block th:include="common/footer"></th:block>
-</body>
+		</body>
 </html>

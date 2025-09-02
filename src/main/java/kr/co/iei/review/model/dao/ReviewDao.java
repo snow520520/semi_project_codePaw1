@@ -24,5 +24,7 @@ public interface ReviewDao {
 
 	Review selectOneReview(int reviewNo);
 
+	int updateReview(Review review);
+
 
 }
