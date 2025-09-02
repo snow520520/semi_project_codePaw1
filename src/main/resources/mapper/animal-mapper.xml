@@ -6,7 +6,7 @@
  </select>
  <insert id="insertAnimal">
  	insert into animal(animal_no, animal_type, animal_name, animal_gender, animal_age, animal_inocul, animal_neuter, member_no, animal_admission) 
- 	values(animal_seq.nextval,#{animalType},#{animalName},#{animalGender},#{animalAge},#{animalInocul},#{animalNeuter},#{memberNo},'N')
+ 	values(animal_seq.nextval,#{animalType},#{animalName},#{animalGender},#{animalAge},#{animalInocul},#{animalNeuter},#{memberNo},1)
  </insert>
  <select id="searchAnimalNo" resultType="int">
  	select animal_no from(select animal_no from animal where member_no = #{memberNo} order by animal_no desc) where rownum = 1
@@ -22,7 +22,7 @@
  	where animal_no = #{animalNo}
  </update>
  <update id="admissionCheck">
- 	update animal set animal_admission = 'Y' where animal_no = #{animalNo}
+ 	update animal set animal_admission = 2 where animal_no = #{animalNo}
  </update>
  <select id="selectAnimalCount" resultType="int">
  	select count(*) from animal
@@ -47,4 +47,7 @@
 	    	)
 		where rnum between #{start} and #{end}
  </select>
+ <update id="admissionReject">
+ 	update animal set animal_admission = 3 where animal_no = #{animalNo}
+ </update>
 </mapper>
