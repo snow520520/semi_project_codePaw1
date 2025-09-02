@@ -52,4 +52,7 @@
  <select id="selectOneNoticeFile" resultType="noticeFile">
  	select * from notice_file where notice_file_no = #{noticeFileNo}
  </select>
+ <delete id="deleteNoticeFile">
+ 	delete from notice_file where notice_file_no = #{noticeFileNo}
+ </delete>
 </mapper>

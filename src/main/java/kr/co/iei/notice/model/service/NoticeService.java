@@ -1,5 +1,6 @@
 package kr.co.iei.notice.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -166,9 +167,22 @@ int numPerPage = 13;
 	}
 	
 	@Transactional
-	public int updateNotice(Notice notice) {
+	public List<NoticeFile> updateNotice(Notice notice, List<NoticeFile> fileList, int[] deleteFileNo) {
 		int result = noticeDao.updateNotice(notice);
-		return result;
+		for(NoticeFile noticeFile : fileList) {
+			noticeFile.setNoticeNo(notice.getNoticeNo());
+			result = noticeDao.insertNoticeFile(noticeFile);
+		}
+		List<NoticeFile> deleteFileList = new ArrayList<NoticeFile>();
+		if(deleteFileNo != null) {
+			for(int noticeFileNo : deleteFileNo) {
+				System.out.println("지울 파일 번호 : "+noticeFileNo);
+				NoticeFile noticeFile = noticeDao.selectOneNoticeFile(noticeFileNo);
+				deleteFileList.add(noticeFile);
+				result += noticeDao.deleteNoticeFile(noticeFileNo);
+			}
+		}
+		return deleteFileList;
 	}
 
 	public NoticeFile selectOneNoticeFile(int noticeFileNo) {
