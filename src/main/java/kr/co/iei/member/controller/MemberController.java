@@ -1,12 +1,15 @@
 package kr.co.iei.member.controller;
-
+import kr.co.iei.notice.controller.NoticeController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,8 +20,14 @@ import kr.co.iei.member.model.vo.Member;
 @Controller
 @RequestMapping(value = "/member")
 public class MemberController {
+
+    private final NoticeController noticeController;
 	@Autowired
 	private MemberService memberService;
+
+    MemberController(NoticeController noticeController) {
+        this.noticeController = noticeController;
+    }
 
 	@GetMapping(value = "/loginFrm")
 	public String loginFrm(HttpServletRequest request, Model model) {
@@ -110,8 +119,49 @@ public class MemberController {
 		}
 		return "common/msg"; 
 	}
-	@GetMapping(value = "/findIdFrm")
-	public String findIdFrm() {
-		return "member/findId";
+	@GetMapping(value = "/myPage")
+	public String myPageFrm() {
+		return "member/myPage";
+	}
+	@PostMapping(value="/updateInfo")
+	public String updateInfo(Member m, HttpSession session, Model model) {
+		System.out.println(m);
+		int result = memberService.updateInfo(m);
+		if(m.getMemberId() == null) {
+			model.addAttribute("title", "정보 입력");
+			model.addAttribute("text", "정보를 입력해주세요.");
+			model.addAttribute("icon", "error");
+			model.addAttribute("loc", "/member/myPage");
+			return "common/msg";
+		}else if(m.getMemberPw() == null) {
+			model.addAttribute("title", "비밀번호 입력");
+			model.addAttribute("text", "정보를 입력해주세요.");
+			model.addAttribute("icon", "error");
+			model.addAttribute("loc", "redirect:/member/myPage");
+			return "common/msg";
+		}else {
+			if(result > 0) {
+				Member member = (Member)session.getAttribute("member");
+				member.setMemberPw(m.getMemberPw());
+				member.setMemberName(m.getMemberName());
+				member.setMemberAddr(m.getMemberAddr());
+				member.setMemberPhone(m.getMemberPhone());
+				/*
+				model.addAttribute("title", "수정 완료");
+				model.addAttribute("text","완 료");
+				model.addAttribute("icon", "success");
+				model.addAttribute("loc", "/member/myPage");
+				return "common/msg";
+				*/
+			}else {
+				model.addAttribute("title", "Fail");
+				model.addAttribute("text"," fail");
+				model.addAttribute("icon", "error");
+				model.addAttribute("loc", "/member/myPage");
+				return "common/msg";
+			}
+			return "redirect:/member/myPage";
+					
+		}
 	}
 }

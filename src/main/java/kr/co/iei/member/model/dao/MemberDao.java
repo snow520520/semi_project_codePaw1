@@ -28,5 +28,7 @@ public interface MemberDao {
 	
 	int selectMemberNameCount(String memberName);
 
+	int updateInfo(Member m);
+
 
 }

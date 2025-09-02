@@ -54,4 +54,21 @@
 	    	)
 		where rnum between #{start} and #{end}
   	</select>
+  	<update id="updateInfo">
+  		update member_tbl 
+  			set 
+  			<if test="memberPw != null">
+	  			member_pw = #{memberPw},
+	  		</if>
+	  		<if test= "memberName != null">
+	  			member_name = #{memberName},
+	  		</if>
+	  		<if test="memberAddr != null">
+	  			member_addr = #{memberAddr}, 
+	  		</if>
+	  		<if test="memberPhone">
+	  			member_phone = #{memberPhone}
+	  		</if>
+  			where member_id = #{memberId}
+  	</update>
 </mapper>

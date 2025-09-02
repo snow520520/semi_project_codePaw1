@@ -183,5 +183,11 @@ public class MemberService {
 		}
 		return result == count;
 	}
+	@Transactional
+	public int updateInfo(Member m) {
+		int result = memberDao.updateInfo(m);
+		
+		return result;
+	}
 }
 

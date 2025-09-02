@@ -114,16 +114,16 @@
 	                <a href="/member/joinFrm">회원가입</a>
 	            </th:block>
 	            <th:block th:if="${session.member != null && session.member.memberLevel == 3}">
-	                <a href="#" th:text="${session.member.memberId}"></a>
+	                <a href="/member/myPage" th:text="${session.member.memberName}"></a>
 	                <a href="/member/logout">로그아웃</a>
 	            </th:block>
 	            <th:block th:if="${session.member != null && session.member.memberLevel == 2}">
-	                <a href="#" th:text="${session.member.memberId}"></a>
+	                <a href="/member/myPage" th:text="${session.member.memberName}"></a>
 	                <a href="/member/logout">로그아웃</a>
 	            </th:block>
 	            <th:block th:if="${session.member != null && session.member.memberLevel == 1}">
 	                <a href="/admin/adminPage?memberPage=1">관리자페이지</a>
-	                <a href="#">마이페이지</a>
+	                <a href="/admin/adminMyPage">마이페이지</a>
 	                <a href="/member/logout">로그아웃</a>
 	            </th:block>
 	            <a href="/notice/list?reqPage=1">공지사항</a>
