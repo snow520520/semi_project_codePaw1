@@ -35,9 +35,21 @@
  	delete notice where notice_no = #{noticeNo}
  </delete>
  <insert id="insertNotice">
- 	insert into notice values(notice_seq.nextval,#{noticeTitle},#{noticeContent},#{memberId},to_char(sysdate,'yyyy-mm-dd'))
+ 	insert into notice values(#{noticeNo},#{noticeTitle},#{noticeContent},#{memberId},to_char(sysdate,'yyyy-mm-dd'))
  </insert>
  <update id="updateNotice">
  	update notice set notice_title = #{noticeTitle}, notice_content = #{noticeContent} where notice_no = #{noticeNo}
  </update>
+ <insert id="insertNoticeFile">
+ 	insert into notice_file values(notice_file_seq.nextval, #{noticeNo},#{filename},#{filepath})
+ </insert>
+ <select id="getNoticeNo" resultType="int">
+ 	select notice_seq.nextval from dual
+ </select>
+ <select id="selectNoticeFile" resultType="noticeFile">
+ 	select * from notice_file where notice_no = #{noticeNo}
+ </select>
+ <select id="selectOneNoticeFile" resultType="noticeFile">
+ 	select * from notice_file where notice_file_no = #{noticeFileNo}
+ </select>
 </mapper>

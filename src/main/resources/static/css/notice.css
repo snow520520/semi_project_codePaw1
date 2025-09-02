@@ -176,3 +176,9 @@ input[type=file]::file-selector-button{
 		cursor: pointer;
 		margin-right: 10px;
 	}
+input[type=file]::file-selector-button:hover{
+	border: 1px solid #FFB22C;
+	background: #FFB22C;
+	color: #ffffff;
+	font-weight: 500;
+}

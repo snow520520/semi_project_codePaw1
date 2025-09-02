@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/notice.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <style>
 	.hidden{
 		display: none;
@@ -19,10 +21,7 @@
 	.title{
 		margin-top: 20px;
 	}
-	input{
-		text-align: center;
-		font-size: 20px;
-	}
+	
 	.note-handle{
 		display: none;
 		border: none;
@@ -53,6 +52,24 @@
 	.note-editor.note-frame, .note-editor.note-airframe{
 		text-align: center;
 	}
+	.inline .del-btn{
+	vertical-align : middle;
+	font-size: 20px;
+	color: #BB271A;
+	cursor: pointer;
+	}
+	#noticeFiles{
+		text-align: center;
+		margin-left: 10px;
+		font-size: 16px;
+		width: 225px;
+	}
+	.file{
+		display: inline-block;
+	}
+	.addFile{
+		margin-left: 30px;
+	}
 </style>
 </head>
 <body>
@@ -65,6 +82,16 @@
 					<input type="text" name="noticeTitle" id="noticeTitle" placeholder="제목을 입력해주세요." th:value="${notice.noticeTitle}">
 				</div>
 				<div class="line" th:text="${notice.memberId}"></div>
+				<div class="line inline">
+					<span class="file">첨부파일 |</span>
+					<div th:each="file : ${notice.fileList}" class="file">
+						<img src="/image/file.png" style="width: 16px;">
+						<span class="deleteFilename" th:text="${file.filename}"></span>
+						<span class="material-icons del-btn" th:onclick="deleteFile([[${file.noticeFileNo}]], this);">delete</span>
+					</div>
+					<span class="addFile">추가 파일 |</span>
+					<input type="file" name="noticeFiles" id="noticeFiles" multiple>
+				</div>
 				<textarea name="noticeContent" id="noticeContent" required></textarea>
 				<p class="hidden" th:text="${notice.noticeContent}">
 				<div class="line"> </div>
@@ -120,6 +147,14 @@
 		        alert("이미지 업로드 실패");
 		    }
 		});
+	}
+	function deleteFile(noticeFileNo, obj){
+		const input = $("<input>");
+		input.attr("name","deletFileNo");
+		input.attr("type","hidden");
+		input.val(noticeFileNo);
+		$(".section>form").append(input);
+		$(obj).parent().remove();
 	}
 	</script>
 	<th:block th:include="common/footer"></th:block>

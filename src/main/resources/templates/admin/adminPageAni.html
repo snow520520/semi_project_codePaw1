@@ -10,9 +10,6 @@
 <style>
 body {
 	font-family: Nanum Gothic Coding, sans-serif;
-	display: flex;
-	align-items: center;
-	height: 100vh;
 }
 .content {
 	width: 100%;
@@ -47,9 +44,6 @@ body {
 	justify-content: space-between;
 	border-bottom: 1px solid #854836;
 	padding-bottom: 20px;
-}
-.admin-header{
-	position: static;
 }
 .admin-title {
 	color: #854836;
@@ -128,10 +122,7 @@ body {
 	padding: 10px 15px;
 	border-bottom: 1px solid #c8c8c8;
 }
-.admin-table>tr>td{
-	max-height: 50px;
-}
-.search-div>.allSearch-div>button{
+.search-div>.allSearch-div>a>button{
 	width: 100px;
 	height: 30px;
 	margin: 5px; 
@@ -342,24 +333,24 @@ body {
 						<div class="admin-title">관리자 페이지</div>
 					</div>
 					<div class="search-div">
-						<div class="allSearch-title member">회원조회</div>
-						<div class="allSearch-title ani" style="display:none;">동물조회</div>
+						<div class="allSearch-title member"  style="display:none;">회원조회</div>
+						<div class="allSearch-title ani">동물조회</div>
 						<div class="allSearch-div">
 							<a href="/admin/adminPage?memberPage=1">
-								<button class="member-search" style="display: none;">전체회원조회</button>
+								<button class="member-search">전체회원조회</button>
 							</a>
 							<form action="/admin/adminPageAni?animalPage=1" method="get" class="animal-form">
-								<button type="submit" class="animal-search">전체동물조회</button>
-								<input type="hidden" name="animalPage" value="1">
+								<button type="submit" class="animal-search" style="display:none;">전체동물조회</button>
+								<input type="hidden" class="animalPage" value="1">
 							</form>
 						</div>
 						<div class="select-search">
 							<div class="selectChangeLevel">
-								<button class="selectChangeLevel-btn" style="cursor: pointer;">선택등급변경</button>
+								<button class="selectChangeLevel-btn" style="cursor: pointer;">선택수정</button>
 							</div>
-							<form action="/admin/searchMemberName" method="get">
-								<input type="text" name="memberName" id="memberName" placeholder="검색" style="padding-left: 10px;">
-								<input type="hidden" name="memberPage" id="memberPage" value="1">	
+							<form action="/admin/searchAnimalName" method="get">
+								<input type="text" name="animalName" id="animalName" placeholder="검색" style="padding-left: 10px;">
+								<input type="hidden" name="animalPage" id="animalPage" value="1">	
 								<button type="submit">				
 									<span class="material-icons">search</span>		
 								</button>				
@@ -369,19 +360,21 @@ body {
 				</div>
 			</div>	
 				<table class="admin-table">
-					<tr class="table-title">
-						<th style = "width: 5%" ></th>
-						<th style = "width: 7%">No</th>
-						<th style = "width: 10%">아이디</th>
-						<th style = "width: 10%">회원이름</th>
-						<th style = "width: 15%">전화번호</th>
-						<th style = "width: 23%">주 소</th>
-						<th style = "width: 10%">회원등급</th>
-						<th style = "width: 12%">가입날짜</th>
-						<th style = "width: 8%">등급변경</th>
+					<tr class="table-title-animal">
+						<th style = "width: 5%"></th>
+						<th style = "width: 6%">No</th>
+						<th style = "width: 12%">품 종</th>
+						<th style = "width: 13%">이 름</th>
+						<th style = "width: 8%">성 별</th>
+						<th style = "width: 8%">나 이</th>
+						<th style = "width: 10%">접종여부</th>
+						<th style = "width: 10%">중성화여부</th>
+						<th style = "width: 10%">회원번호</th>
+						<th style = "width: 10%">입소여부</th>
+						<th style = "width: 8%">비 고</th>
 					</tr>
-					<tr th:each="member, status : ${memberList}" class="tr-tbl">
-						<td style="height:50px;">
+					<tr th:each="a, status : ${animalList}" class="tr-tbl-animal">
+						<td>
 							<div class="input-wrap">
 								<span class="material-icons-outlined" th:id="${'material-icons-outlined'+status.count}">check_circle</span>
 								<label th:for="${'material-icons-outlined'+status.count}" class="lab-in"></label>
@@ -389,52 +382,78 @@ body {
 								<label th:for="${'material-icons'+status.count}" class="lab-out" style="display:none;"></label>
 							</div>
 						</td>
-						<td th:text="${member.memberNo}" style="height:50px;"></td>
-						<td th:text="${member.memberId}" style="height:50px;"></td>
-						<td th:text="${member.memberName}" style="height:50px;"></td>
-						<td th:text="${member.memberPhone}" style="height:50px;"></td>
-						<td class="addr-td" th:text="${member.memberAddr}" style="height:50px;"></td>
-						<td style="height:50px;" id = "memberLevelSelect">
-							<div class="select" th:switch="${member.memberLevel}" >
-								<select th:case= "1">
-									<option value = "1" selected>관리자</option>
-									<option value = "2">입양회원</option>
-									<option value = "3">정회원</option>
+						<td th:text="${a.animalNo}"></td>
+						<td th:text="${a.animalType}"></td>
+						<td th:text="${a.animalName}"></td>
+						<td th:text="${a.animalGender}"></td>
+						<td th:text="${a.animalAge}"></td>
+						<td id="animalInoculSelect">
+							<div class="select" th:switch="${a.animalInocul}" id="animalInocul" >
+								<select th:case= "Y">
+									<option value = "Y" selected>접종</option>
+									<option value = "N">미접종</option>
 								</select>
-								<select th:case= "2">
-									<option value = "1">관리자</option>
-									<option value = "2" selected>입양회원</option>
-									<option value = "3">정회원</option>
-								</select>
-								<select th:case= "3">
-									<option value = "1">관리자</option>
-									<option value = "2">입양회원</option>
-									<option value = "3"selected>정회원</option>
+								<select th:case= "N">
+									<option value = "Y">접종</option>
+									<option value = "N" selected>미접종</option>
 								</select>
 							</div>
 						</td>
-						<td th:text="${member.enrollDate}" style="height:50px;"></td>
+						<td id="animalNeuterSelect">
+							<div class="select" th:switch="${a.animalNeuter}" id="animalNeuter">
+								<select th:case= "Y">
+									<option value = "Y" selected>O</option>
+									<option value = "N">X</option>
+								</select>
+								<select th:case= "N">
+									<option value = "Y">O</option>
+									<option value = "N" selected>X</option>
+								</select>
+							</div>
+						</td>
+						<td th:text="${a.memberNo}"></td>
+						<td style="height:50px;" id="animalAdmissionSelect">
+							<div class="select" th:switch="${a.animalAdmission}" id=animalAdmission>
+								<select th:case= "1">
+									<option value = "1" selected>입소완료</option>
+									<option value = "2">검토중</option>
+									<option value = "3">입소거절</option>
+								</select>
+								<select th:case= "2">
+									<option value = "1">입소완료</option>
+									<option value = "2" selected>컴토중</option>
+									<option value = "3">입소거절</option>
+								</select>
+								<select th:case= "3">
+									<option value = "1">입소완료</option>
+									<option value = "2">검토중</option>
+									<option value = "3" selected>입소거절</option>
+								</select>
+							</div>
+						</td>
 						<td>
-							<button class="changeLevel-btn" style="cursor:pointer">등급변경</button>
+							<button class="changeLevel-btn" style="cursor:pointer">수 정</button>
 						</td>
 					</tr>
 				</table>
-			<!-- <div id="pageNavi" style="height:100px;" th:utext="${pageNaviMember}"></div> -->
+			<div id="pageNavi" style="height:100px;" th:utext="${pageNaviAni}"></div>
 		</section>
 	</main>
 	<script>
 		$(".animal-search").on("click",function(){
-			$(".member-search").toggle();
+			$(".member-search").show();
 			$(this).hide();
 		});
 		$(".member-search").on("click",function(){
-			$(".animal-search").toggle();
+			$(".animal-search").show();
 			$(this).hide();
 		});
 		$(".changeLevel-btn").on("click", function(){
-			const memberNo = $(this).parent().parent().children().eq(1).text();
-			const memberLevel = $(this).parent().prev().prev().children().children().val();
-			location.href= "/admin/changeLevel?memberNo="+memberNo+"&memberLevel="+memberLevel;
+			const animalNo = $(this).parent().parent().children().eq(1).text();
+			const animalAdmission = $(this).parent().prev().children().children().val();
+			const animalInocul = $(this).parent().prev().prev().prev().prev().children().children().val();
+			const animalNeuter = $(this).parent().prev().prev().prev().children().children().val();
+			location.href= "/admin/changeAdmission?animalNo="+animalNo+"&animalAdmission="+animalAdmission+"&animalInocul="+animalInocul+"&animalNeuter="+animalNeuter;
 		});
 		$(".material-icons-outlined").on("click", function(){
 			$(this).parent().children().eq(2).show();
@@ -446,21 +465,29 @@ body {
 		});
 		$(".material-icons-outlined").on("click", function(){
 			const checked = $(this);
-			 if(checked.length === 0){
+			if(checked.length === 0){
 				 return;
-			 }
+			}
 			 const no = new Array();
-			 const level = new Array();
+			 const admission = new Array();
+			 const inocul = new Array();
+			 const neuter = new Array();
 			 checked.each(function(index, item){
-				 const memberNo = $(item).parent().parent().next().text();
-				 no.push(memberNo);
-				 const memberLevel = $(item).parent().parent().parent().find("select").val();
-				 level.push(memberLevel);
-			 });
+				const animalNo = $(item).parent().parent().next().text();
+				const animalAdmission = $(item).parent().parent().siblings().find("#animalAdmission").children().val();
+				const animalInocul = $(item).parent().parent().siblings().find("#animalInocul").children().val();
+				const animalNeuter = $(item).parent().parent().siblings().find("#animalNeuter").children().val();
+				no.push(animalNo);
+				admission.push(animalAdmission);
+				inocul.push(animalInocul);
+				neuter.push(animalNeuter);
+			});
 			$(".selectChangeLevel-btn").on("click", function(){
 				 console.log(no.join("/"));
-				 console.log(level.join("/"));
-				 location.href = "/admin/checkedChangeLevel?no="+no.join("/")+"&level="+level.join("/");
+				 console.log(admission.join("/"));
+				 console.log(inocul.join("/"));
+				 console.log(neuter.join("/"));
+				 location.href = "/admin/checkedChangeAdmission?no="+no.join("/")+"&admission="+admission.join("/")+"&inocul="+inocul.join("/")+"&neuter="+neuter.join("/");
 			});
 		});
 	</script>

@@ -1,9 +1,17 @@
 package kr.co.iei.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class FileUtil {
@@ -27,7 +35,49 @@ public class FileUtil {
 			}
 			count++;
 		}
-		return null;
+		File uploadFile = new File(savepath+filepath);
+		
+		try {
+			file.transferTo(uploadFile);
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return filepath;
+	}
+
+	public void downloadFile(String savepath, String filepath, String filename, HttpServletResponse response) {
+		String downFile = savepath+filepath;
+		
+		try {
+			FileInputStream fis = new FileInputStream(downFile);
+			BufferedInputStream bis = new BufferedInputStream(fis);
+			
+			ServletOutputStream sos = response.getOutputStream();
+			BufferedOutputStream bos = new BufferedOutputStream(sos);
+			
+			String resFilename = new String(filename.getBytes("UTF-8"),"ISO-8859-1");
+			
+			response.setContentType("application/octet-stream");
+			response.setHeader("Content-Disposition", "attacment;filename="+resFilename);
+			
+			while(true) {
+				int read = bis.read();
+				if(read == -1) {
+					break;
+				}
+				bos.write(read);
+			}
+			bos.close();
+			bis.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	

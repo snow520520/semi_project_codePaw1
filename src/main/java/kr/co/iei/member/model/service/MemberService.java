@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.co.iei.animal.model.dao.AnimalDao;
-import kr.co.iei.animal.model.vo.AnimalListData;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.vo.Member;
 import kr.co.iei.member.model.vo.MemberListData;
@@ -38,18 +36,10 @@ public class MemberService {
 		int result = memberDao.join(m);
 		return result;
 	}
-	public List allMember() {
-		List listMember = memberDao.allMember();
-		return listMember;
-	}
-	public List allAnimal() {
-		List listAnimal = memberDao.allAnimal();
-		return listAnimal;
-	}
-	public MemberListData selectMemberList(int reqPage) {
+	public MemberListData selectMemberList(int memberPage) {
 		int numPerPage = 10;
 		
-		int end = reqPage * numPerPage;
+		int end = memberPage * numPerPage;
 		int start = (end-numPerPage)+1;
 		HashMap<String, Object> param = new HashMap<String,Object>();
 		param.put("start", start);
@@ -64,26 +54,26 @@ public class MemberService {
 		
 		int pageNaviSize = 5;
 		
-		int pageNo = ((reqPage-1)/pageNaviSize)*pageNaviSize+1;
+		int pageNo = ((memberPage-1)/pageNaviSize)*pageNaviSize+1;
 		
-		String pageNavi = "<ul class='pagination circle-style'>";
+		String pageNaviMember = "<ul class='pagination circle-style'>";
 		if(pageNo != 1) {
-			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/adminPage?reqPage="+(pageNo-1)+"'>";
-			pageNavi += "<span class='material-icons'>chevron_left</span>";
-			pageNavi += "</a>";
-			pageNavi += "</li>";
+			pageNaviMember += "<li>";
+			pageNaviMember += "<a class='page-item' href='/admin/adminPage?memberPage="+(pageNo-1)+"'>";
+			pageNaviMember += "<span class='material-icons'>chevron_left</span>";
+			pageNaviMember += "</a>";
+			pageNaviMember += "</li>";
 		}
 		for(int i=0;i<pageNaviSize;i++) {
-			pageNavi += "<li>";
-			if(pageNo == reqPage) {
-				pageNavi += "<a class='page-item active-page' href='/admin/adminPage?reqPage="+pageNo+"'>";
+			pageNaviMember += "<li>";
+			if(pageNo == memberPage) {
+				pageNaviMember += "<a class='page-item active-page' href='/admin/adminPage?memberPage="+pageNo+"'>";
 			}else {
-				pageNavi += "<a class='page-item' href='/admin/adminPage?reqPage="+pageNo+"'>";
+				pageNaviMember += "<a class='page-item' href='/admin/adminPage?memberPage="+pageNo+"'>";
 			}
-			pageNavi += pageNo;
-			pageNavi += "</a>";
-			pageNavi += "</li>";
+			pageNaviMember += pageNo;
+			pageNaviMember += "</a>";
+			pageNaviMember += "</li>";
 			
 			pageNo++;
 			if(pageNo > totalPage) {
@@ -91,18 +81,81 @@ public class MemberService {
 			}
 		}
 		if(pageNo <= totalPage) {
-			pageNavi += "<li>";
-			pageNavi += "<a class='page-item' href='/admin/adminPage?reqPage="+pageNo+"'>";
-			pageNavi += "<span class='material-icons'>chevron_right</span>";
-			pageNavi += "</a>";
-			pageNavi += "</li>";
+			pageNaviMember += "<li>";
+			pageNaviMember += "<a class='page-item' href='/admin/adminPage?memberPage="+pageNo+"'>";
+			pageNaviMember += "<span class='material-icons'>chevron_right</span>";
+			pageNaviMember += "</a>";
+			pageNaviMember += "</li>";
 		}
-		pageNavi += "</ul>";
+		pageNaviMember += "</ul>";
 		
 		List list = memberDao.selectMemberList(param);
 		
-		MemberListData mld = new MemberListData(list, pageNavi);
+		MemberListData mld = new MemberListData(list, pageNaviMember);
 		return mld;
+	}
+	
+	public MemberListData selectMemberNameList(int memberPage, String memberName) {
+		
+		int numPerPage = 10;
+		
+		int end = memberPage * numPerPage;
+		int start = (end-numPerPage)+1;
+		HashMap<String, Object> param = new HashMap<String,Object>();
+		param.put("start", start);
+		param.put("end", end);
+		
+		int totalCount = memberDao.selectMemberNameCount(memberName);
+		
+		int totalPage = totalCount / numPerPage;
+		if(totalCount % numPerPage != 0) {
+			totalPage += 1;
+		
+			int pageNaviSize = 5;
+			
+			int pageNo = ((memberPage-1)/pageNaviSize)*pageNaviSize+1;
+			
+			String pageNaviMember = "<ul class='pagination circle-style'>";
+			if(pageNo != 1) {
+				pageNaviMember += "<li>";
+				pageNaviMember += "<a class='page-item' href='/admin/adminPage?memberName="+memberName+"&memberPage="+(pageNo-1)+"'>";
+				pageNaviMember += "<span class='material-icons'>chevron_left</span>";
+				pageNaviMember += "</a>";
+				pageNaviMember += "</li>";
+			}
+			for(int i=0;i<pageNaviSize;i++) {
+				pageNaviMember += "<li>";
+				if(pageNo == memberPage) {
+					pageNaviMember += "<a class='page-item active-page' href='/admin/adminPage?memberName="+memberName+"&memberPage="+pageNo+"'>";
+				}else {
+					pageNaviMember += "<a class='page-item' href='/admin/adminPage?memberName="+memberName+"&memberPage="+pageNo+"'>";
+				}
+				pageNaviMember += pageNo;
+				pageNaviMember += "</a>";
+				pageNaviMember += "</li>";
+				
+				pageNo++;
+				if(pageNo > totalPage) {
+					break;
+				}
+			}
+			if(pageNo <= totalPage) {
+				pageNaviMember += "<li>";
+				pageNaviMember += "<a class='page-item' href='/admin/adminPage?memberName="+memberName+"&memberPage="+pageNo+"'>";				pageNaviMember += "<span class='material-icons'>chevron_right</span>";
+				pageNaviMember += "</a>";
+				pageNaviMember += "</li>";
+			}
+			pageNaviMember += "</ul>";
+			param.put("memberName", memberName);
+			List list = memberDao.selectMemberNameList(param);
+			
+			MemberListData mld = new MemberListData(list, pageNaviMember);
+			return mld;
+		}else {
+			MemberListData mld = null;
+			
+			return mld;
+		}
 	}
 	@Transactional
 	public int changeLevel(Member m) {
@@ -130,6 +183,5 @@ public class MemberService {
 		}
 		return result == count;
 	}
-	
 }
 
