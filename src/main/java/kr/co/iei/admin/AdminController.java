@@ -75,22 +75,20 @@ public class AdminController {
     public String searchMemberName(String memberName, int memberPage, Model model) {
     	if(memberName !="" || memberName != null) {
     		MemberListData mld = memberService.selectMemberNameList(memberPage, memberName);
-    		System.out.println(mld);
     		if(mld != null) {
     			model.addAttribute("memberList", mld.getList());
-    			//model.addAttribute("pageNaviMember", mld.getPageNaviMember());
-    			return "admin/adminPage?&memberName="+memberName+"&memberPage=1";
+    			model.addAttribute("pageNaviMember", mld.getPageNaviMember());
     		}else{
     			model.addAttribute("title", "검색 실패");
     			model.addAttribute("content", "error");
     			model.addAttribute("icon", "error");
-    			model.addAttribute("loc", "/admin/adminPage?memberPage=1");
+    			model.addAttribute("loc", "/admin/adminPage");
     		}
     	}else {
     		model.addAttribute("title", "이름을 입력하세요.");
 			model.addAttribute("content", "error");
 			model.addAttribute("icon", "error");
-			model.addAttribute("loc", "/admin/adminPage?memberPage=1");
+			model.addAttribute("loc", "/admin/adminPage");
 	    }
     	return "common/msg";
     }
