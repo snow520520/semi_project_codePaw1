@@ -109,6 +109,7 @@
 	<header>
 	    <div class="header-top">
 	        <div class="links">
+	            <a href="/notice/list?reqPage=1">공지사항</a>
 	            <th:block th:if="${session.member == null}">
 	                <a href="/member/loginFrm">로그인</a>
 	                <a href="/member/joinFrm">회원가입</a>
@@ -126,7 +127,6 @@
 	                <a href="#">마이페이지</a>
 	                <a href="/member/logout">로그아웃</a>
 	            </th:block>
-	            <a href="/notice/list?reqPage=1">공지사항</a>
 	        </div>
 	        <div class="logo">
 	            <a href="/"><img src="/image/logo1.jpg" alt="Logo"></a>

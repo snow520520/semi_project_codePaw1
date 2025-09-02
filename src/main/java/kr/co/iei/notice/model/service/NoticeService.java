@@ -149,9 +149,10 @@ int numPerPage = 13;
 	}
 	
 	@Transactional
-	public int deleteNotice(int noticeNo) {
+	public List<NoticeFile> deleteNotice(int noticeNo) {
+		List deleteFileList = noticeDao.selectNoticeFile(noticeNo);
 		int result = noticeDao.deleteNotice(noticeNo);
-		return result;
+		return deleteFileList;
 	}
 	
 	@Transactional
