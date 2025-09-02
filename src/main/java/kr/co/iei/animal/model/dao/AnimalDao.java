@@ -28,4 +28,8 @@ public interface AnimalDao {
 
 	int checkedChangeAdmission(Animal a);
 
+	List searchAnimalName(HashMap<String, Object> param);
+
+	int searchAnimalNameCount(String animalName);
+
 }

@@ -143,7 +143,7 @@ public class MemberService {
 			}
 			if(pageNo <= totalPage) {
 				pageNaviMember += "<li>";
-				pageNaviMember += "<a class='page-item' href='/admin/adminPage?memberId="+memberName+"&memberPage="+pageNo+"'>";
+				pageNaviMember += "<a class='page-item' href='/admin/adminPage?memberName="+memberName+"&memberPage="+pageNo+"'>";
 				pageNaviMember += "<span class='material-icons'>chevron_right</span>";
 				pageNaviMember += "</a>";
 				pageNaviMember += "</li>";

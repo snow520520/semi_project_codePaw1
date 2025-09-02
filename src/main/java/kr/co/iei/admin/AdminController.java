@@ -118,4 +118,26 @@ public class AdminController {
         }
         return "common/msg";
     }
+	@GetMapping(value = "/searchAnimalName")
+	public String searchAnimalName(String animalName, int animalPage, Model model) {
+		if(!animalName.isEmpty()) {
+    		AnimalListData ald = animalService.searchAnimalName(animalPage, animalName);
+    		if(ald != null) {
+    			model.addAttribute("animalList", ald.getList());
+    			model.addAttribute("pageNaviAnimal", ald.getPageNaviAni());
+    		}else{
+    			model.addAttribute("title", "검색 실패");
+    			model.addAttribute("content", "error");
+    			model.addAttribute("icon", "error");
+    			model.addAttribute("loc", "/admin/adminPageAni?animalPage=1");
+    		}
+    	}else {
+    		model.addAttribute("title", "이름을 입력하세요.");
+			model.addAttribute("content", "error");
+			model.addAttribute("icon", "error");
+			model.addAttribute("loc", "/admin/adminPageAni?animalPage=1");
+	    }
+    	return "common/msg";
+    }
+	
 }

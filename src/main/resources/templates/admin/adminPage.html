@@ -360,7 +360,7 @@ body {
 							<form action="/admin/searchMemberName" method="get">
 								<input type="text" name="memberName" id="memberName" placeholder="검색" style="padding-left: 10px;">
 								<input type="hidden" name="memberPage" id="memberPage" value="1">	
-								<button type="submit" class="selectSearch-btn">				
+								<button type="submit">				
 									<span class="material-icons">search</span>		
 								</button>				
 							</form>
@@ -394,7 +394,7 @@ body {
 						<td th:text="${member.memberName}" style="height:50px;"></td>
 						<td th:text="${member.memberPhone}" style="height:50px;"></td>
 						<td class="addr-td" th:text="${member.memberAddr}" style="height:50px;"></td>
-						<td style="height:50px;">
+						<td style="height:50px;" id = "memberLevelSelect">
 							<div class="select" th:switch="${member.memberLevel}" >
 								<select th:case= "1">
 									<option value = "1" selected>관리자</option>
@@ -444,8 +444,8 @@ body {
 			$(this).parent().children().eq(0).show();
 			$(this).hide();
 		});
-		$(".selectChangeLevel-btn").on("click", function(){
-			const checked = $(".material-icons-outlined").addClass("checked");
+		$(".material-icons-outlined").on("click", function(){
+			const checked = $(this);
 			 if(checked.length === 0){
 				 return;
 			 }
@@ -457,18 +457,12 @@ body {
 				 const memberLevel = $(item).parent().parent().parent().find("select").val();
 				 level.push(memberLevel);
 			 });
-			 console.log(no.join("/"));
-			 console.log(level.join("/"));
-			 location.href = "/admin/checkedChangeLevel?no="+no.join("/")+"&level="+level.join("/");
-		});
-		/*
-		$(".selectSearch-btn").on("click", function(){
-			const searchVal = $("#selectSearch").val();
-			$.ajax({
-				url: 
+			$(".selectChangeLevel-btn").on("click", function(){
+				 console.log(no.join("/"));
+				 console.log(level.join("/"));
+				 location.href = "/admin/checkedChangeLevel?no="+no.join("/")+"&level="+level.join("/");
 			});
 		});
-		*/
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>

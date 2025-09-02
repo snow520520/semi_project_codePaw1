@@ -348,9 +348,9 @@ body {
 							<div class="selectChangeLevel">
 								<button class="selectChangeLevel-btn" style="cursor: pointer;">선택수정</button>
 							</div>
-							<form action="/animal/searchAnimalName" method="get">
-								<input type="text" name="selectSearch" id="selectSearch" placeholder="검색" style="padding-left: 10px;">
-								<input type="hidden" name="reqPage" id="reqPage" value="1">	
+							<form action="/animal/searchAnimalName?ani" method="get">
+								<input type="text" name="animalName" id="animalName" placeholder="검색" style="padding-left: 10px;">
+								<input type="hidden" name="animalPage" id="animalPage" value="1">	
 								<button type="submit">				
 									<span class="material-icons">search</span>		
 								</button>				
@@ -387,7 +387,7 @@ body {
 						<td th:text="${a.animalName}"></td>
 						<td th:text="${a.animalGender}"></td>
 						<td th:text="${a.animalAge}"></td>
-						<td>
+						<td id="animalInoculSelect">
 							<div class="select" th:switch="${a.animalInocul}" id="animalInocul" >
 								<select th:case= "Y">
 									<option value = "Y" selected>접종</option>
@@ -399,7 +399,7 @@ body {
 								</select>
 							</div>
 						</td>
-						<td>
+						<td id="animalNeuterSelect">
 							<div class="select" th:switch="${a.animalNeuter}" id="animalNeuter">
 								<select th:case= "Y">
 									<option value = "Y" selected>O</option>
@@ -412,15 +412,15 @@ body {
 							</div>
 						</td>
 						<td th:text="${a.memberNo}"></td>
-						<td style="height:50px;">
+						<td style="height:50px;" id="animalAdmissionSelect">
 							<div class="select" th:switch="${a.animalAdmission}" id=animalAdmission>
-								<select th:case= "Y">
-									<option value = "Y" selected>입소완료</option>
-									<option value = "N">검토중</option>
+								<select th:case= "1">
+									<option value = "1" selected>입소완료</option>
+									<option value = "2">검토중</option>
 								</select>
-								<select th:case= "N">
-									<option value = "Y">입소완료</option>
-									<option value = "N" selected>검토중</option>
+								<select th:case= "2">
+									<option value = "1">입소완료</option>
+									<option value = "2" selected>검토중</option>
 								</select>
 							</div>
 						</td>
@@ -456,12 +456,11 @@ body {
 			$(this).parent().children().eq(0).show();
 			$(this).hide();
 		});
-		$(".selectChangeLevel-btn").on("click", function(){
-			const checked = $(".material-icons-outlined").addClass("checked");
-			
-			 if(checked.length === 0){
+		$(".material-icons-outlined").on("click", function(){
+			const checked = $(this);
+			if(checked.length === 0){
 				 return;
-			 }
+			}
 			 const no = new Array();
 			 const admission = new Array();
 			 const inocul = new Array();
@@ -475,13 +474,14 @@ body {
 				admission.push(animalAdmission);
 				inocul.push(animalInocul);
 				neuter.push(animalNeuter);
-			 
-			 });
-			 console.log(no.join("/"));
-			 console.log(admission.join("/"));
-			 console.log(inocul.join("/"));
-			 console.log(neuter.join("/"));
-			 location.href = "/admin/checkedChangeAdmission?no="+no.join("/")+"&admission="+admission.join("/")+"&inocul="+inocul.join("/")+"&neuter="+neuter.join("/");
+			});
+			$(".selectChangeLevel-btn").on("click", function(){
+				 console.log(no.join("/"));
+				 console.log(admission.join("/"));
+				 console.log(inocul.join("/"));
+				 console.log(neuter.join("/"));
+				 location.href = "/admin/checkedChangeAdmission?no="+no.join("/")+"&admission="+admission.join("/")+"&inocul="+inocul.join("/")+"&neuter="+neuter.join("/");
+			});
 		});
 	</script>
 	<th:block th:include="common/footer"></th:block>
