@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpServletResponse;
 import kr.co.iei.member.model.vo.Member;
 import kr.co.iei.notice.model.service.NoticeService;
 import kr.co.iei.notice.model.vo.Notice;
@@ -141,7 +142,7 @@ public class NoticeController {
 		return "notice/updateFrm";
 	}
 	@PostMapping(value="/update")
-	public String update(Notice notice, Model model) {
+	public String update(Notice notice, MultipartFile[] noticeFiles, Model model) {
 		int result = noticeService.updateNotice(notice);
 		if(result >0) {
 			model.addAttribute("title", "수정 성공");
@@ -156,5 +157,11 @@ public class NoticeController {
 			model.addAttribute("loc", "/notice/view?noticeNo="+notice.getNoticeNo());
 			return "common/msg";
 		}
+	}
+	@GetMapping(value="/filedown")
+	public void filedown(int noticeFileNo, HttpServletResponse response) {
+		NoticeFile noticeFile = noticeService.selectOneNoticeFile(noticeFileNo);
+		String savepath = "C:/Temp/upload/image/notice/";
+		fileUtil.downloadFile(savepath, noticeFile.getFilepath(), noticeFile.getFilename(), response);
 	}
 }

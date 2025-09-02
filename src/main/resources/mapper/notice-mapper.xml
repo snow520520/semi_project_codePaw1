@@ -49,4 +49,7 @@
  <select id="selectNoticeFile" resultType="noticeFile">
  	select * from notice_file where notice_no = #{noticeNo}
  </select>
+ <select id="selectOneNoticeFile" resultType="noticeFile">
+ 	select * from notice_file where notice_file_no = #{noticeFileNo}
+ </select>
 </mapper>

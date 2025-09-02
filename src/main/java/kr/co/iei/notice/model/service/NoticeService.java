@@ -170,4 +170,9 @@ int numPerPage = 13;
 		int result = noticeDao.updateNotice(notice);
 		return result;
 	}
+
+	public NoticeFile selectOneNoticeFile(int noticeFileNo) {
+		NoticeFile noticeFile = noticeDao.selectOneNoticeFile(noticeFileNo);
+		return noticeFile;
+	}
 }

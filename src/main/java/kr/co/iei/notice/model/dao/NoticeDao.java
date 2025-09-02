@@ -33,4 +33,6 @@ public interface NoticeDao {
 
 	List selectNoticeFile(int noticeNo);
 
+	NoticeFile selectOneNoticeFile(int noticeFileNo);
+
 }
