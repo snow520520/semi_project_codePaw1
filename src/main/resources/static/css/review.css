@@ -9,7 +9,8 @@ html, body {
     margin: 0 auto;
 }
 .section{
-	width: 1200px;
+	width: 1400px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 	padding: 20px 30px 20px 30px;
 	background-color: #ffffff;
 	margin: 20px;
@@ -194,4 +195,30 @@ input{
   background-color: #FFB22C;
   color: #fff;
   font-weight: 600;
+}
+
+
+.updateNotice:link,
+.updateNotice:visited {
+  color: #000;
+  text-decoration: none;
+}
+
+.updateNotice:hover {
+  text-decoration: underline;
+  color: #000;
+  cursor: pointer;
+}
+
+
+.deleteNotice:link,
+.deleteNotice:visited {
+  color: #000;
+  text-decoration: none;
+}
+
+.deleteNotice:hover {
+  text-decoration: underline;
+  color: red;
+  cursor: pointer;
 }

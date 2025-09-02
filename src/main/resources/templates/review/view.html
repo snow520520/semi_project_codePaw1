@@ -43,6 +43,30 @@
 	border-radius: 8px;
 	overflow: hidden;
 }
+
+.updateReview{
+	cursor: pointer;
+	color : #000;
+	text-decoration: none;
+}
+
+.updateReview:hover{
+	text-decoration: underline;
+	color: blue;
+}
+
+.deleteReview{
+	cursor: pointer;
+	color: #000;
+	text-decoration: none;
+}
+
+.deleteReview:hover{
+	text-decoration: underline;
+	color: red;
+}
+
+
 </style>
 
 </head>
@@ -54,12 +78,9 @@
 			<div th:text="${review.memberNo}"></div>
 			<div th:text="${review.reviewDate}"></div>
 			<div class="line"></div>
-			<th:block
-				th:if="${session.member != null 
-					  && (session.member.memberNo == review.memberNo || session.member.memberLevel == 1)}">
-				<a class="updateReview"
-					th:href="@{/review/updateFrm(reviewNo=${review.reviewNo})}">수정</a>
-				<a onclick="deleteReview(${review.reviewNo});">삭제</a>
+			<th:block th:if="${session.member != null && (session.member.memberNo == review.memberNo || session.member.memberLevel == 1)}">
+				<a class="updateReview" th:href="@{/review/reviewUpdateFrm(reviewNo=${review.reviewNo})}">수정</a>
+				<a class="deleteReview" href="#" th:onclick="deleteReview([[${review.reviewNo}]]);">삭제</a>
 			</th:block>
 			<div class="reviewContent" th:utext="${review.reviewContent}"></div>
 			<div class="line"></div>

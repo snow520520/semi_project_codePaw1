@@ -171,4 +171,9 @@ public class ReviewService {
 		int result = reviewDao.reviewWrite(r);
 		return result;
 	}
+	@Transactional
+	public int updateReview(Review review) {
+		int result = reviewDao.updateReview(review);
+		return result;
+	}
 }

@@ -75,4 +75,11 @@
 		WHERE review_no = #{reviewNo}
 	</select>
 
+	<update	id="updateReview">
+		update animal_review
+		set review_title = #{reviewTitle},
+			review_content = #{reviewContent},
+			review_date = to_char(sysdate,'yyyy-mm-dd')
+		where review_no = #{reviewNo}
+	</update>
 </mapper>
