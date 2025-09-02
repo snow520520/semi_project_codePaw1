@@ -1,7 +1,7 @@
 	const slider = document.getElementById("slider");
 	const dotsContainer = document.getElementById("dots");
 	let index = 0;
-	let count = 0;
+	let sliderCount = 0;
 	let dots = [];
 	
 	function loadImages(i = 1) {
@@ -10,12 +10,12 @@
 	
 	img.onload = () => {
 	    slider.appendChild(img);
-	    count++;
+	    sliderCount++;
 	    loadImages(i + 1);
 	};
 	
 	img.onerror = () => {
-	    if (count > 0) {
+	    if (sliderCount > 0) {
 	    createDots();
 	    startSlider();
 	    }
@@ -23,7 +23,7 @@
 	}
 	
 	function createDots() {
-	for (let i = 0; i < count; i++) {
+	for (let i = 0; i < sliderCount; i++) {
 	    const dot = document.createElement("span");
 	    dot.textContent = "•";
 	    if (i === 0) dot.classList.add("active");
@@ -40,7 +40,7 @@
 	}
 	
 	function nextSlide() {
-	index = (index + 1) % count;
+	index = (index + 1) % sliderCount;
 	updateSlider();
 	}
 	
