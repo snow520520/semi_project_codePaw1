@@ -8,22 +8,23 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-		.like {
-		    cursor: pointer;
-		    font-size: 14px;
-		    color: gray;
-			font-weight: bold;
-		    transition: color 0.3s;
-		}
-		.like.liked {
-		    color: red;
-		}
-		.like-count {
-		    margin-left: 5px;
-		    font-size: 12px;
-			color: black;
-		    font-weight: bold;
-		}
+        .like {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+        }
+        .like-icon {
+            font-size: 20px;
+        }
+        .like-icon.liked {
+            color: red;
+        }
+        .like-count {
+            margin-left: 5px;
+            font-size: 12px;
+            color: black;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -55,8 +56,11 @@
                         <div class="card-info">
                             <h3 th:text="${ap.protectTitle}">제목</h3>
                             <span class="like" th:data-protect-no="${ap.protectNo}">
-                                <span class="heart" th:text="${ap.likedByUser} ? '❤️' : '🤍'">🤍</span>
-                                <span class="count" th:text="${ap.likeCount}">0</span>
+                                <span class="material-icons like-icon"
+                                      th:classappend="${ap.likedByUser} ? ' liked' : ''"
+                                      th:text="${ap.likedByUser} ? 'favorite' : 'favorite_border'">
+                                </span>
+                                <span class="like-count" th:text="${ap.likeCount}">0</span>
                             </span>
                         </div>
                         <p class="date" th:text="${ap.protectDate}">2025-xx-xx</p>
@@ -69,56 +73,66 @@
             </div>
         </div>
     </div>
-	<script src="js/main.js"></script>
-    <script>
-        $(document).on('click', '.like', function() {
-            let span = $(this);
-            let protectNo = span.data('protect-no');
-            $.post('/mainAllpage/toggleLike', { protectNo: protectNo }, function(data) {
-                span.find('.heart').text(data.likedByUser ? '❤️' : '🤍');
-                span.find('.count').text(data.likeCount);
-            });
-        });
 
-        {
-            let startIndex = 8;
-            const count = 12;
-            const cardContainer = document.querySelector(".all-card");
-            const moreBtn = document.querySelector(".more-btn");
+    <script src="js/main.js"></script>
+	<script>
+	$(document).on('click', '.like', function() {
+	    let span = $(this);
+	    let protectNo = span.data('protect-no');
+	    $.post('/mainAllpage/toggleLike', { protectNo: protectNo }, function(data) {
+	        let icon = span.find('.like-icon');
+	        if(data.likedByUser) {
+	            icon.text('favorite');
+	            icon.addClass('liked');
+	        } else {
+	            icon.text('favorite_border');
+	            icon.removeClass('liked');
+	        }
+	        span.find('.like-count').text(data.likeCount);
+	    });
+	});
 
-            moreBtn.addEventListener("click", () => {
-                fetch(`/mainAllpage/loadMore?start=${startIndex}&count=${count}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        data.forEach(ap => {
-                            const div = document.createElement("div");
-                            div.className = "card-container";
-                            div.innerHTML = `
-                                <a href="/mainAllpage/detail?protectNo=${ap.protectNo}">
-                                    <div class="card">
-                                        <img class="thumbnail" src="${ap.thumbnailUrl}" alt="썸네일" />
-                                    </div>
-                                </a>
-                                <div class="card-info">
-                                    <h3>${ap.protectTitle}</h3>
-                                    <span class="like" data-protect-no="${ap.protectNo}">
-                                        <span class="heart">${ap.likedByUser ? '❤️' : '🤍'}</span>
-                                        <span class="count">${ap.likeCount}</span>
-                                    </span>
-                                </div>
-                                <p class="date">${ap.protectDate}</p>
-                            `;
-                            cardContainer.appendChild(div);
-                        });
-                        moreBtn.style.display = "none";
-                    })
-                    .catch(error => {
-                        console.error('데이터 로딩 중 오류 발생:', error);
-                    });
-            });
-        }
-    </script>
+	let startIndex = 8;
+	const count = 12;
+	const cardContainer = document.querySelector(".all-card");
+	const moreBtn = document.querySelector(".more-btn");
 
+	if (moreBtn) {
+	    moreBtn.addEventListener("click", () => {
+	        fetch(`/mainAllpage/loadMore?start=${startIndex}&count=${count}`)
+	            .then(res => res.json())
+	            .then(data => {
+	                data.forEach(ap => {
+	                    const div = document.createElement("div");
+	                    div.className = "card-container";
+	                    div.innerHTML = `
+	                        <a href="/mainAllpage/detail?protectNo=${ap.protectNo}">
+	                            <div class="card">
+	                                <img class="thumbnail" src="${ap.thumbnailUrl}" alt="썸네일" />
+	                            </div>
+	                        </a>
+	                        <div class="card-info">
+	                            <h3>${ap.protectTitle}</h3>
+	                            <span class="like" data-protect-no="${ap.protectNo}">
+	                                <span class="material-icons like-icon ${ap.likedByUser ? 'liked' : ''}">
+	                                    ${ap.likedByUser ? 'favorite' : 'favorite_border'}
+	                                </span>
+	                                <span class="like-count">${ap.likeCount}</span>
+	                            </span>
+	                        </div>
+	                        <p class="date">${ap.protectDate}</p>
+	                    `;
+	                    cardContainer.appendChild(div);
+	                });
+	                startIndex += data.length;
+	                if (data.length < count) moreBtn.style.display = "none";
+	            })
+	            .catch(error => {
+	                console.error('데이터 로딩 중 오류 발생:', error);
+	            });
+	    });
+	}
+	</script>
     <th:block th:include="common/footer"></th:block>
 </body>
 </html>

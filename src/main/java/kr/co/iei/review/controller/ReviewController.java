@@ -111,6 +111,29 @@ public class ReviewController {
 		}
 		return "common/msg";
 	}
+	@GetMapping(value="/reviewUpdateFrm")
+	public String updateFrm(int reviewNo, Model model) {
+		Review review = reviewService.selectOneReview(reviewNo);
+		model.addAttribute("review", review);
+		return "review/reviewUpdateFrm";
+	}
+	@PostMapping(value="/update")
+	public String update(Review review, Model model) {
+		int result = reviewService.updateReview(review);
+		if(result>0) {
+			model.addAttribute("title", "수정 성공");
+			model.addAttribute("text", "게시글이 수정되었습니다.");
+			model.addAttribute("icon", "success");
+			model.addAttribute("loc", "/review/view?reviewNo="+review.getReviewNo());
+			return "common/msg";
+		}else {
+			model.addAttribute("title", "수정 실패");
+			model.addAttribute("text", "잠시 후 다시 시도해주세요.");
+			model.addAttribute("icon", "warning");
+			model.addAttribute("loc", "/review/view?reviewNo="+review.getReviewNo());
+			return "common/msg";
+		}
+	}
 
 	// 삭제
 	@GetMapping(value = "/delete")
@@ -129,4 +152,6 @@ public class ReviewController {
 		}
 		return "common/msg";
 	}
+	
+	
 }
