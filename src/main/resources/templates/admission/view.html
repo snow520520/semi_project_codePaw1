@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>입소신청 상세페이지</title>
+<title>Insert title here</title>
 <link rel="stylesheet" href="/css/admission.css">
 <style>
 	.section>div:first-child{
@@ -55,6 +55,13 @@
 		border: 1px solid #555555;
 		border-radius: 10px; 
 		line-height: 32px;
+		margin-left: 10px;
+	}
+	.animalAdmission{
+		font-size: 18px; 
+		font-weight: bold; 
+		text-align: right;
+		color: #854836;
 	}
 </style>
 </head>
@@ -117,9 +124,12 @@
 						<td style="width: 80%" th:text="${animal.animalNeuter}"></td>
 					</tr>
 				</table>
-				<div class="btn-box size" th:if="${session.member.memberLevel == 1}">
+				<div class="btn-box size" th:if="${session.member.memberLevel == 1 && animal.animalAdmission == 1}">
 					<button type="button" th:onclick="admissionCheck([[${animal.animalNo}]]);">승인</button>
+					<button type="button" th:onclick="admissionReject([[${animal.animalNo}]]);">거절</button>
 				</div>
+				<div class="animalAdmission" th:if="${animal.animalAdmission} == 2">입소 승인</div>
+				<div class="animalAdmission" th:if="${animal.animalAdmission} == 3">입소 거절</div>
 				<div class="btn-box">
 					<button type="button" onclick="location.href='/admission/list?reqPage=1'">목록으로</button>
 				</div>
@@ -179,6 +189,33 @@
 			}).then(function(isConfirm){
 				if(isConfirm){
 					location.href="/admission/admissionCheck?animalNo="+animalNo;
+				}
+			});
+		}
+		function admissionReject(animalNo){
+			swal({
+				title : "입소 거절",
+				text : "입소를 거절하시겠습니까?",
+				icon : "info",
+				buttons : {
+					cancel:{
+						text: "취소",
+						value: false,
+						visible: true,
+						ClassName : "btn-swal",
+						colseModal: true
+					},
+					confirm:{
+						text: "거절하기",
+						value: true,
+						visible : true,
+						ClassName : "btn-swal-color",
+						closeModal : true
+					}
+				}
+			}).then(function(isConfirm){
+				if(isConfirm){
+					location.href="/admission/admissionReject?animalNo="+animalNo;
 				}
 			});
 		}

@@ -24,12 +24,7 @@ public interface AnimalDao {
 
 	int selectAnimalCount();
 
-	int changeAdmission(Animal a);
+	int admissionReject(int animalNo);
 
-	int checkedChangeAdmission(Animal a);
-
-	List searchAnimalName(HashMap<String, Object> param);
-
-	int searchAnimalNameCount(String animalName);
 
 }

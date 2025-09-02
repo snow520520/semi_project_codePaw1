@@ -38,11 +38,9 @@
 				<tr th:each="admission : ${list}">
 					<th:block th:if="${list!='작성된 게시글이 존재하지 않습니다.'}">
 					<td th:text="${admission.admissionNo}"></td>
-					<td>
+					<td th:onclick="checkAccess([[${admission.admissionNo}]], '[[${admission.memberId}]]')">
 						<span class="material-icons lock">lock_outline</span>
-						<a href="javascript:void(0);" 
-  							 th:onclick="checkAccess([[${admission.admissionNo}]], '[[${admission.memberId}]]')"
-   							th:text="${admission.admissionTitle}"></a>
+						<a th:text="${admission.admissionTitle}"></a>
 					</td>
 					<td th:text="${admission.admissionDate}"></td>
 					<td th:text="${admission.memberId}"></td>					

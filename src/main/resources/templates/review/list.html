@@ -6,10 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/css/review.css">
 
-
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-
 <link
 	href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
 	rel="stylesheet">
@@ -17,9 +15,32 @@
 <style>
 .like-icon {
 	cursor: pointer;
-	font-size: 23px; 
+	font-size: 23px;
 	vertical-align: middle;
-	color: #e57373; 
+	color: #e57373;
+}
+
+.card {
+	cursor: pointer;
+	width: 250px;
+	height: 200px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #f9f9f9;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+}
+
+.card img {
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: cover;
+}
+
+.card-info h3 {
+	cursor: pointer;
 }
 </style>
 
@@ -43,13 +64,14 @@
 				<div class="all-card">
 					<th:block th:each="review : ${list}">
 						<div class="card-container">
-							<div class="card">
-								<img src="#.jpg" alt="아이1"
-									th:href="@{/review/view(reviewNo=${review.reviewNo})}">
+							<div class="card" th:data-reviewNo="${review.reviewNo}">
+								<img th:src="${review.thumbnail}" alt="후기 이미지">
 							</div>
+							
+
 							<div class="card-info">
-								<h3 th:text="${review.reviewTitle}"></h3>
-								<!-- 좋아요 아이콘 -->
+								<h3 class="review-title" th:data-reviewNo="${review.reviewNo}"
+									th:text="${review.reviewTitle}"></h3>
 								<span class="material-icons-outlined like-icon">favorite_border</span>
 							</div>
 							<p class="date" th:text="${review.reviewDate}"></p>
@@ -86,7 +108,23 @@
 	        }
 	      });
 	    });
+
+	    // 카드 클릭 -> 상세 페이지 이동
+	    document.querySelectorAll(".card").forEach(card =>{
+	    	 card.addEventListener("click",function() {
+	    		 const reviewNo = this.dataset.reviewno;
+	    		 location.href= "/review/view?reviewNo=" + reviewNo;
+	    	 })
+	    });
+	    
+	    // 제목 클릭 -> 상세 페이지 이동
+	    document.querySelectorAll(".review-title").forEach(title => {
+	       title.addEventListener("click", function() {
+	         const reviewNo = this.dataset.reviewno;
+	         location.href = "/review/view?reviewNo=" + reviewNo;
+	       });
+	    });
 	  });
-	</script>
+	 </script>
 </body>
 </html>

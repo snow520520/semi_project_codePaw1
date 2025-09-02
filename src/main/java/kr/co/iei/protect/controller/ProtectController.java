@@ -120,7 +120,7 @@ public class ProtectController {
         Member member = (Member) session.getAttribute("member");
         Integer memberNo = (member != null) ? member.getMemberNo() : null;
 
-        List<Protect> list = protectService.selectPageList(1, 4, memberNo);
+        List<Protect> list = protectService.selectPageList(1, 8, memberNo);
         model.addAttribute("list", list);
         model.addAttribute("member", member);
         return "index";
@@ -253,7 +253,7 @@ public class ProtectController {
     @PostMapping(value="/mainAllpage/editorImage", produces = "plain/text;charset=utf-8")
     @ResponseBody
     public String editorImage(MultipartFile upfile) {
-        String savePath = "C:/image/";
+        String savePath = "C:/Temp/upload/image/";
         String filename = UUID.randomUUID() + "_" + upfile.getOriginalFilename();
         try { upfile.transferTo(new File(savePath + filename)); } 
         catch (IOException e) { e.printStackTrace(); return "fail"; }

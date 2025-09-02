@@ -115,7 +115,7 @@ public class AdmissionController {
 	 @PostMapping(value="/insertFrm/editorImage", produces = "plain/text;charset=utf-8")
 	 @ResponseBody
 	 public String editorImage(MultipartFile upfile) {
-		 String savePath = "C:/image/";
+		 String savePath = "C:/Temp/upload/image/";
 	     String filename = UUID.randomUUID() + "_" + upfile.getOriginalFilename();
 	     File file = new File(savePath + filename);
       try {
@@ -197,6 +197,22 @@ public class AdmissionController {
 		 model.addAttribute("loc", "/admission/list?reqPage=1");
 		 return "common/msg";
 		 
+	 }
+	 @GetMapping(value="/admissionReject")
+	 public String admissionReject(int animalNo, Model model) {
+		 int result = animalService.admissionReject(animalNo);
+		 if(result > 0) {
+			 model.addAttribute("title", "거절 성공");
+			 model.addAttribute("text", "입소 거절되었습니다.");
+			 model.addAttribute("icon", "success");
+			 model.addAttribute("loc", "/admission/list?reqPage=1");
+			 return "common/msg";
+		 }
+		 model.addAttribute("title", "거절 실패");
+		 model.addAttribute("text", "잠시후 다시 시도해 주세요.");
+		 model.addAttribute("icon", "warning");
+		 model.addAttribute("loc", "/admission/list?reqPage=1");
+		 return "common/msg";
 	 }
 	 
 	
