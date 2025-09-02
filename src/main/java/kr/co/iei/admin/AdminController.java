@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.co.iei.animal.model.service.AnimalService;
 import kr.co.iei.animal.model.vo.Animal;
@@ -72,11 +73,13 @@ public class AdminController {
     }
 	@GetMapping(value ="/searchMemberName")
     public String searchMemberName(String memberName, int memberPage, Model model) {
-    	if(!memberName.isEmpty()) {
+    	if(memberName !="" || memberName != null) {
     		MemberListData mld = memberService.selectMemberNameList(memberPage, memberName);
+    		System.out.println(mld);
     		if(mld != null) {
     			model.addAttribute("memberList", mld.getList());
-    			model.addAttribute("pageNaviMember", mld.getPageNaviMember());
+    			//model.addAttribute("pageNaviMember", mld.getPageNaviMember());
+    			return "admin/adminPage?&memberName="+memberName+"&memberPage=1";
     		}else{
     			model.addAttribute("title", "검색 실패");
     			model.addAttribute("content", "error");
@@ -119,14 +122,15 @@ public class AdminController {
         return "common/msg";
     }
 	@GetMapping(value = "/searchAnimalName")
-	public String searchAnimalName(String animalName, int animalPage, Model model) {
+	public String searchAnimalNameList(String animalName, int animalPage, Model model) {
 		if(!animalName.isEmpty()) {
 			
-    		AnimalListData ald = animalService.searchAnimalName(animalName, animalPage);
+    		AnimalListData ald = animalService.searchAnimalNameList(animalName, animalPage);
     		System.out.println(ald);
     		if(ald != null) {
     			model.addAttribute("animalList", ald.getList());
     			model.addAttribute("pageNaviAni", ald.getPageNaviAni());
+    			System.out.println(ald.getList());
     		}else{
     			model.addAttribute("title", "검색 실패");
     			model.addAttribute("content", "error");

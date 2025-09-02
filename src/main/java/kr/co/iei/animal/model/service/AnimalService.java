@@ -132,7 +132,7 @@ public class AnimalService {
 		}
 		return result == count;
 	}
-	public AnimalListData searchAnimalName(String animalName, int animalPage) {
+	public AnimalListData searchAnimalNameList(String animalName, int animalPage) {
 		int numPerPage = 10;
 		
 		int end = animalPage * numPerPage;
@@ -141,7 +141,7 @@ public class AnimalService {
 		param.put("start", start);
 		param.put("end", end);
 		
-		int totalCount = animalDao.searchAnimalNameCount(animalName);
+		int totalCount = animalDao.searchAnimalNameCountList(animalName);
 		
 		int totalPage = totalCount / numPerPage;
 		if(totalCount % numPerPage != 0) {
@@ -184,7 +184,7 @@ public class AnimalService {
 			}
 			pageNaviAni += "</ul>";
 			param.put("animalName", animalName);
-			List list = animalDao.searchAnimalName(param);
+			List list = animalDao.searchAnimalNameList(param);
 			
 			AnimalListData ald = new AnimalListData(list, pageNaviAni);
 			return ald;

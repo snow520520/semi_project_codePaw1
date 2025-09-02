@@ -152,7 +152,9 @@ public class MemberService {
 			MemberListData mld = new MemberListData(list, pageNaviMember);
 			return mld;
 		}else {
-			return null;
+			MemberListData mld = null;
+			
+			return mld;
 		}
 	}
 	@Transactional

@@ -60,15 +60,15 @@
  		</if>
  	where animal_no=#{animalNo}
  </update>
- <select id="searchAnimalNameCount" resultType = "int">
+ <select id="searchAnimalNameCountList" resultType = "int">
  	select count(*) from animal where animal_name like '%'||'${animalName}'||'%'
  </select>
- <select id="searchAnimalName" resultType= "animal">
+ <select id="searchAnimalNameList" resultType= "animal">
  	select * from
 	    	(select rownum as rnum, n.* from
 	        	(select 
 	            	animal_no, animal_type, animal_name, animal_gender, animal_age, animal_inocul, animal_neuter, member_no, animal_admission 
-	        	from animal where animal_name like '%'||'${animalName}'||'%' order by 1
+	        	from animal where animal_name like '%'||'${animalName}'||'%' order by animal_no desc
 	        	)n
 	    	)
 		where rnum between #{start} and #{end}
