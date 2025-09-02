@@ -11,6 +11,7 @@
 		font-size: 26px;
 		border: none;
 		margin-bottom: 20px;
+		text-align: left;
 	}
 	#animalAge{
 		width: 200px;
@@ -91,7 +92,7 @@
 			<input type="hidden" name="protectNo" th:value="${protectNo}">
 			<input type="hidden" name="memberId" th:value="${member.memberId}">
 				<div>
-					<input type="text" name="adoptionTitle" id="adoptionTitle" placeholder="제목">
+					<input type="text" name="adoptionTitle" id="adoptionTitle" placeholder="제목을 입력해주세요.">
 				</div>
 				<div class="line" th:text="${member.memberId}"></div>
 				<div class="info-tbl">
