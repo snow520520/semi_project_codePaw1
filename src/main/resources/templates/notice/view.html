@@ -50,6 +50,12 @@
 			<div th:text="${notice.memberId}"></div>
 			<div th:text="${notice.noticeDate}"></div>
 			<div class="line"> </div>
+			<div class="line inline">
+				<span>첨부파일 |</span>
+				<th:block th:each="file : ${notice.fileList}">
+					<img src="/image/file.png" style="width: 16px;">
+				</th:block>
+			</div>
 			<th:block th:if="${session.member != null && session.member.memberLevel == 1}">
 			<a class="updateNotice" th:href="@{/notice/updateFrm(noticeNo=${notice.noticeNo})}">수정</a>
 			<a th:onclick="deleteNotice([[${notice.noticeNo}]]);">삭제</a>

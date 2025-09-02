@@ -57,6 +57,13 @@ public class NoticeController {
 	@GetMapping(value="/view")
 	public String view(int noticeNo, Model model) {
 		Notice notice = noticeService.selectOnetNotice(noticeNo);
+		if(notice == null) {
+			model.addAttribute("title", "조회 실패");
+			model.addAttribute("text", "이미 삭제된 게시글입니다.");
+			model.addAttribute("icon", "info");
+			model.addAttribute("loc", "/notice/list?reqPage=1");
+			return "common/msg";
+		}
 		model.addAttribute("notice", notice);
 		return "notice/view";
 	}
@@ -81,6 +88,7 @@ public class NoticeController {
 	public String insertFrm(@SessionAttribute Member member,Model model) {
 		return "notice/insertFrm";
 	}
+	
 	@PostMapping(value="/insertFrm/editorImage", produces = "plain/text;charset=utf-8")
 	 @ResponseBody
 	 public String editorImage(MultipartFile upfile) {
@@ -95,19 +103,23 @@ public class NoticeController {
       }
       return "/editorImage/" + filename;
   }
+	
 	@PostMapping(value="/insert")
-	public String insert(Notice notice, Model model, MultipartFile[] noticeFile) {
+	public String insert(Notice notice, Model model, MultipartFile[] noticeFiles) {
 		
-		int result = noticeService.insertNotice(notice);
 		List<NoticeFile> fileList = new ArrayList<NoticeFile>();
-		if(!noticeFile[0].isEmpty()) {
+		if(!noticeFiles[0].isEmpty()) {
 			String savepath = "C:/Temp/upload/image/notice/";
-			for(MultipartFile file : noticeFile) {
+			for(MultipartFile file : noticeFiles) {
 				String filename = file.getOriginalFilename();
 				String filepath = fileUtil.upload(savepath, file);
+				NoticeFile noticeFile = new NoticeFile();
+				noticeFile.setFilename(filename);
+				noticeFile.setFilepath(filepath);
+				fileList.add(noticeFile);
 			}
 		}
-		
+		int result = noticeService.insertNotice(notice,fileList);
 		if(result > 0) {
 			model.addAttribute("title", "작성 성공");
 			model.addAttribute("text", "게시글이 작성되었습니다.");

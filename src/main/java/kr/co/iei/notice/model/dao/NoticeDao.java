@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.notice.model.vo.Notice;
+import kr.co.iei.notice.model.vo.NoticeFile;
 
 @Mapper
 public interface NoticeDao {
@@ -25,5 +26,11 @@ public interface NoticeDao {
 	int insertNotice(Notice notice);
 
 	int updateNotice(Notice notice);
+
+	int insertNoticeFile(NoticeFile noticeFile);
+
+	int getNoticeNo();
+
+	List selectNoticeFile(int noticeNo);
 
 }

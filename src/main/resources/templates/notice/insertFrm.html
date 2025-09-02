@@ -18,7 +18,8 @@
 	}
 	input{
 		text-align: center;
-		font-size: 20px;
+		margin-left: 10px;
+		font-size: 16px;
 	}
 	.note-handle{
 		display: none;
@@ -63,8 +64,8 @@
 				</div>
 				<div class="line" th:text="${session.member.memberId}"></div>
 				<div class="line inline">
-					<label for="noticeFile">첨부파일</label>
-					<input type="file" name="noticeFile" id="noticeFile" multiple>
+					<label for="noticeFiles">첨부파일</label>
+					<input type="file" name="noticeFiles" id="noticeFiles" multiple>
 				</div>
 				<textarea name="noticeContent" id="noticeContent" required></textarea>
 				<div class="line"> </div>

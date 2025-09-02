@@ -12,6 +12,7 @@ import kr.co.iei.admission.model.vo.AdmissionListData;
 import kr.co.iei.member.model.vo.Member;
 import kr.co.iei.notice.model.dao.NoticeDao;
 import kr.co.iei.notice.model.vo.Notice;
+import kr.co.iei.notice.model.vo.NoticeFile;
 import kr.co.iei.notice.model.vo.NoticeListData;
 
 @Service
@@ -139,6 +140,10 @@ int numPerPage = 13;
 
 	public Notice selectOnetNotice(int noticeNo) {
 		Notice notice = noticeDao.selectOneNotice(noticeNo);
+		if(notice != null) {
+			List fileList = noticeDao.selectNoticeFile(noticeNo);
+			notice.setFileList(fileList);
+		}
 		return notice;
 	}
 	
@@ -149,8 +154,14 @@ int numPerPage = 13;
 	}
 	
 	@Transactional
-	public int insertNotice(Notice notice) {
+	public int insertNotice(Notice notice, List<NoticeFile> fileList) {
+		int newNoticeNo = noticeDao.getNoticeNo();
+		notice.setNoticeNo(newNoticeNo);
 		int result = noticeDao.insertNotice(notice);
+		for(NoticeFile noticeFile : fileList) {
+			noticeFile.setNoticeNo(newNoticeNo);
+			result += noticeDao.insertNoticeFile(noticeFile);
+		}
 		return result;
 	}
 	

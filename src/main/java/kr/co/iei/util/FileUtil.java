@@ -1,6 +1,7 @@
 package kr.co.iei.util;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,15 @@ public class FileUtil {
 			}
 			count++;
 		}
-		return null;
+		File uploadFile = new File(savepath+filepath);
+		
+		try {
+			file.transferTo(uploadFile);
+		} catch (IllegalStateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return filepath;
 	}
 	
 	
