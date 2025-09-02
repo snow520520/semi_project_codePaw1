@@ -160,6 +160,9 @@ public class ReviewService {
 				}else {
 					r.setThumbnail("/editorImage/default.png");
 				}
+				
+			int count = reviewDao.selectLikeCount(r.getReviewNo());
+			r.setLikeCount(count);
 			}
 			ReviewListData rld = new ReviewListData(list, pageNavi);
 			return rld;
@@ -189,5 +192,14 @@ public class ReviewService {
 	public int updateReview(Review review) {
 		int result = reviewDao.updateReview(review);
 		return result;
+	}
+	@Transactional
+	public int toggleLike(int reviewNo, int memberNo, int isLike) {
+		if(isLike == 0) {
+			reviewDao.insertLike(reviewNo, memberNo);
+		}else {
+			reviewDao.deleteLike(reviewNo, memberNo);
+		}
+		return reviewDao.selectLikeCount(reviewNo);
 	}
 }
