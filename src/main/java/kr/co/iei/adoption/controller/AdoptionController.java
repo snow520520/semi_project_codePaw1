@@ -42,16 +42,17 @@ public class AdoptionController {
 	
 	@GetMapping(value="/searchTitle")
 	public String searchTitle(String searchTitle, int reqPage, Model model) {
-		System.out.println("넣은 제목:"+searchTitle);
 		if(!searchTitle.isEmpty()) {
 			AdoptionListData ald = adoptionService.searchTitleAdoptionList(reqPage,searchTitle);
-			System.out.println("결과 : "+ald);
 			if(ald != null) {
 				model.addAttribute("list", ald.getList());
 				model.addAttribute("pageNavi", ald.getPageNavi());
+			}else {
+				model.addAttribute("list", "작성된 게시글이 존재하지 않습니다.");
 			}
+		}else {
+			model.addAttribute("list", "작성된 게시글이 존재하지 않습니다.");
 		}
-		
 		return "adoption/list";
 	}
 	
