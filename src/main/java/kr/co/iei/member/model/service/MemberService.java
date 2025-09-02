@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.co.iei.animal.model.dao.AnimalDao;
-import kr.co.iei.animal.model.vo.AnimalListData;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.vo.Member;
 import kr.co.iei.member.model.vo.MemberListData;
@@ -143,8 +141,7 @@ public class MemberService {
 			}
 			if(pageNo <= totalPage) {
 				pageNaviMember += "<li>";
-				pageNaviMember += "<a class='page-item' href='/admin/adminPage?memberName="+memberName+"&memberPage="+pageNo+"'>";
-				pageNaviMember += "<span class='material-icons'>chevron_right</span>";
+				pageNaviMember += "<a class='page-item' href='/admin/adminPage?memberName="+memberName+"&memberPage="+pageNo+"'>";				pageNaviMember += "<span class='material-icons'>chevron_right</span>";
 				pageNaviMember += "</a>";
 				pageNaviMember += "</li>";
 			}

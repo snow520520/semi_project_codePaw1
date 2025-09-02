@@ -95,7 +95,6 @@ public class MemberController {
 			return 1;
 		}
 	}
-
 	@PostMapping(value ="/join")
 	public String join(Member m, Model model) {
 		int result = memberService.join(m);
@@ -112,7 +111,6 @@ public class MemberController {
 		}
 		return "common/msg"; 
 	}
-
 	@GetMapping(value = "/findIdFrm")
 	public String findIdFrm() {
 		return "member/findId";

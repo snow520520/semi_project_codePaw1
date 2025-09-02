@@ -348,7 +348,7 @@ body {
 							<div class="selectChangeLevel">
 								<button class="selectChangeLevel-btn" style="cursor: pointer;">선택수정</button>
 							</div>
-							<form action="/animal/searchAnimalName?ani" method="get">
+							<form action="/admin/searchAnimalName" method="get">
 								<input type="text" name="animalName" id="animalName" placeholder="검색" style="padding-left: 10px;">
 								<input type="hidden" name="animalPage" id="animalPage" value="1">	
 								<button type="submit">				
@@ -417,10 +417,17 @@ body {
 								<select th:case= "1">
 									<option value = "1" selected>입소완료</option>
 									<option value = "2">검토중</option>
+									<option value = "3">입소거절</option>
 								</select>
 								<select th:case= "2">
 									<option value = "1">입소완료</option>
-									<option value = "2" selected>검토중</option>
+									<option value = "2" selected>컴토중</option>
+									<option value = "3">입소거절</option>
+								</select>
+								<select th:case= "3">
+									<option value = "1">입소완료</option>
+									<option value = "2">검토중</option>
+									<option value = "3" selected>입소거절</option>
 								</select>
 							</div>
 						</td>

@@ -121,10 +121,12 @@ public class AdminController {
 	@GetMapping(value = "/searchAnimalName")
 	public String searchAnimalName(String animalName, int animalPage, Model model) {
 		if(!animalName.isEmpty()) {
-    		AnimalListData ald = animalService.searchAnimalName(animalPage, animalName);
+			
+    		AnimalListData ald = animalService.searchAnimalName(animalName, animalPage);
+    		System.out.println(ald);
     		if(ald != null) {
     			model.addAttribute("animalList", ald.getList());
-    			model.addAttribute("pageNaviAnimal", ald.getPageNaviAni());
+    			model.addAttribute("pageNaviAni", ald.getPageNaviAni());
     		}else{
     			model.addAttribute("title", "검색 실패");
     			model.addAttribute("content", "error");
@@ -139,5 +141,4 @@ public class AdminController {
 	    }
     	return "common/msg";
     }
-	
 }
