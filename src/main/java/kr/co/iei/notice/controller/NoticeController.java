@@ -2,6 +2,7 @@ package kr.co.iei.notice.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,13 +19,18 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.iei.member.model.vo.Member;
 import kr.co.iei.notice.model.service.NoticeService;
 import kr.co.iei.notice.model.vo.Notice;
+import kr.co.iei.notice.model.vo.NoticeFile;
 import kr.co.iei.notice.model.vo.NoticeListData;
+import kr.co.iei.util.FileUtil;
 
 @Controller
 @RequestMapping(value="/notice")
 public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private FileUtil fileUtil;
 	
 	@GetMapping(value="/list")
 	public String list(Model model, int reqPage) {
@@ -78,7 +84,7 @@ public class NoticeController {
 	@PostMapping(value="/insertFrm/editorImage", produces = "plain/text;charset=utf-8")
 	 @ResponseBody
 	 public String editorImage(MultipartFile upfile) {
-		 String savePath = "C:/image/";
+		 String savePath = "C:/Temp/upload/image/";
 	     String filename = UUID.randomUUID() + "_" + upfile.getOriginalFilename();
 	     File file = new File(savePath + filename);
      try {
@@ -90,8 +96,18 @@ public class NoticeController {
       return "/editorImage/" + filename;
   }
 	@PostMapping(value="/insert")
-	public String insert(Notice notice, Model model) {
+	public String insert(Notice notice, Model model, MultipartFile[] noticeFile) {
+		
 		int result = noticeService.insertNotice(notice);
+		List<NoticeFile> fileList = new ArrayList<NoticeFile>();
+		if(!noticeFile[0].isEmpty()) {
+			String savepath = "C:/Temp/upload/image/notice/";
+			for(MultipartFile file : noticeFile) {
+				String filename = file.getOriginalFilename();
+				String filepath = fileUtil.upload(savepath, file);
+			}
+		}
+		
 		if(result > 0) {
 			model.addAttribute("title", "작성 성공");
 			model.addAttribute("text", "게시글이 작성되었습니다.");

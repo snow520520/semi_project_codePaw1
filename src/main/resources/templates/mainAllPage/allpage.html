@@ -5,22 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>현재 입양 가능한 아이들</title>
     <link rel="stylesheet" href="/css/allpage.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         .like {
             cursor: pointer;
-            font-size: 14px;
-            color: gray;
-            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
         }
-        .like.liked {
+        .like-icon {
+            font-size: 20px;
+        }
+        .like-icon.liked {
             color: red;
         }
         .like-count {
-            margin-left: 2px;
+            margin-left: 5px;
             font-size: 12px;
-			color: black;
+            color: black;
             font-weight: bold;
         }
     </style>
@@ -40,7 +42,7 @@
             </div>
             <hr>
 
-            <div class="all-card">  
+            <div class="all-card" id="all-card">  
                 <div th:each="ap : ${list}">
                     <div class="card-container">
                         <a th:href="@{/mainAllpage/detail(protectNo=${ap.protectNo})}">
@@ -51,9 +53,10 @@
                         <div class="card-info">
                             <h3 th:text="${ap.protectTitle}">제목</h3>
                             <span class="like" 
-                                  th:classappend="${ap.likedByUser} ? ' liked' : ''" 
                                   th:data-protect-no="${ap.protectNo}">
-                                <span th:text="${ap.likedByUser} ? '❤️' : '🤍'"></span>
+                                <span class="material-icons like-icon" th:classappend="${ap.likedByUser} ? ' liked' : ''">
+                                    <span th:text="${ap.likedByUser} ? 'favorite' : 'favorite_border'">favorite_border</span>
+                                </span>
                                 <span class="like-count" th:text="${ap.likeCount}">0</span>
                             </span>
                         </div>
@@ -73,12 +76,13 @@
             let span = $(this);
             let protectNo = span.data('protect-no');
             $.post('/mainAllpage/toggleLike', { protectNo: protectNo }, function(data) {
+                let icon = span.find('.like-icon');
                 if(data.likedByUser) {
-                    span.addClass('liked');
-                    span.find('span:first').text('❤️');
+                    icon.text('favorite');
+                    icon.addClass('liked');
                 } else {
-                    span.removeClass('liked');
-                    span.find('span:first').text('🤍');
+                    icon.text('favorite_border');
+                    icon.removeClass('liked');
                 }
                 span.find('.like-count').text(data.likeCount);
             });

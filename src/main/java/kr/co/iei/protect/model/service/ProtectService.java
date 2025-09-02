@@ -45,7 +45,13 @@ public class ProtectService {
             if ("2".equals(ap.getProtectStatus())) ap.setThumbnailUrl("/image/complete.png");
             else ap.setThumbnailUrl(extractFirstImageSrc(ap.getProtectContent()));
 
-            if(memberNo != null) ap.setLikedByUser(isLiked(memberNo, ap.getProtectNo()));
+
+            if(memberNo != null) {
+                boolean liked = isLiked(memberNo, ap.getProtectNo()); 
+                ap.setLikedByUser(liked);
+            } else {
+                ap.setLikedByUser(false);
+            }
             ap.setLikeCount(getLikeCount(ap.getProtectNo()));
         }
         return list;

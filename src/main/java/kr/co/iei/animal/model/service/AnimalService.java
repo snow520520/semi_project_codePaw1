@@ -99,4 +99,10 @@ public class AnimalService {
 		
 	}
 	
+	@Transactional
+	public int admissionReject(int animalNo) {
+		int result = animalDao.admissionReject(animalNo);
+		return result;
+	}
+	
 }

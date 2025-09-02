@@ -24,5 +24,7 @@ public interface AnimalDao {
 
 	int selectAnimalCount();
 
+	int admissionReject(int animalNo);
+
 
 }
