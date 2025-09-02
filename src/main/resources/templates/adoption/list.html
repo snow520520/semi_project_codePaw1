@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>입양신청 목록</title>
 <link rel="stylesheet" href="/css/adoption.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
@@ -11,6 +11,9 @@
 	.tbl.tbl-hover tbody > tr:hover {
 	  cursor: pointer;
 	  background-color: rgba(255, 178, 44, 0.05);
+	}
+	.notFoundList{
+		width: 1200px;
 	}
 </style>
 <body>
@@ -36,6 +39,7 @@
 						<th style="width:20%">작성자</th>
 					</tr>
 					<tr th:each="adoption : ${list}">
+						<th:block th:if="${list != '작성된 게시글이 존재하지 않습니다.'}">
 						<td th:text="${adoption.adoptionNo}"></td>
 						<td th:onclick="checkAccess([[${adoption.adoptionNo}]], '[[${adoption.memberId}]]')">
 							<span class="material-icons lock">lock_outline</span>
@@ -43,7 +47,14 @@
 						</td>
 						<td th:text="${adoption.adoptionDate}"></td>
 						<td th:text="${adoption.memberId}"></td>
+						</th:block>
 					</tr>
+					<th:block th:if="${list == '작성된 게시글이 존재하지 않습니다.'}">
+						<td> </td>
+						<td class="notFoundList" th:text="${list}"></td>
+						<td> </td>
+						<td> </td>
+					</th:block>
 				</table>
 			</div>
 			<div id="pageNavi" th:utext="${pageNavi}"></div>

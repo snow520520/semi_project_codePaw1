@@ -1,5 +1,6 @@
 package kr.co.iei.notice.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import kr.co.iei.admission.model.vo.AdmissionListData;
 import kr.co.iei.member.model.vo.Member;
 import kr.co.iei.notice.model.dao.NoticeDao;
 import kr.co.iei.notice.model.vo.Notice;
+import kr.co.iei.notice.model.vo.NoticeFile;
 import kr.co.iei.notice.model.vo.NoticeListData;
 
 @Service
@@ -139,24 +141,53 @@ int numPerPage = 13;
 
 	public Notice selectOnetNotice(int noticeNo) {
 		Notice notice = noticeDao.selectOneNotice(noticeNo);
+		if(notice != null) {
+			List fileList = noticeDao.selectNoticeFile(noticeNo);
+			notice.setFileList(fileList);
+		}
 		return notice;
 	}
 	
 	@Transactional
-	public int deleteNotice(int noticeNo) {
+	public List<NoticeFile> deleteNotice(int noticeNo) {
+		List deleteFileList = noticeDao.selectNoticeFile(noticeNo);
 		int result = noticeDao.deleteNotice(noticeNo);
-		return result;
+		return deleteFileList;
 	}
 	
 	@Transactional
-	public int insertNotice(Notice notice) {
+	public int insertNotice(Notice notice, List<NoticeFile> fileList) {
+		int newNoticeNo = noticeDao.getNoticeNo();
+		notice.setNoticeNo(newNoticeNo);
 		int result = noticeDao.insertNotice(notice);
+		for(NoticeFile noticeFile : fileList) {
+			noticeFile.setNoticeNo(newNoticeNo);
+			result += noticeDao.insertNoticeFile(noticeFile);
+		}
 		return result;
 	}
 	
 	@Transactional
-	public int updateNotice(Notice notice) {
+	public List<NoticeFile> updateNotice(Notice notice, List<NoticeFile> fileList, int[] deleteFileNo) {
 		int result = noticeDao.updateNotice(notice);
-		return result;
+		for(NoticeFile noticeFile : fileList) {
+			noticeFile.setNoticeNo(notice.getNoticeNo());
+			result = noticeDao.insertNoticeFile(noticeFile);
+		}
+		List<NoticeFile> deleteFileList = new ArrayList<NoticeFile>();
+		if(deleteFileNo != null) {
+			for(int noticeFileNo : deleteFileNo) {
+				System.out.println("지울 파일 번호 : "+noticeFileNo);
+				NoticeFile noticeFile = noticeDao.selectOneNoticeFile(noticeFileNo);
+				deleteFileList.add(noticeFile);
+				result += noticeDao.deleteNoticeFile(noticeFileNo);
+			}
+		}
+		return deleteFileList;
+	}
+
+	public NoticeFile selectOneNoticeFile(int noticeFileNo) {
+		NoticeFile noticeFile = noticeDao.selectOneNoticeFile(noticeFileNo);
+		return noticeFile;
 	}
 }

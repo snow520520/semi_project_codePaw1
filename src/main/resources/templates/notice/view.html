@@ -16,10 +16,9 @@
 	.section>div:nth-child(3){
 		float: right;
 	}
-	.line{
-		border-bottom: 1px solid #000000;
-		padding-bottom: 20px;
-		margin-bottom: 20px;
+	.inline{
+		padding-right:20px;
+		padding-bottom: 10px;
 	}
 	.noticeContent{
 		min-height: 600px;
@@ -36,7 +35,8 @@
 		padding-bottom: 10px;
 		padding-top: 30px;
 	}
-	.section a{
+	.updateNotice,
+	.deleteNotice{
 		float: right;
 		margin-left: 20px;
 	}
@@ -51,12 +51,15 @@
 			<div th:text="${notice.noticeDate}"></div>
 			<div class="line"> </div>
 			<div class="line inline">
-				<span>첨부파일</span>
-				<
+				<span>첨부파일 |</span>
+				<th:block th:each="file : ${notice.fileList}">
+					<img src="/image/file.png" style="width: 16px;">
+					<a th:href="@{/notice/filedown(noticeFileNo=${file.noticeFileNo})}" th:text="${file.filename}"></a>
+				</th:block>
 			</div>
 			<th:block th:if="${session.member != null && session.member.memberLevel == 1}">
-			<a class="updateNotice" th:href="@{/notice/updateFrm(noticeNo=${notice.noticeNo})}">수정</a>
-			<a th:onclick="deleteNotice([[${notice.noticeNo}]]);">삭제</a>
+				<a class="updateNotice" th:href="@{/notice/updateFrm(noticeNo=${notice.noticeNo})}">수정</a>
+				<a class="deleteNotice" th:onclick="deleteNotice([[${notice.noticeNo}]]);">삭제</a>
 			</th:block>
 			<div class="noticeContent" th:utext="${notice.noticeContent}"></div>
 			<div class="line"> </div>

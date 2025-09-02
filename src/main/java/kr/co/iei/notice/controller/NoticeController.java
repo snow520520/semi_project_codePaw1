@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpServletResponse;
 import kr.co.iei.member.model.vo.Member;
 import kr.co.iei.notice.model.service.NoticeService;
 import kr.co.iei.notice.model.vo.Notice;
@@ -57,30 +58,35 @@ public class NoticeController {
 	@GetMapping(value="/view")
 	public String view(int noticeNo, Model model) {
 		Notice notice = noticeService.selectOnetNotice(noticeNo);
+		if(notice == null) {
+			model.addAttribute("title", "조회 실패");
+			model.addAttribute("text", "이미 삭제된 게시글입니다.");
+			model.addAttribute("icon", "info");
+			model.addAttribute("loc", "/notice/list?reqPage=1");
+			return "common/msg";
+		}
 		model.addAttribute("notice", notice);
 		return "notice/view";
 	}
 	@GetMapping(value="/delete")
 	public String delete(int noticeNo, Model model) {
-		int result = noticeService.deleteNotice(noticeNo);
-		if(result > 0) {
-			model.addAttribute("title", "삭제 성공");
-			model.addAttribute("text", "게시글이 삭제되었습니다.");
-			model.addAttribute("icon", "success");
-			model.addAttribute("loc", "/notice/list?reqPage=1");
-			return "common/msg";
-		}else {
-			model.addAttribute("title", "삭제 실패");
-			model.addAttribute("text", "잠시후 다시 시도해 주세요.");
-			model.addAttribute("icon", "warning");
-			model.addAttribute("loc", "/notice/view?noticeNo="+noticeNo);
-			return "common/msg";
+		List<NoticeFile> list = noticeService.deleteNotice(noticeNo);
+		String savepath = "C:/Temp/upload/image/notice/";
+		for(NoticeFile noticeFile : list) {
+			File deleteFile = new File(savepath+noticeFile.getFilepath());
+			deleteFile.delete();
 		}
+		model.addAttribute("title", "삭제 성공");
+		model.addAttribute("text", "게시글이 삭제되었습니다.");
+		model.addAttribute("icon", "success");
+		model.addAttribute("loc", "/notice/list?reqPage=1");
+		return "common/msg";
 	}
 	@GetMapping(value="/insertFrm")
 	public String insertFrm(@SessionAttribute Member member,Model model) {
 		return "notice/insertFrm";
 	}
+	
 	@PostMapping(value="/insertFrm/editorImage", produces = "plain/text;charset=utf-8")
 	 @ResponseBody
 	 public String editorImage(MultipartFile upfile) {
@@ -95,19 +101,23 @@ public class NoticeController {
       }
       return "/editorImage/" + filename;
   }
+	
 	@PostMapping(value="/insert")
-	public String insert(Notice notice, Model model, MultipartFile[] noticeFile) {
+	public String insert(Notice notice, Model model, MultipartFile[] noticeFiles) {
 		
-		int result = noticeService.insertNotice(notice);
 		List<NoticeFile> fileList = new ArrayList<NoticeFile>();
-		if(!noticeFile[0].isEmpty()) {
+		if(!noticeFiles[0].isEmpty()) {
 			String savepath = "C:/Temp/upload/image/notice/";
-			for(MultipartFile file : noticeFile) {
+			for(MultipartFile file : noticeFiles) {
 				String filename = file.getOriginalFilename();
 				String filepath = fileUtil.upload(savepath, file);
+				NoticeFile noticeFile = new NoticeFile();
+				noticeFile.setFilename(filename);
+				noticeFile.setFilepath(filepath);
+				fileList.add(noticeFile);
 			}
 		}
-		
+		int result = noticeService.insertNotice(notice,fileList);
 		if(result > 0) {
 			model.addAttribute("title", "작성 성공");
 			model.addAttribute("text", "게시글이 작성되었습니다.");
@@ -129,20 +139,30 @@ public class NoticeController {
 		return "notice/updateFrm";
 	}
 	@PostMapping(value="/update")
-	public String update(Notice notice, Model model) {
-		int result = noticeService.updateNotice(notice);
-		if(result >0) {
-			model.addAttribute("title", "수정 성공");
-			model.addAttribute("text", "게시글이 수정되었습니다.");
-			model.addAttribute("icon", "success");
-			model.addAttribute("loc", "/notice/view?noticeNo="+notice.getNoticeNo());
-			return "common/msg";
-		}else {
-			model.addAttribute("title", "수정 실패");
-			model.addAttribute("text", "잠시후 다시 시도해 주세요.");
-			model.addAttribute("icon", "warning");
-			model.addAttribute("loc", "/notice/view?noticeNo="+notice.getNoticeNo());
-			return "common/msg";
+	public String update(Notice notice, MultipartFile[] noticeFiles, int[] deleteFileNo, Model model) {
+		List<NoticeFile> fileList = new ArrayList<NoticeFile>();
+		String savepath = "C:/Temp/upload/image/notice/";
+		if(!noticeFiles[0].isEmpty()) {
+			for(MultipartFile file : noticeFiles) {
+				String filename = file.getOriginalFilename();
+				String filepath = fileUtil.upload(savepath, file);
+				NoticeFile nf = new NoticeFile();
+				nf.setFilename(filename);
+				nf.setFilepath(filepath);
+				fileList.add(nf);
+			}
 		}
+		List<NoticeFile> deleteFileList = noticeService.updateNotice(notice,fileList,deleteFileNo);
+		for(NoticeFile noticeFile : deleteFileList) {
+			File deleteFile = new File(savepath+noticeFile.getFilepath());
+			deleteFile.delete();
+		}
+		return "redirect:/notice/view?noticeNo="+notice.getNoticeNo();
+	}
+	@GetMapping(value="/filedown")
+	public void filedown(int noticeFileNo, HttpServletResponse response) {
+		NoticeFile noticeFile = noticeService.selectOneNoticeFile(noticeFileNo);
+		String savepath = "C:/Temp/upload/image/notice/";
+		fileUtil.downloadFile(savepath, noticeFile.getFilepath(), noticeFile.getFilename(), response);
 	}
 }

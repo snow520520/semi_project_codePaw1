@@ -63,12 +63,11 @@
 			<div class="all-review">
 				<div class="all-card">
 					<th:block th:each="review : ${list}">
+						<th:block th:if="${list != '작성된 게시글이 존재하지 않습니다.'}">
 						<div class="card-container">
 							<div class="card" th:data-reviewNo="${review.reviewNo}">
 								<img th:src="${review.thumbnail}" alt="후기 이미지">
 							</div>
-							
-
 							<div class="card-info">
 								<h3 class="review-title" th:data-reviewNo="${review.reviewNo}"
 									th:text="${review.reviewTitle}"></h3>
@@ -76,14 +75,16 @@
 							</div>
 							<p class="date" th:text="${review.reviewDate}"></p>
 						</div>
+						</th:block>
 					</th:block>
+					<th:block th:if ="${list =='작성된 게시글이 존재하지 않습니다.'}">
 					<div class="write-btn-wrapper">
-						<a
-							th:if="${session.member != null and (session.member.memberLevel == 1 or session.member.memberLevel == 2)}"
+						<a th:if="${session.member != null and (session.member.memberLevel == 1 or session.member.memberLevel == 2)}"
 							href="/review/reviewWriteFrm">
 							<button class="write-btn">글쓰기</button>
 						</a>
 					</div>
+					</th:block>
 				</div>
 			</div>
 			<div id="pageNavi" th:utext="${pageNavi}"></div>
@@ -125,6 +126,32 @@
 	       });
 	    });
 	  });
+	  
+	  function likepush(reviewNo, obj) {
+			console.log(reviewNo);
+			const currentText = $(obj).text();
+			//현재 텍스트(아이콘)에 따라서 좋아요 or 좋아요 취소 로직을 따로 처리 
+			const isLike = (currentText === "favorite") ? 1 : 0;
+			$.ajax({
+				url : "/review/likepush",
+				data : {
+					reviewNo : reviewNo,
+					isLike : isLike
+				},
+				type : "post",
+				success : function(data) {
+					console.log(data);
+					if (isLike === 0) {
+						$(obj).text("favorite");
+					} else {
+						$(obj).text("favorite_border");
+					}
+
+					$(obj).next().text(data);
+				}
+			})
+
+		}
 	 </script>
 </body>
 </html>

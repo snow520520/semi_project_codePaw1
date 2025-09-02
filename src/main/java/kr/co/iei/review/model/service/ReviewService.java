@@ -63,10 +63,10 @@ public class ReviewService {
 		}
 		pageNavi.append("</ul>");
 
-		// 🔽 여기서 리스트 가져오기
+		//여기서 리스트 가져오기
 		List<Review> list = reviewDao.reviewList(param);
 
-		// 🔽 썸네일 세팅
+		//썸네일 세팅
 		for (Review r : list) {
 			if (r.getReviewContent() != null && r.getReviewContent().contains("src=")) {
 				String content = r.getReviewContent();
@@ -144,10 +144,24 @@ public class ReviewService {
 			pageNavi += "</ul>";
 
 			param.put("searchTitle", searchTitle);
-			List list = reviewDao.searchTitleReview(param);
+			List<Review> list = reviewDao.searchTitleReview(param);
 
+			for(Review r : list) {
+				if(r.getReviewContent() != null && r.getReviewContent().contains("src=")) {
+					String content = r.getReviewContent();
+					int startIdx = content.indexOf("src=") + 5;
+					int endIdx = content.indexOf("\"", startIdx);
+					if(endIdx > startIdx) {
+						String src = content.substring(startIdx, endIdx);
+						r.setThumbnail(src);
+					}else {
+						r.setThumbnail("/editorImage/default.png");
+					}
+				}else {
+					r.setThumbnail("/editorImage/default.png");
+				}
+			}
 			ReviewListData rld = new ReviewListData(list, pageNavi);
-
 			return rld;
 		} else {
 			return null;

@@ -39,9 +39,8 @@
 				<tr th:each="notice : ${list}">
 					<th:block th:if="${list!='작성된 게시글이 존재하지 않습니다.'}">
 					<td th:text="${notice.noticeNo}"></td>
-					<td>
-						<a th:href="@{/notice/view(noticeNo=${notice.noticeNo})}"
-   							th:text="${notice.noticeTitle}"></a>
+					<td th:onclick="view([[${notice.noticeNo}]])">
+						<a th:text="${notice.noticeTitle}"></a>
 					</td>
 					<td th:text="${notice.noticeDate}"></td>
 					<td th:text="${notice.memberId}"></td>
@@ -52,7 +51,7 @@
 						<td class="noticeX" th:text="${list}"></td>
 						<td> </td>
 						<td> </td>
-					</th:block>
+				</th:block>
 			</table>
 			<button class="insertNotice" th:if="${session.member != null && session.member.memberLevel == 1}">
 				<a href="/notice/insertFrm">작성하기</a>
@@ -60,6 +59,11 @@
 			<div id="pageNavi" th:utext="${pageNavi}"></div>
 		</section>
 	</main>
+	<script>
+	function view(noticeNo){
+		location.href="/notice/view?noticeNo="+noticeNo;
+	}
+	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>
