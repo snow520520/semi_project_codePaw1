@@ -18,15 +18,15 @@ public interface MemberDao {
 
 	int join(Member m);
 
-	List allMember();
-
-	List allAnimal();
-
 	int selectMemberCount();
 
 	List selectMemberList(HashMap<String, Object> param);
 
 	int changeLevel(Member m);
+
+	List selectMemberNameList(HashMap<String, Object> param);
 	
+	int selectMemberNameCount(String memberName);
+
 
 }
