@@ -49,7 +49,7 @@
 	    	(select rownum as rnum, n.* from
 	        	(select 
 	            	member_no, member_id, member_name, member_age, member_addr, member_phone, member_level, enroll_date 
-	        	from member_tbl where member_name like '%'||'${memberName}'||'%' order by member_no desc
+	        	from member_tbl where member_name like '%'||'${memberName}'||'%' order by member_no
 	        	)n
 	    	)
 		where rnum between #{start} and #{end}

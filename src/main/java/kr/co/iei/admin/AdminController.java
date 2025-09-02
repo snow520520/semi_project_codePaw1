@@ -82,15 +82,17 @@ public class AdminController {
     			model.addAttribute("title", "검색 실패");
     			model.addAttribute("content", "error");
     			model.addAttribute("icon", "error");
-    			model.addAttribute("loc", "/admin/adminPage");
+    			model.addAttribute("loc", "/admin/adminPage?memberPage=1");
+    			return "common/msg";
     		}
     	}else {
     		model.addAttribute("title", "이름을 입력하세요.");
 			model.addAttribute("content", "error");
 			model.addAttribute("icon", "error");
-			model.addAttribute("loc", "/admin/adminPage");
+			model.addAttribute("loc", "/admin/adminPage?memberPage=1");
+			return "common/msg";
 	    }
-    	return "common/msg";
+    	return "admin/adminPage";
     }
 	@GetMapping(value = "/changeAdmission")
 	public String changeAdmission(Animal a, Model model) {
@@ -122,25 +124,24 @@ public class AdminController {
 	@GetMapping(value = "/searchAnimalName")
 	public String searchAnimalNameList(String animalName, int animalPage, Model model) {
 		if(!animalName.isEmpty()) {
-			
     		AnimalListData ald = animalService.searchAnimalNameList(animalName, animalPage);
-    		System.out.println(ald);
     		if(ald != null) {
     			model.addAttribute("animalList", ald.getList());
     			model.addAttribute("pageNaviAni", ald.getPageNaviAni());
-    			System.out.println(ald.getList());
     		}else{
     			model.addAttribute("title", "검색 실패");
     			model.addAttribute("content", "error");
     			model.addAttribute("icon", "error");
     			model.addAttribute("loc", "/admin/adminPageAni?animalPage=1");
+    			return "common/msg";
     		}
     	}else {
     		model.addAttribute("title", "이름을 입력하세요.");
 			model.addAttribute("content", "error");
 			model.addAttribute("icon", "error");
 			model.addAttribute("loc", "/admin/adminPageAni?animalPage=1");
+			return "common/msg";
 	    }
-    	return "common/msg";
+    	return "admin/adminPageAni";
     }
 }

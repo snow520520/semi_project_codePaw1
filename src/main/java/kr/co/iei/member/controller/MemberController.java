@@ -34,7 +34,6 @@ public class MemberController {
 	    model.addAttribute("savedId", savedId);
 	    return "member/login";
 	}
-
 	@PostMapping(value = "/login")
 	public String login(Member m, boolean saveId ,Model model, HttpSession session, HttpServletResponse response) {
 		Member member = memberService.login(m);

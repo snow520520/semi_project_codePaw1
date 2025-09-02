@@ -147,7 +147,7 @@ body {
                 <div class="login-option">
                     <span class="material-icons-outlined" id="checkBoxOut" style="font-size: 20px;">check_box_outline_blank</span>
                     <span class="material-icons" id="checkBox" style="display:none; font-size:20px;">check_box</span>
-                    <input type="checkbox" name="login-remain" id="login-remain" style="display:none;">
+                    <input type="checkbox" name="saveId" id="login-remain" style="display:none;">
                     <label for="login-remain">로그인 정보저장</label>
                 </div>
                 <span class="IdPw alert" id="IdPw" style="display:none;">아이디와 비밀번호를 입력해주세요.</span>
@@ -204,7 +204,6 @@ body {
                 $("#IdPw").show();
             }
         });
-        
         window.onload = function() {
             if($("#memberId").val() !== "") {
                 $("#checkBox").show();
