@@ -108,7 +108,7 @@
 		<section class="section">
 			<form action="/admission/insert" method="post" class="form">
 				<div class="title">
-					<input type="text" name="admissionTitle" id="admissionTitle" placeholder="제목을 입력해주세요.">
+					<input type="text" name="admissionTitle" id="admissionTitle" placeholder="제목을 입력해주세요." required>
 					<input type="hidden" name="memberId" id="memberId" th:value="${session.member.memberId}">
 				</div>
 				<div class="line" th:text="${member.memberId}"></div>
