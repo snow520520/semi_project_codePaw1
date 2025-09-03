@@ -167,6 +167,7 @@ body {
 .material-icons-outlined {
 	cursor: pointer;
 	font-size: 20px;
+	color: #854836;
 	margin: auto 0;
 	line-height: 35px;
 	padding-left: 10px;
@@ -263,10 +264,10 @@ div[class=email-div],div[class=input-phone]{
 					success : function(result) {
 						if (result === 0) {
 							memberIdTag.css("width", "280px");
-							checkIdMsg.show().css("color", "blue").text("사용가능한 아이디 입니다.").addClass("valid");
+							checkIdMsg.show().css("color", "#2854C5").text("사용가능한 아이디 입니다.").addClass("valid");
 						} else if (result === 1) {
 							memberIdTag.css("width", "280px");
-							checkIdMsg.show().css("color", "red").text("이미 사용중인 아이디 입니다.").addClass("invalid");
+							checkIdMsg.show().css("color", "#BB271A").text("이미 사용중인 아이디 입니다.").addClass("invalid");
 						}
 					},
 					error : function() {
@@ -275,7 +276,7 @@ div[class=email-div],div[class=input-phone]{
 				});
 			} else {
 				memberIdTag.css("width", "280px");
-				checkIdMsg.show().css("color", "red").text("영문 + 숫자 6~12글자로 입력해주세요.").addClass("invalid");
+				checkIdMsg.show().css("color", "#BB271A").text("영문 + 숫자 6~12글자로 입력해주세요.").addClass("invalid");
 			}
 		});
 		$("#memberPw").on("keyup", function() {
@@ -293,13 +294,13 @@ div[class=email-div],div[class=input-phone]{
 			if (regResult) {
 				memberPw.css("width", "260px");
 				checkPwMsg.show();
-				checkPwMsg.css("color", "blue");
-				checkPwMsg.text("비밀번호 사용가능");
+				checkPwMsg.css("color", "#2854C5");
+				checkPwMsg.text("사용가능한 비밀번호입니다.");
 				checkPwMsg.addClass("valid");
 			} else{
 				memberPw.css("width", "260px");
 				checkPwMsg.show();
-				checkPwMsg.css("color", "red");
+				checkPwMsg.css("color", "#BB271A");
 				checkPwMsg.text("대소문자+숫자를 각 1개 이상 포함하여 6~15자 이내로 입력해주세요.");
 				checkPwMsg.addClass("invalid");	
 			}
@@ -320,20 +321,20 @@ div[class=email-div],div[class=input-phone]{
 					if(!memberPwReVal){
 						memberPwRe.css("width", "260px");
 						checkPwReMsg.show();
-						checkPwReMsg.css("color", "red");
+						checkPwReMsg.css("color", "#BB271A");
 						checkPwReMsg.text("비밀번호를 입력해주세요.");
 						checkPwReMsg.addClass("invalid");
 					}else{
 						if(memberPwVal === memberPwReVal){
 							memberPwRe.css("width", "260px");
 							checkPwReMsg.show();
-							checkPwReMsg.css("color", "blue");
-							checkPwReMsg.text("비밀번호가 일치");
+							checkPwReMsg.css("color", "#2854C5");
+							checkPwReMsg.text("비밀번호가 일치합니다.");
 							checkPwReMsg.addClass("valid");
 						}else{
 							memberPwRe.css("width", "260px");
 							checkPwReMsg.show();
-							checkPwReMsg.css("color", "red");
+							checkPwReMsg.css("color", "#BB271A");
 							checkPwReMsg.text("비밀번호를 확인해주세요.");
 							checkPwReMsg.addClass("invalid");
 						}
@@ -342,7 +343,7 @@ div[class=email-div],div[class=input-phone]{
 					if(memberPwVal !== memberPwReVal){
 						memberPwRe.css("width", "260px");
 						checkPwReMsg.show();
-						checkPwReMsg.css("color", "red");
+						checkPwReMsg.css("color", "#BB271A");
 						checkPwReMsg.text("비밀번호를 다시 입력해주세요.");
 						checkPwReMsg.addClass("invalid");
 					}
@@ -356,9 +357,9 @@ div[class=email-div],div[class=input-phone]{
 			console.log(receiver);
 			if(regResult){
 				if(!receiver){
-					$("#autoMsg").css("color", "red").text("이메일을 입력해주세요.").show();
+					$("#autoMsg").css("color", "#BB271A").text("이메일을 입력해주세요.").show();
 				}else{
-					$("#autoMsg").text("Yeah~").css("color", "blue").css("font-size", "").show();
+					$("#autoMsg").text("인증번호 전송 중..").css("color", "#2854C5").css("font-size", "").show();
 					$.ajax({
 						url: "/api/emailCode",
 						type: "get",
@@ -376,13 +377,13 @@ div[class=email-div],div[class=input-phone]{
 						$("#autoMsg").isEmpty().hide();
 				}
 			}else{
-				$("#autoMsg").css("color", "red").text("이메일 형식에 맞게 입력해주세요.").show();
+				$("#autoMsg").css("color", "#BB271A").text("이메일 형식에 맞게 입력해주세요.").show();
 			}
 		});
 		$("#auto-btn").on("click", function(){
 			const inputCode = $("#auto-code").val();
 				if(mailCode.toLowerCase() === inputCode.toLowerCase()){
-					$("#autoMsg").css("color", "blue").css("margin-right", "20px");
+					$("#autoMsg").css("color", "#2854C5").css("margin-right", "20px");
 					$("#autoMsg").text("인증 완료");
 					window.clearInterval(intervalId);
 					$("#auto-code").hide();
@@ -392,7 +393,7 @@ div[class=email-div],div[class=input-phone]{
 					mailCode = null;
 				}else{
 					$("#autoMsg").text("인증번호 입력해주세요");
-					$("#autoMsg").css("color", "red");
+					$("#autoMsg").css("color", "#BB271A");
 			}
 		});
 		let intervalId = null;
@@ -405,7 +406,7 @@ div[class=email-div],div[class=input-phone]{
 				if(sec === "00"){
 					if(min === "0"){
 						$("#autoMsg").text("인증시간 만료");
-						$("#autoMsg").css("color", "red");
+						$("#autoMsg").css("color", "#BB271A");
 						window.clearInterval(intervalId);
 						mailCode = null;
 					}else{
