@@ -193,6 +193,7 @@ public class MemberService {
 		int result = memberDao.deleteInfo(memberNo);
 		return result;
 	}
+
 	public Member selectMemberNo(int memberNo) {
 		return memberDao.selectMemberNo(memberNo);
 	}
