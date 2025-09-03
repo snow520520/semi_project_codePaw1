@@ -40,7 +40,9 @@
 					<th:block th:if="${list!='작성된 게시글이 존재하지 않습니다.'}">
 					<td th:text="${notice.noticeNo}"></td>
 					<td th:onclick="view([[${notice.noticeNo}]])">
-						<a th:text="${notice.noticeTitle}"></a>
+						<a th:text="${#strings.length(notice.noticeTitle) > 25 ?
+									#strings.substring(notice.noticeTitle, 0, 25) + '...' :
+									notice.noticeTitle}"></a>
 					</td>
 					<td th:text="${notice.noticeDate}"></td>
 					<td th:text="${notice.memberId}"></td>

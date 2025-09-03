@@ -137,18 +137,20 @@ hr {
     bottom: 30px;
     right: 30px;
     padding: 12px 20px;
-    background: #FFB22C;
-    color: #fff;
-    border: none;
+    background: #ffffff;
+    color: #444444;
+    font-weight: 500;
+    font-size: 16px;
+    border: 1px solid #444444;
     border-radius: 8px;
     cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     transition: background 0.2s, transform 0.2s;
 }
 
 .write-btn:hover {
     background: #FFB22C;
-    transform: translateY(-2px);
+    color: #ffffff;
+    border: none;
 }
 
 .pagination {

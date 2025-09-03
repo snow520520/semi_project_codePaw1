@@ -40,7 +40,9 @@
 					<td th:text="${admission.admissionNo}"></td>
 					<td th:onclick="checkAccess([[${admission.admissionNo}]], '[[${admission.memberId}]]')">
 						<span class="material-icons lock">lock_outline</span>
-						<a th:text="${admission.admissionTitle}"></a>
+						<a th:text="${#strings.length(admission.admissionTitle) > 25 ?
+									#strings.substring(admission.admissionTitle, 0, 25) + '...' :
+									admission.admissionTitle}"></a>
 					</td>
 					<td th:text="${admission.admissionDate}"></td>
 					<td th:text="${admission.memberId}"></td>					
