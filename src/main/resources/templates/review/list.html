@@ -49,6 +49,20 @@
 	cursor: pointer;
 }
 
+.review-title{
+	width: 190px;
+	height: 25px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+@media(prefers-reduced-motion: reduce){
+	.material-icons-outlined like-icon{
+	animation: none;
+	transition: none;
+	}
+}
 
 </style>
 
@@ -78,9 +92,10 @@
 								</div>
 								<div class="card-info">
 									<h3 class="review-title" th:data-reviewNo="${review.reviewNo}"
-										th:text="${review.reviewTitle}"></h3>
-									<span class="like-count" th:text="${review.likeCount}">0</span>
-									<span class="material-icons-outlined like-icon">favorite_border</span>
+										th:text="${#strings.length(review.reviewTitle) > 12 ? #strings.substring(review.reviewTitle, 0, 12) + '...':review.reviewTitle}"></h3>
+									<span th:text = "${review.likeCount}"></span>
+									<span th:if = "${review.isLike == 0}" class="material-icons-outlined">favorite_border</span>
+									<span th:if = "${review.likeCount}"class="material-icons-outlined">favorite</span>
 								</div>
 								<p class="date" th:text="${review.reviewDate}"></p>
 							</div>
@@ -94,7 +109,7 @@
 				<div class="write-btn-wrapper"
 					th:if="${session.member != null and (session.member.memberLevel == 1 || session.member.memberLevel == 2)}">
 					<a href="/review/reviewWriteFrm">
-						<button class="write-btn">글쓰기</button>
+						<button class="write-btn">작성하기</button>
 					</a>
 				</div>
 			</div>
@@ -137,7 +152,30 @@
 	       });
 	    });
 	 
-		document.querySelectorAll(".like-icon").forEach(icon =>{
+	    function likepush(reviewNo, obj){
+	    	const currentLike = $(obj).text();
+	    	const isLike = (currentLike === "favorite") ? 1 : 0;
+	    	$.ajax({
+	    		url : "/review/likepush",
+	    		data : {
+	    			reviewNo : reviewNo,
+	    			isLike : isLike
+	    		},
+	    		type : "post",
+	    		success : function(data){
+	    			if(isLike === 0){
+	    				$(obj).text("favorite_border");
+	    			}else{
+	    				$(obj).text("favorite");
+	    			}
+	    			
+	    			$(obj).next().text(data);
+	    		}
+	    	})
+	    }
+	    
+	    
+		/*document.querySelectorAll(".like-icon").forEach(icon =>{
 			icon.addEventListener("click", function(){
 				const reviewNo = this.dataset.reviewno;
 				const likeCounE1 = this.nextElementSibling;
@@ -157,7 +195,7 @@
 					}
 				})
 			})
-		})	  
+		})*/	  
 	  });
 	 </script>
 </body>

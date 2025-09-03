@@ -194,12 +194,8 @@ public class ReviewService {
 		return result;
 	}
 	@Transactional
-	public int toggleLike(int reviewNo, int memberNo, int isLike) {
-		if(isLike == 0) {
-			reviewDao.insertLike(reviewNo, memberNo);
-		}else {
-			reviewDao.deleteLike(reviewNo, memberNo);
-		}
-		return reviewDao.selectLikeCount(reviewNo);
-	}
+	public int likePush(int reviewNo, int memberNo, int isLike) {
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("reviewNo", reviewNo);
+		param.put("isLike", isLike);
 }

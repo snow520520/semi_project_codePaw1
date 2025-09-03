@@ -155,14 +155,12 @@ public class ReviewController {
 	
 	@PostMapping("/likepush")
 	@ResponseBody
-	public int likepush(@RequestParam int reviewNo,
-						@RequestParam int isLike,
-						@SessionAttribute Member member) {
+	public int likepush(int reviewNo,
+						int isLike, @SessionAttribute Member member) {
 		int memberNo = member.getMemberNo();
+		int result = reviewService.likepush(reviewNo, memberNo, isLike);
 		
-		int newCount = reviewService.toggleLike(reviewNo, memberNo, isLike);
-		
-		return newCount;
+		return result;
 	}
 	
 }
