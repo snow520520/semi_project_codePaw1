@@ -68,8 +68,8 @@
 			<div th:text="${a.memberId}"></div>
 			<div th:text="${a.adoptionDate}"></div>
 			<div class="line"> </div>
-			<a th:href="@{/adoption/updateFrm(adoptionNo=${a.adoptionNo})}">수정</a>
 			<a th:onclick="deleteAdoption([[${a.adoptionNo}]])">삭제</a>
+			<a th:href="@{/adoption/updateFrm(adoptionNo=${a.adoptionNo})}">수정</a>
 			<div class="info-tbl">
 				<div>입양 희망자 정보</div>
 				<table class="tbl member">
