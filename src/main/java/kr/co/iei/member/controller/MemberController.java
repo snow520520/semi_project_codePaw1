@@ -9,9 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +29,14 @@ public class MemberController {
     MemberController(NoticeController noticeController) {
         this.noticeController = noticeController;
     }
-
+    @RequestMapping(value = "/loginMsg")
+    public String loginMsg(Model model) {
+    	model.addAttribute("title", "로그인");
+		model.addAttribute("text", "로그인 후 사용합니다.");
+		model.addAttribute("icon", "info");
+		model.addAttribute("loc", "/member/login");
+		return "common/msg"; 
+    }
 	@GetMapping(value = "/loginFrm")
 	public String loginFrm(HttpServletRequest request, Model model) {
 	    Cookie[] cookies = request.getCookies();
@@ -185,10 +190,11 @@ public class MemberController {
 		}
 	}
 	@ResponseBody
-	@GetMapping(value = "/searchName") 
-	public List<Member> searchName(String memberName, Model model) {
+	@GetMapping(value = "/searchId") 
+	public Member searchId(String memberName, String memberPhone, Model model) {
 		//query에 memberName 전달 시 int 타입으로 리턴한 후 memberName과 memberPhone이 둘다 일치하는지 
-		List<Member> list1 = memberService.searchName(memberName);
-		return list1;
+		Member m = memberService.searchId(memberName, memberPhone);
+		
+		return m;
 	}
 }

@@ -31,11 +31,10 @@ public interface MemberDao {
 	int updateInfo(Member m);
 
 	int deleteInfo(int memberNo);
+	
 	Member selectMemberNo(int memberNo);
 
-	List<Member> searchName(String memberName);
-
-	List<Member> searchPhone(String memberPhone);
+	Member searchId(String memberName, String memberPhone);
 
 	
 

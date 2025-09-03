@@ -1,6 +1,7 @@
 package kr.co.iei;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,4 +18,11 @@ public class WebConfig implements WebMvcConfigurer {
 		// 기존 static 이미지
 		registry.addResourceHandler("/image/**").addResourceLocations("classpath:/static/image/");
 	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		
+		WebMvcConfigurer.super.addInterceptors(registry);
+	}
+	
 }

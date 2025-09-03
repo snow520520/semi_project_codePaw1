@@ -247,10 +247,13 @@ body {
 							<span class="material-icons-outlined">phone_android</span>
 							<input type = "text" name = "memberPhone" id="memberPhone" placeholder = "'ex)010-0000-0000'">
 						</div>
-						<div class="sub-btn">
-							<button type = "button" class="search-btn">아이디 찾기</button>			
+						<div class="result-div">
+							
 						</div>
 					</div>
+					<div class="sub-btn">
+							<button type = "button" class="search-btn">아이디 찾기</button>			
+						</div>
 					<div class="close">
 						<a href="#" class="modal-close">닫기</a>
 					</div>
@@ -323,11 +326,21 @@ body {
 			const memberName = $("#memberName").val();
 			const memberPhone = $("#memberPhone").val();
 			$.ajax({
-				url: "/member/searchName",
+				url: "/member/searchId",
 				type: "get",
 				data: {memberName : memberName, memberPhone : memberPhone},
-				success: function(data1){
-					console.log(data1);
+				success: function(result){
+					var errorMessage = $('<div>').text('아이디를 찾을 수 없습니다.');
+					const resultDiv = $(".result-div");
+					const div = $("<div>");
+					const span = $("<span>");
+					
+					console.log(result);
+					if(result === null){
+						resultDiv.append(errorMessage);
+					}
+				},error : function(){
+					
 				}
 			});
 		});
