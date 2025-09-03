@@ -426,7 +426,6 @@ div[class=email-div],div[class=input-phone]{
 		$("#addr-btn").on("click", function(){
 		    new daum.Postcode({
 		        oncomplete: function(data) {
-		            console.log(data);
 		            $("#memberAddr").val(data.roadAddress);
 		            $("#memberAddr").focus();
 		            $("#memberAddr").attr("readonly");

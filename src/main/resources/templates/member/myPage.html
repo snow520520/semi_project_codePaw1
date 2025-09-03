@@ -163,7 +163,17 @@ body {
 	padding: 7px;
 	border-radius: 2px;
 	cursor: pointer;
-	
+}
+.cc-btn{
+	width: 15%;
+	height: 35px;
+	margin: 10px;
+	background-color: #ffb22c;
+	color: white;
+	border: none;
+	padding: 7px;
+	border-radius: 2px;
+	cursor: pointer;
 }
 .material-icons-outlined {
 	cursor: pointer;
@@ -411,13 +421,37 @@ div[class=email-div],div[class=input-phone]{
 			let memberPwVal = $("#memberPw").val();
 			let memberPwReVal = $("#memberPwRe").val();
 			let emailVal = $("#email").val();
+			const checkPwMsg = $(".checkPw-msg");
+			const checkPwReMsg = $(".checkPwRe-msg");
+			checkPwReMsg.remove("invalid").remove("valid");
+
+			const memberPw = $("#memberPw");
+			const memberPwRe = $("#memberPwRe");
+			const pwReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,15}$/; //6~15자 이내 대소문자, 숫자 각 1개 이상 포함
+			const regResult = pwReg.test(memberPwVal);
 			
-			const autoMsg = $("#autoMsg").text("인증 완료");
+			const autoMsg = $("#autoMsg");
 			const autoBtn = $("#auto-btn");
 			if(!memberPwVal || !memberPwReVal || !emailVal){
 				e.preventDefault();
-				alert("수정할 정보를 입력해주세요.");
-			}else{
+				swal({
+					title : "정보 입력",
+					text : "수정할 정보를 입력해주세요.",
+					icon : "warning",
+					buttons :{
+						cancel : {
+							text : "확인",
+							value : false,
+							visible : true,
+							className : "cc-btn",
+							closeModal : true
+						},
+					}
+				});
+			}else if(regResult){
+				if(memberPwVal === memberPwReVal && emailVal === ""){
+					
+				}
 				$("#auto-btn").on("click", function(){
 					$("#autoMsg").text("인증 완료");
 				});
