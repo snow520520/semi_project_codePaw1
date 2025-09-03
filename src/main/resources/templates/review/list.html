@@ -20,6 +20,12 @@
 	color: #e57373;
 }
 
+.like-count{
+	font-size: 15px;
+	color: #555;
+	padding-left: 20px;
+}
+
 .card {
 	cursor: pointer;
 	width: 250px;
@@ -42,6 +48,8 @@
 .card-info h3 {
 	cursor: pointer;
 }
+
+
 </style>
 
 </head>
@@ -52,7 +60,7 @@
 			<div class="page-title">입양사진 및 후기</div>
 			<div class="searchTitle">
 				<form action="/review/searchTitle" method="get">
-					<input type="text" name="searchTitle" placeholder="제목을 입력해주세요."> 
+					<input type="text" name="searchTitle" placeholder="제목을 입력해주세요.">
 					<input type="hidden" name="reqPage" id="reqPage" value="1">
 					<button type="submit">
 						<span class="material-icons">search</span>
@@ -64,27 +72,30 @@
 				<div class="all-card">
 					<th:block th:each="review : ${list}">
 						<th:block th:if="${list != '작성된 게시글이 존재하지 않습니다.'}">
-						<div class="card-container">
-							<div class="card" th:data-reviewNo="${review.reviewNo}">
-								<img th:src="${review.thumbnail}" alt="후기 이미지">
+							<div class="card-container">
+								<div class="card" th:data-reviewNo="${review.reviewNo}">
+									<img th:src="${review.thumbnail}" alt="후기 이미지">
+								</div>
+								<div class="card-info">
+									<h3 class="review-title" th:data-reviewNo="${review.reviewNo}"
+										th:text="${review.reviewTitle}"></h3>
+									<span class="like-count" th:text="${review.likeCount}">0</span>
+									<span class="material-icons-outlined like-icon">favorite_border</span>
+								</div>
+								<p class="date" th:text="${review.reviewDate}"></p>
 							</div>
-							<div class="card-info">
-								<h3 class="review-title" th:data-reviewNo="${review.reviewNo}"
-									th:text="${review.reviewTitle}"></h3>
-								<span class="material-icons-outlined like-icon">favorite_border</span>
-							</div>
-							<p class="date" th:text="${review.reviewDate}"></p>
-						</div>
 						</th:block>
 					</th:block>
-					<th:block th:if ="${list =='작성된 게시글이 존재하지 않습니다.'}">
-					<div class="write-btn-wrapper">
-						<a th:if="${session.member != null and (session.member.memberLevel == 1 or session.member.memberLevel == 2)}"
-							href="/review/reviewWriteFrm">
-							<button class="write-btn">글쓰기</button>
-						</a>
-					</div>
+					<th:block th:if="${list =='작성된 게시글이 존재하지 않습니다.'}">
+
 					</th:block>
+
+				</div>
+				<div class="write-btn-wrapper"
+					th:if="${session.member != null and (session.member.memberLevel == 1 || session.member.memberLevel == 2)}">
+					<a href="/review/reviewWriteFrm">
+						<button class="write-btn">글쓰기</button>
+					</a>
 				</div>
 			</div>
 			<div id="pageNavi" th:utext="${pageNavi}"></div>
@@ -125,33 +136,29 @@
 	         location.href = "/review/view?reviewNo=" + reviewNo;
 	       });
 	    });
-	  });
-	  
-	  function likepush(reviewNo, obj) {
-			console.log(reviewNo);
-			const currentText = $(obj).text();
-			//현재 텍스트(아이콘)에 따라서 좋아요 or 좋아요 취소 로직을 따로 처리 
-			const isLike = (currentText === "favorite") ? 1 : 0;
-			$.ajax({
-				url : "/review/likepush",
-				data : {
-					reviewNo : reviewNo,
-					isLike : isLike
-				},
-				type : "post",
-				success : function(data) {
-					console.log(data);
-					if (isLike === 0) {
-						$(obj).text("favorite");
-					} else {
-						$(obj).text("favorite_border");
+	 
+		document.querySelectorAll(".like-icon").forEach(icon =>{
+			icon.addEventListener("click", function(){
+				const reviewNo = this.dataset.reviewno;
+				const likeCounE1 = this.nextElementSibling;
+				let isLike = (this.textContent === "favorite_border") ? 0 : 1;
+				
+				$.ajax({
+					url : "/review/likepush",
+					type : "post",
+					data : {reviewNo : reviewNo, isLike : isLike},
+					success : function(newCount){
+						if(isLike === 0){
+							icon.textContent ="favorite";
+						}else{
+							icon.textContent ="favorite_border";
+						}
+						likeCountE1.textContent = newCount;
 					}
-
-					$(obj).next().text(data);
-				}
+				})
 			})
-
-		}
+		})	  
+	  });
 	 </script>
 </body>
 </html>

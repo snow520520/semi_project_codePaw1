@@ -19,6 +19,8 @@ public class Review {
 	private Integer animalNo;
 	private Integer adoptionNo;
 	private String thumbnail;   // 첫 이미지 경로 or 기본이미지
+	private int isLike;
+	private int likeCount;
 
 
 }

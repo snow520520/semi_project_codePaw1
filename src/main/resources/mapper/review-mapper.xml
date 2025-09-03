@@ -82,4 +82,28 @@
 			review_date = to_char(sysdate,'yyyy-mm-dd')
 		where review_no = #{reviewNo}
 	</update>
+	
+	<insert id="insertLike">
+		insert into post_like
+		(review_no, member_no)
+		values (
+		#{reviewNo},
+		#{memberNo}
+		)
+	</insert>
+	
+	<delete id="deleteLike">
+		delete from post_like
+		(review_no, member_no)
+		values (
+		#{reviewNo},
+		#{memberNo}
+		)
+	</delete>
+	
+	<select id="selectLikeCount" resultType = "int">
+		select from post_like
+		where review_no = #{reviewNo}
+	</select>
+	
 </mapper>

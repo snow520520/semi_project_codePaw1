@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import kr.co.iei.review.model.vo.Review;
 
@@ -26,5 +27,12 @@ public interface ReviewDao {
 
 	int updateReview(Review review);
 
+	public int insertLike(@Param("reviewNo") int reviewNo, 
+						  @Param("memberNo") int memberNo);
+	public int deleteLike(@Param("reviewNo") int reviewNo, 
+						  @Param("memberNo") int memberNo);
+	public int selectLikeCount(@Param("reviewNo") int reviewNo);
+
+	
 
 }
