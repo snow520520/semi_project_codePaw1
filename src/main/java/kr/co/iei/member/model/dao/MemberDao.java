@@ -30,5 +30,9 @@ public interface MemberDao {
 
 	int updateInfo(Member m);
 
+	Member selectMemberNo(int memberNo);
+
+	
+
 
 }
