@@ -50,16 +50,20 @@
                                 <img class="thumbnail" th:src="${ap.thumbnailUrl}" alt="썸네일" />
                             </div>
                         </a>
-                        <div class="card-info">
-                            <h3 th:text="${ap.protectTitle}">제목</h3>
-                            <span class="like" 
-                                  th:data-protect-no="${ap.protectNo}">
-                                <span class="material-icons like-icon" th:classappend="${ap.likedByUser} ? ' liked' : ''">
-                                    <span th:text="${ap.likedByUser} ? 'favorite' : 'favorite_border'">favorite_border</span>
-                                </span>
-                                <span class="like-count" th:text="${ap.likeCount}">0</span>
-                            </span>
-                        </div>
+						<div class="card-info">
+						    <h3 th:text="${#strings.length(ap.protectTitle) > 12 ? 
+						                  #strings.substring(ap.protectTitle, 0, 12) + '...' : 
+						                  ap.protectTitle}">
+						        제목
+						    </h3>
+						    <span class="like" 
+						          th:data-protect-no="${ap.protectNo}">
+						        <span class="material-icons like-icon" th:classappend="${ap.likedByUser} ? ' liked' : ''">
+						            <span th:text="${ap.likedByUser} ? 'favorite' : 'favorite_border'">favorite_border</span>
+						        </span>
+						        <span class="like-count" th:text="${ap.likeCount}">0</span>
+						    </span>
+						</div>
                         <p class="date" th:text="${ap.protectDate}">2025-xx-xx</p>
                     </div>
                 </div>

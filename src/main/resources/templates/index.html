@@ -53,8 +53,12 @@
                                 <img th:src="${ap.thumbnailUrl}" alt="이미지" />
                             </div>
                         </a>
-                        <div class="card-info">
-                            <h3 th:text="${ap.protectTitle}">제목</h3>
+						<div class="card-info">
+						    <h3 th:text="${#strings.length(ap.protectTitle) > 12 ? 
+						                  #strings.substring(ap.protectTitle, 0, 12) + '...' : 
+						                  ap.protectTitle}">
+						        제목
+						    </h3>
                             <span class="like" th:data-protect-no="${ap.protectNo}">
                                 <span class="material-icons like-icon"
                                       th:classappend="${ap.likedByUser} ? ' liked' : ''"
@@ -101,35 +105,37 @@
 	    moreBtn.addEventListener("click", () => {
 	        fetch(`/mainAllpage/loadMore?start=${startIndex}&count=${count}`)
 	            .then(res => res.json())
-	            .then(data => {
-	                data.forEach(ap => {
-	                    const div = document.createElement("div");
-	                    div.className = "card-container";
-	                    div.innerHTML = `
-	                        <a href="/mainAllpage/detail?protectNo=${ap.protectNo}">
-	                            <div class="card">
-	                                <img class="thumbnail" src="${ap.thumbnailUrl}" alt="썸네일" />
-	                            </div>
-	                        </a>
-	                        <div class="card-info">
-	                            <h3>${ap.protectTitle}</h3>
-	                            <span class="like" data-protect-no="${ap.protectNo}">
-	                                <span class="material-icons like-icon ${ap.likedByUser ? 'liked' : ''}">
-	                                    ${ap.likedByUser ? 'favorite' : 'favorite_border'}
-	                                </span>
-	                                <span class="like-count">${ap.likeCount}</span>
-	                            </span>
-	                        </div>
-	                        <p class="date">${ap.protectDate}</p>
-	                    `;
-	                    cardContainer.appendChild(div);
-	                });
-	                startIndex += data.length;
-	                if (data.length < count) moreBtn.style.display = "none";
-	            })
-	            .catch(error => {
-	                console.error('데이터 로딩 중 오류 발생:', error);
-	            });
+				.then(data => {
+				    data.forEach(ap => {
+				        const div = document.createElement("div");
+				        div.className = "card-container";
+				        let title = ap.protectTitle;
+				        if (title.length > 12) {
+				            title = title.substring(0, 12) + "...";
+				        }
+
+				        div.innerHTML = `
+				            <a href="/mainAllpage/detail?protectNo=${ap.protectNo}">
+				                <div class="card">
+				                    <img class="thumbnail" src="${ap.thumbnailUrl}" alt="썸네일" />
+				                </div>
+				            </a>
+				            <div class="card-info">
+				                <h3>${title}</h3>
+				                <span class="like" data-protect-no="${ap.protectNo}">
+				                    <span class="material-icons like-icon ${ap.likedByUser ? 'liked' : ''}">
+				                        ${ap.likedByUser ? 'favorite' : 'favorite_border'}
+				                    </span>
+				                    <span class="like-count">${ap.likeCount}</span>
+				                </span>
+				            </div>
+				            <p class="date">${ap.protectDate}</p>
+				        `;
+				        cardContainer.appendChild(div);
+				    });
+				    startIndex += data.length;
+				    moreBtn.style.display = "none";
+				})
 	    });
 	}
 	</script>
