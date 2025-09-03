@@ -423,9 +423,7 @@ div[class=email-div],div[class=input-phone]{
 			let emailVal = $("#email").val();
 			const checkPwMsg = $(".checkPw-msg");
 			const checkPwReMsg = $(".checkPwRe-msg");
-			const autoCer = false;
 			checkPwReMsg.remove("invalid").remove("valid");
-			console.log(!$("#email").hasClass("confirmed"));
 			const memberPw = $("#memberPw");
 			const memberPwRe = $("#memberPwRe");
 			const pwReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,15}$/; //6~15자 이내 대소문자, 숫자 각 1개 이상 포함
@@ -498,7 +496,7 @@ div[class=email-div],div[class=input-phone]{
 		$(".delete-button").on("click", function(){
 			swal({
 				title : "회원 탈퇴",
-				text : "회원을 탈퇴하시겠습니까?",
+				text : "회원탈퇴를 하시겠습니까?",
 				icon : "warning",
 				buttons :{
 					cancel : {
