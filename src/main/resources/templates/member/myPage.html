@@ -145,7 +145,17 @@ body {
 	font-size: 20px;
 	cursor: pointer;
 }
-
+.cc-btn{
+	width: 60px;
+	height: 40px;
+	color: white;
+	background-color: #ffb22c;
+	padding: 8px;
+	border: none;
+	border-radius: 5px;
+	font-size: 15px;
+	cursor: pointer;
+}
 .update-form>.submit-btn {
 	display: flex;
 	justify-content: center;
@@ -163,7 +173,6 @@ body {
 	padding: 7px;
 	border-radius: 2px;
 	cursor: pointer;
-	
 }
 .material-icons-outlined {
 	cursor: pointer;
@@ -238,12 +247,13 @@ div[class=email-div],div[class=input-phone]{
 				</div>
 				<div class="submit-btn upd">
 					<button type="submit" class="update-button" style="font-weight: bold;">정보 수정</button>
-					<button type="submit" class="delete-button" style="font-weight: bold; margin-left: 60px;">회원탈퇴</button>
+					<button type="button" class="delete-button" style="font-weight: bold; margin-left: 60px;">회원탈퇴</button>
 				</div>
 			</form>
 		</section>
 	</main>
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script src="/js/sweetalert.min.js"></script>
 	<script>
 		$("#memberPw").on("keyup", function() {
 			const checkPwMsg = $(".checkPw-msg");
@@ -320,7 +330,6 @@ div[class=email-div],div[class=input-phone]{
 			const emailReg = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/; // '계정@도메인.최상위도메인'
 			const receiver = $("#email").val();
 			const regResult = emailReg.test(receiver);
-			console.log(receiver);
 			if(regResult){
 				if(!receiver){
 					$("#autoMsg").css("color", "red").css("margin-right", "40px").text("이메일을 입력해주세요.").show();
@@ -350,7 +359,8 @@ div[class=email-div],div[class=input-phone]{
 			const inputCode = $("#auto-code").val();
 				if(mailCode.toLowerCase() === inputCode.toLowerCase()){
 					$("#autoMsg").css("color", "blue").css("margin-right", "20px");
-					$("#autoMsg").text("인증 완료");
+					$("#autoMsg").addClass("auto-btn").text("인증 완료");
+					$("#email").addClass("confirmed");
 					window.clearInterval(intervalId);
 					$("#auto-code").hide();
 					$("#auto-btn").hide();
@@ -411,17 +421,106 @@ div[class=email-div],div[class=input-phone]{
 			let memberPwVal = $("#memberPw").val();
 			let memberPwReVal = $("#memberPwRe").val();
 			let emailVal = $("#email").val();
+			const checkPwMsg = $(".checkPw-msg");
+			const checkPwReMsg = $(".checkPwRe-msg");
+			const autoCer = false;
+			checkPwReMsg.remove("invalid").remove("valid");
+			console.log(!$("#email").hasClass("confirmed"));
+			const memberPw = $("#memberPw");
+			const memberPwRe = $("#memberPwRe");
+			const pwReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,15}$/; //6~15자 이내 대소문자, 숫자 각 1개 이상 포함
+			const regResult = pwReg.test(memberPwVal);
 			
-			const autoMsg = $("#autoMsg").text("인증 완료");
+			const emailReg = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/; // '계정@도메인.최상위도메인'
+			const receiver = $("#email").val();
+			const regResultEm = emailReg.test(receiver);
+			
+			const autoMsg = $("#autoMsg");
 			const autoBtn = $("#auto-btn");
+			
 			if(!memberPwVal || !memberPwReVal || !emailVal){
 				e.preventDefault();
-				alert("수정할 정보를 입력해주세요.");
-			}else{
-				$("#auto-btn").on("click", function(){
-					$("#autoMsg").text("인증 완료");
+				swal({
+					title : "정보 입력",
+					text : "수정할 정보를 입력해주세요.",
+					icon : "warning",
+					buttons :{
+						cancel : {
+							text : "확인",
+							value : false,
+							visible : true,
+							className : "cc-btn",
+							closeModal : true
+						}
+					}
 				});
+			}else {
+				if(memberPwVal === memberPwReVal){
+					if(!$("#email").hasClass("confirmed")){
+						e.preventDefault();
+						swal({
+							title: "수정 실패",
+							text: "이메일 인증을 해주세요.",
+							icon: "warning",
+							buttons: {
+								cancel : {
+									text : "확인",
+									value : false,
+									visible : true,
+									className : "cc-btn",
+									closeModal : true
+								}
+							}
+						})
+					}else{
+						swal({
+							title: "수정 완료",
+							text: "개인정보 수정 완료",
+							icon: "success",
+							buttons: {
+								confirm:{
+									text: "확인",
+									value : true,
+									visible : true,
+									className : "cc-btn",
+									closeModal : true
+								}
+							}.then(function(isConfirm){
+								if(isConfirm){
+									location.href="redirect:/";
+								}
+							})
+						});
+					}
+				}
 			}
+		});
+		$(".delete-button").on("click", function(){
+			swal({
+				title : "회원 탈퇴",
+				text : "회원을 탈퇴하시겠습니까?",
+				icon : "warning",
+				buttons :{
+					cancel : {
+						text : "취소",
+						value : false,
+						visible : true,
+						className : "cc-btn",
+						closeModal : true
+					},
+					confirm : {
+						text : "탈퇴",
+						value : true,
+						visible : true,
+						className : "cc-btn",
+						closeModal : true
+					}
+				}
+			}).then(function(isConfirm){
+				if(isConfirm){
+					location.href = "/member/deleteInfo";
+				}
+			});
 		});
 	</script>
 	<th:block th:include="common/footer"></th:block>

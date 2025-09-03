@@ -164,4 +164,21 @@ public class MemberController {
 					
 		}
 	}
+	@GetMapping(value = "/deleteInfo")
+	public String deleteInfo(Member m, Model model, HttpSession session) {
+		Member member = (Member)session.getAttribute("member");
+		if(member.getMemberNo() != 0) {
+			int memberNo = member.getMemberNo();
+			int result = memberService.deleteInfo(memberNo);
+			if(result > 0) {
+				model.addAttribute("title", "삭제 완료");
+				model.addAttribute("text", "계정삭제가 완료되었습니다.");
+				model.addAttribute("icon", "success");
+				model.addAttribute("loc", "/member/logout");
+			}
+			return "common/msg";
+		}else {
+			return "redirect:/";
+		}
+	}
 }

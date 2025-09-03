@@ -66,11 +66,14 @@
 	  		<if test="memberAddr != null">
 	  			member_addr = #{memberAddr}, 
 	  		</if>
-	  		<if test="memberPhone">
+	  		<if test="memberPhone != null">
 	  			member_phone = #{memberPhone}
 	  		</if>
   			where member_id = #{memberId}
   	</update>
+  	<delete id="deleteInfo">
+  		delete from member_tbl where member_no = #{memberNo}
+  	</delete>
   	
   	<select id="selectMemberNo" resultType="member">
   		select * from member_tbl where member_no = #{memberNo}
