@@ -24,7 +24,7 @@ public class ReviewService {
 	private ReviewDao reviewDao;
 
 	// 후기 목록
-	public ReviewListData reviewList(int reqPage) {
+	public ReviewListData reviewList(int reqPage, int memberNo) {
 		int numPerPage = 16;
 		int end = reqPage * numPerPage;
 		int start = end - numPerPage + 1;
@@ -32,6 +32,7 @@ public class ReviewService {
 		HashMap<String, Object> param = new HashMap<>();
 		param.put("start", start);
 		param.put("end", end);
+		param.put("memberNo", memberNo);
 
 		int totalCount = reviewDao.selectReviewList();
 		int totalPage = (int) Math.ceil(totalCount / (double) numPerPage);
@@ -160,9 +161,6 @@ public class ReviewService {
 				}else {
 					r.setThumbnail("/editorImage/default.png");
 				}
-				
-			int count = reviewDao.selectLikeCount(r.getReviewNo());
-			r.setLikeCount(count);
 			}
 			ReviewListData rld = new ReviewListData(list, pageNavi);
 			return rld;
@@ -194,12 +192,22 @@ public class ReviewService {
 		return result;
 	}
 	@Transactional
-	public int toggleLike(int reviewNo, int memberNo, int isLike) {
-		if(isLike == 0) {
-			reviewDao.insertLike(reviewNo, memberNo);
-		}else {
-			reviewDao.deleteLike(reviewNo, memberNo);
-		}
-		return reviewDao.selectLikeCount(reviewNo);
+	public int likepush(int reviewNo, int memberNo, int isLike) {
+	    HashMap<String, Object> param = new HashMap<>();
+	    param.put("reviewNo", reviewNo);
+	    param.put("memberNo", memberNo);
+
+	    if (isLike == 0) {
+	     
+	        reviewDao.insertLike(param);
+	    } else {
+	    
+	        reviewDao.deleteLike(param);
+	    }
+
+	    return reviewDao.selectLikeCount(reviewNo);
 	}
+
+
+
 }

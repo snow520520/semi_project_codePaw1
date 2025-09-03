@@ -55,8 +55,6 @@ input{
 
 .all-review{
 	padding-top: 20px;
-	
-	
 }
 
 .all-card {
@@ -82,6 +80,7 @@ input{
     width: 100%;
     align-items: center;
     margin-top: 5px;
+    
 }
 
 .card-info h3 {
@@ -137,7 +136,7 @@ input{
     right: 30px;          
     padding: 12px 20px;  
     background: #ffffff;
-	width: 100px;
+	width: 110px;
 	height: 50px;
     color: #444444;
     font-weight: 500;
