@@ -189,5 +189,8 @@ public class MemberService {
 		
 		return result;
 	}
+	public Member selectMemberNo(int memberNo) {
+		return memberDao.selectMemberNo(memberNo);
+	}
 }
 
