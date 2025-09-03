@@ -71,4 +71,8 @@
 	  		</if>
   			where member_id = #{memberId}
   	</update>
+  	
+  	<select id="selectMemberNo" resultType="member">
+  		select * from member_tbl where member_no = #{memberNo}
+  	</select>
 </mapper>

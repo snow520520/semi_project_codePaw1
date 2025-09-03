@@ -44,15 +44,18 @@
 	overflow: hidden;
 }
 
+.section>div>a{
+	margin-left: 20px;
+}
+
+.u-d-btn{
+	float: right;
+}
+
 .updateReview{
 	cursor: pointer;
 	color : #000;
 	text-decoration: none;
-}
-
-.updateReview:hover{
-	text-decoration: underline;
-	color: blue;
 }
 
 .deleteReview{
@@ -61,12 +64,28 @@
 	text-decoration: none;
 }
 
-.deleteReview:hover{
-	text-decoration: underline;
-	color: red;
+.btn-box{
+	text-align: center;
+}
+.btn-box>button{
+	border: 1px solid #888888;
+	background-color: #ffffff;
+	width: 200px;
+	height: 50px;
+	border-radius: 10px;
+	font-size: 16px;
+	font-weight: 400;
+	cursor: pointer;
+	transition-duration: 0.2s;
 }
 
-
+.btn-box>button:hover {
+	background-color:#FFB22C;
+	border: none;
+	color: #ffffff;
+	font-weight: 400;
+	transition-duration: 0.2s; 
+}
 </style>
 
 </head>
@@ -75,13 +94,13 @@
 	<main class="content">
 		<section class="section">
 			<div th:text="${review.reviewTitle}"></div>
-			<div th:text="${review.memberNo}"></div>
+			<div th:text="${member.memberId}"></div>
 			<div th:text="${review.reviewDate}"></div>
 			<div class="line"></div>
-			<th:block th:if="${session.member != null && (session.member.memberNo == review.memberNo || session.member.memberLevel == 1)}">
+			<div class="u-d-btn" th:if="${session.member != null && (session.member.memberNo == review.memberNo || session.member.memberLevel == 1)}">
 				<a class="updateReview" th:href="@{/review/reviewUpdateFrm(reviewNo=${review.reviewNo})}">수정</a>
 				<a class="deleteReview" href="#" th:onclick="deleteReview([[${review.reviewNo}]]);">삭제</a>
-			</th:block>
+			</div>
 			<div class="reviewContent" th:utext="${review.reviewContent}"></div>
 			<div class="line"></div>
 			<div class="btn-box">
