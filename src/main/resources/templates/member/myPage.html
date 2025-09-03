@@ -339,7 +339,7 @@ div[class=email-div],div[class=input-phone]{
 						type: "get",
 						data: {receiver : receiver},
 						success: function(code){
-							$("#autoMsg").text("Yeah~").css("color", "blue").css("font-size", "12px").show();
+							$("#autoMsg").text("번호 입력").css("color", "blue").css("font-size", "12px").show();
 							mailCode = code;
 							$("#email-btn").hide();
 							$("#auto-code").show();
@@ -349,7 +349,7 @@ div[class=email-div],div[class=input-phone]{
 							autoTime();
 						}
 					});
-						$("#autoMsg").isEmpty().hide();
+					$("#autoMsg").isEmpty().hide();
 				}
 			}else{
 				$("#autoMsg").css("color", "red").text("이메일 형식에 맞게 입력해주세요.").show();
