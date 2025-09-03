@@ -215,7 +215,10 @@ body {
 	border: none;
 }
 .admin-table th{
-	background-color: #F7F7F7;
+	background-color: rgba(255, 178, 44, 0.1);
+}
+.admin-table tr:hover{
+  	background-color: rgba(255, 178, 44, 0.05);
 }
 .selectChangeLevel>.selectChangeLevel-btn{
 	width: 100px;
@@ -328,7 +331,7 @@ body {
 }
 .page-item{
 	text-decoration: none;
-	color : #FFB22C;
+	color : #333333;
 }
 </style>
 </head>
@@ -419,7 +422,7 @@ body {
 						</td>
 					</tr>
 				</table>
-			<!-- <div id="pageNavi" style="height:100px;" th:utext="${pageNaviMember}"></div> -->
+			<div id="pageNavi" style="height:100px;" th:utext="${pageNaviMember}"></div>
 		</section>
 	</main>
 	<script>

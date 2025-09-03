@@ -61,7 +61,9 @@ public class ReviewController {
 	@GetMapping(value = "/view")
 	public String view(int reviewNo, Model model) {
 		Review review = reviewService.selectOneReview(reviewNo);
+		Member m = memberService.selectMemberNo(review.getMemberNo());
 		model.addAttribute("review", review);
+		model.addAttribute("member", m);
 		return "review/view";
 	}
 

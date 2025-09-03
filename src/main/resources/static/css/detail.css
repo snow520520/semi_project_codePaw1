@@ -69,13 +69,14 @@ body {
 }
 
 .form-table th {
-    background-color: #FFB22C;
-    color: #f0f0f0;
+    background-color: rgba(255, 178, 44, 0.1);
+    color: #222222;
+    font-weight: 500;
 }
 
 .image-box {
     width: 100%;
-    min-height: 200px; 
+    min-height: 350px; 
     border: 1px solid #ddd;
     margin-bottom: 30px;
     padding: 10px;
@@ -111,12 +112,12 @@ a {
 .buttons .submit-button {
     width: 250px;
     padding: 15px;
-    background-color: #FFB22C;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    background-color: #ffffff;
+    color: #444444;
+    border: 1px solid #444444;
+    border-radius: 8px;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 500;
     cursor: pointer;
     display: inline-block;
     transition: background-color 0.2s;
@@ -124,5 +125,6 @@ a {
 
 .buttons .submit-button:hover {
     background: #FFB22C;
-    transform: translateY(-2px);
+    color: #ffffff;
+    border:none;
 }

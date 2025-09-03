@@ -75,8 +75,8 @@
 			<div th:text="${admission.admissionDate}"></div>
 			<div class="line"> </div>
 			<th:block th:if="${session.member != null && (session.member.memberId == member.memberId || session.member.memberLevel == 1)}">
-			<a class="updateAdmission" th:href="@{/admission/updateFrm(admissionNo=${admission.admissionNo},animalNo=${animal.animalNo})}">수정</a>
 			<a th:onclick="deleteAdmission([[${admission.admissionNo}]]);">삭제</a>
+			<a class="updateAdmission" th:href="@{/admission/updateFrm(admissionNo=${admission.admissionNo},animalNo=${animal.animalNo})}">수정</a>
 			</th:block>
 			<div class="info-tbl">
 				<div>보호자 정보</div>

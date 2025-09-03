@@ -80,18 +80,25 @@ a{
 }
 .insertNotice{
 	float: right;
-	width:100px;
-	height: 30px;
-	border: none;
-	background-color: #FFB22C;
-	border-radius: 50px;
+	padding: 5px 10px;
+	border: 1px solid #444444;
+	background-color: #ffffff;
+	border-radius: 8px;
 	margin-top: 20px;
 	margin-bottom: 20px; 
+	transition: background 0.2s, transform 0.2s;
 }
 .insertNotice>a{
 	font-size:16px;
-	color: #ffffff;
+	color: #444444;
 	font-weight: 500;
+}
+.insertNotice:hover{
+	border: none;
+	background-color: #FFB22C; 
+}
+.insertNotice:hover>a{
+	color: #ffffff;
 }
 /*페이징 처리 css */
 .pagination {
