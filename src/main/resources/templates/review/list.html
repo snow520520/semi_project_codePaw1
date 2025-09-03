@@ -5,25 +5,27 @@
 <title>입양후기 목록</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/css/review.css">
-
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
 	rel="stylesheet">
 
 <style>
-.like-icon {
-	cursor: pointer;
-	font-size: 23px;
-	vertical-align: middle;
-	color: #e57373;
+.like-box {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px; /* 숫자와 하트 사이 여백 */
+	min-width: 35px; /* 항상 일정한 공간 확보 (밀림 방지) */
 }
 
-.like-count{
+.like-count {
 	font-size: 15px;
 	color: #555;
-	padding-left: 20px;
+}
+
+.like-icon {
+	cursor: pointer;
+	font-size: 20px;
+	vertical-align: middle;
+	color: #e57373;
 }
 
 .card {
@@ -45,27 +47,21 @@
 	object-fit: cover;
 }
 
-.card-info h3 {
-	cursor: pointer;
+.card-info {
+	display: flex;
+	align-items: center;
+	justify-content: space-between; /* 제목 왼쪽, 좋아요 오른쪽 */
+	margin-top: 5px;
 }
 
-.review-title{
-	width: 190px;
-	height: 25px;
+.review-title {
+	flex: 1;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+	cursor: pointer;
 }
-
-@media(prefers-reduced-motion: reduce){
-	.material-icons-outlined like-icon{
-	animation: none;
-	transition: none;
-	}
-}
-
 </style>
-
 </head>
 <body>
 	<th:block th:include="common/header"></th:block>
@@ -82,6 +78,7 @@
 				</form>
 			</div>
 			<hr class="border">
+
 			<div class="all-review">
 				<div class="all-card">
 					<th:block th:each="review : ${list}">
@@ -92,20 +89,25 @@
 								</div>
 								<div class="card-info">
 									<h3 class="review-title" th:data-reviewNo="${review.reviewNo}"
-										th:text="${#strings.length(review.reviewTitle) > 12 ? #strings.substring(review.reviewTitle, 0, 12) + '...':review.reviewTitle}"></h3>
-									<span th:text = "${review.likeCount}"></span>
-									<span th:if = "${review.isLike == 0}" class="material-icons-outlined">favorite_border</span>
-									<span th:if = "${review.likeCount}"class="material-icons-outlined">favorite</span>
+										th:text="${#strings.length(review.reviewTitle) > 12 ? #strings.substring(review.reviewTitle, 0, 12) + '...' : review.reviewTitle}">
+									</h3>
+
+									<!-- 좋아요 영역 -->
+									<div class="like-box" th:data-reviewNo="${review.reviewNo}"
+										th:data-isLike="${review.isLike}"
+										th:data-login="${session.member != null}">
+										<span class="like-count" th:text="${review.likeCount}">0</span>
+										<span class="material-icons like-icon">
+											[[${review.isLike == 1 ? 'favorite' : 'favorite_border'}]] </span>
+									</div>
 								</div>
 								<p class="date" th:text="${review.reviewDate}"></p>
 							</div>
 						</th:block>
 					</th:block>
-					<th:block th:if="${list =='작성된 게시글이 존재하지 않습니다.'}">
-
-					</th:block>
-
+					<th:block th:if="${list =='작성된 게시글이 존재하지 않습니다.'}"></th:block>
 				</div>
+
 				<div class="write-btn-wrapper"
 					th:if="${session.member != null and (session.member.memberLevel == 1 || session.member.memberLevel == 2)}">
 					<a href="/review/reviewWriteFrm">
@@ -118,85 +120,57 @@
 	</main>
 	<th:block th:include="common/footer"></th:block>
 
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-	  document.addEventListener("DOMContentLoaded", function() {
-	    const likeIcons = document.querySelectorAll(".like-icon");
+$(document).on("click", ".like-icon", function() {
+    const box = $(this).closest(".like-box");
+    const icon = $(this);
+    const reviewNo = box.data("reviewno");
+    let isLike = parseInt(box.data("islike"));
+    const isLogin = (box.data("login") === true || box.data("login") === "true");
+    const countEl = box.find(".like-count");
 
-	    likeIcons.forEach(icon => {
-	      icon.addEventListener("click", function() {
-	        if (this.textContent === "favorite_border") {
-	          this.textContent = "favorite";   
-	          this.classList.remove("material-icons-outlined");
-	          this.classList.add("material-icons");
-	        } else {
-	          this.textContent = "favorite_border"; 
-	          this.classList.remove("material-icons");
-	          this.classList.add("material-icons-outlined");
-	        }
-	      });
-	    });
+    if (!isLogin) {
+        swal("로그인 후 이용 가능합니다.", "", "warning");
+        return;
+    }
 
-	    // 카드 클릭 -> 상세 페이지 이동
-	    document.querySelectorAll(".card").forEach(card =>{
-	    	 card.addEventListener("click",function() {
-	    		 const reviewNo = this.dataset.reviewno;
-	    		 location.href= "/review/view?reviewNo=" + reviewNo;
-	    	 })
-	    });
-	    
-	    // 제목 클릭 -> 상세 페이지 이동
-	    document.querySelectorAll(".review-title").forEach(title => {
-	       title.addEventListener("click", function() {
-	         const reviewNo = this.dataset.reviewno;
-	         location.href = "/review/view?reviewNo=" + reviewNo;
-	       });
-	    });
-	 
-	    function likepush(reviewNo, obj){
-	    	const currentLike = $(obj).text();
-	    	const isLike = (currentLike === "favorite") ? 1 : 0;
-	    	$.ajax({
-	    		url : "/review/likepush",
-	    		data : {
-	    			reviewNo : reviewNo,
-	    			isLike : isLike
-	    		},
-	    		type : "post",
-	    		success : function(data){
-	    			if(isLike === 0){
-	    				$(obj).text("favorite_border");
-	    			}else{
-	    				$(obj).text("favorite");
-	    			}
-	    			
-	    			$(obj).next().text(data);
-	    		}
-	    	})
-	    }
-	    
-	    
-		/*document.querySelectorAll(".like-icon").forEach(icon =>{
-			icon.addEventListener("click", function(){
-				const reviewNo = this.dataset.reviewno;
-				const likeCounE1 = this.nextElementSibling;
-				let isLike = (this.textContent === "favorite_border") ? 0 : 1;
-				
-				$.ajax({
-					url : "/review/likepush",
-					type : "post",
-					data : {reviewNo : reviewNo, isLike : isLike},
-					success : function(newCount){
-						if(isLike === 0){
-							icon.textContent ="favorite";
-						}else{
-							icon.textContent ="favorite_border";
-						}
-						likeCountE1.textContent = newCount;
-					}
-				})
-			})
-		})*/	  
-	  });
-	 </script>
+    $.ajax({
+        url: "/review/likepush",
+        type: "post",
+        data: { reviewNo: reviewNo, isLike: isLike },
+        success: function(newCount) {
+            if (isLike === 0) {
+                icon.text("favorite");
+                box.data("islike", 1);
+            } else {
+                icon.text("favorite_border");
+                box.data("islike", 0);
+            }
+            countEl.text(newCount);
+        },
+        error: function(xhr, status, err) {
+            console.error("좋아요 AJAX 실패:", status, err);
+        }
+    });
+});
+
+// 카드 클릭 -> 상세 페이지 이동
+document.querySelectorAll(".card").forEach(card =>{
+    card.addEventListener("click",function() {
+        const reviewNo = this.dataset.reviewno;
+        location.href= "/review/view?reviewNo=" + reviewNo;
+    })
+});
+
+// 제목 클릭 -> 상세 페이지 이동
+document.querySelectorAll(".review-title").forEach(title => {
+    title.addEventListener("click", function() {
+        const reviewNo = this.dataset.reviewno;
+        location.href = "/review/view?reviewNo=" + reviewNo;
+    });
+});
+</script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 </html>

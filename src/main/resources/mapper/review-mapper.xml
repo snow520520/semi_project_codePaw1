@@ -1,109 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="kr.co.iei.review.model.dao.ReviewDao">
 
-	<select id="reviewList" resultType="review">
-		select * from
-		(select rownum as rnum, n.* from
-		(select
-		review_no,
-		review_content, review_title, review_date
-		from animal_review order by
-		review_no desc
-		)n
-		)
-		where #{start} <![CDATA[ <= ]]>
-		rnum and rnum <![CDATA[ <= ]]>
-		#{end}
-	</select>
+  <!-- 후기 목록 + 좋아요 개수 + 내가 누른 여부 -->
+  <select id="reviewList" resultType="review">
+    SELECT *
+    FROM (
+      SELECT rownum AS rnum, n.*
+      FROM (
+        SELECT 
+          ar.review_no       AS reviewNo,
+          ar.review_title    AS reviewTitle,
+          ar.review_content  AS reviewContent,
+          ar.review_date     AS reviewDate,
+          ar.member_no       AS memberNo,
+          ar.animal_no       AS animalNo,
+          ar.adoption_no     AS adoptionNo,
+          -- 썸네일은 Service에서 따로 처리
+          (SELECT COUNT(*) 
+             FROM post_like pl 
+            WHERE pl.review_no = ar.review_no) AS likeCount,
+          (SELECT COUNT(*) 
+             FROM post_like pl 
+            WHERE pl.review_no = ar.review_no
+              AND pl.member_no = #{memberNo}) AS isLike
+        FROM animal_review ar
+        ORDER BY ar.review_no DESC
+      ) n
+    )
+    WHERE rnum <![CDATA[>=]]> #{start}
+      AND rnum <![CDATA[<=]]> #{end}
+  </select>
 
-	<select id="selectReviewList" resultType="int">
-		select count(*) from
-		animal_review
-	</select>
+  <select id="selectReviewList" resultType="int">
+    SELECT COUNT(*) FROM animal_review
+  </select>
 
-	<select id="searchTitleCount" resultType="int">
-		select count(*) from
-		animal_review where review_title like
-		'%'||'${searchTitle}'||'%'
-	</select>
+  <select id="searchTitleCount" resultType="int">
+    SELECT COUNT(*) 
+    FROM animal_review 
+    WHERE review_title LIKE '%' || #{searchTitle} || '%'
+  </select>
 
-	<select id="searchTitleReview" resultType="review">
-		select * from
-		(select rownum as rnum, n.* from
-		(select
-		review_no,
-		review_content, review_title, review_date
-		from animal_review order by
-		review_no desc
-		)n
-		)
-		where #{start} <![CDATA[ <= ]]>
-		rnum and rnum <![CDATA[ <= ]]>
-		#{end}
-	</select>
+  <select id="searchTitleReview" resultType="review">
+    SELECT *
+    FROM (
+      SELECT rownum AS rnum, n.*
+      FROM (
+        SELECT 
+          ar.review_no       AS reviewNo,
+          ar.review_title    AS reviewTitle,
+          ar.review_content  AS reviewContent,
+          ar.review_date     AS reviewDate,
+          ar.member_no       AS memberNo,
+          (SELECT COUNT(*) 
+             FROM post_like pl 
+            WHERE pl.review_no = ar.review_no) AS likeCount,
+          (SELECT COUNT(*) 
+             FROM post_like pl 
+            WHERE pl.review_no = ar.review_no
+              AND pl.member_no = #{memberNo}) AS isLike
+        FROM animal_review ar
+        WHERE ar.review_title LIKE '%' || #{searchTitle} || '%'
+        ORDER BY ar.review_no DESC
+      ) n
+    )
+    WHERE rnum <![CDATA[>=]]> #{start}
+      AND rnum <![CDATA[<=]]> #{end}
+  </select>
 
-	<delete id="deleteReviewNo">
-		delete from animal_review where review_no
-		=${reviewNo}
-	</delete>
+  <delete id="deleteReviewNo">
+    DELETE FROM animal_review WHERE review_no = #{reviewNo}
+  </delete>
 
-	<insert id="reviewWrite">
-		INSERT INTO animal_review
-		(review_no, review_title, review_content, review_date, member_no, animal_no,
-		adoption_no)
-		VALUES (
-		review_seq.nextval,
-		#{reviewTitle},
-		#{reviewContent},
-		TO_CHAR(SYSDATE, 'yyyy-mm-dd'),
-		#{memberNo},
-		#{animalNo,jdbcType=INTEGER},
-		#{adoptionNo,jdbcType=INTEGER}
-		)
-	</insert>
+  <insert id="reviewWrite">
+    INSERT INTO animal_review
+    (review_no, review_title, review_content, review_date, member_no, animal_no, adoption_no)
+    VALUES (
+      review_seq.NEXTVAL,
+      #{reviewTitle},
+      #{reviewContent},
+      TO_CHAR(SYSDATE, 'yyyy-mm-dd'),
+      #{memberNo},
+      #{animalNo,jdbcType=INTEGER},
+      #{adoptionNo,jdbcType=INTEGER}
+    )
+  </insert>
 
+  <select id="selectOneReview" resultType="review">
+    SELECT 
+      ar.review_no       AS reviewNo,
+      ar.review_title    AS reviewTitle,
+      ar.review_content  AS reviewContent,
+      ar.review_date     AS reviewDate,
+      ar.member_no       AS memberNo,
+      (SELECT COUNT(*) 
+         FROM post_like pl 
+        WHERE pl.review_no = ar.review_no) AS likeCount
+    FROM animal_review ar
+    WHERE ar.review_no = #{reviewNo}
+  </select>
 
-	<select id="selectOneReview" resultType="review">
-		SELECT
-		review_title AS reviewTitle,
-		review_no AS reviewNo,
-		review_content AS reviewContent,
-		member_no AS memberNo,
-		review_date AS reviewDate
-		FROM animal_review
-		WHERE review_no = #{reviewNo}
-	</select>
+  <update id="updateReview">
+    UPDATE animal_review
+    SET review_title   = #{reviewTitle},
+        review_content = #{reviewContent},
+        review_date    = TO_CHAR(SYSDATE,'yyyy-mm-dd')
+    WHERE review_no = #{reviewNo}
+  </update>
 
-	<update	id="updateReview">
-		update animal_review
-		set review_title = #{reviewTitle},
-			review_content = #{reviewContent},
-			review_date = to_char(sysdate,'yyyy-mm-dd')
-		where review_no = #{reviewNo}
-	</update>
-	
-	<insert id="insertLike">
-		insert into post_like
-		(review_no, member_no)
-		values (
-		#{reviewNo},
-		#{memberNo}
-		)
-	</insert>
-	
-	<delete id="deleteLike">
-		delete from post_like
-		(review_no, member_no)
-		values (
-		#{reviewNo},
-		#{memberNo}
-		)
-	</delete>
-	
-	<select id="selectLikeCount" resultType = "int">
-		select from post_like
-		where review_no = #{reviewNo}
-	</select>
-	
+  <insert id="insertLike" parameterType="hashmap">
+    INSERT INTO post_like (review_no, member_no)
+    VALUES (#{reviewNo}, #{memberNo})
+  </insert>
+
+  <delete id="deleteLike" parameterType="hashmap">
+    DELETE FROM post_like
+    WHERE review_no = #{reviewNo}
+      AND member_no = #{memberNo}
+  </delete>
+
+  <select id="selectLikeCount" resultType="int">
+    SELECT COUNT(*) 
+    FROM post_like 
+    WHERE review_no = #{reviewNo}
+  </select>
+
+  <select id="selectIsLike" resultType="int">
+    SELECT COUNT(*) 
+    FROM post_like 
+    WHERE member_no = #{memberNo} 
+      AND review_no = #{reviewNo}
+  </select>
+
 </mapper>

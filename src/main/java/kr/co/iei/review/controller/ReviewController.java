@@ -2,6 +2,8 @@ package kr.co.iei.review.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpSession;
 import kr.co.iei.animal.model.service.AnimalService;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.member.model.vo.Member;
@@ -34,13 +37,17 @@ public class ReviewController {
 	private AnimalService animalService;
 
 	// 후기 목록
-	@GetMapping(value = "/list")
-	public String reviewList(int reqPage, Model model) {
-		ReviewListData rld = reviewService.reviewList(reqPage);
-		model.addAttribute("list", rld.getList());
-		model.addAttribute("pageNavi", rld.getPageNavi());
-		return "review/list";
+	@GetMapping("/list")
+	public String reviewList(@RequestParam(defaultValue="1") int reqPage,
+	                         @SessionAttribute(required=false) Member member,
+	                         Model model) {
+	    int memberNo = (member != null) ? member.getMemberNo() : 0;
+	    ReviewListData rld = reviewService.reviewList(reqPage, memberNo);
+	    model.addAttribute("list", rld.getList());
+	    model.addAttribute("pageNavi", rld.getPageNavi());
+	    return "review/list";
 	}
+
 
 	// 검색
 	@GetMapping(value = "/searchTitle")
@@ -155,14 +162,14 @@ public class ReviewController {
 		return "common/msg";
 	}
 	
-	@PostMapping("/likepush")
+	@PostMapping(value= "/likepush")
 	@ResponseBody
-	public int likepush(int reviewNo,
-						int isLike, @SessionAttribute Member member) {
-		int memberNo = member.getMemberNo();
-		int result = reviewService.likepush(reviewNo, memberNo, isLike);
-		
-		return result;
+	public int likepush(@RequestParam int reviewNo,
+	                    @RequestParam int isLike,
+	                    @SessionAttribute Member member) {
+	    return reviewService.likepush(reviewNo, member.getMemberNo(), isLike);
 	}
+
+
 	
 }

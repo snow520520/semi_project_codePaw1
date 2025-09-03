@@ -1,16 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>입양후기 작성 화면</title>
 
 <style>
-
-
-
 .review-write-container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	max-width: 1400px;
+	width: 100%;
 	margin: 20px auto;
 	background: #f0f0f0;
 	padding: 20px;
@@ -19,18 +18,11 @@
 }
 
 .review-write-wrap {
-	width: 1000px;
-}
-
-.review-write-wrap .input-item>input[type=text] {
-	padding: 0;
-	border-bottom: none;
-}
-
-.content .input-item>textarea {
-	min-height: 800px;
 	width: 800px;
-	padding-top: 10px;
+	margin: 0 auto;
+	background: #fff;
+	padding: 30px;
+	border-radius: 8px;
 }
 
 .reviewTitle {
@@ -38,19 +30,22 @@
 	border-bottom: 1px solid #000;
 	outline: none;
 	padding: 5px;
-	width: 800px;
+	width: 100%;
 	font-size: 23px;
 }
 
 .content .input-item {
-	padding-top: 20px;
-	width: 800px;
+	margin-top: 20px;
+	width: 100%;
 }
 
 .content .input-item>textarea {
+	min-height: 600px;
+	width: 100%;
 	font-size: 17px;
 	border-left: none;
 	border-right: none;
+	padding-top: 10px;
 }
 
 .btn {
@@ -90,16 +85,20 @@
 	box-shadow: none;
 }
 
-.note-editable img {
-	display: block;
-	margin: 10px auto;
-	max-width: 100%;
-	height: auto;
-}
 
 .note-editable {
 	resize: none;
 	outline: none;
+	text-align: left;
+}
+
+.note-editable img {
+
+	object-fit: cover;
+	border-radius: 8px;
+	display: inline-block;
+	margin: 5px;
+	vertical-align: top;
 }
 
 .note-resizebar {
@@ -110,26 +109,19 @@
 <body>
 	<th:block th:include="common/header"></th:block>
 	<main class="content review-write-container">
-		<section class="section reivew-write-wrap">
+		<section class="review-write-wrap">
 			<form id="reviewForm" action="/review/reviewWriteFrm" method="post"
 				enctype="multipart/form-data">
-				<!-- 숨겨진 값 -->
 				<input type="hidden" name="animalNo" th:value="${animalNo}">
 				<input type="hidden" name="adoptionNo" th:value="${adoptionNo}">
 
-				<table class="tbl">
-					<tr>
-						<input type="text" id="reviewTitle" class="reviewTitle"
-							name="reviewTitle" placeholder="입양후기 제목을 입력해주세요">
-					</tr>
-					<tr>
-						<td>
-							<div class="input-item">
-								<textarea id="reviewContent" name="reviewContent"></textarea>
-							</div>
-						</td>
-					</tr>
-				</table>
+				<input type="text" id="reviewTitle" class="reviewTitle"
+					name="reviewTitle" placeholder="입양후기 제목을 입력해주세요">
+
+				<div class="input-item">
+					<textarea id="reviewContent" name="reviewContent"></textarea>
+				</div>
+
 				<div class="btn">
 					<button type="button" id="btn-primary"
 						onclick="location.href='/review/list?reqPage=1'">취소하기</button>
@@ -137,79 +129,76 @@
 				</div>
 			</form>
 		</section>
-		</main>
-		<th:block th:include="common/footer"></th:block>
-			<script src="/summernote"></script>
-			<script src="/summernote/summernote-lite.js"></script>
-			<script src="/summernote/lang/summernote-ko-KR.js"></script>
-			<link rel="stylesheet" href="/summernote/summernote-lite.css">
-			<script>
-				$("[name=reviewContent]")
-						.summernote(
-								{
-									height : 545,
-									lang : "ko-KR",
-									toolbar : [
-											[ 'fontname', [ 'fontname' ] ],
-											[ 'fontsize', [ 'fontsize' ] ],
-											[
-													'style',
-													[ 'bold', 'italic',
-															'underline',
-															'strikethrough',
-															'clear' ] ],
-											[ 'color', [ 'forecolor', 'color' ] ],
-											[ 'height', [ 'height' ] ],
-											[ 'insert', [ 'picture' ] ],
-											[ 'view', [ 'help' ] ] ],
-									callbacks : {
-										onImageUpload : function(files) {
-											for (let i = 0; i < files.length; i++) {
-												uploadImage(files[i], this);
-											}
-										}
-									}
-								});
-				function uploadImage(file, editor) {
-					const form = new FormData();
-					form.append("upfile", file);
+	</main>
+	<th:block th:include="common/footer"></th:block>
 
-					$.ajax({
-						url : "/review/reviewWriteFrm/editorImage",
-						type : "post",
-						data : form,
-						processData : false,
-						contentType : false,
-						success : function(result) {
-							$(editor).summernote("insertImage", result);
-						}
-					});
+	<script src="/summernote"></script>
+	<script src="/summernote/summernote-lite.js"></script>
+	<script src="/summernote/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/summernote/summernote-lite.css">
+
+	<script>
+		$("[name=reviewContent]")
+				.summernote(
+						{
+							height : 545,
+							lang : "ko-KR",
+							toolbar : [
+									[ 'fontname', [ 'fontname' ] ],
+									[ 'fontsize', [ 'fontsize' ] ],
+									[
+											'style',
+											[ 'bold', 'italic', 'underline',
+													'strikethrough', 'clear' ] ],
+									[ 'color', [ 'forecolor', 'color' ] ],
+									[ 'height', [ 'height' ] ],
+									[ 'insert', [ 'picture' ] ],
+									[ 'view', [ 'help' ] ] ],
+							callbacks : {
+								onImageUpload : function(files) {
+									for (let i = 0; i < files.length; i++) {
+										uploadImage(files[i], this);
+									}
+								}
+							}
+						});
+
+		function uploadImage(file, editor) {
+			const form = new FormData();
+			form.append("upfile", file);
+
+			$.ajax({
+				url : "/review/reviewWriteFrm/editorImage",
+				type : "post",
+				data : form,
+				processData : false,
+				contentType : false,
+				success : function(result) {
+					$(editor).summernote("insertImage", result);
 				}
-				document
-						.getElementById("reviewForm")
-						.addEventListener(
-								"submit",
-								function(e) {
-									const title = document
-											.getElementById("reviewTitle").value
-											.trim();
-									const content = $("[name=reviewContent]")
-											.summernote("isEmpty") ? "" : $(
-											"[name=reviewContent]").summernote(
-											"code").trim();
+			});
+		}
 
-									if (title === "") {
-										alert("제목을 입력하세요.");
-										e.preventDefault();
-										return;
-									}
-									if (content === ""
-											|| content === "<p><br></p>") {
-										alert("내용을 입력하세요.");
-										e.preventDefault();
-										return;
-									}
-								});
-			</script>
-		</body>
+		document.getElementById("reviewForm").addEventListener(
+				"submit",
+				function(e) {
+					const title = document.getElementById("reviewTitle").value
+							.trim();
+					const content = $("[name=reviewContent]").summernote(
+							"isEmpty") ? "" : $("[name=reviewContent]")
+							.summernote("code").trim();
+
+					if (title === "") {
+						alert("제목을 입력하세요.");
+						e.preventDefault();
+						return;
+					}
+					if (content === "" || content === "<p><br></p>") {
+						alert("내용을 입력하세요.");
+						e.preventDefault();
+						return;
+					}
+				});
+	</script>
+</body>
 </html>

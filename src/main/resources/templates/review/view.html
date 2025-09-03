@@ -25,17 +25,24 @@
 	margin-bottom: 20px;
 }
 
+.reviewContent img {
+	display: block;
+	margin: 10px auto; 
+	max-width: 100%; 
+	height: auto; 
+}
+
 .reviewContent {
 	min-height: 600px;
 	text-align: center;
 	margin-top: 50px;
 }
 
-.content{
+.content {
 	margin: 0 auto;
 }
 
-.section{
+.section {
 	width: 1200px;
 	padding: 20px 30px 20px 30px;
 	background-color: #ffffff;
@@ -43,26 +50,28 @@
 	border-radius: 8px;
 	overflow: hidden;
 }
-.u-d-btn{
+
+.u-d-btn {
 	float: right;
 }
 
-.updateReview{
-	cursor: pointer;
-	color : #000;
-	text-decoration: none;
-}
-
-.deleteReview{
+.updateReview {
 	cursor: pointer;
 	color: #000;
 	text-decoration: none;
 }
 
-.btn-box{
+.deleteReview {
+	cursor: pointer;
+	color: #000;
+	text-decoration: none;
+}
+
+.btn-box {
 	text-align: center;
 }
-.btn-box>button{
+
+.btn-box>button {
 	border: 1px solid #888888;
 	background-color: #ffffff;
 	width: 200px;
@@ -75,11 +84,11 @@
 }
 
 .btn-box>button:hover {
-	background-color:#FFB22C;
+	background-color: #FFB22C;
 	border: none;
 	color: #ffffff;
 	font-weight: 400;
-	transition-duration: 0.2s; 
+	transition-duration: 0.2s;
 }
 </style>
 
@@ -92,9 +101,12 @@
 			<div th:text="${member.memberId}"></div>
 			<div th:text="${review.reviewDate}"></div>
 			<div class="line"></div>
-			<div class="u-d-btn" th:if="${session.member != null && (session.member.memberNo == review.memberNo || session.member.memberLevel == 1)}">
-				<a class="updateReview" th:href="@{/review/reviewUpdateFrm(reviewNo=${review.reviewNo})}">수정</a>
-				<a class="deleteReview" href="#" th:onclick="deleteReview([[${review.reviewNo}]]);">삭제</a>
+			<div class="u-d-btn"
+				th:if="${session.member != null && (session.member.memberNo == review.memberNo || session.member.memberLevel == 1)}">
+				<a class="updateReview"
+					th:href="@{/review/reviewUpdateFrm(reviewNo=${review.reviewNo})}">수정</a>
+				<a class="deleteReview" href="#"
+					th:onclick="deleteReview([[${review.reviewNo}]]);">삭제</a>
 			</div>
 			<div class="reviewContent" th:utext="${review.reviewContent}"></div>
 			<div class="line"></div>
@@ -106,33 +118,33 @@
 	</main>
 	<script src="/js/sweetalert.min.js"></script>
 	<script>
-	function deleteReview(reviewNo){
-		swal({
-			title : "게시물 삭제",
-			text : "게시물을 삭제하시겠습니까?",
-		    icon : "warning",
-		    buttons : {
-		    	cancel:{
-		    		text : "취소",
-		    		value : false,
-		    		visible : true,
-		    		ClassName : "btn-swal",
-		    		closeModal : true
-		    	},
-		    	confirm : {
-		    	 	text : "삭제",
-		    		value : true,
-		    		visible : true,
-		    		ClassName : "btn-swal-color",
-		    		closeModal : true
-		    	}	
-			}
-		}).then(function(isConfirm){
-			if(isConfirm){
-				location.href="/review/delete?reviewNo="+reviewNo;
-			}
-		});
-	};
+		function deleteReview(reviewNo) {
+			swal({
+				title : "게시물 삭제",
+				text : "게시물을 삭제하시겠습니까?",
+				icon : "warning",
+				buttons : {
+					cancel : {
+						text : "취소",
+						value : false,
+						visible : true,
+						ClassName : "btn-swal",
+						closeModal : true
+					},
+					confirm : {
+						text : "삭제",
+						value : true,
+						visible : true,
+						ClassName : "btn-swal-color",
+						closeModal : true
+					}
+				}
+			}).then(function(isConfirm) {
+				if (isConfirm) {
+					location.href = "/review/delete?reviewNo=" + reviewNo;
+				}
+			});
+		};
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>

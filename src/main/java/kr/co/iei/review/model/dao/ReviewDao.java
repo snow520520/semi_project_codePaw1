@@ -25,13 +25,13 @@ public interface ReviewDao {
 
 	Review selectOneReview(int reviewNo);
 
+	int insertLike(HashMap<String, Object> param);
+	int deleteLike(HashMap<String, Object> param);
+	int selectLikeCount(int reviewNo);
+	int selectIsLike(@Param("reviewNo") int reviewNo, @Param("memberNo") int memberNo);
+
 	int updateReview(Review review);
 
-	public int insertLike(@Param("reviewNo") int reviewNo, 
-						  @Param("memberNo") int memberNo);
-	public int deleteLike(@Param("reviewNo") int reviewNo, 
-						  @Param("memberNo") int memberNo);
-	public int selectLikeCount(@Param("reviewNo") int reviewNo);
 
 	
 
