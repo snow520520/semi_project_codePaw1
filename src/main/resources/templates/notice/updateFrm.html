@@ -76,10 +76,10 @@
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
-			<form action="/notice/update" method="post" enctype="multipart/form-data">
+			<form action="/notice/update" method="post" enctype="multipart/form-data" class="form">
 				<div class="title">
 					<input type="hidden" name="noticeNo" id="noticeNo" th:value="${notice.noticeNo}">
-					<input type="text" name="noticeTitle" id="noticeTitle" placeholder="제목을 입력해주세요." th:value="${notice.noticeTitle}">
+					<input type="text" name="noticeTitle" id="noticeTitle" placeholder="제목을 입력해주세요." th:value="${notice.noticeTitle}" required>
 				</div>
 				<div class="line" th:text="${notice.memberId}"></div>
 				<div class="line inline">
@@ -105,11 +105,11 @@
 	<script src="/summernote/summernote-lite.js"></script>
 	<script src="/summernote/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/summernote/summernote-lite.css">
+	<script src="/js/sweetalert.min.js"></script>
 	<script>
 	
 	$('#noticeContent').summernote({
 	    height: 600,
-	    placeholder: "내용을 입력해주세요.",
 	    toolbar: [
 		    // [groupName, [list of button]]
 		    ['fontname', ['fontname']],
@@ -156,6 +156,28 @@
 		$(".section>form").append(input);
 		$(obj).parent().remove();
 	}
+	$("#submit").on('click',function(e){
+		const content = $("#noticeContent").summernote('isEmpty');
+		if(content){
+			e.preventDefault(); // 전송 막기
+		      swal({
+		          title : "내용 확인",
+		          text : "내용을 입력해주세요!",
+		          icon : "warning",
+		          buttons : {
+		              confirm:{
+		                  text: "확인",
+		                  value: true,
+		                  visible : true,
+		                  className : "btn-swal-color",
+		                  closeModal : true
+		              }
+		          }
+		   		});
+		}else {
+            $(".form").submit();
+        }
+	})
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>

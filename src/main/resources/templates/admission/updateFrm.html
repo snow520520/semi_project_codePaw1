@@ -106,7 +106,7 @@
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
-			<form action="/admission/update" method="post">
+			<form action="/admission/update" method="post" class="form">
 				<div class="title">
 					<input type="text" name="admissionTitle" id="admissionTitle" th:value="${admission.admissionTitle}" placeholder="제목을 입력해주세요.">
 					<input type="hidden" name="admissionNo" id="admissionNo" th:value="${admission.admissionNo}">
@@ -197,6 +197,7 @@
 	<script src="/summernote/summernote-lite.js"></script>
 	<script src="/summernote/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/summernote/summernote-lite.css">
+	<script src="/js/sweetalert.min.js"></script>
 	<script>
 	
 	$('#admissionContent').summernote({
@@ -239,6 +240,28 @@
 		    }
 		});
 	}
+	$("#submit").on('click',function(e){
+		const content = $("#admissionContent").summernote('isEmpty');
+		if(content){
+			e.preventDefault(); // 전송 막기
+		      swal({
+		          title : "입소동기 확인",
+		          text : "입소동기를 입력해주세요!",
+		          icon : "warning",
+		          buttons : {
+		              confirm:{
+		                  text: "확인",
+		                  value: true,
+		                  visible : true,
+		                  className : "btn-swal-color",
+		                  closeModal : true
+		              }
+		          }
+		   		});
+		}else {
+            $(".form").submit();
+        }
+	})
 	
 	$('#admissionTitle').on("focus",function(){
 		const admissionTitle = $("#admissionTitle");
