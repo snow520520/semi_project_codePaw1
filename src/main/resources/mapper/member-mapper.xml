@@ -75,7 +75,13 @@
   		delete from member_tbl where member_no = #{memberNo}
   	</delete>
   	
-  	<select id="selectMemberNo" resultType="member">
+  	<select id="selectMemberNo" resultType="List">
   		select * from member_tbl where member_no = #{memberNo}
+  	</select>
+  	<select id="searchName" resultType = "List">
+  		select * from member_tbl where member_name = #{memberName}
+  	</select>
+  	<select id="searchPhone" resultType = "List">
+  		select * from member_tbl where member_phone = #{memberPhone}
   	</select>
 </mapper>

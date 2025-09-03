@@ -3,220 +3,335 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+	rel="stylesheet">
 <style>
 body {
-    font-family: Nanum Gothic Coding, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+	font-family: Nanum Gothic Coding, sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
 }
 
 .content {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f7f7f7;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #f7f7f7;
 }
 
 .login-wrap {
-    width: 500px;
-    background-color: white;
-    padding: 30px;
-    text-align: center;
-    border-radius: 10px;
-    margin-top: 10%;
-    margin-bottom: 150px;
+	width: 500px;
+	background-color: white;
+	padding: 30px;
+	text-align: center;
+	border-radius: 10px;
+	margin-top: 10%;
+	margin-bottom: 150px;
 }
 
 .login-title {
-    color: #854836;
-    font-size: 25px;
-    font-weight: bold;
-    padding: 30px;
-    padding-bottom: 40px;
+	color: #854836;
+	font-size: 25px;
+	font-weight: bold;
+	padding: 30px;
+	padding-bottom: 40px;
 }
 
 .login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
 }
 
-.login-form > .login-input-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin: 30px;
-    margin-bottom: 10px;
+.login-form>.login-input-wrap {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	margin: 30px;
+	margin-bottom: 10px;
 }
 
-.login-form > .login-input-wrap > input {
-    font-size: 16px;
-    height: 40px;
-    padding: 10px;
-    border: 1px solid #854836;
-    border-radius: 2px;
+.login-form>.login-input-wrap>input {
+	font-size: 16px;
+	height: 40px;
+	padding: 10px;
+	border: 1px solid #854836;
+	border-radius: 2px;
 }
 
-.password-wrap > input {
-    font-size: 16px;
-    height: 40px;
-    padding: 10px;
-    border: 1px solid #854836;
-    border-radius: 2px;
+.password-wrap>input {
+	font-size: 16px;
+	height: 40px;
+	padding: 10px;
+	border: 1px solid #854836;
+	border-radius: 2px;
 }
 
-.login-form > .login-input-wrap > input:last-child {
-    margin-top: 5px;
+.login-form>.login-input-wrap>input:last-child {
+	margin-top: 5px;
 }
 
-.login-form > .login-input-wrap > input:hover {
-    font-size: 14px;
-    font-style: inherit;
+.login-form>.login-input-wrap>input:hover {
+	font-size: 14px;
+	font-style: inherit;
 }
 
 .login-option {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin-left: 30px;
-    cursor: pointer;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	margin-left: 30px;
+	cursor: pointer;
 }
 
-.login-option > label {
-    padding-left: 5px;
+.login-option>label {
+	padding-left: 5px;
 }
 
 .alert {
-    margin-left: 35px;
-    text-align: left;
-    font-size: small;
-    font-weight: bold;
-    color: red;
+	margin-left: 35px;
+	text-align: left;
+	font-size: small;
+	font-weight: bold;
+	color: red;
 }
 
 .login-button {
-    height: 45px;
-    border: 0;
-    border-radius: 15px;
-    color: white;
-    background: #FFB22C;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: 500;
-    margin: 30px;
+	height: 45px;
+	border: 0;
+	border-radius: 15px;
+	color: white;
+	background: #FFB22C;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: 500;
+	margin: 30px;
 }
 
 .login-footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-    font-size: 15px;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 15px;
+	font-size: 15px;
 }
 
 .login-footer a {
-    text-decoration: none;
-    color: #854836;
+	text-decoration: none;
+	color: #854836;
+}
+
+.login-footer button {
+	text-decoration: none;
+	color: #854836;
+	border: none;
+	background-color: transparent;
+	font-size: 15px;
+	cursor: pointer;
 }
 
 .login-footer a:hover {
-    font-weight: bold;
+	font-weight: bold;
+}
+
+.login-footer button:hover {
+	font-weight: bold;
 }
 
 .material-icons-outlined {
-    cursor: pointer;
-    font-size: 20px;
-    padding-top: 2px;
-    color: #854836;
+	cursor: pointer;
+	font-size: 20px;
+	padding-top: 2px;
+	color: #854836;
 }
-    </style>
+.dialog {
+  display:none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.dialog>.tb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.dialog>.tb .inner {
+  width: 100%;
+  padding: 20px;
+  background: #fff;
+  border-radius: 16px;
+  min-height: 500px;
+}
+
+.dialog .top {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  justify-content: center;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.dialog .title {
+  font-weight: bold;
+  font-size: 20px;
+  
+}
+.dialog .ct {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-height: 60vh;
+  height: 60vh;
+  overflow-y: auto;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #fff;
+}
+</style>
 </head>
 <body>
-    <th:block th:include="common/header"></th:block>
-    <main class="content">
-        <section class="login-wrap">
-            <div class="login-title">로그인</div>
-            <form action="/member/login" method="post" class="login-form" autocomplete="off">
-                <div class="login-input-wrap">
-                    <input type="text" name="memberId" id="memberId" placeholder="아이디" th:value="${savedId}" style="outline:none;">
-                    <input type="password" name="memberPw" id="memberPw" placeholder="비밀번호" style="outline:none;">
-                </div>
-                <div class="login-option">
-                    <span class="material-icons-outlined" id="checkBoxOut" style="font-size: 20px;">check_box_outline_blank</span>
-                    <span class="material-icons" id="checkBox" style="display:none; font-size:20px;">check_box</span>
-                    <input type="checkbox" name="saveId" id="login-remain" style="display:none;">
-                    <label for="login-remain">로그인 정보저장</label>
-                </div>
-                <span class="IdPw alert" id="IdPw" style="display:none;">아이디와 비밀번호를 입력해주세요.</span>
-                <span class="Pw alert" id="Pw" style="display:none;">비밀번호를 입력해주세요.</span>
-                <button type="submit" class="login-button">로그인</button>
-            </form>
-            <div class="login-footer">
-                <a href="/member/joinFrm">회원가입</a>
-                <span>
-                    <a href="/member/findIdFrm">아이디</a>
-                    <span style="color: #854836">|</span>
-                    <a href="#">비밀번호 찾기</a>
-                </span>
-            </div>
-        </section>
-    </main>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $("#memberId").on("click", function() {
-            $(this).css('border', '1px solid #854836');
-            $(this).removeAttr("placeholder");
-        });
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="login-wrap">
+			<div class="login-title">로그인</div>
+			<form action="/member/login" method="post" class="login-form"
+				autocomplete="off">
+				<div class="login-input-wrap">
+					<input type="text" name="memberId" id="memberId" placeholder="아이디" th:value="${savedId}" style="outline: none;"> 
+					<input type="password" name="memberPw" id="memberPw" placeholder="비밀번호" style="outline: none;">
+				</div>
+				<div class="login-option">
+					<span class="material-icons-outlined" id="checkBoxOut" style="font-size: 20px;">check_box_outline_blank</span>
+					<span class="material-icons" id="checkBox" style="display: none; font-size: 20px;">check_box</span> 
+					<input type="checkbox" name="saveId" id="login-remain" style="display: none;"> <label for="login-remain">로그인 정보저장</label>
+				</div>
+				<span class="IdPw alert" id="IdPw" style="display: none;">아이디와 비밀번호를 입력해주세요.</span>
+				<span class="Pw alert" id="Pw" style="display: none;">비밀번호를 입력해주세요.</span>
+				<button type="submit" class="login-button">로그인</button>
+			</form>
+			<div class="login-footer">
+				<a href="/member/joinFrm">회원가입</a> 
+				<span>
+					<button type="button" onClick="modal('dialog')" class="id-btn"><span>아이디</span></button> 
+					<span style="color: #854836">|</span> 
+					<!-- <button type="button" onClick="modal('dialog')">비밀번호 찾기</a> -->
+				</span>
+			</div>
+		</section>
+		<div id="dialog" class="dialog">
+			<div class="tb">
+				<div class="inner" style="max-width: 600px;">
+					<div class="top">
+						<div class="title">아이디 찾기</div>
+					</div>
+ 					<div class="ct">
+						<div class="searchName-div">
+							<span class="material-icons-outlined">dns</span>
+							<input type = "text" name = "memberName" id="memberName" placeholder = "이름 입력">
+						</div>
+						<div class="searchPhone-div">
+							<span class="material-icons-outlined">phone_android</span>
+							<input type = "text" name = "memberPhone" id="memberPhone" placeholder = "'ex)010-0000-0000'">
+						</div>
+						<div class="sub-btn">
+							<button type = "button" class="search-btn">아이디 찾기</button>			
+						</div>
+					</div>
+					<div class="close">
+						<a href="#" class="modal-close">닫기</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$("#memberId").on("click", function() {
+			$(this).css('border', '1px solid #854836');
+			$(this).removeAttr("placeholder");
+		});
 
-        $("#memberId").on("focusout", function() {
-            $(this).css('border', '1px solid #854836');
-            $(this).attr('placeholder','아이디');
-        });
+		$("#memberId").on("focusout", function() {
+			$(this).css('border', '1px solid #854836');
+			$(this).attr('placeholder', '아이디');
+		});
 
-        $("#memberPw").on("click", function() {
-            $(this).css('border', '1px solid #854836');
-            $(this).removeAttr("placeholder");
-        });
+		$("#memberPw").on("click", function() {
+			$(this).css('border', '1px solid #854836');
+			$(this).removeAttr("placeholder");
+		});
 
-        $("#memberPw").on("focusout", function() {
-            $(this).attr('placeholder','비밀번호');
-        });
+		$("#memberPw").on("focusout", function() {
+			$(this).attr('placeholder', '비밀번호');
+		});
 
-        $("#checkBoxOut, #checkBox").on("click", function() {
-            $("#checkBoxOut, #checkBox").toggle();
-            $("#login-remain").prop("checked", $("#checkBox").is(":visible"));
-        });
+		$("#checkBoxOut, #checkBox").on("click", function() {
+			$("#checkBoxOut, #checkBox").toggle();
+			$("#login-remain").prop("checked", $("#checkBox").is(":visible"));
+		});
 
-        $(".login-button").on("click", function() {
-            const memberIdCheck = $("#memberId").val();
-            const memberPwCheck = $("#memberPw").val();
-            if((!memberIdCheck && !memberPwCheck)) {
-                $("#IdPw").show();
-                $("#Pw").hide();
-            } else if(memberIdCheck !== null && !memberPwCheck) {
-                $("#Pw").show();
-                $("#IdPw").hide();
-            } else if(!memberIdCheck && memberPwCheck !== null) {
-                $("#Pw").hide();
-                $("#IdPw").show();
-            }
-        });
-        window.onload = function() {
-            if($("#memberId").val() !== "") {
-                $("#checkBox").show();
-                $("#checkBoxOut").hide();
-                $("#login-remain").prop("checked", true);
-            } else {
-                $("#checkBox").hide();
-                $("#checkBoxOut").show();
-                $("#login-remain").prop("checked", false);
-            }
-        }
-    </script>
-    <th:block th:include="common/footer"></th:block>
+		$(".login-button").on("click", function() {
+			const memberIdCheck = $("#memberId").val();
+			const memberPwCheck = $("#memberPw").val();
+			if ((!memberIdCheck && !memberPwCheck)) {
+				$("#IdPw").show();
+				$("#Pw").hide();
+			} else if (memberIdCheck !== null && !memberPwCheck) {
+				$("#Pw").show();
+				$("#IdPw").hide();
+			} else if (!memberIdCheck && memberPwCheck !== null) {
+				$("#Pw").hide();
+				$("#IdPw").show();
+			}
+		});
+		window.onload = function() {
+			if ($("#memberId").val() !== "") {
+				$("#checkBox").show();
+				$("#checkBoxOut").hide();
+				$("#login-remain").prop("checked", true);
+			} else {
+				$("#checkBox").hide();
+				$("#checkBoxOut").show();
+				$("#login-remain").prop("checked", false);
+			}
+		}
+		//모달 열기
+		function modal(id) {
+			$("." + id).fadeIn();
+		}
+		//모달 닫기
+		$('.modal-close').on('click', function(e) {
+			e.preventDefault();
+			const modal = $(this).parents('.dialog');
+			modal.fadeOut();
+		});
+		$(".search-btn").on("click", function(){
+			const memberName = $("#memberName").val();
+			const memberPhone = $("#memberPhone").val();
+			$.ajax({
+				url: "/member/searchName",
+				type: "get",
+				data: {memberName : memberName, memberPhone : memberPhone},
+				success: function(data1){
+					console.log(data1);
+				}
+			});
+		});
+	</script>
+	<th:block th:include="common/footer"></th:block>
 </body>
 </html>

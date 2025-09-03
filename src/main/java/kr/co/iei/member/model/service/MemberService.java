@@ -196,5 +196,13 @@ public class MemberService {
 	public Member selectMemberNo(int memberNo) {
 		return memberDao.selectMemberNo(memberNo);
 	}
+	public List<Member> searchName(String memberName) {
+		List<Member> list1 = memberDao.searchName(memberName);
+		return list1;
+	}
+	public List<Member> searchPhone(String memberPhone) {
+		List<Member> list2 = memberDao.searchPhone(memberPhone);
+		return list2;
+	}
 }
 

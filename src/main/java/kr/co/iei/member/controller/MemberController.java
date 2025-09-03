@@ -1,5 +1,8 @@
 package kr.co.iei.member.controller;
 import kr.co.iei.notice.controller.NoticeController;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -180,5 +183,12 @@ public class MemberController {
 		}else {
 			return "redirect:/";
 		}
+	}
+	@ResponseBody
+	@GetMapping(value = "/searchName") 
+	public List<Member> searchName(String memberName, Model model) {
+		//query에 memberName 전달 시 int 타입으로 리턴한 후 memberName과 memberPhone이 둘다 일치하는지 
+		List<Member> list1 = memberService.searchName(memberName);
+		return list1;
 	}
 }

@@ -162,7 +162,17 @@ body {
 	padding: 7px;
 	border-radius: 2px;
 	cursor: pointer;
-	
+}
+.cc-btn{
+	width: 60px;
+	height: 40px;
+	color: white;
+	background-color: #ffb22c;
+	padding: 8px;
+	border: none;
+	border-radius: 5px;
+	font-size: 15px;
+	cursor: pointer;
 }
 .material-icons-outlined {
 	cursor: pointer;
@@ -245,6 +255,7 @@ div[class=email-div],div[class=input-phone]{
 		</section>
 	</main>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="/js/sweetalert.min.js"></script>
 	<script>
 		$(".checkId-btn").on("click", function() {
 			const checkIdMsg = $(".checkId-msg");
@@ -435,14 +446,6 @@ div[class=email-div],div[class=input-phone]{
 		        }
 		    }).open();
 		});
-		$("button[type=submit]").on("click",function(e){
-			let memberAge = $("#memberAge").val();
-			console.log(memberAge);
-			if(memberAge === ""){
-				e.preventDefault();
-				alert("정보를 입력한 후 회원가입을 해주세요.");
-			}
-		});
 		$(".join-button").on("click", function(e){
 			let memberPwVal = $("#memberPw").val();
 			let memberPwReVal = $("#memberPwRe").val();
@@ -468,7 +471,7 @@ div[class=email-div],div[class=input-phone]{
 				e.preventDefault();
 				swal({
 					title : "정보 입력",
-					text : "수정할 정보를 입력해주세요.",
+					text : "기입할 정보를 입력해주세요.",
 					icon : "warning",
 					buttons :{
 						cancel : {
@@ -485,7 +488,7 @@ div[class=email-div],div[class=input-phone]{
 					if(!$("#email").hasClass("confirmed")){
 						e.preventDefault();
 						swal({
-							title: "수정 실패",
+							title: "메일 인증",
 							text: "이메일 인증을 해주세요.",
 							icon: "warning",
 							buttons: {
@@ -500,8 +503,8 @@ div[class=email-div],div[class=input-phone]{
 						})
 					}else{
 						swal({
-							title: "수정 완료",
-							text: "개인정보 수정 완료",
+							title: "회원가입 완료",
+							text: "회원가입이 완료되었습니다.",
 							icon: "success",
 							buttons: {
 								confirm:{
@@ -519,6 +522,96 @@ div[class=email-div],div[class=input-phone]{
 						});
 					}
 				}
+			}
+			let memberAge = $("#memberAge").val();
+			let memberId = $("#memberId").val();
+			let memberAddr = $("#memberAddr").val();
+			let memberName = $("#memberName").val();
+			let memberPhone = $("#memberPhone").val();
+			const regP = /^01(?:0|1|[6-9])-(?:\d{3,4})-\d{4}$/;
+			const regPResult = reg.test(memberPhone);
+			if(!regPResult){
+				e.preventDefault();
+				swal({
+					title : "재입력",
+					text : "전화번호를 다시 입력해주세요.(ex. 010-0000-0000)",
+					icon : "warning",
+					buttons :{
+						cancel : {
+							text : "확인",
+							value : false,
+							visible : true,
+							className : "cc-btn",
+							closeModal : true
+						}
+					}
+				});
+			}
+			if(memberAge === ""){
+				e.preventDefault();
+				swal({
+					title : "정보 입력",
+					text : "나이를 입력해주세요.",
+					icon : "warning",
+					buttons :{
+						cancel : {
+							text : "확인",
+							value : false,
+							visible : true,
+							className : "cc-btn",
+							closeModal : true
+						}
+					}
+				});
+			}else if(memberId === ""){
+				e.preventDefault();
+				swal({
+					title : "정보 입력",
+					text : "아이디를 입력해주세요.",
+					icon : "warning",
+					buttons :{
+						cancel : {
+							text : "확인",
+							value : false,
+							visible : true,
+							className : "cc-btn",
+							closeModal : true
+						}
+					}
+				});
+			}else if(memberName === ""){
+				e.preventDefault();
+				swal({
+					title : "정보 입력",
+					text : "이름을 입력해주세요.",
+					icon : "warning",
+					buttons :{
+						cancel : {
+							text : "확인",
+							value : false,
+							visible : true,
+							className : "cc-btn",
+							closeModal : true
+						}
+					}
+				});
+			}else if(memberPhone === ""){
+				e.preventDefault();
+				e.preventDefault();
+				swal({
+					title : "정보 입력",
+					text : "전화번호를 입력해주세요.",
+					icon : "warning",
+					buttons :{
+						cancel : {
+							text : "확인",
+							value : false,
+							visible : true,
+							className : "cc-btn",
+							closeModal : true
+						}
+					}
+				});
 			}
 		});
 	</script>
