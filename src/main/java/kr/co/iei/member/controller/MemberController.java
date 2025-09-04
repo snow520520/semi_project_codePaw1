@@ -191,7 +191,7 @@ public class MemberController {
 		}
 	}
 	@ResponseBody
-	@GetMapping(value = "/searchId") 
+	@GetMapping(value = "/searchId")  //input name값 다르게
 	public Member searchId(String memberName, String memberPhone) {
 		//query에 memberName 전달 시 int 타입으로 리턴한 후 memberName과 memberPhone이 둘다 일치하는지 
 		Member m = memberService.searchId(memberName, memberPhone);

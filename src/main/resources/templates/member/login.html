@@ -262,8 +262,6 @@ body {
 .material-icons-outlined {
 	font-size: 20px;
 	margin: auto 0;
-	line-height: 35px;
-	padding-left: 10px;
 	color: #854836;
 }
 /*modalA*/
@@ -385,34 +383,28 @@ body {
 			<form action="/member/login" method="post" class="login-form"
 				autocomplete="off">
 				<div class="login-input-wrap">
-					<input type="text" name="memberId" id="memberId" placeholder="아이디"
-						th:value="${savedId}" style="outline: none;"> <input
-						type="password" name="memberPw" id="memberPw" placeholder="비밀번호"
-						style="outline: none;">
+					<input type="text" name="memberId" id="memberId" placeholder="아이디" th:value="${savedId}" style="outline: none;"> 
+					<input type="password" name="memberPw" id="memberPw" placeholder="비밀번호" style="outline: none;">
 				</div>
 				<div class="login-option">
-					<span class="material-icons-outlined" id="checkBoxOut"
-						style="font-size: 20px;">check_box_outline_blank</span> <span
-						class="material-icons" id="checkBox"
-						style="display: none; font-size: 20px;">check_box</span> <input
-						type="checkbox" name="saveId" id="login-remain"
-						style="display: none;"> <label for="login-remain">로그인
-						정보저장</label>
+					<span class="material-icons-outlined" id="checkBoxOut" style="font-size: 20px;">check_box_outline_blank</span> 
+					<span class="material-icons" id="checkBox" style="display: none; font-size: 20px;">check_box</span> 
+					<input type="checkbox" name="saveId" id="login-remain" style="display: none;"> 
+					<label for="login-remain">로그인 정보저장</label>
 				</div>
-				<span class="IdPw alert" id="IdPw" style="display: none;">아이디와
-					비밀번호를 입력해주세요.</span> <span class="Pw alert" id="Pw" style="display: none;">비밀번호를
-					입력해주세요.</span>
+				<span class="IdPw alert" id="IdPw" style="display: none;">아이디와 비밀번호를 입력해주세요.</span> 
+					<span class="Pw alert" id="Pw" style="display: none;">비밀번호를입력해주세요.</span>
 				<button type="submit" class="login-button">로그인</button>
 			</form>
 			<div class="login-footer">
 				<a href="/member/joinFrm">회원가입</a> <span>
 					<button type="button" onClick="modal('dialog')" class="id-btn">
-						<span>아이디</span>
-					</button> <span style="color: #854836">|</span>
+						<span>아이디 찾기</span>
+					</button><!--  <span style="color: #854836">|</span>
 					<button type="button" onClick="modal('dialogA')"
 						class="pwSearch-btn">
 						<span>비밀번호 찾기</span>
-					</button>
+					</button> -->
 				</span>
 			</div>
 		</section>
@@ -443,6 +435,7 @@ body {
 				</div>
 			</div>
 		</div>
+		<!-- 
 		<div id="dialogA" class="dialogA">
 			<div class="tb">
 				<div class="inner" style="max-width: 500px;">
@@ -479,7 +472,7 @@ body {
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>  -->
 	</main>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
