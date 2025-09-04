@@ -66,6 +66,11 @@
 	widht: 1200px;
 }
 
+.border{
+	width: 1100px;
+	margin: 0 auto;
+}
+
 </style>
 </head>
 <body>
@@ -74,7 +79,7 @@
 		<section class="section">
 			<div class="page-title">입양사진 및 후기</div>
 			<div class="searchTitle">
-				<form action="/review/searchTitle" method="get">
+				<form class=search action="/review/searchTitle" method="get">
 					<input type="text" name="searchTitle" placeholder="제목을 입력해주세요.">
 					<input type="hidden" name="reqPage" id="reqPage" value="1">
 					<button type="submit">
@@ -83,7 +88,12 @@
 				</form>
 			</div>
 			<hr class="border">
-
+			<div class="write-btn-wrapper"
+					th:if="${session.member != null and (session.member.memberLevel == 1 || session.member.memberLevel == 2)}">
+					<a href="/review/reviewWriteFrm">
+						<button class="write-btn">작성하기</button>
+					</a>
+				</div>
 			<div class="all-review">
 				<div class="all-card">
 					<th:block th:each="review : ${list}">
@@ -112,13 +122,6 @@
 					</th:block>
 					<th:block th:if="${list =='작성된 게시글이 존재하지 않습니다.'}"></th:block>
 				</div>
-
-				<div class="write-btn-wrapper"
-					th:if="${session.member != null and (session.member.memberLevel == 1 || session.member.memberLevel == 2)}">
-					<a href="/review/reviewWriteFrm">
-						<button class="write-btn">작성하기</button>
-					</a>
-				</div>
 			</div>
 			<div id="pageNavi" th:utext="${pageNavi}"></div>
 		</section>
@@ -127,7 +130,7 @@
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-$(document).on("click", ".like-icon", function() {
+	$(document).on("click", ".like-icon", function() {
     const box = $(this).closest(".like-box");
     const icon = $(this);
     const reviewNo = box.data("reviewno");
@@ -136,7 +139,10 @@ $(document).on("click", ".like-icon", function() {
     const countEl = box.find(".like-count");
 
     if (!isLogin) {
-        swal("로그인 후 이용 가능합니다.", "", "warning");
+        swal("로그인 후 이용 가능합니다.", "", "warning")
+            .then(() => {
+                location.href = "/member/loginFrm";
+            });
         return;
     }
 

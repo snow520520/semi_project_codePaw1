@@ -134,7 +134,7 @@
 	<script src="/summernote/summernote-lite.js"></script>
 	<script src="/summernote/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/summernote/summernote-lite.css">
-
+	<script src="/js/sweetalert.min.js"></script>
 	<script>
 		$("[name=reviewContent]")
 				.summernote({
@@ -174,25 +174,52 @@
 				}
 			});
 		}
-		document.getElementById("reviewForm").addEventListener(
-				"submit",
-				function(e) {
-					const title = document.getElementById("reviewTitle").value.trim();
-					const content = $("[name=reviewContent]").summernote(
-							"isEmpty") ? "" : $("[name=reviewContent]")
-							.summernote("code").trim();
-					
-					if (title === "") {
-						alert("제목을 입력하세요.");
-						e.preventDefault();
-						return;
-					}
-					if (content === "" || content === "<p><br></p>") {
-						alert("내용을 입력하세요.");
-						e.preventDefault();
-						return;
-					}
-				});
+		
+		$("#btn-secondary").on('click',function(e){
+			const content = $("#reviewContent").summernote('isEmpty');
+			if(content){
+				e.preventDefault(); // 전송 막기
+			      swal({
+			          title : "내용 확인",
+			          text : "내용을 입력해주세요!",
+			          icon : "warning",
+			          buttons : {
+			              confirm:{
+			                  text: "확인",
+			                  value: true,
+			                  visible : true,
+			                  className : "btn-swal-color",
+			                  closeModal : true
+			              }
+			          }
+			   		});
+			}else {
+	            $(".form").submit();
+	        }
+		})
+		$("#btn-secondary").on('click',function(e){
+			const title = $("#reviewTitle").val();
+			if(title === ''){
+				e.preventDefault(); // 전송 막기
+			      swal({
+			          title : "내용 확인",
+			          text : "내용을 입력해주세요!",
+			          icon : "warning",
+			          buttons : {
+			              confirm:{
+			                  text: "확인",
+			                  value: true,
+			                  visible : true,
+			                  className : "btn-swal-color",
+			                  closeModal : true
+			              }
+			          }
+			   		});
+			}else {
+	            $(".form").submit();
+	        }
+		})
+		
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>

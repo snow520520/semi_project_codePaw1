@@ -132,7 +132,7 @@ html, body {
 	<th:block th:include="common/header"></th:block>
 	<main class="content review-write-container">
 		<section class="review-write-wrap">
-			<form id="reviewForm" action="/review/reviewWriteFrm" method="post"
+			<form class="form" action="/review/reviewWriteFrm" method="post"
 				enctype="multipart/form-data">
 				<input type="hidden" name="animalNo" th:value="${animalNo}">
 				<input type="hidden" name="adoptionNo" th:value="${adoptionNo}">
@@ -158,7 +158,7 @@ html, body {
 	<script src="/summernote/summernote-lite.js"></script>
 	<script src="/summernote/lang/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="/summernote/summernote-lite.css">
-
+	<script src="/js/sweetalert.min.js"></script>
 	<script>
 		$("[name=reviewContent]")
 				.summernote(
@@ -201,6 +201,54 @@ html, body {
 			});
 		}
 
+		$("#btn-secondary").on('click',function(e){
+			const content = $("#reviewContent").summernote('isEmpty');
+			if(content){
+				e.preventDefault(); // 전송 막기
+			      swal({
+			          title : "내용 확인",
+			          text : "내용을 입력해주세요!",
+			          icon : "warning",
+			          buttons : {
+			              confirm:{
+			                  text: "확인",
+			                  value: true,
+			                  visible : true,
+			                  className : "btn-swal-color",
+			                  closeModal : true
+			              }
+			          }
+			   		});
+			}else {
+	            $(".form").submit();
+	        }
+		})
+		$("#btn-secondary").on('click',function(e){
+			const title = $("#reviewTitle").val();
+			if(title === ''){
+				e.preventDefault(); // 전송 막기
+			      swal({
+			          title : "내용 확인",
+			          text : "내용을 입력해주세요!",
+			          icon : "warning",
+			          buttons : {
+			              confirm:{
+			                  text: "확인",
+			                  value: true,
+			                  visible : true,
+			                  className : "btn-swal-color",
+			                  closeModal : true
+			              }
+			          }
+			   		});
+			}else {
+	            $(".form").submit();
+	        }
+		})
+		
+		
+		
+		/*
 		document.getElementById("reviewForm").addEventListener(
 				"submit",
 				function(e) {
@@ -221,6 +269,7 @@ html, body {
 						return;
 					}
 				});
+		*/
 	</script>
 </body>
 </html>
