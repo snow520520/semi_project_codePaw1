@@ -19,8 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
 import kr.co.iei.animal.model.service.AnimalService;
+import kr.co.iei.animal.model.vo.Animal;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.member.model.vo.Member;
+import kr.co.iei.protect.model.vo.Protect;
 import kr.co.iei.review.model.service.ReviewService;
 import kr.co.iei.review.model.vo.Review;
 import kr.co.iei.review.model.vo.ReviewListData;
@@ -120,6 +122,7 @@ public class ReviewController {
 		}
 		return "common/msg";
 	}
+	
 	@GetMapping(value="/reviewUpdateFrm")
 	public String updateFrm(int reviewNo, Model model) {
 		Review review = reviewService.selectOneReview(reviewNo);

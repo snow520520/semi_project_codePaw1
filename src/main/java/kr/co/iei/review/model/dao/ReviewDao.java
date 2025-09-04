@@ -33,6 +33,4 @@ public interface ReviewDao {
 	int updateReview(Review review);
 
 
-	
-
 }

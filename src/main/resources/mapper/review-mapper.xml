@@ -133,5 +133,7 @@
     WHERE member_no = #{memberNo} 
       AND review_no = #{reviewNo}
   </select>
+  
+
 
 </mapper>
