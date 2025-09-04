@@ -74,7 +74,7 @@
   	<delete id="deleteInfo">
   		delete from member_tbl where member_no = #{memberNo}
   	</delete>
-  	<select id="selectMemberNo" resultType="List">
+  	<select id="selectMemberNo" resultType="member">
   		select * from member_tbl where member_no = #{memberNo}
   	</select>
   	<select id="searchId" resultType = "member">
