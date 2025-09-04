@@ -171,6 +171,7 @@ public class MemberController {
 				member.setMemberName(m.getMemberName());
 				member.setMemberAddr(m.getMemberAddr());
 				member.setMemberPhone(m.getMemberPhone());
+				
 				/*
 				model.addAttribute("title", "수정 완료");
 				model.addAttribute("text","완 료");
@@ -224,7 +225,6 @@ public class MemberController {
 	@PostMapping(value = "/RePassword")
 	public boolean RePassoword(String memberPw) {
 		boolean result = memberService.RePassword(memberPw);
-		
 		return result;
 	}
 }

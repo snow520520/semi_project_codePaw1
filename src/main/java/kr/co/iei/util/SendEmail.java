@@ -25,7 +25,7 @@ public class SendEmail {
 		
 		try {
 			helper.setSentDate(new Date());
-			helper.setFrom(new InternetAddress("skjb6990@gmail.com", "얍"));
+			helper.setFrom(new InternetAddress("skjb6990@gmail.com", "codePaw"));
 			helper.setTo(receiver);
 			helper.setSubject(emailTitle);
 			helper.setText(emailContent, true);
