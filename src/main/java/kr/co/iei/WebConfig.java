@@ -47,7 +47,8 @@ public class WebConfig implements WebMvcConfigurer {
 								"/notice/list",
 								"/notice/searchTitle",
 								"/notice/view",
-								"/notice/filedown"
+								"/notice/filedown",
+								"/adoption/view"
 								);
 		registry.addInterceptor(new AdminInterceptor())
 		.addPathPatterns(
