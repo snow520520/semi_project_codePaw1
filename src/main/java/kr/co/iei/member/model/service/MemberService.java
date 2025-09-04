@@ -17,6 +17,7 @@ public class MemberService {
 	
 	@Autowired
 	private MemberDao memberDao;
+	
 	public Member login(Member m) {
 		Member member = memberDao.login(m);
 		return member;
@@ -193,9 +194,21 @@ public class MemberService {
 		int result = memberDao.deleteInfo(memberNo);
 		return result;
 	}
-
 	public Member selectMemberNo(int memberNo) {
 		return memberDao.selectMemberNo(memberNo);
+	}
+	public Member searchId(String memberName, String memberPhone) {
+		Member m = memberDao.searchId(memberName, memberPhone);
+		return m;
+	}
+	public Member passwordRe(String memberId, String memberPhone) {
+		Member m = memberDao.passwordRe(memberId, memberPhone);
+		return m;
+	}
+	public boolean RePassword(String memberPw) {
+		boolean result = memberDao.RePassword(memberPw);
+		
+		return result;
 	}
 }
 

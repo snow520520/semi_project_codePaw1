@@ -3,220 +3,748 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+	rel="stylesheet">
 <style>
 body {
-    font-family: Nanum Gothic Coding, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+	font-family: Nanum Gothic Coding, sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
 }
 
 .content {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f7f7f7;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #f7f7f7;
 }
 
 .login-wrap {
-    width: 500px;
-    background-color: white;
-    padding: 30px;
-    text-align: center;
-    border-radius: 10px;
-    margin-top: 10%;
-    margin-bottom: 150px;
+	width: 500px;
+	background-color: white;
+	padding: 30px;
+	text-align: center;
+	border-radius: 10px;
+	margin-top: 10%;
+	margin-bottom: 150px;
 }
 
 .login-title {
-    color: #854836;
-    font-size: 25px;
-    font-weight: bold;
-    padding: 30px;
-    padding-bottom: 40px;
+	color: #854836;
+	font-size: 25px;
+	font-weight: bold;
+	padding: 30px;
+	padding-bottom: 40px;
 }
 
 .login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
 }
 
-.login-form > .login-input-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin: 30px;
-    margin-bottom: 10px;
+.login-form>.login-input-wrap {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	margin: 30px;
+	margin-bottom: 10px;
 }
 
-.login-form > .login-input-wrap > input {
-    font-size: 16px;
-    height: 40px;
-    padding: 10px;
-    border: 1px solid #854836;
-    border-radius: 2px;
+.login-form>.login-input-wrap>input {
+	font-size: 16px;
+	height: 40px;
+	padding: 10px;
+	border: 1px solid #854836;
+	border-radius: 2px;
 }
 
-.password-wrap > input {
-    font-size: 16px;
-    height: 40px;
-    padding: 10px;
-    border: 1px solid #854836;
-    border-radius: 2px;
+.password-wrap>input {
+	font-size: 16px;
+	height: 40px;
+	padding: 10px;
+	border: 1px solid #854836;
+	border-radius: 2px;
 }
 
-.login-form > .login-input-wrap > input:last-child {
-    margin-top: 5px;
+.login-form>.login-input-wrap>input:last-child {
+	margin-top: 5px;
 }
 
-.login-form > .login-input-wrap > input:hover {
-    font-size: 14px;
-    font-style: inherit;
+.login-form>.login-input-wrap>input:hover {
+	font-size: 14px;
+	font-style: inherit;
 }
 
 .login-option {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin-left: 30px;
-    cursor: pointer;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	margin-left: 30px;
+	cursor: pointer;
 }
 
-.login-option > label {
-    padding-left: 5px;
+.login-option>label {
+	padding-left: 5px;
 }
 
 .alert {
-    margin-left: 35px;
-    text-align: left;
-    font-size: small;
-    font-weight: bold;
-    color: red;
+	margin-left: 35px;
+	text-align: left;
+	font-size: small;
+	font-weight: bold;
+	color: red;
 }
 
 .login-button {
-    height: 45px;
-    border: 0;
-    border-radius: 15px;
-    color: white;
-    background: #FFB22C;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: 500;
-    margin: 30px;
+	height: 45px;
+	border: 0;
+	border-radius: 15px;
+	color: white;
+	background: #FFB22C;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: 500;
+	margin: 30px;
 }
 
 .login-footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-    font-size: 15px;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 15px;
+	font-size: 15px;
 }
 
 .login-footer a {
-    text-decoration: none;
-    color: #854836;
+	text-decoration: none;
+	color: #854836;
+}
+
+.login-footer button {
+	text-decoration: none;
+	color: #854836;
+	border: none;
+	background-color: transparent;
+	font-size: 15px;
+	cursor: pointer;
 }
 
 .login-footer a:hover {
-    font-weight: bold;
+	font-weight: bold;
+}
+
+.login-footer button:hover {
+	font-weight: bold;
 }
 
 .material-icons-outlined {
-    cursor: pointer;
-    font-size: 20px;
-    padding-top: 2px;
-    color: #854836;
+	cursor: pointer;
+	font-size: 20px;
+	padding-top: 2px;
+	color: #854836;
 }
-    </style>
+/*modal*/
+.dialog {
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 10;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+}
+
+.dialog>.tb {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+
+.dialog>.tb .inner {
+	width: 80%;
+	height: 500px;
+	padding: 20px;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+	min-height: 300px;
+}
+
+.dialog .top {
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #854836;
+	justify-content: center;
+	padding-bottom: 15px;
+	margin-bottom: 15px;
+}
+
+.dialog .title {
+	font-weight: bold;
+	font-size: 20px;
+	color: #854836;
+}
+
+.dialog .ct {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 15px;
+	margin-top: 70px;
+}
+
+.dialog .ct .searchName-div, .dialog .ct .searchPhone-div {
+	width: 350px;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	border-radius: 6px;
+	background-color: #fff;
+	border: 1px solid #854836;
+	overflow: hidden;
+}
+
+.dialog .ct input {
+	flex: 1;
+	border: none;
+	padding: 10px;
+	font-size: 14px;
+	outline: none;
+}
+
+.dialog .result-div {
+	font-size: 14px;
+	color: #333;
+	padding-top: 30px;
+}
+
+.dialog .sub-btn {
+	display: flex;
+	justify-content: center;
+	margin-top: 80px;
+}
+
+.dialog .sub-btn .search-btn {
+	background: #f5a623;
+	color: #fff;
+	border: none;
+	padding: 10px 18px;
+	font-size: 15px;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+
+.dialog .close {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.dialog .close button {
+	font-size: 13px;
+	color: #854836;
+	text-decoration: none;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.material-icons-outlined {
+	font-size: 20px;
+	margin: auto 0;
+	line-height: 35px;
+	padding-left: 10px;
+	color: #854836;
+}
+/*modalA*/
+.dialogA {
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 10;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+}
+
+.dialogA>.tb {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+
+.dialogA>.tb .inner {
+	width: 80%;
+	height: 500px;
+	padding: 20px;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+	min-height: 300px;
+}
+
+.dialogA .top {
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #854836;
+	justify-content: center;
+	padding-bottom: 15px;
+	margin-bottom: 15px;
+}
+
+.dialogA .title {
+	font-weight: bold;
+	font-size: 20px;
+	color: #854836;
+}
+
+.dialogA .ct {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 15px;
+	margin-top: 70px;
+}
+
+.dialogA .ct .searchId-div, .dialogA .ct .searchPhone-div {
+	width: 350px;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	border-radius: 6px;
+	background-color: #fff;
+	border: 1px solid #854836;
+	overflow: hidden;
+}
+
+.dialogA .ct input {
+	flex: 1;
+	border: none;
+	padding: 10px;
+	font-size: 14px;
+	outline: none;
+}
+
+.dialogA .result-div {
+	font-size: 14px;
+	color: #333;
+	padding-top: 30px;
+}
+
+.dialogA .sub-btn {
+	display: flex;
+	justify-content: center;
+	margin-top: 80px;
+}
+
+.dialogA .sub-btn .insert-btn {
+	background: #f5a623;
+	color: #fff;
+	border: none;
+	padding: 10px 18px;
+	font-size: 15px;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+
+.dialogA .close {
+	margin-top: 15px;
+	text-align: center;
+}
+
+.dialogA .close button {
+	font-size: 13px;
+	color: #854836;
+	text-decoration: none;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.material-icons-outlined {
+	font-size: 20px;
+	margin: auto 0;
+	line-height: 35px;
+	padding-left: 10px;
+	color: #854836;
+}
+</style>
 </head>
 <body>
-    <th:block th:include="common/header"></th:block>
-    <main class="content">
-        <section class="login-wrap">
-            <div class="login-title">로그인</div>
-            <form action="/member/login" method="post" class="login-form" autocomplete="off">
-                <div class="login-input-wrap">
-                    <input type="text" name="memberId" id="memberId" placeholder="아이디" th:value="${savedId}" style="outline:none;">
-                    <input type="password" name="memberPw" id="memberPw" placeholder="비밀번호" style="outline:none;">
-                </div>
-                <div class="login-option">
-                    <span class="material-icons-outlined" id="checkBoxOut" style="font-size: 20px;">check_box_outline_blank</span>
-                    <span class="material-icons" id="checkBox" style="display:none; font-size:20px;">check_box</span>
-                    <input type="checkbox" name="saveId" id="login-remain" style="display:none;">
-                    <label for="login-remain">로그인 정보저장</label>
-                </div>
-                <span class="IdPw alert" id="IdPw" style="display:none;">아이디와 비밀번호를 입력해주세요.</span>
-                <span class="Pw alert" id="Pw" style="display:none;">비밀번호를 입력해주세요.</span>
-                <button type="submit" class="login-button">로그인</button>
-            </form>
-            <div class="login-footer">
-                <a href="/member/joinFrm">회원가입</a>
-                <span>
-                    <a href="/member/findIdFrm">아이디</a>
-                    <span style="color: #854836">|</span>
-                    <a href="#">비밀번호 찾기</a>
-                </span>
-            </div>
-        </section>
-    </main>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $("#memberId").on("click", function() {
-            $(this).css('border', '1px solid #854836');
-            $(this).removeAttr("placeholder");
-        });
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="login-wrap">
+			<div class="login-title">로그인</div>
+			<form action="/member/login" method="post" class="login-form"
+				autocomplete="off">
+				<div class="login-input-wrap">
+					<input type="text" name="memberId" id="memberId" placeholder="아이디"
+						th:value="${savedId}" style="outline: none;"> <input
+						type="password" name="memberPw" id="memberPw" placeholder="비밀번호"
+						style="outline: none;">
+				</div>
+				<div class="login-option">
+					<span class="material-icons-outlined" id="checkBoxOut"
+						style="font-size: 20px;">check_box_outline_blank</span> <span
+						class="material-icons" id="checkBox"
+						style="display: none; font-size: 20px;">check_box</span> <input
+						type="checkbox" name="saveId" id="login-remain"
+						style="display: none;"> <label for="login-remain">로그인
+						정보저장</label>
+				</div>
+				<span class="IdPw alert" id="IdPw" style="display: none;">아이디와
+					비밀번호를 입력해주세요.</span> <span class="Pw alert" id="Pw" style="display: none;">비밀번호를
+					입력해주세요.</span>
+				<button type="submit" class="login-button">로그인</button>
+			</form>
+			<div class="login-footer">
+				<a href="/member/joinFrm">회원가입</a> <span>
+					<button type="button" onClick="modal('dialog')" class="id-btn">
+						<span>아이디</span>
+					</button> <span style="color: #854836">|</span>
+					<button type="button" onClick="modal('dialogA')"
+						class="pwSearch-btn">
+						<span>비밀번호 찾기</span>
+					</button>
+				</span>
+			</div>
+		</section>
+		<div id="dialog" class="dialog">
+			<div class="tb">
+				<div class="inner" style="max-width: 500px;">
+					<div class="top">
+						<div class="title">아이디 찾기</div>
+					</div>
+					<div class="ct">
+						<div class="searchName-div">
+							<span class="material-icons-outlined">dns</span> <input
+								type="text" name="memberName" id="memberName" placeholder="이 름">
+						</div>
+						<div class="searchPhone-div">
+							<span class="material-icons-outlined">phone_android</span> <input
+								type="text" name="memberPhone" id="memberPhone"
+								placeholder="전화번호 ex) '010-0000-0000'">
+						</div>
+						<div class="result-div"></div>
+					</div>
+					<div class="sub-btn">
+						<button type="button" class="search-btn">아이디 찾기</button>
+					</div>
+					<div class="close">
+						<button type="button" class="modal-close">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="dialogA" class="dialogA">
+			<div class="tb">
+				<div class="inner" style="max-width: 500px;">
+					<div class="top">
+						<div class="title">비밀번호 재설정</div>
+					</div>
+					<div class="ct">
+						<div class="searchId-div">
+							<span class="material-icons-outlined">dns</span> <input
+								type="text" name="memberName" id="memberName" placeholder="아이디">
+						</div>
+						<div class="searchPhone-div">
+							<span class="material-icons-outlined">phone_android</span> <input
+								type="text" name="memberPhone" id="memberPhone"
+								placeholder="전화번호 ex) '010-0000-0000'">
+						</div>
+						<div class="searchPw-div" style="display: none;">
+							<span class="material-icons-outlined">dns</span> <input
+								type="text" name="memberPw" id="memberPw" placeholder="재설정 비밀번호">
+						</div>
+						<div class="searchPwRe-div" style="display: none;">
+							<span class="material-icons-outlined">phone_android</span> <input
+								type="text" name="memberPwRe" id="memberPwRe"
+								placeholder="비밀번호 확인">
+						</div>
+						<div class="result-div"></div>
+					</div>
+					<div class="sub-btn">
+						<button type="button" class="insert-btn">입 력</button>
+						<button type="button" class="rePw-btn" style = "display: none;">재설정하기</button>
+					</div>
+					<div class="close">
+						<button type="button" class="modal-closeA">닫기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$("#memberId").on("click", function() {
+			$(this).css('border', '1px solid #854836');
+			$(this).removeAttr("placeholder");
+		});
 
-        $("#memberId").on("focusout", function() {
-            $(this).css('border', '1px solid #854836');
-            $(this).attr('placeholder','아이디');
-        });
+		$("#memberId").on("focusout", function() {
+			$(this).css('border', '1px solid #854836');
+			$(this).attr('placeholder', '아이디');
+		});
 
-        $("#memberPw").on("click", function() {
-            $(this).css('border', '1px solid #854836');
-            $(this).removeAttr("placeholder");
-        });
+		$("#memberPw").on("click", function() {
+			$(this).css('border', '1px solid #854836');
+			$(this).removeAttr("placeholder");
+		});
 
-        $("#memberPw").on("focusout", function() {
-            $(this).attr('placeholder','비밀번호');
-        });
+		$("#memberPw").on("focusout", function() {
+			$(this).attr('placeholder', '비밀번호');
+		});
 
-        $("#checkBoxOut, #checkBox").on("click", function() {
-            $("#checkBoxOut, #checkBox").toggle();
-            $("#login-remain").prop("checked", $("#checkBox").is(":visible"));
-        });
+		$("#checkBoxOut, #checkBox").on("click", function() {
+			$("#checkBoxOut, #checkBox").toggle();
+			$("#login-remain").prop("checked", $("#checkBox").is(":visible"));
+		});
 
-        $(".login-button").on("click", function() {
-            const memberIdCheck = $("#memberId").val();
-            const memberPwCheck = $("#memberPw").val();
-            if((!memberIdCheck && !memberPwCheck)) {
-                $("#IdPw").show();
-                $("#Pw").hide();
-            } else if(memberIdCheck !== null && !memberPwCheck) {
-                $("#Pw").show();
-                $("#IdPw").hide();
-            } else if(!memberIdCheck && memberPwCheck !== null) {
-                $("#Pw").hide();
-                $("#IdPw").show();
-            }
-        });
-        window.onload = function() {
-            if($("#memberId").val() !== "") {
-                $("#checkBox").show();
-                $("#checkBoxOut").hide();
-                $("#login-remain").prop("checked", true);
-            } else {
-                $("#checkBox").hide();
-                $("#checkBoxOut").show();
-                $("#login-remain").prop("checked", false);
-            }
-        }
-    </script>
-    <th:block th:include="common/footer"></th:block>
+		$(".login-button").on("click", function() {
+			const memberIdCheck = $("#memberId").val();
+			const memberPwCheck = $("#memberPw").val();
+			if ((!memberIdCheck && !memberPwCheck)) {
+				$("#IdPw").show();
+				$("#Pw").hide();
+			} else if (memberIdCheck !== null && !memberPwCheck) {
+				$("#Pw").show();
+				$("#IdPw").hide();
+			} else if (!memberIdCheck && memberPwCheck !== null) {
+				$("#Pw").hide();
+				$("#IdPw").show();
+			}
+		});
+		window.onload = function() {
+			if ($("#memberId").val() !== "") {
+				$("#checkBox").show();
+				$("#checkBoxOut").hide();
+				$("#login-remain").prop("checked", true);
+			} else {
+				$("#checkBox").hide();
+				$("#checkBoxOut").show();
+				$("#login-remain").prop("checked", false);
+			}
+		}
+		//모달 열기
+		function modal(id) {
+			$("." + id).fadeIn();
+		}
+		//모달 닫기
+		$('.modal-close').on('click', function(e) {
+			e.preventDefault();
+			const modal = $(this).parents('.dialog');
+			modal.fadeOut();
+		
+		});
+		$('.modal-closeA').on('click', function(e) {
+			e.preventDefault();
+			const modal = $(this).parents('.dialogA');
+			modal.fadeOut();
+		
+		});
+		$(".search-btn").on("click", function(){
+			const memberName = $("#memberName").val();
+			const memberPhone = $("#memberPhone").val();
+			$.ajax({
+				url: "/member/searchId",
+				type: "get",
+				data: {memberName : memberName, memberPhone : memberPhone},
+				success: function(result){
+					const resultDiv = $(".result-div");
+					resultDiv.empty();
+					if(result && result.memberId){
+						const resultDiv = $(".result-div");
+						const div = $("<div>").addClass("search-result");
+						const spanStart = $("<span>").text("아이디 찾기 결과 ID는 [");
+						const spanId = $("<span>").css("color", "blue").text(result.memberId);
+						const spanEnd =$("<span>").text("] 입니다.");
+						div.append(spanStart).append(spanId).append(spanEnd);
+						resultDiv.append(div);
+					}else{
+						const resultDiv = $(".result-div");
+						const div = $("<div>").addClass("search-result");
+						const span = $("<span>").css("color", "red").text("일치하는 회원 정보가 없습니다.");
+						div.append(span);
+						resultDiv.append(div);
+					}
+				},error : function(){
+					const resultDiv = $(".result-div");
+					resultDiv.empty();
+					const div = $("<div>").addClass("search-result");
+					const span = $("<span>").css("color", "gray").text("조회결과 오류가 발생하였습니다. 다시 시도해주세요.");
+					div.append(span);
+					resultDiv.append(div);
+				}
+			});
+			const resultDiv = $(".result-div");
+			$(".modal-close").on("click", function(){
+				resultDiv.empty();
+				memberName.empty();
+				memberPhone.empty();
+			});
+		});
+		$(".insert-btn").on("click", function(){
+			const memberId = $("#memberId").val();
+			const memberPhone = $("#memberPhone").val();
+			const memberPwVal = $("#memberPw").val();
+			const memberPwReVal = $("#memberPwRe").val();
+			
+			const searchPw = $(".searchPw-div");
+			const searchPwRe = $(".searchPwRe-div");
+			const searchId = $(".searchId-div");
+			const searchPhone = $(".searchPhone-div");
+			const searchBtn = $(".search-btn");
+			const rePwBtn = $(".rePw-btn");
+			
+			$.ajax({
+				url: "/member/passwordRe",
+				type: "get",
+				data: {memberId : memberId, memberPhone : memberPhone},
+				success: function(result){
+					const resultDiv = $(".result-div");
+					resultDiv.empty();
+					console.log(result);
+					if(result.memberId && result.memberPhone){
+						searchId.toggle();
+						searchPhone.toggle();
+						searchBtn.toggle();
+						searchPw.toggle();
+						searchPwRe.toggle();
+						rePwBtn.toggle();
+						
+						const resultDiv = $(".result-div");
+						const div = $("<div>").addClass("passwordRe-result");
+						const span = $("<span>").css("color", "blue").text("재설정할 비밀번호를 입력해주세요.");
+						div.append(span);
+						resultDiv.append(div);
+					}else if(result.memberId || result.memberPhone){
+						const resultDiv = $(".result-div");
+						const div = $("<div>").addClass("passwordRe-result");
+						const span = $("<span>").css("color", "red").text("아이디 또는 전화번호를 다시 입력해주세요.");
+						div.append(span);
+						resultDiv.append(div);
+					}else{
+						const resultDiv = $(".result-div");
+						const div = $("<div>").addClass("passwordRe-result");
+						const span = $("<span>").css("color", "red").text("회원 정보를 입력해주세요.");
+						div.append(span);
+						resultDiv.append(div);
+					}
+				},error : function(){
+					const resultDiv = $(".result-div");
+					resultDiv.empty();
+					const div = $("<div>").addClass("passwordRe-result");
+					const span = $("<span>").css("color", "gray").text("오류가 발생하였습니다. 다시 시도해주세요.");
+					div.append(span);
+					resultDiv.append(div);
+				}
+			});
+			const resultDiv = $(".result-div");
+			$(".modal-closeA").on("click", function(){
+				resultDiv.empty();
+			});
+		});
+		$(".rePw-btn").on("click", function(e){
+			const memberPwVal = $("#memberPw").val();
+			const memberPwReVal = $("#memberPwRe").val();
+			
+			const searchPw = $(".searchPw-div");
+			const searchPwRe = $(".searchPwRe-div");
+			const searchId = $(".searchId-div");
+			const searchPhone = $(".searchPhone-div");
+			const searchBtn = $(".search-btn");
+			const rePwBtn = $(".rePw-btn");
+			
+			const pwReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,15}$/; //6~15자 이내 대소문자, 숫자 각 1개 이상 포함
+			const regResult = pwReg.test(memberPwVal);
+			
+			$.ajax({
+				url: "/member/RePassword",
+				type: "post",
+				data: {memberPw : memberPw},
+				success: function(result){
+					const resultDiv = $(".result-div");
+					resultDiv.empty();
+					if(result){
+						if (regResult) {
+							const resultDiv = $(".result-div");
+							const div = $("<div>").addClass("passwordRe-result");
+							const span = $("<span>").css("color", "blue").text("비밀번호 사용가능");
+							div.append(span);
+							resultDiv.append(div);
+							if(!memberPwReVal){
+								const resultDiv = $(".result-div");
+								const div = $("<div>").addClass("passwordRe-result");
+								const span = $("<span>").css("color", "red").text("비밀번호를 확인해주세요.");
+								div.append(span);
+								resultDiv.append(div);
+							} else{
+								if(memberPwVal === memberPwReVal){
+										searchId.toggle();
+										searchPhone.toggle();
+										searchBtn.toggle();
+										searchPw.toggle();
+										searchPwRe.toggle();
+										rePwBtn.toggle();
+										
+										const resultDiv = $(".result-div");
+										const div = $("<div>").addClass("passwordRe-result");
+										const span = $("<span>").css("color", "red").text("비밀번호 일치");
+										div.append(span);
+										resultDiv.append(div);
+								}else{
+									const resultDiv = $(".result-div");
+									const div = $("<div>").addClass("passwordRe-result");
+									const span = $("<span>").css("color", "red").text("비밀번호 일치");
+									div.append(span);
+									resultDiv.append(div);
+								}
+							}
+						}else{
+							const resultDiv = $(".result-div");
+							resultDiv.empty();
+							if(memberPwVal !== memberPwReVal){
+								const resultDiv = $(".result-div");
+								const div = $("<div>").addClass("passwordRe-result");
+								const span = $("<span>").css("color", "red").text("비밀번호를 다시 입력해주세요.");
+								div.append(span);
+								resultDiv.append(div);
+							}					
+						}
+					}else{
+						e.preventDefault();
+					}
+				},error : function(){
+					const resultDiv = $(".result-div");
+					resultDiv.empty();
+					const div = $("<div>").addClass("passwordRe-result");
+					const span = $("<span>").css("color", "gray").text("오류가 발생하였습니다. 다시 시도해주세요.");
+					div.append(span);
+					resultDiv.append(div);
+				}
+			});
+			const resultDiv = $(".result-div");
+			$(".modal-closeA").on("click", function(){
+				resultDiv.empty();
+				
+			});
+		});
+	</script>
+	<th:block th:include="common/footer"></th:block>
 </body>
 </html>

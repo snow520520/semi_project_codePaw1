@@ -1,5 +1,8 @@
 package kr.co.iei.member.controller;
 import kr.co.iei.notice.controller.NoticeController;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +30,14 @@ public class MemberController {
     MemberController(NoticeController noticeController) {
         this.noticeController = noticeController;
     }
-
+    @RequestMapping(value = "/loginMsg")
+    public String loginMsg(Model model) {
+    	model.addAttribute("title", "로그인");
+		model.addAttribute("text", "로그인 후 사용합니다.");
+		model.addAttribute("icon", "info");
+		model.addAttribute("loc", "/member/login");
+		return "common/msg"; 
+    }
 	@GetMapping(value = "/loginFrm")
 	public String loginFrm(HttpServletRequest request, Model model) {
 	    Cookie[] cookies = request.getCookies();
@@ -180,5 +189,26 @@ public class MemberController {
 		}else {
 			return "redirect:/";
 		}
+	}
+	@ResponseBody
+	@GetMapping(value = "/searchId") 
+	public Member searchId(String memberName, String memberPhone) {
+		//query에 memberName 전달 시 int 타입으로 리턴한 후 memberName과 memberPhone이 둘다 일치하는지 
+		Member m = memberService.searchId(memberName, memberPhone);
+		
+		return m;
+	}
+	@ResponseBody
+	@GetMapping(value = "/passwordRe")
+	public Member passwordRe(String memberId, String memberPhone) {
+		Member m = memberService.passwordRe(memberId, memberPhone);
+		return m;
+	}
+	@ResponseBody
+	@PostMapping(value = "/RePassword")
+	public boolean RePassoword(String memberPw) {
+		boolean result = memberService.RePassword(memberPw);
+		
+		return result;
 	}
 }
