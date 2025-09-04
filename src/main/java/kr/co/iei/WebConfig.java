@@ -20,18 +20,4 @@ public class WebConfig implements WebMvcConfigurer {
 		// 기존 static 이미지
 		registry.addResourceHandler("/image/**").addResourceLocations("classpath:/static/image/");
 	}
-
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new LoginInterceptor())
-				.addPathPatterns(
-						
-						).excludePathPatterns(
-								
-								);
-			
-		
-		
-	}
-	
 }

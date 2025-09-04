@@ -377,7 +377,7 @@ div[class=email-div],div[class=input-phone]{
 						type: "get",
 						data: {receiver : receiver},
 						success: function(code){
-							$("#autoMsg").text("번호 입력").css("color", "blue").css("margin-left", "65px").css("font-size", "12px").show();
+							$("#autoMsg").text("번호 입력").css("color", "#2854C5").css("margin-left", "65px").css("font-size", "12px").show();
 							mailCode = code;
 							$("#email-btn").hide();
 							$("#auto-code").show();
@@ -397,7 +397,7 @@ div[class=email-div],div[class=input-phone]{
 			const inputCode = $("#auto-code").val();
 				if(mailCode.toLowerCase() === inputCode.toLowerCase()){
 					$("#autoMsg").css("color", "#2854C5").css("margin-right", "20px");
-					$("#autoMsg").text("인증 완료");
+					$("#autoMsg").addClass("auto-btn").css("margin-right", "280px").text("인증 완료");
 					$("#email").addClass("confirmed");
 					window.clearInterval(intervalId);
 					$("#auto-code").hide();
@@ -406,7 +406,7 @@ div[class=email-div],div[class=input-phone]{
 					$("#time-zone").hide();
 					mailCode = null;
 				}else{
-					$("#autoMsg").text("인증번호 입력해주세요");
+					$("#autoMsg").css("font-size", "10px").text("인증번호 입력!!");
 					$("#autoMsg").css("color", "#BB271A");
 			}
 		});
@@ -453,7 +453,6 @@ div[class=email-div],div[class=input-phone]{
 			let emailVal = $("#email").val();
 			const checkPwMsg = $(".checkPw-msg");
 			const checkPwReMsg = $(".checkPwRe-msg");
-			const autoCer = false;
 			checkPwReMsg.remove("invalid").remove("valid");
 			console.log(!$("#email").hasClass("confirmed"));
 			const memberPw = $("#memberPw");
@@ -548,7 +547,7 @@ div[class=email-div],div[class=input-phone]{
 					}
 				});
 			}
-			if(memberAge === ""){
+			if(memberAge.trim() === ""){
 				e.preventDefault();
 				swal({
 					title : "정보 입력",
@@ -564,7 +563,7 @@ div[class=email-div],div[class=input-phone]{
 						}
 					}
 				});
-			}else if(memberId === ""){
+			}else if(memberId.trim() === ""){
 				e.preventDefault();
 				swal({
 					title : "정보 입력",
@@ -580,7 +579,7 @@ div[class=email-div],div[class=input-phone]{
 						}
 					}
 				});
-			}else if(memberName === ""){
+			}else if(memberName.trim() === ""){
 				e.preventDefault();
 				swal({
 					title : "정보 입력",
@@ -596,8 +595,7 @@ div[class=email-div],div[class=input-phone]{
 						}
 					}
 				});
-			}else if(memberPhone === ""){
-				e.preventDefault();
+			}else if(memberPhone.trim() === ""){
 				e.preventDefault();
 				swal({
 					title : "정보 입력",

@@ -163,6 +163,7 @@ public class MemberController {
 				member.setMemberName(m.getMemberName());
 				member.setMemberAddr(m.getMemberAddr());
 				member.setMemberPhone(m.getMemberPhone());
+				
 				/*
 				model.addAttribute("title", "수정 완료");
 				model.addAttribute("text","완 료");
