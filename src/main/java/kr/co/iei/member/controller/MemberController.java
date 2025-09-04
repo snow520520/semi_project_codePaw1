@@ -216,7 +216,6 @@ public class MemberController {
 	@PostMapping(value = "/RePassword")
 	public boolean RePassoword(String memberPw) {
 		boolean result = memberService.RePassword(memberPw);
-		
 		return result;
 	}
 }
