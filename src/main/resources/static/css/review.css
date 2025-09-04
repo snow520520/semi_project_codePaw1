@@ -128,7 +128,8 @@ input{
 }
 .write-btn-wrapper {
     width : 1000px;
-    text-align: right;       
+    text-align: right;
+    padding-top: 20px;    
 	margin: 0 auto;
 }
 .write-btn {

@@ -94,4 +94,13 @@
 	<update id="updateProtectStatus">
 	    update protect_tbl set protect_status = #{status} where protect_no = #{protectNo}
 	</update>
+	
+	<delete id="deleteProtectLikesByProtectNo" parameterType="int">
+    DELETE FROM protect_like WHERE protect_no = #{protectNo}
+	</delete>
+	
+	<delete id="deleteProtect" parameterType="int">
+	    DELETE FROM protect_tbl WHERE protect_no = #{protectNo}
+	</delete>
+
 </mapper>

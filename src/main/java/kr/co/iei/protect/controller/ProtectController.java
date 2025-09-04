@@ -55,6 +55,14 @@ public class ProtectController {
             return "common/msg";
         }
 
+        if (ap.getProtectTitle() == null || ap.getProtectTitle().trim().isEmpty()) {
+            model.addAttribute("title", "등록 실패");
+            model.addAttribute("text", "제목을 입력해주세요.");
+            model.addAttribute("icon", "warning");
+            model.addAttribute("loc", "/mainAllpage/writeFrm");
+            return "common/msg";
+        }
+
         Animal animal = new Animal();
         animal.setAnimalName(animalName);
         try {
@@ -138,29 +146,28 @@ public class ProtectController {
         return protectService.selectPageList(start, count, memberNo);
     }
 
-    @ResponseBody
     @PostMapping("/mainAllpage/toggleLike")
+    @ResponseBody
     public Map<String, Object> toggleLike(@RequestParam("protectNo") int protectNo, HttpSession session) {
-        Map<String, Object> resultMap = new HashMap<>();
+        Map<String, Object> result = new HashMap<>();
         Member member = (Member) session.getAttribute("member");
+
         if (member == null) {
-            resultMap.put("likedByUser", false);
-            resultMap.put("likeCount", 0);
-            return resultMap;
+            result.put("loginRequired", true);
+            return result;
         }
 
         boolean liked = protectService.isLiked(member.getMemberNo(), protectNo);
         if (liked) {
             protectService.deleteProtectLike(member.getMemberNo(), protectNo);
-            liked = false;
         } else {
             protectService.insertProtectLike(member.getMemberNo(), protectNo);
-            liked = true;
         }
 
-        resultMap.put("likedByUser", liked);
-        resultMap.put("likeCount", protectService.getLikeCount(protectNo));
-        return resultMap;
+        result.put("loginRequired", false);
+        result.put("likedByUser", !liked);
+        result.put("likeCount", protectService.getLikeCount(protectNo));
+        return result;
     }
 
     @ResponseBody
@@ -249,6 +256,35 @@ public class ProtectController {
         }
         return "common/msg";
     }
+    
+    @GetMapping("/mainAllpage/delete")
+    public String deleteProtect(@RequestParam("protectNo") int protectNo, Model model, HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        if(member == null || member.getMemberLevel() != 1) {
+            model.addAttribute("title", "권한 없음");
+            model.addAttribute("text", "삭제는 관리자만 가능합니다.");
+            model.addAttribute("icon", "error");
+            model.addAttribute("loc", "/member/loginFrm");
+            return "common/msg";
+        }
+
+        int result = protectService.deleteProtect(protectNo); 
+        if(result > 0) {
+            model.addAttribute("title", "삭제 완료");
+            model.addAttribute("text", "입양 글이 정상적으로 삭제되었습니다.");
+            model.addAttribute("icon", "success");
+            model.addAttribute("loc", "/mainAllpage/allpage");
+        } else {
+            model.addAttribute("title", "삭제 실패");
+            model.addAttribute("text", "오류가 발생했습니다.");
+            model.addAttribute("icon", "error");
+            model.addAttribute("loc", "/mainAllpage/detail?protectNo=" + protectNo);
+        }
+        return "common/msg";
+    }
+
+    
+
     
     @PostMapping(value="/mainAllpage/editorImage", produces = "plain/text;charset=utf-8")
     @ResponseBody
