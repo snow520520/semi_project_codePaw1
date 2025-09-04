@@ -74,11 +74,16 @@
   	<delete id="deleteInfo">
   		delete from member_tbl where member_no = #{memberNo}
   	</delete>
-  	
   	<select id="selectMemberNo" resultType="List">
   		select * from member_tbl where member_no = #{memberNo}
   	</select>
   	<select id="searchId" resultType = "member">
   		select * from member_tbl where member_name = #{memberName} and member_phone = #{memberPhone}
   	</select>
+  	<select id="passwordRe" resultType = "member">
+  		select * from member_tbl where member_id = #{memberId} and member_phone = #{memberPhone}
+  	</select>
+  	<update id="RePassword">
+  		update member_tbl set member_pw = #{memberPw} where member_id = #{memberId} and member_phone = #{memberPhone}
+  	</update>
 </mapper>

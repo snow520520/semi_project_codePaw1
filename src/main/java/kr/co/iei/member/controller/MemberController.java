@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.Cookie;
@@ -191,10 +192,23 @@ public class MemberController {
 	}
 	@ResponseBody
 	@GetMapping(value = "/searchId") 
-	public Member searchId(String memberName, String memberPhone, Model model) {
+	public Member searchId(String memberName, String memberPhone) {
 		//query에 memberName 전달 시 int 타입으로 리턴한 후 memberName과 memberPhone이 둘다 일치하는지 
 		Member m = memberService.searchId(memberName, memberPhone);
 		
 		return m;
+	}
+	@ResponseBody
+	@GetMapping(value = "/passwordRe")
+	public Member passwordRe(String memberId, String memberPhone) {
+		Member m = memberService.passwordRe(memberId, memberPhone);
+		return m;
+	}
+	@ResponseBody
+	@PostMapping(value = "/RePassword")
+	public boolean RePassoword(String memberPw) {
+		boolean result = memberService.RePassword(memberPw);
+		
+		return result;
 	}
 }

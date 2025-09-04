@@ -201,5 +201,14 @@ public class MemberService {
 		Member m = memberDao.searchId(memberName, memberPhone);
 		return m;
 	}
+	public Member passwordRe(String memberId, String memberPhone) {
+		Member m = memberDao.passwordRe(memberId, memberPhone);
+		return m;
+	}
+	public boolean RePassword(String memberPw) {
+		boolean result = memberDao.RePassword(memberPw);
+		
+		return result;
+	}
 }
 
