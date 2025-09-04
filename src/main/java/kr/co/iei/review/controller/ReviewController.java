@@ -102,7 +102,7 @@ public class ReviewController {
 	}
 
 	// 후기 저장
-	@PostMapping(value = "/reviewWriteFrm")
+	@PostMapping(value = "/reviewWrite")
 	public String insertReview(Review r, @SessionAttribute Member member, Model model) {
 		r.setMemberNo(member.getMemberNo());
 
