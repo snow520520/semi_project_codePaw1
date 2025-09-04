@@ -2,6 +2,7 @@ package kr.co.iei.protect.model.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -37,6 +38,9 @@ public interface ProtectDao {
     void insertProtectLike(@Param("memberNo") int memberNo, @Param("protectNo") int protectNo);
     void deleteProtectLike(@Param("memberNo") int memberNo, @Param("protectNo") int protectNo);
     Integer selectLikeCount(@Param("protectNo") int protectNo);
-
     int updateProtectStatus(@Param("protectNo") int protectNo, @Param("status") int status);
+    void deleteProtectLikesByProtectNo(@Param("protectNo") int protectNo);
+    int deleteProtect(@Param("protectNo") int protectNo);
+
+    
 }

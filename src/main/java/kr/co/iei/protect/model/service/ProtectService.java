@@ -116,6 +116,15 @@ public class ProtectService {
     public int updateProtectContent(Protect ap) {
         return protectDao.updateProtectContent(ap);
     }
+    
+    @Transactional
+    public int deleteProtect(int protectNo) {
+
+        protectDao.deleteProtectLikesByProtectNo(protectNo);
+     
+        return protectDao.deleteProtect(protectNo);
+    }
+
 
 
     public boolean isLiked(int memberNo, int protectNo) {

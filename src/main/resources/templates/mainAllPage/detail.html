@@ -19,9 +19,15 @@
 
 		<div th:if="${loginMember != null and loginMember.memberLevel == 1}">
 		    <div class="actions">
-		        <a th:href="@{/mainAllpage/updateFrm(protectNo=${ap.protectNo})}">수정하기</a>
+		        <a th:href="@{/mainAllpage/updateFrm(protectNo=${ap.protectNo})}" class="submit-button">
+		            수정하기
+		        </a>
+		        <a th:href="@{/mainAllpage/delete(protectNo=${ap.protectNo})}" class="submit-button">
+		            삭제하기
+		        </a>
 		    </div>
 		</div>
+
 	
 		<table class="form-table">
 		    <tbody>
