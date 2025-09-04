@@ -65,7 +65,6 @@ public class NoticeController {
 			model.addAttribute("loc", "/notice/list?reqPage=1");
 			return "common/msg";
 		}
-		System.out.println("공지사항 파일 : "+ notice.getFileList());
 		model.addAttribute("notice", notice);
 		return "notice/view";
 	}

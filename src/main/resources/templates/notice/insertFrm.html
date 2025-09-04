@@ -56,7 +56,7 @@
 		<section class="section">
 			<form action="/notice/insert" method="post" enctype="multipart/form-data" autocomplete="off" class="form">
 				<div class="title">
-					<input type="text" name="noticeTitle" id="noticeTitle" placeholder="제목을 입력해주세요." required>
+					<input type="text" name="noticeTitle" id="noticeTitle" placeholder="제목을 입력해주세요.">
 					<input type="hidden" name="memberId" id="memberId" th:value="${session.member.memberId}">
 				</div>
 				<div class="line" th:text="${session.member.memberId}"></div>
@@ -64,7 +64,7 @@
 					<label for="noticeFiles">첨부파일</label>
 					<input type="file" name="noticeFiles" id="noticeFiles" multiple>
 				</div>
-				<textarea name="noticeContent" id="noticeContent" required></textarea>
+				<textarea name="noticeContent" id="noticeContent"></textarea>
 				<div class="line"> </div>
 				<div class="btn-box">
 					<button type="button" onclick="location.href='/notice/list?reqPage=1'">취소하기</button>
@@ -97,6 +97,28 @@
 	            }
 	        }
 	    }
+	});
+	$("#submit").on('click',function(e){
+		const content = $("#noticeTitle").val();
+		if(content === ""){
+			e.preventDefault(); // 전송 막기
+		      swal({
+		          title : "제목 확인",
+		          text : "제목을 입력해주세요!",
+		          icon : "warning",
+		          buttons : {
+		              confirm:{
+		                  text: "확인",
+		                  value: true,
+		                  visible : true,
+		                  className : "btn-swal-color",
+		                  closeModal : true
+		              }
+		          }
+		   		});
+		}else {
+            $(".form").submit();
+        }
 	});
 	$("#submit").on('click',function(e){
 		const content = $("#noticeContent").summernote('isEmpty');

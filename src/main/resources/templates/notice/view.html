@@ -52,6 +52,9 @@
 			<div class="line"> </div>
 			<div class="line inline">
 				<span>첨부파일 |</span>
+				<th:block th:if="${#lists.isEmpty(notice.fileList)}">
+					<span>없음</span>
+				</th:block>
 				<th:block th:each="file : ${notice.fileList}">
 					<img src="/image/file.png" style="width: 16px;">
 					<a th:href="@{/notice/filedown(noticeFileNo=${file.noticeFileNo})}" th:text="${file.filename}"></a>

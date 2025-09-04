@@ -17,8 +17,8 @@
 		padding-bottom: 20px;
 		margin-bottom: 20px;
 	}
-	.adoptionContent>th,
-	.adoptionContent>td{
+	.adoptionContentMotive>th,
+	.adoptionContentMotive>td{
 		height: 120px;
 	}
 	textarea{
@@ -45,7 +45,7 @@
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
-			<form action="/adoption/update" method="post">
+			<form action="/adoption/update" method="post" class="form">
 				<input type="hidden" name="adoptionNo" th:value="${a.adoptionNo}">
 				<input type="hidden" name="memberId" th:value="${a.memberId}">
 				<input type="text" id="adoptionTitle" name="adoptionTitle" th:value="${a.adoptionTitle}">
@@ -66,10 +66,10 @@
 							<th style="width: 20%">주소</th>
 							<td style="width: 80%" th:text="${member.memberAddr}"></td>
 						</tr>
-						<tr class="adoptionContent">
+						<tr class="adoptionContentMotive">
 							<th style="width: 20%">입양동기</th>
 							<td style="width: 80%">
-								<textarea name="adoptionContent" th:text="${a.adoptionContent}"></textarea>
+								<textarea name="adoptionContent" id="adoptionContent" th:text="${a.adoptionContent}"></textarea>
 							</td>
 						</tr>
 					</table>
@@ -86,12 +86,60 @@
 					</table>
 					<div class="btn-box">
 						<button type="button" th:onclick="location.href='/adoption/view?adoptionNo=[[${a.adoptionNo}]]'">취소</button>
-						<button type="submit">수정하기</button>
+						<button type="submit" id="submit">수정하기</button>
 					</div>
 				</div>
 			</form>
 		</section>
 	</main>
+	<script src="/js/sweetalert.min.js"></script>
+	<script>
+		$("#submit").on('click',function(e){
+			const content = $("#adoptionTitle").val();
+			if(content === ""){
+				e.preventDefault(); // 전송 막기
+			      swal({
+			          title : "제목 확인",
+			          text : "제목을 입력해주세요!",
+			          icon : "warning",
+			          buttons : {
+			              confirm:{
+			                  text: "확인",
+			                  value: true,
+			                  visible : true,
+			                  className : "btn-swal-color",
+			                  closeModal : true
+			              }
+			          }
+			   		});
+			}else {
+	            $(".form").submit();
+	        }
+		})
+		
+		$("#submit").on('click',function(e){
+			const content = $("#adoptionContent").val();
+			if(content === ""){
+				e.preventDefault(); // 전송 막기
+			      swal({
+			          title : "입양 동기 확인",
+			          text : "입양 동기를 입력해주세요!",
+			          icon : "warning",
+			          buttons : {
+			              confirm:{
+			                  text: "확인",
+			                  value: true,
+			                  visible : true,
+			                  className : "btn-swal-color",
+			                  closeModal : true
+			              }
+			          }
+			   		});
+			}else {
+	            $(".form").submit();
+	        }
+		})
+	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
 </html>

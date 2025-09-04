@@ -17,13 +17,11 @@
             font-size: 20px;
         }
         .like-icon.liked {
-            color: red;
         }
         .like-count {
-            margin-left: 5px;
-            font-size: 12px;
+            font-size: 15px;
             color: black;
-            font-weight: bold;
+			margin-right: 4px;
         }
     </style>
 </head>
@@ -60,11 +58,11 @@
 						        제목
 						    </h3>
                             <span class="like" th:data-protect-no="${ap.protectNo}">
+                                <span class="like-count" th:text="${ap.likeCount}">0</span>
                                 <span class="material-icons like-icon"
                                       th:classappend="${ap.likedByUser} ? ' liked' : ''"
                                       th:text="${ap.likedByUser} ? 'favorite' : 'favorite_border'">
                                 </span>
-                                <span class="like-count" th:text="${ap.likeCount}">0</span>
                             </span>
                         </div>
                         <p class="date" th:text="${ap.protectDate}">2025-xx-xx</p>
@@ -80,22 +78,24 @@
 
     <script src="js/main.js"></script>
 	<script>
-	$(document).on('click', '.like', function() {
-	    let span = $(this);
-	    let protectNo = span.data('protect-no');
-	    $.post('/mainAllpage/toggleLike', { protectNo: protectNo }, function(data) {
-	        let icon = span.find('.like-icon');
-	        if(data.likedByUser) {
-	            icon.text('favorite');
-	            icon.addClass('liked');
-	        } else {
-	            icon.text('favorite_border');
-	            icon.removeClass('liked');
-	        }
-	        span.find('.like-count').text(data.likeCount);
-	    });
-	});
-
+		$(document).on('click', '.like', function() {
+		    let span = $(this);
+		    let protectNo = span.data('protect-no');
+		    $.post('/mainAllpage/toggleLike', { protectNo: protectNo }, function(data) {
+		        if (data.loginRequired) {
+		            alert("로그인 후 이용 가능합니다.");
+		            window.location.href = "/member/loginFrm";
+		            return;
+		        }
+		        let icon = span.find('.like-icon');
+		        if(data.likedByUser) {
+		            icon.text('favorite').addClass('liked');
+		        } else {
+		            icon.text('favorite_border').removeClass('liked');
+		        }
+		        span.find('.like-count').text(data.likeCount);
+		    });
+		});
 	let startIndex = 8;
 	const count = 12;
 	const cardContainer = document.querySelector(".all-card");
@@ -123,10 +123,10 @@
 				            <div class="card-info">
 				                <h3>${title}</h3>
 				                <span class="like" data-protect-no="${ap.protectNo}">
+				                    <span class="like-count">${ap.likeCount}</span>
 				                    <span class="material-icons like-icon ${ap.likedByUser ? 'liked' : ''}">
 				                        ${ap.likedByUser ? 'favorite' : 'favorite_border'}
 				                    </span>
-				                    <span class="like-count">${ap.likeCount}</span>
 				                </span>
 				            </div>
 				            <p class="date">${ap.protectDate}</p>

@@ -31,7 +31,14 @@ public interface MemberDao {
 	int updateInfo(Member m);
 
 	int deleteInfo(int memberNo);
+	
 	Member selectMemberNo(int memberNo);
+
+	Member searchId(String memberName, String memberPhone);
+
+	Member passwordRe(String memberId, String memberPhone);
+
+	boolean RePassword(String memberPw);
 
 	
 
