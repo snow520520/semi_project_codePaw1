@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.section {
+		display: flex;           
+		justify-content: center;
+		align-items: center;    
+		height: 50vh;         
+	}
+	.page-title {
+		font-size: 24px;
+		font-weight: bold;
+	}
+	
+</style>
+</head>
+<body>
+	<th:block th:include="common/header"></th:block>
+	<main class="content">
+		<section class="section">
+			<div class="page-title">페이지가 존재하지 않습니다.</div>
+		</section>
+	</main>
+	
+	<th:block th:include="common/footer"></th:block>
+	
+</body>
+</html>
