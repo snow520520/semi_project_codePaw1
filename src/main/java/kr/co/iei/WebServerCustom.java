@@ -8,17 +8,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
+public class WebServerCustom implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
 
-public class WebServerCustom implements WebServerFactoryCustomizer<ConfigurableWebServerFactory>{
+    @Override
+    public void customize(ConfigurableWebServerFactory factory) {
 
-	@Override
-	public void customize(ConfigurableWebServerFactory factory) {
+        ErrorPage error400 = new ErrorPage(HttpStatus.BAD_REQUEST, "/error/badRequest");
+        ErrorPage error404 = new ErrorPage(HttpStatus.NOT_FOUND, "/error/notFound");
+        ErrorPage error500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/serverError");
 
-		ErrorPage error404 = new ErrorPage(HttpStatus.NOT_FOUND, "/error/notFound");
-		ErrorPage error400 = new ErrorPage(HttpStatus.NOT_FOUND, "/error/notFound");
-		ErrorPage error500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/serverError");
-		
-		factory.addErrorPages(error400, error404, error500);
-	}
-	
+        factory.addErrorPages(error400, error404, error500);
+    }
 }
