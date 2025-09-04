@@ -63,6 +63,15 @@ public class ProtectController {
             return "common/msg";
         }
 
+
+        if (ap.getProtectContent() == null || ap.getProtectContent().trim().isEmpty()) {
+            model.addAttribute("title", "등록 실패");
+            model.addAttribute("text", "내용을 입력해주세요.");
+            model.addAttribute("icon", "warning");
+            model.addAttribute("loc", "/mainAllpage/writeFrm");
+            return "common/msg";
+        }
+
         Animal animal = new Animal();
         animal.setAnimalName(animalName);
         try {
