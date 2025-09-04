@@ -17,13 +17,11 @@
             font-size: 20px;
         }
         .like-icon.liked {
-            color: red;
         }
         .like-count {
-            margin-left: 5px;
-            font-size: 12px;
+            font-size: 15px;
             color: black;
-            font-weight: bold;
+			margin-right: 4px;
         }
         .header-wrapper>h2{
         	color: #854836;
@@ -61,10 +59,10 @@
 						    </h3>
 						    <span class="like" 
 						          th:data-protect-no="${ap.protectNo}">
+						        <span class="like-count" th:text="${ap.likeCount}">0</span>
 						        <span class="material-icons like-icon" th:classappend="${ap.likedByUser} ? ' liked' : ''">
 						            <span th:text="${ap.likedByUser} ? 'favorite' : 'favorite_border'">favorite_border</span>
 						        </span>
-						        <span class="like-count" th:text="${ap.likeCount}">0</span>
 						    </span>
 						</div>
                         <p class="date" th:text="${ap.protectDate}">2025-xx-xx</p>
