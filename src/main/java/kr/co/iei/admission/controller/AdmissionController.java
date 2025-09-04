@@ -153,11 +153,18 @@ public class AdmissionController {
 		 return "common/msg";
 	 }
 	 @GetMapping(value="/updateFrm")
-	 public String updateFrm(int admissionNo, int animalNo, Model model) {
+	 public String updateFrm(int admissionNo, int animalNo, Model model, @SessionAttribute(required = false)Member member) {
 		 Admission admission = admissionService.selectOneAdmission(admissionNo);
 		 Animal animal = animalService.selectAnimalNo(animalNo);
 		 model.addAttribute("admission", admission);
 		 model.addAttribute("animal", animal);
+		 if(member.getMemberLevel() != 1 && member.getMemberId() == admission.getMemberId()) {
+			 model.addAttribute("title", "권한 없음");
+ 			model.addAttribute("text", "해당 글은 작성자와 관리자만 볼 수 있습니다.");
+ 			model.addAttribute("icon", "warning");
+ 			model.addAttribute("loc", "/adoption/list?reqPage=1");
+ 			return "common/msg";
+		 }
 		 return "admission/updateFrm";
 	 }
 	 @PostMapping(value="/update")
