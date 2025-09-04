@@ -69,7 +69,7 @@
 			<div th:text="${a.adoptionDate}"></div>
 			<div class="line"> </div>
 			<a th:onclick="deleteAdoption([[${a.adoptionNo}]])">삭제</a>
-			<a th:href="@{/adoption/updateFrm(adoptionNo=${a.adoptionNo})}">수정</a>
+			<a href="javascript:void(0);" th:onclick="|checkUpdateAccess(${a.adoptionNo}, '[[${a.memberId}]]')|">수정</a>
 			<div class="info-tbl">
 				<div>입양 희망자 정보</div>
 				<table class="tbl member">
@@ -169,6 +169,19 @@
 			}
 		});
 	}
+	</script>
+	<script th:inline="javascript">
+	    const sessionMemberId =  /*[[${session.member != null ? session.member.memberId : 'null'}]]*/ 'null';
+	    const memberLevel = /*[[${session.member != null ? session.member.memberLevel : 0}]]*/ 0;
+	
+	    function checkUpdateAccess(adoptionNo, postMemberId) {
+	        if (memberLevel === 1 || sessionMemberId === postMemberId) {
+	            location.href = "/adoption/updateFrm?adoptionNo=" + adoptionNo;
+	            return;
+	        }
+	        swal("수정 권한이 없습니다.","","warning");
+	    }
+
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>

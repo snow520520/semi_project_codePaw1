@@ -159,6 +159,7 @@ public class AdoptionController {
 	
 	@GetMapping(value="/updateFrm")
 	public String updateFrm(int adoptionNo, Model model,@SessionAttribute(required = false) Member member) {
+		Adoption a = adoptionService.selectOneAdoption(adoptionNo);
 		if(member == null) {
     		model.addAttribute("title", "로그인 확인");
     		model.addAttribute("text", "로그인 후 이용 가능합니다.");
@@ -174,13 +175,12 @@ public class AdoptionController {
     			return "common/msg";
     		}
     	}
-		Adoption a = adoptionService.selectOneAdoption(adoptionNo);
 		Member m = memberService.selectMemberId(a.getMemberId());
 		Protect protect = protectService.selectOneProtect(a.getProtectNo());
 		int animalNo = protect.getAnimalNo();
 	    Animal animal = animalService.selectAnimalNo(animalNo);
 		model.addAttribute("a", a);
-		model.addAttribute("member", member);
+		model.addAttribute("member", m);
 		model.addAttribute("animal", animal);
 		return "adoption/updateFrm";
 	}
