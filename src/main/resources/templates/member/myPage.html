@@ -334,7 +334,7 @@ div[class=email-div],div[class=input-phone]{
 				if(!receiver){
 					$("#autoMsg").css("color", "red").css("margin-right", "40px").text("이메일을 입력해주세요.").show();
 				}else{
-					$("#autoMsg").text("인증번호 전송 중..").css("color", "#2854C5").css("font-size", "12px").show();
+					$("#autoMsg").text("인증번호 전송 중..").css("color", "#2854C5").css("font-size", "12px").css("margin-left", "15px").show();
 					$.ajax({
 						url: "/api/emailCode",
 						type: "get",
@@ -350,10 +350,9 @@ div[class=email-div],div[class=input-phone]{
 							autoTime();
 						}
 					});
-					$("#autoMsg").isEmpty().hide();
 				}
 			}else{
-				$("#autoMsg").css("color", "#BB271A").css("font-size", "11px").text("이메일 형식에 맞게 입력해주세요.").show();
+				$("#autoMsg").css("color", "#BB271A").css("font-size", "11px").css("margin-left", "15px").text("이메일 형식에 맞게 입력해주세요.").show();
 			}
 		});
 		$("#auto-btn").on("click", function(){
@@ -425,7 +424,7 @@ div[class=email-div],div[class=input-phone]{
 			let emailVal = $("#email").val();
 			const checkPwMsg = $(".checkPw-msg");
 			const checkPwReMsg = $(".checkPwRe-msg");
-			checkPwReMsg.remove("invalid").remove("valid");
+			checkPwReMsg.removeClass("invalid").removeClass("valid");
 			const memberPw = $("#memberPw");
 			const memberPwRe = $("#memberPwRe");
 			const pwReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{5,15}$/; //6~15자 이내 대소문자, 숫자 각 1개 이상 포함
@@ -485,11 +484,11 @@ div[class=email-div],div[class=input-phone]{
 									className : "cc-btn",
 									closeModal : true
 								}
-							}.then(function(isConfirm){
-								if(isConfirm){
-									location.href="redirect:/";
-								}
-							})
+							}
+						}).then(function(isConfirm){
+							if(isConfirm){
+								location.href="/";
+							}
 						});
 					}
 				}
@@ -497,30 +496,14 @@ div[class=email-div],div[class=input-phone]{
 			let memberAddr = $("#memberAddr").val();
 			let memberName = $("#memberName").val();
 			let memberPhone = $("#memberPhone").val();
+			
 			const regP = /^01(?:0|1|[0-9])-(?:\d{4})-\d{4}$/;
-			const regPResult = reg.test(memberPhone);
-			if(!regPResult){
-				e.preventDefault();
-				swal({
-					title : "재입력",
-					text : "전화번호를 다시 입력해주세요.(ex. 010-0000-0000)",
-					icon : "warning",
-					buttons :{
-						cancel : {
-							text : "확인",
-							value : false,
-							visible : true,
-							className : "cc-btn",
-							closeModal : true
-						}
-					}
-				});
-			}
-			if(memberId.trim() === ""){
+			const regPResult = regP.test(memberPhone);
+			if(!memberAddr){
 				e.preventDefault();
 				swal({
 					title : "정보 입력",
-					text : "아이디를 입력해주세요.",
+					text : "주소를 입력해주세요.",
 					icon : "warning",
 					buttons :{
 						cancel : {
@@ -532,7 +515,7 @@ div[class=email-div],div[class=input-phone]{
 						}
 					}
 				});
-			}else if(memberName.trim() === ""){
+			}else if(!memberName){
 				e.preventDefault();
 				swal({
 					title : "정보 입력",
@@ -548,11 +531,11 @@ div[class=email-div],div[class=input-phone]{
 						}
 					}
 				});
-			}else if(memberPhone.trim() === ""){
+			}else if(!memberPhone || !regPResult){
 				e.preventDefault();
 				swal({
 					title : "정보 입력",
-					text : "전화번호를 입력해주세요.",
+					text : "전화번호를 입력해주세요.(ex. 010-0000-0000)",
 					icon : "warning",
 					buttons :{
 						cancel : {

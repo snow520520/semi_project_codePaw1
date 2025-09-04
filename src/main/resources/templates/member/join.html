@@ -529,7 +529,7 @@ div[class=email-div],div[class=input-phone]{
 			let memberName = $("#memberName").val();
 			let memberPhone = $("#memberPhone").val();
 			const regP = /^01(?:0|1|[6-9])-(?:\d{3,4})-\d{4}$/;
-			const regPResult = reg.test(memberPhone);
+			const regPResult = regP.test(memberPhone);
 			if(!regPResult){
 				e.preventDefault();
 				swal({
@@ -547,7 +547,7 @@ div[class=email-div],div[class=input-phone]{
 					}
 				});
 			}
-			if(memberAge.trim() === ""){
+			if(!memberAge && isNaN(memberAge)){
 				e.preventDefault();
 				swal({
 					title : "정보 입력",
@@ -563,7 +563,7 @@ div[class=email-div],div[class=input-phone]{
 						}
 					}
 				});
-			}else if(memberId.trim() === ""){
+			}else if(!memberId){
 				e.preventDefault();
 				swal({
 					title : "정보 입력",
@@ -579,7 +579,7 @@ div[class=email-div],div[class=input-phone]{
 						}
 					}
 				});
-			}else if(memberName.trim() === ""){
+			}else if(!memberName){
 				e.preventDefault();
 				swal({
 					title : "정보 입력",
@@ -595,11 +595,11 @@ div[class=email-div],div[class=input-phone]{
 						}
 					}
 				});
-			}else if(memberPhone.trim() === ""){
+			}else if(!memberPhone || !regPResult){
 				e.preventDefault();
 				swal({
 					title : "정보 입력",
-					text : "전화번호를 입력해주세요.",
+					text : "전화번호를 입력해주세요.(ex. 010-0000-0000)",
 					icon : "warning",
 					buttons :{
 						cancel : {
