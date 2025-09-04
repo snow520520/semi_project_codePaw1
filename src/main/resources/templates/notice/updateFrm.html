@@ -76,23 +76,28 @@
 	<th:block th:include="common/header"></th:block>
 	<main class="content">
 		<section class="section">
-			<form action="/notice/update" method="post" enctype="multipart/form-data" class="form">
+			<form action="/notice/update" method="post" enctype="multipart/form-data" class="form" autocomplete="off">
 				<div class="title">
 					<input type="hidden" name="noticeNo" id="noticeNo" th:value="${notice.noticeNo}">
-					<input type="text" name="noticeTitle" id="noticeTitle" placeholder="제목을 입력해주세요." th:value="${notice.noticeTitle}" required>
+					<input type="text" name="noticeTitle" id="noticeTitle" placeholder="제목을 입력해주세요." th:value="${notice.noticeTitle}">
 				</div>
 				<div class="line" th:text="${notice.memberId}"></div>
 				<div class="line inline">
 					<span class="file">첨부파일 |</span>
-					<div th:each="file : ${notice.fileList}" class="file">
-						<img src="/image/file.png" style="width: 16px;">
-						<span class="deleteFilename" th:text="${file.filename}"></span>
-						<span class="material-icons del-btn" th:onclick="deleteFile([[${file.noticeFileNo}]], this);">delete</span>
-					</div>
+					<th:block th:each="file : ${notice.fileList}" class="file">
+						<th:block th:if="${file != null}">
+							<img src="/image/file.png" style="width: 16px;">
+							<span class="deleteFilename" th:text="${file.filename}"></span>
+							<span class="material-icons del-btn" th:onclick="deleteFile([[${file.noticeFileNo}]], this);">delete</span>
+						</th:block>
+						<th:block th:if="${file == null}">
+							<span>없음</span>
+						</th:block>
+					</th:block>
 					<span class="addFile">추가 파일 |</span>
 					<input type="file" name="noticeFiles" id="noticeFiles" multiple>
 				</div>
-				<textarea name="noticeContent" id="noticeContent" required></textarea>
+				<textarea name="noticeContent" id="noticeContent"></textarea>
 				<p class="hidden" th:text="${notice.noticeContent}">
 				<div class="line"> </div>
 				<div class="btn-box">
@@ -157,6 +162,28 @@
 		$(obj).parent().remove();
 	}
 	$("#submit").on('click',function(e){
+		const content = $("#noticeTitle").val();
+		if(content === ""){
+			e.preventDefault(); // 전송 막기
+		      swal({
+		          title : "제목 확인",
+		          text : "제목을 입력해주세요!",
+		          icon : "warning",
+		          buttons : {
+		              confirm:{
+		                  text: "확인",
+		                  value: true,
+		                  visible : true,
+		                  className : "btn-swal-color",
+		                  closeModal : true
+		              }
+		          }
+		   		});
+		}else {
+            $(".form").submit();
+        }
+	});
+	$("#submit").on('click',function(e){
 		const content = $("#noticeContent").summernote('isEmpty');
 		if(content){
 			e.preventDefault(); // 전송 막기
@@ -177,7 +204,15 @@
 		}else {
             $(".form").submit();
         }
-	})
+	});
+	$('#noticeTitle').on("focus",function(){
+		const noticeTitle = $("#noticeTitle");
+		noticeTitle.attr("placeholder","");			
+	});
+	$('#noticeTitle').on("blur",function(){
+		const noticeTitle = $("#noticeTitle");	
+		noticeTitle.attr("placeholder","제목을 입력해주세요.");
+	});
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
