@@ -119,7 +119,7 @@
 			<form id="reviewForm" action="/review/update" method="post" enctype="multipart/form-data">
 				<div class="title">
 					<input type="hidden" name="reviewNo" id="reviewNo" th:value="${review.reviewNo}">
-					<input type="text" id="reviewTitle" class="reviewTitle" name="reviewTitle" placeholder="입양후기 제목을 입력해주세요" th:value="${review.reviewNo}">
+					<input type="text" id="reviewTitle" class="reviewTitle" name="reviewTitle" placeholder="입양후기 제목을 입력해주세요" th:value="${review.reviewTitle}">
 				</div>
 				<textarea name="reviewContent" id="reviewContent" required th:text="${review.reviewContent}"></textarea>
 				<div class="line"></div>
