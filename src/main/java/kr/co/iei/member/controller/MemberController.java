@@ -38,6 +38,14 @@ public class MemberController {
 		model.addAttribute("loc", "/member/login");
 		return "common/msg"; 
     }
+    @RequestMapping(value = "/adminMsg")
+	public String adminMsg(Model model) {
+		model.addAttribute("title", "관리자 페이지");
+		model.addAttribute("text", "관리자만 접근 가능");
+		model.addAttribute("icon", "warning");
+		model.addAttribute("loc", "/");
+		return "common/msg"; 
+	}
 	@GetMapping(value = "/loginFrm")
 	public String loginFrm(HttpServletRequest request, Model model) {
 	    Cookie[] cookies = request.getCookies();

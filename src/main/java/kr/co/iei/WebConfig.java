@@ -5,6 +5,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import kr.co.iei.util.LoginInterceptor;
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 	@Override
@@ -21,8 +23,15 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LoginInterceptor())
+				.addPathPatterns(
+						
+						).excludePathPatterns(
+								
+								);
+			
 		
-		WebMvcConfigurer.super.addInterceptors(registry);
+		
 	}
 	
 }
