@@ -167,6 +167,7 @@ public class AdoptionController {
     		model.addAttribute("loc", "/member/loginFrm");
     		return "common/msg";
     	}else {
+    		//   로그인을 안했거나         멤버 레벨 1이 아니면서                 로그인 한 아이디랑 작성자가 같지 않으면
     		if (member == null || (member.getMemberLevel() != 1 && !member.getMemberId().equals(a.getMemberId()))) {
     			model.addAttribute("title", "권한 없음");
     			model.addAttribute("text", "해당 글은 작성자와 관리자만 볼 수 있습니다.");
@@ -174,15 +175,15 @@ public class AdoptionController {
     			model.addAttribute("loc", "/adoption/list?reqPage=1");
     			return "common/msg";
     		}
+    		Member m = memberService.selectMemberId(a.getMemberId());
+    		Protect protect = protectService.selectOneProtect(a.getProtectNo());
+    		int animalNo = protect.getAnimalNo();
+    		Animal animal = animalService.selectAnimalNo(animalNo);
+    		model.addAttribute("a", a);
+    		model.addAttribute("member", m);
+    		model.addAttribute("animal", animal);
+    		return "adoption/updateFrm";
     	}
-		Member m = memberService.selectMemberId(a.getMemberId());
-		Protect protect = protectService.selectOneProtect(a.getProtectNo());
-		int animalNo = protect.getAnimalNo();
-	    Animal animal = animalService.selectAnimalNo(animalNo);
-		model.addAttribute("a", a);
-		model.addAttribute("member", m);
-		model.addAttribute("animal", animal);
-		return "adoption/updateFrm";
 	}
 	
 	@PostMapping(value="/update")
