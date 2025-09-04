@@ -138,29 +138,28 @@ public class ProtectController {
         return protectService.selectPageList(start, count, memberNo);
     }
 
-    @ResponseBody
     @PostMapping("/mainAllpage/toggleLike")
+    @ResponseBody
     public Map<String, Object> toggleLike(@RequestParam("protectNo") int protectNo, HttpSession session) {
-        Map<String, Object> resultMap = new HashMap<>();
+        Map<String, Object> result = new HashMap<>();
         Member member = (Member) session.getAttribute("member");
+
         if (member == null) {
-            resultMap.put("likedByUser", false);
-            resultMap.put("likeCount", 0);
-            return resultMap;
+            result.put("loginRequired", true);
+            return result;
         }
 
         boolean liked = protectService.isLiked(member.getMemberNo(), protectNo);
         if (liked) {
             protectService.deleteProtectLike(member.getMemberNo(), protectNo);
-            liked = false;
         } else {
             protectService.insertProtectLike(member.getMemberNo(), protectNo);
-            liked = true;
         }
 
-        resultMap.put("likedByUser", liked);
-        resultMap.put("likeCount", protectService.getLikeCount(protectNo));
-        return resultMap;
+        result.put("loginRequired", false);
+        result.put("likedByUser", !liked);
+        result.put("likeCount", protectService.getLikeCount(protectNo));
+        return result;
     }
 
     @ResponseBody
