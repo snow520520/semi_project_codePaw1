@@ -567,6 +567,13 @@ body {
 						div.append(span);
 						resultDiv.append(div);
 					}
+					if(!result.memberPhone){
+						const resultDiv = $(".result-div");
+						const div = $("<div>").addClass("search-result");
+						const span = $("<span>").css("color", "red").text("전화번호를 입력해주세요.(ex. 010-0000-0000)");
+						div.append(span);
+						resultDiv.append(div);
+					}
 				},error : function(){
 					const resultDiv = $(".result-div");
 					resultDiv.empty();
@@ -581,8 +588,8 @@ body {
 				resultDiv.empty();
 				memberName.empty();
 				memberPhone.empty();
-			});
 		});
+		/*
 		$(".insert-btn").on("click", function(){
 			const memberId = $("#memberId").val();
 			const memberPhone = $("#memberPhone").val();
@@ -728,7 +735,7 @@ body {
 				resultDiv.empty();
 				
 			});
-		});
+		});*/
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>
