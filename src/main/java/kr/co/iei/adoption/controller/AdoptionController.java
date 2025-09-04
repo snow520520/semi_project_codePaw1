@@ -158,14 +158,29 @@ public class AdoptionController {
 
 	
 	@GetMapping(value="/updateFrm")
-	public String updateFrm(int adoptionNo, Model model) {
+	public String updateFrm(int adoptionNo, Model model,@SessionAttribute(required = false) Member member) {
 		Adoption a = adoptionService.selectOneAdoption(adoptionNo);
-		Member member = memberService.selectMemberId(a.getMemberId());
+		if(member == null) {
+    		model.addAttribute("title", "로그인 확인");
+    		model.addAttribute("text", "로그인 후 이용 가능합니다.");
+    		model.addAttribute("icon", "info");
+    		model.addAttribute("loc", "/member/loginFrm");
+    		return "common/msg";
+    	}else {
+    		if (member == null || (member.getMemberLevel() != 1 && !member.getMemberId().equals(a.getMemberId()))) {
+    			model.addAttribute("title", "권한 없음");
+    			model.addAttribute("text", "해당 글은 작성자와 관리자만 볼 수 있습니다.");
+    			model.addAttribute("icon", "warning");
+    			model.addAttribute("loc", "/adoption/list?reqPage=1");
+    			return "common/msg";
+    		}
+    	}
+		Member m = memberService.selectMemberId(a.getMemberId());
 		Protect protect = protectService.selectOneProtect(a.getProtectNo());
 		int animalNo = protect.getAnimalNo();
 	    Animal animal = animalService.selectAnimalNo(animalNo);
 		model.addAttribute("a", a);
-		model.addAttribute("member", member);
+		model.addAttribute("member", m);
 		model.addAttribute("animal", animal);
 		return "adoption/updateFrm";
 	}

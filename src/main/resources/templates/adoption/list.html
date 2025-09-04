@@ -61,22 +61,22 @@
 		</section>
 	</main>
 	<script th:inline="javascript">
-    const memberId = /*[[${session.member != null ? session.member.memberId : 'null'}]]*/ 'null';
-    const memberLevel = /*[[${session.member != null ? session.member.memberLevel : 0}]]*/ 0;
-
-    function checkAccess(adoptionNo, memberId) {
-        if (memberLevel === 1) {
-            location.href = "/adoption/view?adoptionNo=" + adoptionNo;
-            return;
-        }
-
-        if (memberId === memberId) {
-            location.href = "/adoption/view?adoptionNo=" + adoptionNo;
-            return;
-        }
-
-        swal("해당 글은 작성자와 관리자만 열람할 수 있습니다.","","warning");
-    }
+	    const memberId = 'null';
+	    const memberLevel = 0;
+	
+	    function checkAccess(adoptionNo, memberId) {
+	        if (memberLevel === 1) {
+	            location.href = "/adoption/view?adoptionNo=" + adoptionNo;
+	            return;
+	        }
+	
+	        if (memberId === memberId) {
+	            location.href = "/adoption/view?adoptionNo=" + adoptionNo;
+	            return;
+	        }
+	
+	        swal("해당 글은 작성자와 관리자만 열람할 수 있습니다.","","warning");
+	    }
 	</script>
 	<th:block th:include="common/footer"></th:block>
 </body>

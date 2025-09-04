@@ -35,13 +35,21 @@ public class MemberController {
     	model.addAttribute("title", "로그인");
 		model.addAttribute("text", "로그인 후 사용합니다.");
 		model.addAttribute("icon", "info");
-		model.addAttribute("loc", "/member/login");
+		model.addAttribute("loc", "/member/loginFrm");
 		return "common/msg"; 
     }
     @RequestMapping(value = "/adminMsg")
 	public String adminMsg(Model model) {
 		model.addAttribute("title", "관리자 페이지");
 		model.addAttribute("text", "관리자만 접근 가능");
+		model.addAttribute("icon", "warning");
+		model.addAttribute("loc", "/");
+		return "common/msg"; 
+	}
+    @RequestMapping(value = "/reviewMsg")
+	public String reviewMsg(Model model) {
+		model.addAttribute("title", "관리자 / 입양 회원 페이지");
+		model.addAttribute("text", "관리자와 입양 회원만 접근 가능");
 		model.addAttribute("icon", "warning");
 		model.addAttribute("loc", "/");
 		return "common/msg"; 
