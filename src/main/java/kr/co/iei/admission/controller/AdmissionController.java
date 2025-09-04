@@ -158,11 +158,11 @@ public class AdmissionController {
 		 Animal animal = animalService.selectAnimalNo(animalNo);
 		 model.addAttribute("admission", admission);
 		 model.addAttribute("animal", animal);
-		 if(member.getMemberLevel() != 1 && member.getMemberId() == admission.getMemberId()) {
+		 if(member.getMemberLevel() != 1 && member.getMemberId() != admission.getMemberId()) {
 			 model.addAttribute("title", "권한 없음");
  			model.addAttribute("text", "해당 글은 작성자와 관리자만 볼 수 있습니다.");
  			model.addAttribute("icon", "warning");
- 			model.addAttribute("loc", "/adoption/list?reqPage=1");
+ 			model.addAttribute("loc", "/admission/list?reqPage=1");
  			return "common/msg";
 		 }
 		 return "admission/updateFrm";
