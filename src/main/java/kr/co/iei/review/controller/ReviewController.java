@@ -124,10 +124,20 @@ public class ReviewController {
 	}
 	
 	@GetMapping(value="/reviewUpdateFrm")
-	public String updateFrm(int reviewNo, Model model) {
+	public String updateFrm(int reviewNo, Model model, @SessionAttribute (required=false) Member member) {
 		Review review = reviewService.selectOneReview(reviewNo);
+		 if(member.getMemberLevel() != 1 && member.getMemberNo() != review.getMemberNo()) {
+			 model.addAttribute("title", "권한 없음");
+ 			model.addAttribute("text", "해당 글은 작성자와 관리자만 볼 수 있습니다.");
+ 			model.addAttribute("icon", "warning");
+ 			model.addAttribute("loc", "/review/list?reqPage=1");
+ 			return "common/msg";
+		 }
 		model.addAttribute("review", review);
 		return "review/reviewUpdateFrm";
+		
+		
+		
 	}
 	@PostMapping(value="/update")
 	public String update(Review review, Model model) {
