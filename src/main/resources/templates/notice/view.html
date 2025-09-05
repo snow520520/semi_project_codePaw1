@@ -61,8 +61,8 @@
 				</th:block>
 			</div>
 			<th:block th:if="${session.member != null && session.member.memberLevel == 1}">
-				<a class="updateNotice" th:href="@{/notice/updateFrm(noticeNo=${notice.noticeNo})}">수정</a>
 				<a class="deleteNotice" th:onclick="deleteNotice([[${notice.noticeNo}]]);">삭제</a>
+				<a class="updateNotice" th:href="@{/notice/updateFrm(noticeNo=${notice.noticeNo})}">수정</a>
 			</th:block>
 			<div class="noticeContent" th:utext="${notice.noticeContent}"></div>
 			<div class="line"> </div>
